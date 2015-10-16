@@ -4,3 +4,4 @@ platform :ios, '7.0'
 
 pod 'JTCalendar', path: '..'
 pod "AFNetworking", "~> 2.0"
+pod 'RongCloudIMKit'

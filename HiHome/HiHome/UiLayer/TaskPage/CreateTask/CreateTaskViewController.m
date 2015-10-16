@@ -286,7 +286,7 @@
         [cell addSubview:_textView];
 
     }else if(indexPath.row == 3){
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, _cellHeight)];
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, _cellHeight)];
         
         lab.text = @"是否创建全天日程";
         
@@ -458,7 +458,7 @@
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
         [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
-        [remindBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;
         remindBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -466,7 +466,7 @@
         [repeatBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [repeatBtn setImage:[UIImage imageNamed:@"repeat_2"] forState:UIControlStateNormal];
         [repeatBtn setTitle:@"重复" forState:UIControlStateNormal];
-        [repeatBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [repeatBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         repeatBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         repeatBtn.imageView.contentMode = UIViewContentModeCenter;
         repeatBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -474,7 +474,7 @@
         [placeBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [placeBtn setImage:[UIImage imageNamed:@"place"] forState:UIControlStateNormal];
         [placeBtn setTitle:@"位置" forState:UIControlStateNormal];
-        [placeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [placeBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         placeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         placeBtn.imageView.contentMode = UIViewContentModeCenter;
         placeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;

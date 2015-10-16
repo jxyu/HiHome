@@ -21,10 +21,12 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - JTCalendar (1.2.1)
+  - RongCloudIMKit (2.3.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - JTCalendar (from `..`)
+  - RongCloudIMKit
 
 EXTERNAL SOURCES:
   JTCalendar:
@@ -33,5 +35,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   JTCalendar: d635cba66a8b44e2e43737c9ce39eb4c570b9569
+  RongCloudIMKit: c20f1301326ffd9e0b073325a5ad8799b077dc1a
 
 COCOAPODS: 0.38.2

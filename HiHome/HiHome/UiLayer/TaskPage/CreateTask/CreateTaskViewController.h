@@ -25,6 +25,7 @@
     UITableView *_mainTableView;
     BOOL    _keyShow;       //标记键盘是否显示
     UITextView *_textView;
+    UILabel *_placeHolderLabel;
     UITextField *_titleField;//标题
     
     CGFloat _keyHeight;

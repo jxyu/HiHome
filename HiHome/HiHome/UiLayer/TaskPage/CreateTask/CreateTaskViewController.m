@@ -116,7 +116,7 @@
             [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
         }
     }
-    _cellCount = 7;
+    _cellCount = 6;
     _cellTextViewHeight = _mainTableView.frame.size.height - 2*_cellHeight;
     
     _keyHeight = 216;//default
@@ -244,290 +244,247 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight)];
     
-    switch (indexPath.row) {
-        case 0:
-        {
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
-            
-            titleLabel.text = @"   任务名称:";
-            _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-            _titleField.placeholder = @"请输入任务名字";
-            _titleField.delegate = self;
-            _titleField.leftView = titleLabel;
-            _titleField.leftViewMode = UITextFieldViewModeAlways;
-            [cell addSubview:_titleField];
-            
-        }
-            break;
-            
-        case 1:
-        {
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
-            UITextField *titleField = [[UITextField alloc]init];
-            titleLabel.text = @"   执行人:";
-            titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-            titleField.placeholder = @"请输入执行人";
-            titleField.delegate = self;
-            titleField.leftView = titleLabel;
-            titleField.leftViewMode = UITextFieldViewModeAlways;
-            
-            UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
-            [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside
-            [chooseContactsBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            titleField.rightView = chooseContactsBtn;
-            titleField.rightViewMode =UITextFieldViewModeAlways;
-            
-            [cell addSubview:titleField];
-            
-        }
-            break;
-        case 2:
-        {
-            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
-            
-            _textView.delegate = self;
-            _textView.returnKeyType = UIReturnKeyDefault;
-            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            
-            [cell addSubview:_textView];
-        }
-            break;
-            
-        case 3:
-        {
-            UIButton *picBtns = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.height, cell.frame.size.height)];
-            [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
-            picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
-            [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            
-            UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-            [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
-            photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
-            [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+    if (indexPath.row == 0) {
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
+        
+        titleLabel.text = @"   任务名称:";
+        _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+        _titleField.placeholder = @"请输入任务名字";
+        _titleField.delegate = self;
+        _titleField.leftView = titleLabel;
+        _titleField.leftViewMode = UITextFieldViewModeAlways;
+        [cell addSubview:_titleField];
+    }else if (indexPath.row == 1){
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
+        UITextField *titleField = [[UITextField alloc]init];
+        titleLabel.text = @"   执行人:";
+        titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+        titleField.placeholder = @"请输入执行人";
+        titleField.delegate = self;
+        titleField.leftView = titleLabel;
+        titleField.leftViewMode = UITextFieldViewModeAlways;
+        
+        UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
+        [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside
+        [chooseContactsBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        titleField.rightView = chooseContactsBtn;
+        titleField.rightViewMode =UITextFieldViewModeAlways;
+        
+        [cell addSubview:titleField];
+    }else if(indexPath.row == 2){
+        _textView.frame = CGRectMake(10, 0, cell.frame.size.width, _cellHeight * 3);
+        _textView.delegate = self;
+        _textView.returnKeyType = UIReturnKeyDefault;
+        _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5,-15,290,60)];
+        _placeHolderLabel.numberOfLines = 0;
+        _placeHolderLabel.text = @"请输入任务内容";
+        _placeHolderLabel.textColor = [[UIColor alloc] initWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+        
+        [_textView addSubview:_placeHolderLabel];
+        [cell addSubview:_textView];
 
-            UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-            [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-            
-            [cell addSubview:picBtns];
-            [cell addSubview:photoBtns];
-            [cell addSubview:otherBtns];
-        }
-            break;
-        case 4:
+    }else if(indexPath.row == 3){
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, _cellHeight)];
+        
+        lab.text = @"是否创建全天日程";
+        
+        UISwitch *swtBtn = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-(20+50), _cellHeight/3, 50, _cellHeight/3)];
+        swtBtn.center =  CGPointMake( self.view.frame.size.width-(20+50)+20,_cellHeight/2);
+        swtBtn.tag = ZY_UISWITCH_TAG_BASE + indexPath.section*10+indexPath.row;
+        
+        [cell addSubview:lab];
+        [cell addSubview:swtBtn];
+    }else if(indexPath.row == 4){
+        NSDate *now = [NSDate date];
+        
+        UILabel *startTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, _cellHeight/2)];
+        UILabel *endTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 0, self.view.frame.size.width/2, _cellHeight/2)];
+        
+        startTimeField = [[UITextField alloc] initWithFrame:CGRectMake(0, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+        endTimeField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+        
+        startTimeField.textAlignment = NSTextAlignmentCenter;
+        endTimeField.textAlignment = NSTextAlignmentCenter;
+        
+        
+        startTimeLab.text = @"开始时间";
+        startTimeLab.textAlignment = NSTextAlignmentCenter;
+        startTimeLab.font = [UIFont boldSystemFontOfSize:14];
+        startTimeLab.textColor = [UIColor grayColor];
+        endTimeLab.text = @"结束时间";
+        endTimeLab.textAlignment = NSTextAlignmentCenter;
+        endTimeLab.font = [UIFont boldSystemFontOfSize:14];
+        endTimeLab.textColor = [UIColor grayColor];
+        
         {
+            NSDateComponents *temp = [self updateLabelForTimer];
             
-            UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, _cellHeight)];
+            NSInteger y = [temp year];
+            NSInteger m = [temp month];
+            NSInteger d = [temp day];
             
-            lab.text = @"   是否创建全天日程";
+            NSInteger hour = [temp hour];
+            NSInteger min = [temp minute];
             
-            UISwitch *swtBtn = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-(20+50), _cellHeight/3, 50, _cellHeight/3)];
-            swtBtn.center =  CGPointMake( self.view.frame.size.width-(20+50)+20,_cellHeight/2);
-            swtBtn.tag = ZY_UISWITCH_TAG_BASE + indexPath.section*10+indexPath.row;
-            
-            [cell addSubview:lab];
-            [cell addSubview:swtBtn];
-            
-            
-        }
-            break;
-        case 5:
-        {
-            NSDate *now = [NSDate date];
-
-            UILabel *startTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, _cellHeight/2)];
-            UILabel *endTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 0, self.view.frame.size.width/2, _cellHeight/2)];
-            
-            startTimeField = [[UITextField alloc] initWithFrame:CGRectMake(0, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
-            endTimeField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
-            
-            startTimeField.textAlignment = NSTextAlignmentCenter;
-            endTimeField.textAlignment = NSTextAlignmentCenter;
-            
-           
-            startTimeLab.text = @"开始时间";
-            startTimeLab.textAlignment = NSTextAlignmentCenter;
-            startTimeLab.font = [UIFont boldSystemFontOfSize:14];
-            startTimeLab.textColor = [UIColor grayColor];
-            endTimeLab.text = @"结束时间";
-            endTimeLab.textAlignment = NSTextAlignmentCenter;
-            endTimeLab.font = [UIFont boldSystemFontOfSize:14];
-            endTimeLab.textColor = [UIColor grayColor];
-         
-            {
-                NSDateComponents *temp = [self updateLabelForTimer];
-                
-                NSInteger y = [temp year];
-                NSInteger m = [temp month];
-                NSInteger d = [temp day];
-                
-                NSInteger hour = [temp hour];
-                NSInteger min = [temp minute];
-                
-                NSInteger week = [temp weekday];
-                NSString *weekStr;
-                switch (week) {
-                    case 1:
-                        weekStr = @"周日";
-                        break;
-                    case 2:
-                        weekStr = @"周一";
-                        break;
-                    case 3:
-                        weekStr = @"周二";
-                        break;
-                    case 4:
-                        weekStr = @"周三";
-                        break;
-                    case 5:
-                        weekStr = @"周四";
-                        break;
-                    case 6:
-                        weekStr = @"周五";
-                        break;
-                    case 7:
-                        weekStr = @"周六";
-                        break;
-                        
-                    default:
-                        break;
-                }
-                
-                
-                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
-                startTimeField.text =timeStr;
-                startTimeField.font = [UIFont systemFontOfSize:14];
-                
-                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d+1,hour,min];
-                endTimeField.text =timeStr2;
-                endTimeField.font = [UIFont systemFontOfSize:14];
-                
-                [_startDateArray addObject:[NSString stringWithFormat:@"%ld",y]];
-                [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",m]];
-                [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",d]];
-                [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",hour]];
-                [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",min]];
-                [_startDateArray addObject:weekStr];
-                
+            NSInteger week = [temp weekday];
+            NSString *weekStr;
+            switch (week) {
+                case 1:
+                    weekStr = @"周日";
+                    break;
+                case 2:
+                    weekStr = @"周一";
+                    break;
+                case 3:
+                    weekStr = @"周二";
+                    break;
+                case 4:
+                    weekStr = @"周三";
+                    break;
+                case 5:
+                    weekStr = @"周四";
+                    break;
+                case 6:
+                    weekStr = @"周五";
+                    break;
+                case 7:
+                    weekStr = @"周六";
+                    break;
+                    
+                default:
+                    break;
             }
             
             
-            UUDatePicker *startDatePicker
-            = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
-                                     PickerStyle:UUDateStyle_YearMonthDayHourMinute
-                                     didSelected:^(NSString *year,
-                                                   NSString *month,
-                                                   NSString *day,
-                                                   NSString *hour,
-                                                   NSString *minute,
-                                                   NSString *weekDay) {
-                                         
-                                         [_startDateArray removeAllObjects];
-                                         [_startDateArray addObject:year];
-                                         [_startDateArray addObject:month];
-                                         [_startDateArray addObject:day];
-                                         [_startDateArray addObject:hour];
-                                         [_startDateArray addObject:minute];
-                                         [_startDateArray addObject:weekDay];
-                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
-                                         NSLog(@"---%@",startTimeField.text);
-                                     }];
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
+            startTimeField.text =timeStr;
+            startTimeField.font = [UIFont systemFontOfSize:14];
             
-            startDatePicker.ScrollToDate = now;
-            startTimeField.inputView = startDatePicker;
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d+1,hour,min];
+            endTimeField.text =timeStr2;
+            endTimeField.font = [UIFont systemFontOfSize:14];
             
-            
-            
-            UUDatePicker *endDatePicker
-            = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
-                                     PickerStyle:UUDateStyle_YearMonthDayHourMinute
-                                     didSelected:^(NSString *year,
-                                                   NSString *month,
-                                                   NSString *day,
-                                                   NSString *hour,
-                                                   NSString *minute,
-                                                   NSString *weekDay) {
-                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
-                                     }];
-            
-            endDatePicker.ScrollToDate = now;
-            endTimeField.inputView = endDatePicker;
-            
-            
-            
-            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 1, 1, _cellHeight - 2)];
-            lineView.backgroundColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
-            
-            [cell addSubview:startTimeLab];
-            [cell addSubview:endTimeLab];
-            [cell addSubview:startTimeField];
-            [cell addSubview:endTimeField];
-            [cell addSubview:lineView];
-            
+            [_startDateArray addObject:[NSString stringWithFormat:@"%ld",y]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",m]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",d]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",hour]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",min]];
+            [_startDateArray addObject:weekStr];
             
         }
-            break;
-        case 6:
-        {
-            
-            cell.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
-//            UIButtonTypeDetailDisclosure,
-//            UIButtonTypeInfoLight,
-//            UIButtonTypeInfoDark,
-//            UIButtonTypeContactAdd,
-            
-            SegmentedButton *remindBtn = [[SegmentedButton alloc] init];
-            remindBtn.frame = CGRectMake(20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
-           // remindBtn.layer.borderWidth = 1.0;
-          //  remindBtn.layer.borderColor = [[UIColor grayColor] CGColor];
-            remindBtn.backgroundColor = [UIColor whiteColor];
-            remindBtn.alpha = 0.8;
-            remindBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REMIND_BTN_TAG;
-            
-            SegmentedButton *repeatBtn = [[SegmentedButton alloc] init];
-            repeatBtn.frame =CGRectMake(self.view.frame.size.width/3+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
-            repeatBtn.backgroundColor = [UIColor whiteColor];
-            repeatBtn.alpha = 0.8;
-            repeatBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REPEAT_BTN_TAG;
-            
-            
-            SegmentedButton *placeBtn = [[SegmentedButton alloc] init];
-            placeBtn.frame =  CGRectMake(self.view.frame.size.width/3*2+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
-            placeBtn.backgroundColor = [UIColor whiteColor];
-            placeBtn.alpha = 0.8;
-            placeBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_PLACE_BTN_TAG;
-            
-            [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-            [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
-            [remindBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-            remindBtn.imageView.contentMode = UIViewContentModeCenter;
-            remindBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-            
-            [repeatBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            [repeatBtn setImage:[UIImage imageNamed:@"repeat_2"] forState:UIControlStateNormal];
-            [repeatBtn setTitle:@"重复" forState:UIControlStateNormal];
-            [repeatBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            repeatBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-            repeatBtn.imageView.contentMode = UIViewContentModeCenter;
-            repeatBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-            
-            [placeBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            [placeBtn setImage:[UIImage imageNamed:@"place"] forState:UIControlStateNormal];
-            [placeBtn setTitle:@"位置" forState:UIControlStateNormal];
-            [placeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            placeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-            placeBtn.imageView.contentMode = UIViewContentModeCenter;
-            placeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-            
-            [cell addSubview:remindBtn];
-            [cell addSubview:repeatBtn];
-            [cell addSubview:placeBtn];
-        }
-            break;
-        default:
-            break;
+        
+        
+        UUDatePicker *startDatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     
+                                     [_startDateArray removeAllObjects];
+                                     [_startDateArray addObject:year];
+                                     [_startDateArray addObject:month];
+                                     [_startDateArray addObject:day];
+                                     [_startDateArray addObject:hour];
+                                     [_startDateArray addObject:minute];
+                                     [_startDateArray addObject:weekDay];
+                                     startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                     NSLog(@"---%@",startTimeField.text);
+                                 }];
+        
+        startDatePicker.ScrollToDate = now;
+        startTimeField.inputView = startDatePicker;
+        
+        
+        
+        UUDatePicker *endDatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                 }];
+        
+        endDatePicker.ScrollToDate = now;
+        endTimeField.inputView = endDatePicker;
+        
+        
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 1, 1, _cellHeight - 2)];
+        lineView.backgroundColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+        
+        [cell addSubview:startTimeLab];
+        [cell addSubview:endTimeLab];
+        [cell addSubview:startTimeField];
+        [cell addSubview:endTimeField];
+        [cell addSubview:lineView];
+    }else{
+        cell.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
+        //            UIButtonTypeDetailDisclosure,
+        //            UIButtonTypeInfoLight,
+        //            UIButtonTypeInfoDark,
+        //            UIButtonTypeContactAdd,
+        
+        SegmentedButton *remindBtn = [[SegmentedButton alloc] init];
+        remindBtn.frame = CGRectMake(20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
+        // remindBtn.layer.borderWidth = 1.0;
+        //  remindBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+        remindBtn.backgroundColor = [UIColor whiteColor];
+        remindBtn.alpha = 0.8;
+        remindBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REMIND_BTN_TAG;
+        
+        SegmentedButton *repeatBtn = [[SegmentedButton alloc] init];
+        repeatBtn.frame =CGRectMake(self.view.frame.size.width/3+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
+        repeatBtn.backgroundColor = [UIColor whiteColor];
+        repeatBtn.alpha = 0.8;
+        repeatBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REPEAT_BTN_TAG;
+        
+        
+        SegmentedButton *placeBtn = [[SegmentedButton alloc] init];
+        placeBtn.frame =  CGRectMake(self.view.frame.size.width/3*2+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
+        placeBtn.backgroundColor = [UIColor whiteColor];
+        placeBtn.alpha = 0.8;
+        placeBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_PLACE_BTN_TAG;
+        
+        [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
+        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
+        [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
+        remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        remindBtn.imageView.contentMode = UIViewContentModeCenter;
+        remindBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [repeatBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        [repeatBtn setImage:[UIImage imageNamed:@"repeat_2"] forState:UIControlStateNormal];
+        [repeatBtn setTitle:@"重复" forState:UIControlStateNormal];
+        [repeatBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
+        repeatBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        repeatBtn.imageView.contentMode = UIViewContentModeCenter;
+        repeatBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [placeBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        [placeBtn setImage:[UIImage imageNamed:@"place"] forState:UIControlStateNormal];
+        [placeBtn setTitle:@"位置" forState:UIControlStateNormal];
+        [placeBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
+        placeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        placeBtn.imageView.contentMode = UIViewContentModeCenter;
+        placeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [cell addSubview:remindBtn];
+        [cell addSubview:repeatBtn];
+        [cell addSubview:placeBtn];
     }
+    
+    //横线左对齐
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -721,13 +678,12 @@
         case 1:
         case 3:
         case 4:
-        case 5:
             return _cellHeight;
             break;
         case 2:
             return _cellHeight*3;
             break;
-        case 6:
+        case 5:
             return _cellHeight*4;
             break;
     }
@@ -856,6 +812,14 @@
     
     return 1;
     
+}
+
+-(void)textViewDidChange:(UITextView *)textView{
+    if (textView.text.length == 0) {
+        _placeHolderLabel.text = @"请输入任务内容";
+    }else{
+        _placeHolderLabel.text =@"";
+    }
 }
 
 - (void)didReceiveMemoryWarning {

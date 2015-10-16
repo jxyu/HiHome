@@ -168,7 +168,7 @@
     if(taskPath == nil)
         return;
     
-    NSLog(@"set task Path");
+    NSLog(@"1111111111111111111111111111111");
     self.labelForTaskName.text = taskPath.taskName;
     self.labelForStartDate.text = [NSString stringWithFormat:@"%02ld/%02ld",[taskPath.startTaskDate month],[taskPath.startTaskDate day]];
     self.labelForEndDate.text = [NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];

@@ -96,7 +96,7 @@
 
 -(void) initViews
 {
-    [_btnRight setTitle:@"完成" forState:UIControlStateNormal];
+    [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
     
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
@@ -138,11 +138,11 @@
     
     _remindViewCtl = [[RemindViewController alloc] init];
     _repeatViewCtl = [[RepeatViewController alloc] init];
-    UIButton *sendBtn = [[UIButton alloc] init];
-    [sendBtn setTitle:@"完成" forState:UIControlStateNormal];
-    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
-    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [self->_tableHeaderView addSubview:sendBtn];
+//    UIButton *sendBtn = [[UIButton alloc] init];
+//    [sendBtn setTitle:@"完成" forState:UIControlStateNormal];
+//    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
+//    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+//    [self->_tableHeaderView addSubview:sendBtn];
     
     [self.view addSubview:_mainTableView];
     

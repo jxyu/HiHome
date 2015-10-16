@@ -85,8 +85,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
+-(void)btnRightClick:(id)sender{
+    NSLog(@"click done button");
+}
+
 -(void) initViews
 {
+    
+    self.titleLabel.text = @"创建纪念日";
+    [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
+    
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mainTableView setDelegate:self];
@@ -126,11 +134,12 @@
     //   _textView.text = @"发帖内容";
     
     
-    UIButton *sendBtn = [[UIButton alloc] init];
-    [sendBtn setTitle:@"完成" forState:UIControlStateNormal];
-    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
-    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [self->_tableHeaderView addSubview:sendBtn];
+//    UIButton *sendBtn = [[UIButton alloc] init];
+//    [sendBtn setTitle:@"完成" forState:UIControlStateNormal];
+//    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
+//    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+//    [_tableHeaderView addSubview:sendBtn];
+    
     
     [self.view addSubview:_mainTableView];
     
@@ -235,124 +244,102 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight)];
     
-    switch (indexPath.row) {
-        case 0:
+    if (indexPath.row == 0) {
+        UIButton *uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _cellHeight*2, _cellHeight*2)];
+        [uploadBtn setImage:[UIImage imageNamed:@"redcamera"] forState:UIControlStateNormal];
+        
+        
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cellHeight*2+20, 0, 200, _cellHeight*2)];
+        
+        textLabel.textAlignment = NSTextAlignmentLeft;
+        textLabel.text = @"请上传头像";
+        textLabel.textColor = [UIColor grayColor];
+        textLabel.font = [UIFont systemFontOfSize:18];
+        [cell addSubview:textLabel];
+        [cell addSubview:uploadBtn];
+    }else if(indexPath.row == 1){
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,120, _cellHeight)];
+        UITextField *titleField = [[UITextField alloc]init];
+        titleLabel.text = @"   纪念日标题:";
+        titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+        titleField.placeholder = @"请输入纪念日标题";
+        titleField.delegate = self;
+        titleField.leftView = titleLabel;
+        titleField.leftViewMode = UITextFieldViewModeAlways;
+        
+        [cell addSubview:titleField];
+    }else if(indexPath.row == 2){
+        NSDate *now = [NSDate date];
+        
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
+        titleLabel.text = @"   选择日期:";
+        
+        UITextField *field = [[UITextField alloc]init];
+        field.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+        field.placeholder = @"请输入纪念日标题";
+        field.delegate = self;
+        field.leftView = titleLabel;
+        field.leftViewMode = UITextFieldViewModeAlways;
+        
+        
         {
-            UIButton *uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _cellHeight*2, _cellHeight*2)];
-            [uploadBtn setImage:[UIImage imageNamed:@"redcamera"] forState:UIControlStateNormal];
+            NSDateComponents *temp = [self updateLabelForTimer];
             
-            
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cellHeight*2+20, 0, 200, _cellHeight*2)];
-            
-            textLabel.textAlignment = NSTextAlignmentLeft;
-            textLabel.text = @"请上传头像";
-            textLabel.textColor = [UIColor grayColor];
-            textLabel.font = [UIFont systemFontOfSize:18];
-            [cell addSubview:textLabel];
-            [cell addSubview:uploadBtn];
+            NSInteger y = [temp year];
+            NSInteger m = [temp month];
+            NSInteger d = [temp day];
+            NSString *timeStr = [NSString stringWithFormat:@"%2ld-%2ld-%2ld",y,m,d];
+            field.text =timeStr;
             
         }
-            break;
-            
-        case 1:
-        {
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,120, _cellHeight)];
-            UITextField *titleField = [[UITextField alloc]init];
-            titleLabel.text = @"   纪念日标题:";
-            titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-            titleField.placeholder = @"请输入纪念日标题";
-            titleField.delegate = self;
-            titleField.leftView = titleLabel;
-            titleField.leftViewMode = UITextFieldViewModeAlways;
-            
-            [cell addSubview:titleField];
-            
-        }
-            break;
-        case 2:
-        {
-             NSDate *now = [NSDate date];
-            
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
-            titleLabel.text = @"   选择日期:";
-            
-            UITextField *field = [[UITextField alloc]init];
-            field.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-            field.placeholder = @"请输入纪念日标题";
-            field.delegate = self;
-            field.leftView = titleLabel;
-            field.leftViewMode = UITextFieldViewModeAlways;
+        
+        UUDatePicker *datePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDay
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     field.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+                                 }];
+        
+        datePicker.ScrollToDate = now;
+        //            datePicker.maxLimitDate = now;
+        //            datePicker.minLimitDate = [now dateByAddingTimeInterval:-111111111];
+        field.inputView = datePicker;
+        [cell addSubview:titleLabel];
+        [cell addSubview:field];
+    }else if(indexPath.row == 3){
+        _textView.frame = CGRectMake(0, 0, cell.frame.size.width, 3*_cellHeight);
+        
+        _textView.delegate = self;
+        _textView.returnKeyType = UIReturnKeyDefault;
+        _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [cell addSubview:_textView];
+    }else{
+        UIButton *picBtns = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.height, cell.frame.size.height)];
+        [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
+        picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
+        [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+        [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
+        photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
+        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+        [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
+        [otherBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [cell addSubview:picBtns];
+        [cell addSubview:photoBtns];
+        [cell addSubview:otherBtns];
 
-            
-            {
-                NSDateComponents *temp = [self updateLabelForTimer];
-                
-                NSInteger y = [temp year];
-                NSInteger m = [temp month];
-                NSInteger d = [temp day];
-                NSString *timeStr = [NSString stringWithFormat:@"%2ld-%2ld-%2ld",y,m,d];
-                field.text =timeStr;
-                
-            }
-            
-            UUDatePicker *datePicker
-            = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
-                                     PickerStyle:UUDateStyle_YearMonthDay
-                                     didSelected:^(NSString *year,
-                                                   NSString *month,
-                                                   NSString *day,
-                                                   NSString *hour,
-                                                   NSString *minute,
-                                                   NSString *weekDay) {
-                                        field.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-                                            }];
-            
-            datePicker.ScrollToDate = now;
-//            datePicker.maxLimitDate = now;
-//            datePicker.minLimitDate = [now dateByAddingTimeInterval:-111111111];
-            field.inputView = datePicker;
-            [cell addSubview:titleLabel];
-            [cell addSubview:field];
-            
-        }
-            break;
-        case 3:
-        {
-            
-            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
-            
-            _textView.delegate = self;
-            _textView.returnKeyType = UIReturnKeyDefault;
-            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            
-            [cell addSubview:_textView];
-            
-        }
-            break;
-        case 4:
-        {
-            UIButton *picBtns = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.height, cell.frame.size.height)];
-            [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
-            picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
-            [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-            
-            UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-            [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
-            photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
-            UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-            [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-
-            [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-            [otherBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-
-            [cell addSubview:picBtns];
-            [cell addSubview:photoBtns];
-            [cell addSubview:otherBtns];
-        }
-            break;
-        default:
-            break;
     }
+    
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];

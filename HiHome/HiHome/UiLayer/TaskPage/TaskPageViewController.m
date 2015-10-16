@@ -172,7 +172,7 @@
             {
                 _createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
             }
-            _createAnniversaryViewCtl.navTitle = @"创建纪念日";
+            //_createAnniversaryViewCtl.navTitle = @"创建纪念日";
             _createAnniversaryViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createAnniversaryViewCtl animated:NO];
             break;

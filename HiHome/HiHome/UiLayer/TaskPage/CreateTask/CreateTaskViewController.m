@@ -90,8 +90,14 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
+-(void)btnRightClick:(id)sender{
+    NSLog(@"click done button");
+}
+
 -(void) initViews
 {
+    [_btnRight setTitle:@"完成" forState:UIControlStateNormal];
+    
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mainTableView setDelegate:self];
@@ -116,7 +122,7 @@
             [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
         }
     }
-    _cellCount = 6;
+    _cellCount = 7;
     _cellTextViewHeight = _mainTableView.frame.size.height - 2*_cellHeight;
     
     _keyHeight = 216;//default
@@ -277,15 +283,32 @@
         _textView.returnKeyType = UIReturnKeyDefault;
         _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5,-15,290,60)];
-        _placeHolderLabel.numberOfLines = 0;
+        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, -15, 200, 60)];
         _placeHolderLabel.text = @"请输入任务内容";
-        _placeHolderLabel.textColor = [[UIColor alloc] initWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+        _placeHolderLabel.textColor = [UIColor grayColor];
         
         [_textView addSubview:_placeHolderLabel];
         [cell addSubview:_textView];
 
     }else if(indexPath.row == 3){
+        UIButton *picBtns = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.height, cell.frame.size.height)];
+        [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
+        picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
+        [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+        [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
+        photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
+        [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
+        
+        [cell addSubview:picBtns];
+        [cell addSubview:photoBtns];
+        [cell addSubview:otherBtns];
+
+    }else if(indexPath.row == 4){
         UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, _cellHeight)];
         
         lab.text = @"是否创建全天日程";
@@ -296,7 +319,7 @@
         
         [cell addSubview:lab];
         [cell addSubview:swtBtn];
-    }else if(indexPath.row == 4){
+    }else if(indexPath.row == 5){
         NSDate *now = [NSDate date];
         
         UILabel *startTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, _cellHeight/2)];
@@ -312,11 +335,11 @@
         startTimeLab.text = @"开始时间";
         startTimeLab.textAlignment = NSTextAlignmentCenter;
         startTimeLab.font = [UIFont boldSystemFontOfSize:14];
-        startTimeLab.textColor = [UIColor grayColor];
+        startTimeLab.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1];
         endTimeLab.text = @"结束时间";
         endTimeLab.textAlignment = NSTextAlignmentCenter;
         endTimeLab.font = [UIFont boldSystemFontOfSize:14];
-        endTimeLab.textColor = [UIColor grayColor];
+        endTimeLab.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1];
         
         {
             NSDateComponents *temp = [self updateLabelForTimer];
@@ -484,7 +507,6 @@
         [cell addSubview:placeBtn];
     }
     
-    //横线左对齐
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -678,12 +700,13 @@
         case 1:
         case 3:
         case 4:
+        case 5:
             return _cellHeight;
             break;
         case 2:
             return _cellHeight*3;
             break;
-        case 5:
+        case 6:
             return _cellHeight*4;
             break;
     }
@@ -818,7 +841,7 @@
     if (textView.text.length == 0) {
         _placeHolderLabel.text = @"请输入任务内容";
     }else{
-        _placeHolderLabel.text =@"";
+        _placeHolderLabel.text = @"";
     }
 }
 

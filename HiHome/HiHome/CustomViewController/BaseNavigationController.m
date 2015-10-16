@@ -104,7 +104,6 @@
 - (void)setBarTitle:(NSString *)strTitle
 {
     _lblTitle.text = strTitle;
-    NSLog(@"%@",_lblTitle);
     _lblTitle.center = CGPointMake(_topView.center.x, _lblTitle.center.y);
 }
 
@@ -148,9 +147,7 @@
 
 - (void)clickLeftButton:(UIButton *)sender
 {
-    NSLog(@"left button click");
     UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
-    NSLog(@"aa:%@",aa);
 }
 
 - (void)clickRightButton:(UIButton *)sender

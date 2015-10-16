@@ -43,7 +43,7 @@
     
     _defaultFlag = true;
     _arrayBtn = [NSMutableArray array];
-    _btnWidth = (self.view.frame.size.width-10)/4;
+    _btnWidth = ([UIScreen mainScreen].bounds.size.width-10)/4;
     self.view.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
     [self initViews];
     [self setDefault];

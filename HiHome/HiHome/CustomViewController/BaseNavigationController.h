@@ -43,7 +43,7 @@ Useage:
 - (void)clickLeftButton:(UIButton *)sender;
 - (void)clickRightButton:(UIButton *)sender;
 
-//设置左右按钮文字
+//设置文本颜色文字
 - (void)setBarTitleColor:(UIColor *)color;
 
 - (void)addStarToNavigtionBar;

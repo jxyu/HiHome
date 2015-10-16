@@ -16,8 +16,10 @@
     
 }
 @property (strong,nonatomic)UILabel *titleLabel;
+@property (strong,nonatomic)UIButton *mBtnRight;
 @property (nonatomic) NSString *navTitle;
 @property ( nonatomic) BOOL POP;
 @property(strong,nonatomic) NSMutableArray *contentHeadView;
 -(void)quitView;
+-(void)btnRightClick:(id)sender;
 @end

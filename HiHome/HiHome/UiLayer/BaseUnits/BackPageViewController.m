@@ -8,6 +8,7 @@
 
 #import "BackPageViewController.h"
 #import "UIDefine.h"
+
 @interface BackPageViewController ()
 
 @end
@@ -81,6 +82,12 @@
 
     [_tableHeaderView addSubview:backBtn];
     
+    //创建右边按钮
+    _mBtnRight = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 55, 20, 50, ZY_VIEWHEIGHT_IN_HEADVIEW)];
+    _mBtnRight.imageView.contentMode = UIViewContentModeCenter;
+    [_mBtnRight addTarget:self action:@selector(btnRightClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_tableHeaderView addSubview:_mBtnRight];
+    
     return _tableHeaderView;
 }
 
@@ -99,6 +106,10 @@
 //    }
 //    [self.navigationController popViewControllerAnimated:YES];
     [self quitView];
+}
+
+-(void)btnRightClick:(id)sender{
+    NSLog(@"click right button");
 }
 
 

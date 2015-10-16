@@ -20,7 +20,7 @@
 //头部的高度
 #define ZY_HEADVIEW_HEIGHT      64
 //头部的btn的边长
-#define ZY_VIEWHEIGHT_IN_HEADVIEW   441
+#define ZY_VIEWHEIGHT_IN_HEADVIEW   44
 
 #pragma  mark - define tags
 

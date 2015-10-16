@@ -391,6 +391,7 @@
 		B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpAndFeedbackViewController.xib; path = HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goback@2x.png"; sourceTree = "<group>"; };
+		B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -426,6 +427,7 @@
 		54C0EF42BA6A87924C972AA9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */,
 				4A5067773248DD015B75248D /* libPods.a */,
 			);
 			name = Frameworks;

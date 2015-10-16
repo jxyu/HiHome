@@ -470,7 +470,6 @@
 		B5033B961BAFA6D60014935E = {
 			isa = PBXGroup;
 			children = (
-				B5E059EC1BB14DC800DBF786 /* Foundation.framework */,
 				B5033BA11BAFA6D60014935E /* HiHome */,
 				B5033BBB1BAFA6D70014935E /* HiHomeTests */,
 				B5033BC61BAFA6D70014935E /* HiHomeUITests */,
@@ -623,6 +622,7 @@
 		B5033BF11BAFD9E20014935E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B5E059EC1BB14DC800DBF786 /* Foundation.framework */,
 				B5033BF21BAFD9FC0014935E /* QuartzCore.framework */,
 			);
 			path = Framework;

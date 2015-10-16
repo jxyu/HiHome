@@ -1,0 +1,37 @@
+//
+//  AppDelegate.h
+//  HiHome
+//
+//  Created by 王建成 on 15/9/21.
+//  Copyright © 2015年 zykj. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "CustomTabBarViewController.h"
+#import "FirstScrollController.h"
+#import "LoginViewController.h"
+
+#import "OptionTextViewController.h"
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    CustomTabBarViewController *_tabBarViewCol;
+    FirstScrollController *firstCol;
+    UIViewController *_tempViewcontroller;
+    LoginViewController *_loginViewCtl;
+    BOOL    _loginFlag ;
+    
+    UIViewController *tempViewCtl2;
+    OptionTextViewController *tempViewCtl;
+}
+
+- (void)showTabBar;
+- (void)hiddenTabBar;
+- (void)selectTableBarIndex:(NSInteger)index;
+-(CustomTabBarViewController *)getTabBar;
+
+@property (strong, nonatomic) UIWindow *window;
+
+
+@end
+

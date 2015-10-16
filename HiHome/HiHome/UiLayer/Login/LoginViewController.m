@@ -1,0 +1,424 @@
+//
+//  LoginViewController.m
+//  HiHome
+//
+//  Created by 王建成 on 15/9/29.
+//  Copyright © 2015年 zykj. All rights reserved.
+//
+
+#import "LoginViewController.h"
+#import "InputText.h"
+#import "UIView+XD.h"
+#import "UIDefine.h"
+#import "JKAlertDialog.h"
+#import "DataProvider.h"
+#import "DataDefine.h"
+
+@interface LoginViewController ()
+
+@end
+
+@implementation LoginViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.frame = [[UIScreen mainScreen] bounds];
+    
+    [self initViews];
+  
+//    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+//    loginBtn.backgroundColor = [UIColor blueColor];
+//    
+//    [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.view addSubview:loginBtn];
+    // Do any additional setup after loading the view from its nib.
+    
+
+
+
+}
+-(void) initViews
+{
+    [self initImgViews];
+    [self initTexts];
+    [self initBtns];
+    [self initLines];
+    [self initLabels];
+    [self initDatas];
+}
+-(void) initDatas
+{
+    _userData = [[DataDefine alloc] init];
+}
+
+
+-(UIImageView *)drawLine:(CGFloat)startX andSY:(CGFloat)startY andEX:(CGFloat)endX andEY:(CGFloat)endY andLW:(CGFloat)lineWidth andColor:(zyColor)color
+{
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:imageView];
+    
+    
+    UIGraphicsBeginImageContext(imageView.frame.size);
+    [imageView.image drawInRect:CGRectMake(0, 0, imageView.frame.size.width, imageView.frame.size.height)];
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), lineWidth);  //线宽
+    CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), color.red,color.green, color.blue, color.alpha);  //颜色
+    CGContextBeginPath(UIGraphicsGetCurrentContext());
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), startX, startY);  //起点坐标
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), endX, endY);   //终点坐标
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    imageView.image=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    return imageView;
+}
+
+-(void)initLines
+{
+    zyColor tempColor;
+    
+    tempColor.alpha = 1.0;
+    tempColor.red = 191/255.0;
+    tempColor.green = 166/255.0;
+    tempColor.blue = 128/255.0;
+    
+    
+    [self drawLine:ZY_UIPART_SCREEN_WIDTH*50 andSY:(ZY_UIPART_SCREEN_HEIGHT * 55 + 65) andEX:ZY_UIPART_SCREEN_WIDTH*50 andEY:(ZY_UIPART_SCREEN_HEIGHT * 55 + 65+20) andLW:1 andColor:tempColor];
+    
+    [self drawLine:ZY_UIPART_SCREEN_WIDTH*5 andSY:ZY_UIPART_SCREEN_HEIGHT*80 andEX:ZY_UIPART_SCREEN_WIDTH*28 andEY:ZY_UIPART_SCREEN_HEIGHT*80 andLW:1 andColor:tempColor];
+    
+//    
+    [self drawLine:(self.view.frame.size.width - ZY_UIPART_SCREEN_WIDTH*28) andSY:ZY_UIPART_SCREEN_HEIGHT*80 andEX:(self.view.frame.size.width - ZY_UIPART_SCREEN_WIDTH*5) andEY:ZY_UIPART_SCREEN_HEIGHT*80 andLW:1 andColor:tempColor];
+}
+
+
+-(void) initLabels
+{
+    NSString *str =@"你可以使用第三方进行登录";
+    UIFont *font = [UIFont fontWithName:@"Arial" size:12];
+//    
+    CGSize labelsize = [str sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName, nil]];
+    
+    UILabel *tapLabel = [[UILabel alloc] initWithFrame:CGRectMake(ZY_UIPART_SCREEN_WIDTH*25, ZY_UIPART_SCREEN_HEIGHT*78.8,ZY_UIPART_SCREEN_WIDTH*50, labelsize.height)];
+    tapLabel.text = str;
+    tapLabel.font = font;
+    tapLabel.textAlignment = NSTextAlignmentCenter;
+    tapLabel.textColor = [UIColor colorWithRed:191/255.0 green:166/255.0 blue:128/255.0 alpha:1.0];
+    [self.view addSubview:tapLabel];
+    
+    
+}
+
+-(void)initImgViews
+{
+    //logo
+    UIImageView *logoImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
+    logoImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 20,self.view.frame.size.width - 2*ZY_UISTART_X ,ZY_UIPART_SCREEN_HEIGHT * 5 );
+  //  logoImgView.contentMode = UIViewContentModeCenter;
+    [self.view addSubview:logoImgView];
+    
+    
+    UIImageView *headImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me"]];
+    headImg.frame =CGRectMake((self.view.frame.size.width - 2*ZY_UISTART_X)/3+ZY_UISTART_X +20/2 ,
+                              ZY_UIPART_SCREEN_HEIGHT * 20-((self.view.frame.size.width - 2*ZY_UISTART_X - 30)/3-20)/2,
+                              (self.view.frame.size.width - 2*ZY_UISTART_X )/3-20,
+                              (self.view.frame.size.width - 2*ZY_UISTART_X )/3-20);
+    headImg.layer.masksToBounds = YES;
+    headImg.layer.cornerRadius = headImg.frame.size.width * 0.5;
+    headImg.layer.borderWidth = 1.0;
+    headImg.layer.borderColor = [[UIColor yellowColor] CGColor];
+    [self.view addSubview:headImg];
+    
+
+    UIImageView *accountImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"account"]];
+    accountImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 35, 20, 20);
+    accountImgView.contentMode = UIViewContentModeCenter;
+    [self.view addSubview:accountImgView];
+    
+    
+    UIImageView *passwordImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"password"]];
+    passwordImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 45, 20, 20);
+    passwordImgView.contentMode = UIViewContentModeCenter;
+    [self.view addSubview:passwordImgView];
+    
+    
+
+}
+
+-(void) initBtns
+{
+    UIButton *loginBtn = [[UIButton alloc] init];
+    loginBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*25, ZY_UIPART_SCREEN_HEIGHT * 55, ZY_UIPART_SCREEN_WIDTH*50, 50);
+    loginBtn.backgroundColor = ZY_UIBASECOLOR;
+    [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
+    
+    loginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    loginBtn.adjustsImageWhenHighlighted = YES;
+    [self.view addSubview:loginBtn];
+    
+    
+    UIButton *testBtn = [[UIButton alloc] init];
+    testBtn.frame = CGRectMake(100, 100, 100, 50);
+   // [testBtn setHeight: YES];
+    [testBtn setHighlighted:YES];
+    testBtn.backgroundColor = ZY_UIBASECOLOR;
+    [testBtn setTitle:@"密码错误" forState:UIControlStateNormal];
+    [testBtn addTarget:self action:@selector(tempClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:testBtn];
+    
+    
+    UIButton *registerBtn = [[UIButton alloc] init];
+    registerBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*25, ZY_UIPART_SCREEN_HEIGHT * 55 + 65, ZY_UIPART_SCREEN_WIDTH*50/2, 20);
+    [registerBtn setTitleColor:[UIColor colorWithRed:191/255.0 green:166/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [registerBtn setTitle:@"新用户注册" forState:UIControlStateNormal];
+    registerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    //设置文字居左
+//    registerBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    registerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    
+    
+    registerBtn.titleLabel.textAlignment = NSTextAlignmentRight;
+    registerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    registerBtn.contentEdgeInsets = UIEdgeInsetsMake(0,0, 0, 10);
+
+    [self.view addSubview:registerBtn];
+    
+//    tempColor.red = 191/255.0;
+//    tempColor.green = 166/255.0;
+//    tempColor.blue = 128/255.0;
+    
+    UIButton *forgetBtn = [[UIButton alloc] init];
+    forgetBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*25*2, ZY_UIPART_SCREEN_HEIGHT * 55+ 65, ZY_UIPART_SCREEN_WIDTH*50/2, 20);
+    [forgetBtn setTitleColor:[UIColor colorWithRed:191/255.0 green:166/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+    forgetBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+//    forgetBtn.titleLabel.textAlignment = NSTextAlignmentRight;
+//    forgetBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    
+    
+    forgetBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    forgetBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    forgetBtn.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 0);
+    [self.view addSubview:forgetBtn];
+    
+    
+    UIButton *QQLoginBtn = [[UIButton alloc] init];
+    QQLoginBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*25, ZY_UIPART_SCREEN_HEIGHT * 90, 40, 40);
+    QQLoginBtn.contentMode = UIViewContentModeCenter;
+    [QQLoginBtn setImage:[UIImage imageNamed:@"qqlogin"] forState:UIControlStateNormal];
+    [self.view addSubview:QQLoginBtn];
+    
+    
+    UIButton *WechatBtn = [[UIButton alloc] init];
+    WechatBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*75-40, ZY_UIPART_SCREEN_HEIGHT * 90, 40, 40);
+    WechatBtn.contentMode = UIViewContentModeCenter;
+    [WechatBtn setImage:[UIImage imageNamed:@"wechatlogin"] forState:UIControlStateNormal];
+    [self.view addSubview:WechatBtn];
+    
+}
+
+-(void) initTexts
+{
+    
+    CGFloat centerX = self.view.width * 0.5;
+    InputText *inputText = [[InputText alloc] init];
+    CGFloat userY = ZY_UIPART_SCREEN_HEIGHT * 35 ;
+    UITextField *userText = [inputText setupWithIcon:nil textY:userY centerX:centerX point:nil];
+    userText.tag = USER_TEXT_TAG;
+    userText.delegate = self;
+    userText.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
+    [userText setReturnKeyType:UIReturnKeyNext];
+    [userText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [userText addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
+    [self.view addSubview:userText];
+    
+    
+    
+    
+    UITextField *passWordText = [inputText setupWithIcon:nil textY:ZY_UIPART_SCREEN_HEIGHT * 45 centerX:self.view.width * 0.5 point:nil];
+    passWordText.delegate = self;
+    passWordText.tag = PASSWORD_TEXT_TAG;
+    passWordText.secureTextEntry = YES;//设置输入后变为“＊”
+    passWordText.clearsOnBeginEditing = YES;//重新选中后清空
+    passWordText.keyboardAppearance = UIKeyboardAppearanceLight;
+    [passWordText setReturnKeyType:UIReturnKeyNext];
+    [passWordText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [passWordText addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
+    [self.view addSubview:passWordText];
+}
+
+
+- (void)webViewDidStartLoad{
+    if (myAlert==nil){
+        myAlert = [[UIAlertView alloc] initWithTitle:nil
+                                             message: @"登陆中..."
+                                            delegate: self
+                                   cancelButtonTitle: nil
+                                   otherButtonTitles: nil];
+        
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        activityView.frame = CGRectMake(120.f, 48.0f, 38.0f, 38.0f);
+        [myAlert addSubview:activityView];
+        [activityView startAnimating];
+        
+        [myAlert show];
+    }
+}
+
+- (void)webViewDidFinishLoad{
+    [myAlert dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+
+#pragma mark - textField delegate
+
+#define NUMBERS @"0123456789\n"
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField.tag == USER_TEXT_TAG)
+    {
+        NSCharacterSet *cs;
+        cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS]invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs]componentsJoinedByString:@""]; //按cs分离出数组,数组按@""分离出字符串
+        BOOL canChange = [string isEqualToString:filtered];
+    
+        return canChange;
+    }
+    else
+    {
+        return  YES;
+    }
+}
+
+- (void)textFieldDidChange:(id)sender
+{
+    UITextField *tempText;
+    tempText =(UITextField *)sender;
+//    tempText.text
+    NSLog(@"text tag [%ld] tempText.text = %@",tempText.tag,tempText.text);
+    
+    switch (tempText.tag) {
+        case USER_TEXT_TAG:
+            _userData.phoneNum = tempText.text;
+            break;
+        case PASSWORD_TEXT_TAG:
+            _userData.passWord = tempText.text;
+            break;
+        default:
+            break;
+    }
+}
+
+
+- (void)textFieldDidEnd:(id)sender
+{
+    UITextField *tempText;
+    tempText =(UITextField *)sender;
+    NSLog(@"text tag [%ld] tempText.text = %@",tempText.tag,tempText.text);
+
+    switch (tempText.tag) {
+        case USER_TEXT_TAG:
+            _userData.phoneNum = tempText.text;
+            break;
+        case PASSWORD_TEXT_TAG:
+            _userData.passWord = tempText.text;
+            break;
+        default:
+            break;
+    }
+    //    tempText.text
+}
+
+
+#pragma  mark - key click action
+-(void) btnClick:(id)sender
+{
+    
+    NSLog(@"Click btn");
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil ];
+}
+
+-(void) loginBtnClick:(id)sender
+{
+    
+    NSLog(@"Click btn");
+//    if(_userData.phoneNum.length == 0|| _userData.passWord.length == 0)
+//    {
+//        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请输入正确的用户名和密码"];
+//        alert.alertType = AlertType_Hint;
+//        [alert addButtonWithTitle:@"确定"];
+//        [alert show];
+//         NSLog(@"Out of click");
+//        return;
+//    }
+    
+//    [self LoginFunc];
+//    [self webViewDidStartLoad];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
+}
+
+-(void)LoginFunc
+{
+    if (_userData.phoneNum.length > 0) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+        [dataprovider Login:_userData.phoneNum andpwd:_userData.passWord];
+    }
+}
+-(void)loginBackcall:(id)dict
+{
+    printf("[%s] start \r\n",__FUNCTION__);
+    NSLog(@"%@",dict);
+    NSLog(@"%@",[dict[@"datas"] objectForKey:@"error"]);
+    if (![dict[@"datas"] objectForKey:@"error"] ) {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        BOOL result= [dict[@"datas"] writeToFile:plistPath atomically:YES];
+        if (result) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
+    printf("[%s] end\r\n",__FUNCTION__);
+}
+
+
+-(void)tempClick:(id)sender
+{
+     NSLog(@"Click btn2");
+   // JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"家和提醒您" message:@"对不起您的账户不存在请前往注册"];
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"解除关系" message:@"解除关系后，你们之间的关系就会成为陌生人，不在接收信息"];
+
+  //  alert.alertType = AlertType_Alert;
+    alert.alertType = AlertType_Hint;
+    [alert addButtonWithTitle:@"确定"];
+  //  [alert addButtonWithTitle:@"取消"];
+    [alert show];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -26,7 +26,7 @@
 
 -(void) initViews
 {
-    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height +50 )];
+    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
 //    _mainTableView.backgroundColor =[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
@@ -66,21 +66,8 @@
 //指定有多少个分区(Section)，默认为1
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 5;
-    
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -91,7 +78,6 @@
 //指定每个分区中有多少行，默认为1
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
     return 1;
 }
 
@@ -115,7 +101,6 @@
         {
             Img_Views = [self addImgViewsForCell1];
             Label_Views = [self addLabelViewsForCell1];
-            
             break;
         }
         case 2:

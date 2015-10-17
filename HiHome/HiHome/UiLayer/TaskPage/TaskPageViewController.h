@@ -11,6 +11,9 @@
 #import "CreateTaskViewController.h"
 #import "SegmentedPageView.h"
 #import "CreateAnniversaryViewController.h"
+#import "AnniversaryTaskDetailView.h"
+#import "TaskDetailPageViewController.h"
+
 #define ZY_CALENDAR_MENU_HEIGHT    50
 
 #define ZY_CALENDAR_NORMALMODE_HEIGHT  (([[UIScreen mainScreen] bounds].size.height-100)/100*50)
@@ -35,10 +38,19 @@
     UITableView *_sendTaskView;
     UITableView *_myTaskView;
     
+    //数据
+    NSMutableArray *_myAnniversaryData;
+    NSMutableArray *_myTaskData;
+    
     /*task分页面*/
     
     CreateTaskViewController *_createTaskViewCtl;
     CreateAnniversaryViewController *_createAnniversaryViewCtl;
+    
+    //纪念日详情页面
+    AnniversaryTaskDetailView *_anniversaryTaskDetailCtl;
+    //任务详情
+    TaskDetailPageViewController *_taskDetailPageCtl;
 }
 
 -(void) initViews;

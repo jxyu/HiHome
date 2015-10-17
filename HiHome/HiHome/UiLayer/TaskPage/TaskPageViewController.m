@@ -11,6 +11,7 @@
 #import "SegmentedPageView.h"
 #import "UIDefine.h"
 #import "TaskTableViewCell.h"
+#import "AnniversaryTaskCell.h"
 
 
 @interface TaskPageViewController ()
@@ -36,6 +37,7 @@
     
     [self.view addSubview:_mainView];
     [self initTaskPage];
+    [self initData];
     [self.view addSubview:_calendarContentView];
     [self.view addSubview:_calendarMenuView];
     [self.view addSubview:[self headerViewForTaskPage]];
@@ -57,9 +59,6 @@
     NSArray *imgsSelect = @[@"mytask_red",@"gettask_red",@"sendtask_red"];
     _tableViews = [NSMutableArray array];
     
-    _cellCountMyTask = 3;//最后一个元素作废，当站位作用，作为最后的横线
-    _cellCountGetTask =4;//最后一个元素作废，当站位作用，作为最后的横线
-    _cellCountSendTask = 15;//最后一个元素作废，当站位作用，作为最后的横线
     
     _myTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50)];
     [self setPageIndexPath:_myTaskView indexPage:0];
@@ -93,6 +92,51 @@
     
     [_taskPageSeg setCurrentPage:0];
 
+}
+
+-(void) initData{
+    _myAnniversaryData = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 3; i++) {
+        AnniversaryTaskCell *anniversary = [[AnniversaryTaskCell alloc] init];
+        anniversary.mImage.image = [UIImage imageNamed:@"yuandan.png"];
+        anniversary.mName.text = @"元旦";
+        anniversary.mDate.text = @"2015年10月17日";
+        [_myAnniversaryData addObject:anniversary];
+    }
+    
+    _myTaskData = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 4; i++) {
+        TaskPath * taskPath = [[TaskPath alloc] init];
+        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%d",i+1];
+        taskPath.taskOwner = @"自己";
+        NSArray *performers = @[@"自己"];
+        taskPath.taskPerformers = performers;
+        taskPath.taskContent =@"去超市买根黄瓜";
+        taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
+        taskPath.taskType = ZY_TASKTYPE_MINE;
+        taskPath.remindTime = ZY_TASkREMIND_RESERVE;
+        taskPath.repeatMode = ZY_TASkREPEAT_RESERVE;
+        
+        NSDate* now = [NSDate date];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        
+        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
+        
+        NSDateComponents *startTaskDate;
+        NSDateComponents *endTaskDate;
+        startTaskDate= [cal components:unitFlags fromDate:now];
+        endTaskDate= [cal components:unitFlags fromDate:now];
+        
+        taskPath.startTaskDate =startTaskDate;
+        endTaskDate.day ++;
+        taskPath.endTaskDate = endTaskDate;
+        
+        [_myTaskData addObject:taskPath];
+    }
+    
+    _cellCountMyTask = _myAnniversaryData.count + _myTaskData.count + 1;//最后一个元素作废，当站位作用，作为最后的横线
+    _cellCountGetTask =4;//最后一个元素作废，当站位作用，作为最后的横线
+    _cellCountSendTask = 15;//最后一个元素作废，当站位作用，作为最后的横线
 }
 
 -(void) setPageIndexPath:(UITableView *) tableView indexPage:(NSInteger)page
@@ -172,7 +216,6 @@
             {
                 _createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
             }
-            //_createAnniversaryViewCtl.navTitle = @"创建纪念日";
             _createAnniversaryViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createAnniversaryViewCtl animated:NO];
             break;
@@ -505,7 +548,58 @@
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(tableView.tag == 1)
+    if(tableView.tag == 0)
+    {
+        if (indexPath.row < _myAnniversaryData.count) {
+            NSString *CellIdentifier = @"AnniversaryTaskCellIdentifier";
+            AnniversaryTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnniversaryTaskCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            AnniversaryTaskCell *anniversaryValue = [_myAnniversaryData objectAtIndex:indexPath.row];
+            cell.mImage = anniversaryValue.mImage;
+            cell.mName = anniversaryValue.mName;
+            cell.mDate = anniversaryValue.mDate;
+            
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            
+            return cell;
+        }else{
+            TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+            if (indexPath.row == _cellCountMyTask - 1) {
+                return cell;
+            }
+            TaskPath *taskPath = [[TaskPath alloc] init];
+            NSLog(@"%ld",indexPath.row);
+            TaskPath *taskValue = [_myTaskData objectAtIndex:(indexPath.row - _myAnniversaryData.count)];
+            taskPath.taskName = taskValue.taskName;
+            taskPath.taskOwner = taskValue.taskOwner;
+            taskPath.taskPerformers = taskValue.taskPerformers;
+            taskPath.taskContent = taskValue.taskContent;
+            taskPath.taskStatus = taskValue.taskStatus;
+            taskPath.taskType = taskValue.taskType;
+            taskPath.remindTime = taskValue.remindTime;
+            taskPath.repeatMode = taskValue.repeatMode;
+            taskPath.startTaskDate = taskValue.startTaskDate;
+            taskPath.endTaskDate = taskValue.endTaskDate;
+            
+            [cell setDispInfo:taskPath];
+            [cell setTaskType:ZY_TASKTYPE_MINE];
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            
+            return cell;
+        }
+    }
+    else if(tableView.tag == 1)
     {
         TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
         
@@ -550,53 +644,7 @@
             [cell setSeparatorInset:UIEdgeInsetsZero];
             [cell setLayoutMargins:UIEdgeInsetsZero];
         }
-         return cell;
-    }
-    else if(tableView.tag == 0)
-    {
-        TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-        TaskPath *taskPath = [[TaskPath alloc] init];
-        
-        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%ld",indexPath.row];
-        taskPath.taskOwner = @"自己";
-        NSArray *performers = @[@"自己"];
-        taskPath.taskPerformers = performers;
-        taskPath.taskContent =@"去超市买根黄瓜";
-        taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
-        taskPath.taskType = ZY_TASKTYPE_MINE;
-        taskPath.remindTime = ZY_TASkREMIND_RESERVE;
-        taskPath.repeatMode = ZY_TASkREPEAT_RESERVE;
-        
-        NSDate* now = [NSDate date];
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        
-        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
-        
-        NSDateComponents *startTaskDate;
-        NSDateComponents *endTaskDate;
-        @try {
-            startTaskDate= [cal components:unitFlags fromDate:now];
-            endTaskDate= [cal components:unitFlags fromDate:now];
-            }
-        
-        @catch (NSException *exception) {
-            return cell;
-        }
-        @finally {
-        }
-        
-        taskPath.startTaskDate =startTaskDate;
-        endTaskDate.day ++;
-        taskPath.endTaskDate = endTaskDate;
-        
-        [cell setDispInfo:taskPath];
-        [cell setTaskType:ZY_TASKTYPE_MINE];
-        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-        {
-            [cell setSeparatorInset:UIEdgeInsetsZero];
-            [cell setLayoutMargins:UIEdgeInsetsZero];
-        }
-         return cell;
+        return cell;
     }
     else if(tableView.tag == 2)
     {
@@ -691,6 +739,26 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     
+    if (tableView.tag == 0) {
+        if (indexPath.row < _myAnniversaryData.count) {
+            if (_anniversaryTaskDetailCtl == nil) {
+                _anniversaryTaskDetailCtl = [[AnniversaryTaskDetailView alloc] init];
+            }
+            _anniversaryTaskDetailCtl.navTitle = @"纪念日详情";
+            _anniversaryTaskDetailCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:_anniversaryTaskDetailCtl animated:NO];
+        }else{
+            _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
+            TaskPath *mSelectTask = [_myTaskData objectAtIndex:(indexPath.row - _myAnniversaryData.count)];
+            NSLog(@"任务名称:%@",mSelectTask.taskName);
+            _taskDetailPageCtl.navTitle = mSelectTask.taskName;
+            _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
 }
 
 //设置划动cell是否出现del按钮，可供删除数据里进行处理
@@ -738,8 +806,6 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
     
     return indexPath;
     

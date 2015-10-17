@@ -152,6 +152,15 @@
 		B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B5FA2DBA1BC5159400D5BDB7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */; settings = {ASSET_TAGS = (); }; };
+		B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */; settings = {ASSET_TAGS = (); }; };
+		B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */; settings = {ASSET_TAGS = (); }; };
+		B77F91131BD1F11B00DAB43C /* yuandan.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F91121BD1F11B00DAB43C /* yuandan.png */; settings = {ASSET_TAGS = (); }; };
+		B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */; settings = {ASSET_TAGS = (); }; };
+		B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */; settings = {ASSET_TAGS = (); }; };
+		B77F911C1BD1FDE500DAB43C /* xueren.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911B1BD1FDE500DAB43C /* xueren.png */; settings = {ASSET_TAGS = (); }; };
+		B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911D1BD225F800DAB43C /* jinianri_img.png */; settings = {ASSET_TAGS = (); }; };
+		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5067773248DD015B75248D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -391,6 +400,18 @@
 		B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpAndFeedbackViewController.xib; path = HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goback@2x.png"; sourceTree = "<group>"; };
+		B77F910D1BD1DDE900DAB43C /* AnniversaryTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskCell.h; sourceTree = "<group>"; };
+		B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskCell.m; sourceTree = "<group>"; };
+		B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskCell.xib; sourceTree = "<group>"; };
+		B77F91121BD1F11B00DAB43C /* yuandan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuandan.png; sourceTree = "<group>"; };
+		B77F91141BD1F29100DAB43C /* AnniversaryTaskDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskDetailView.h; sourceTree = "<group>"; };
+		B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskDetailView.m; sourceTree = "<group>"; };
+		B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskDetailView.xib; sourceTree = "<group>"; };
+		B77F911B1BD1FDE500DAB43C /* xueren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xueren.png; sourceTree = "<group>"; };
+		B77F911D1BD225F800DAB43C /* jinianri_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jinianri_img.png; sourceTree = "<group>"; };
+		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
+		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
+		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
 		B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -583,6 +604,7 @@
 		B5033BDA1BAFB35A0014935E /* TaskPage */ = {
 			isa = PBXGroup;
 			children = (
+				B77F911F1BD22AF800DAB43C /* TaskDetailPage */,
 				B56CFC131BCC90030081B645 /* CreateTask */,
 				B5033BDD1BAFB4050014935E /* TaskPageViewController.h */,
 				B5033BDE1BAFB4050014935E /* TaskPageViewController.m */,
@@ -591,6 +613,9 @@
 				B5A77ABB1BB4FA5F0014DD67 /* TaskTableViewCell.m */,
 				B5A77ABD1BB4FBA10014DD67 /* TaskPath.h */,
 				B5A77ABE1BB4FBA10014DD67 /* TaskPath.m */,
+				B77F910D1BD1DDE900DAB43C /* AnniversaryTaskCell.h */,
+				B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */,
+				B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */,
 			);
 			path = TaskPage;
 			sourceTree = "<group>";
@@ -652,6 +677,9 @@
 				B55D08B01BB400FD00C10932 /* sendtask_red@2x.png */,
 				B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */,
 				B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */,
+				B77F91121BD1F11B00DAB43C /* yuandan.png */,
+				B77F911B1BD1FDE500DAB43C /* xueren.png */,
+				B77F911D1BD225F800DAB43C /* jinianri_img.png */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -1020,6 +1048,19 @@
 			name = NavigationAnimation;
 			sourceTree = "<group>";
 		};
+		B77F911F1BD22AF800DAB43C /* TaskDetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				B77F91141BD1F29100DAB43C /* AnniversaryTaskDetailView.h */,
+				B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */,
+				B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */,
+				B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */,
+				B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */,
+				B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */,
+			);
+			name = TaskDetailPage;
+			sourceTree = "<group>";
+		};
 		C1C03E818DF32598B7701194 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1150,13 +1191,16 @@
 				B5A77AB71BB4E9780014DD67 /* gettask_gray@2x.png in Resources */,
 				B57F5D8F1BBA8399009AC336 /* wechatlogin@2x.png in Resources */,
 				B58DD9641BB67CF50040A084 /* addressBook@2x.png in Resources */,
+				B77F91131BD1F11B00DAB43C /* yuandan.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
+				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
 				B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */,
 				B58196071BCB87A500D69A1E /* takePic@2x.png in Resources */,
 				B57F5D8B1BBA8399009AC336 /* account@2x.png in Resources */,
 				80BC02F01BB0EDAA0002A267 /* metion_tab_gods_icon@2x.png in Resources */,
 				B5033BB21BAFA6D60014935E /* LaunchScreen.storyboard in Resources */,
+				B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */,
 				B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */,
 				B57F5D8D1BBA8399009AC336 /* password@2x.png in Resources */,
 				B58DD96A1BB687A90040A084 /* addtask@2x.png in Resources */,
@@ -1185,6 +1229,7 @@
 				B581960E1BCB906400D69A1E /* UploadPicViewController.xib in Resources */,
 				B58DD95D1BB63DED0040A084 /* task@2x.png in Resources */,
 				80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */,
+				B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */,
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
@@ -1206,10 +1251,12 @@
 				B58DD9561BB638AD0040A084 /* headman.png in Resources */,
 				B58DD94E1BB61F0A0040A084 /* remindTime@2x.png in Resources */,
 				B58196081BCB87A500D69A1E /* uploadPic@2x.png in Resources */,
+				B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */,
 				B58DD95C1BB63DED0040A084 /* chat@2x.png in Resources */,
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
 				B56CFC181BCC90950081B645 /* CreateTaskViewController.xib in Resources */,
 				B58DD9591BB63C2D0040A084 /* bugle@2x.png in Resources */,
+				B77F911C1BD1FDE500DAB43C /* xueren.png in Resources */,
 				B5033BAD1BAFA6D60014935E /* Main.storyboard in Resources */,
 				80BC02F71BB0F07A0002A267 /* index_2.png in Resources */,
 				B58196121BCBAC0D00D69A1E /* pickPicBtn@2x.png in Resources */,
@@ -1299,6 +1346,7 @@
 				B5E059E01BB146E100DBF786 /* WMOtherViewController.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
+				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,
 				B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */,
 				B5E059DE1BB146E100DBF786 /* WMNavigationController.m in Sources */,
 				B5033BEA1BAFB4320014935E /* AddressPageViewController.m in Sources */,
@@ -1319,6 +1367,7 @@
 				B5741DD11BC2600D00335B1C /* DataProvider.m in Sources */,
 				B56CFC2C1BCCFD5E0081B645 /* CreateAnniversaryViewController.m in Sources */,
 				B58DD9671BB67DCC0040A084 /* CardTableViewCell.m in Sources */,
+				B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */,
 				B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */,
 				B5E0599D1BB0F92900DBF786 /* CustomTabBarViewController.m in Sources */,
 				B5E059D71BB146E100DBF786 /* WMBaseViewController.m in Sources */,
@@ -1332,6 +1381,7 @@
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
 				B583B19A1BC359DC000572CA /* SVIndefiniteAnimatedView.m in Sources */,
+				B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */,
 				B56C2EEA1BC4BF330030FB83 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

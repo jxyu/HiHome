@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */; };
+		8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */; };
 		80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -174,6 +176,8 @@
 
 /* Begin PBXFileReference section */
 		4A5067773248DD015B75248D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gods_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fridnes_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
@@ -401,6 +405,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */,
+				8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */,
 				B5E059ED1BB14DC800DBF786 /* Foundation.framework in Frameworks */,
 				B5033BF31BAFD9FC0014935E /* QuartzCore.framework in Frameworks */,
 				C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */,
@@ -427,6 +433,8 @@
 		54C0EF42BA6A87924C972AA9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */,
+				8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */,
 				B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */,
 				4A5067773248DD015B75248D /* libPods.a */,
 			);

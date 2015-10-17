@@ -66,21 +66,8 @@
 //指定有多少个分区(Section)，默认为1
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 5;
-    
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -91,7 +78,6 @@
 //指定每个分区中有多少行，默认为1
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
     return 1;
 }
 
@@ -115,7 +101,6 @@
         {
             Img_Views = [self addImgViewsForCell1];
             Label_Views = [self addLabelViewsForCell1];
-            
             break;
         }
         case 2:

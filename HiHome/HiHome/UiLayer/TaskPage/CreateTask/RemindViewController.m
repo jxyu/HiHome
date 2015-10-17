@@ -173,14 +173,16 @@
         [_arrayRemind addObject:tempInfo];
     }
     
-    UIButton *finishBtn = [[UIButton alloc] init];
-    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
-    finishBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
-    finishBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    finishBtn.tag = ZY_UIBUTTON_TAG_BASE + 20;
-    [self->_tableHeaderView addSubview:finishBtn];
-    [finishBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *finishBtn = [[UIButton alloc] init];
+//    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
+//    finishBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
+//    finishBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+//    finishBtn.tag = ZY_UIBUTTON_TAG_BASE + 20;
+    //[self->_tableHeaderView addSubview:finishBtn];
+    //[finishBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
 
+    [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
+    
     _oneLineHight = (self.view.frame.size.height -(ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20) -20)/repeatMode.count;
     
     customView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20, self.view.frame.size.width, _oneLineHight*0)];
@@ -392,6 +394,10 @@
     }
     [self.navigationController popViewControllerAnimated:YES];
 
+}
+
+-(void)btnRightClick:(id)sender{
+    NSLog(@"tixing done");
 }
 
 - (void)didReceiveMemoryWarning {

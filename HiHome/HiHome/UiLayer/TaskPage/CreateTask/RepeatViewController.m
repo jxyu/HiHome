@@ -66,6 +66,8 @@
 
 -(void) initViews
 {
+    [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
+    
     repeatMode = @[@"不重复",@"每天",@"每周",@"每月",@"每年"];
     NSInteger rownum  = 0;
     for (int i = 0; i<repeatMode.count; i++) {
@@ -206,6 +208,11 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
+-(void)btnRightClick:(id)sender{
+    NSLog(@"repeat done");
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

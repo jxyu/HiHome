@@ -57,9 +57,9 @@
     NSArray *imgsSelect = @[@"mytask_red",@"gettask_red",@"sendtask_red"];
     _tableViews = [NSMutableArray array];
     
-    _cellCountMyTask = 3;
-    _cellCountGetTask =4;
-    _cellCountSendTask = 15;
+    _cellCountMyTask = 3;//最后一个元素作废，当站位作用，作为最后的横线
+    _cellCountGetTask =4;//最后一个元素作废，当站位作用，作为最后的横线
+    _cellCountSendTask = 15;//最后一个元素作废，当站位作用，作为最后的横线
     
     _myTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50)];
     [self setPageIndexPath:_myTaskView indexPage:0];
@@ -505,9 +505,6 @@
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    NSLog(@"self.view.frame.size.width = %lf",self.view.frame.size.width);
-    
     if(tableView.tag == 1)
     {
         TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
@@ -560,7 +557,7 @@
         TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
         TaskPath *taskPath = [[TaskPath alloc] init];
         
-        taskPath.taskName = @"去超市买黄瓜";
+        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%ld",indexPath.row];
         taskPath.taskOwner = @"自己";
         NSArray *performers = @[@"自己"];
         taskPath.taskPerformers = performers;
@@ -649,13 +646,6 @@
         }
          return cell;
     }
-    //分割线设置
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-    {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-    return cell;
     
 }
 

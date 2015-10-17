@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIDefine.h"
 #import "CardTableViewCell.h"
+#import "AddressLocalViewController.h"
 
 
 @interface AddressPageViewController ()
@@ -25,7 +26,7 @@
 
 -(void) initViews
 {
-    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT+ZY_VIEWHEIGHT_IN_HEADVIEW-20, self.view.frame.size.width,self.view.frame.size.height -ZY_HEADVIEW_HEIGHT )];
+    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT+ZY_VIEWHEIGHT_IN_HEADVIEW-20, SCREEN_WIDTH,SCREEN_HEIGHT -ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mainTableView setDelegate:self];
     [_mainTableView setDataSource:self];
@@ -169,13 +170,13 @@
 }
 
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
- 
-    return @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",
-             @"H",@"I",@"J",@"K",@"L",@"M",@"N",
-             @"O",@"P",@"Q",@"R",@"S",@"T",@"U",
-             @"V",@"W",@"X",@"Y",@"Z",@"#"];
-}
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+// 
+//    return @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",
+//             @"H",@"I",@"J",@"K",@"L",@"M",@"N",
+//             @"O",@"P",@"Q",@"R",@"S",@"T",@"U",
+//             @"V",@"W",@"X",@"Y",@"Z",@"#"];
+//}
 
 #pragma mark - setting for cell
 //设置每行调用的cell
@@ -255,6 +256,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
+    if (indexPath.section==0) {
+        AddressLocalViewController * addresslocalVC=[[AddressLocalViewController alloc] initWithNibName:@"AddressLocalViewController" bundle:[NSBundle mainBundle]];
+        [self.navigationController pushViewController:addresslocalVC animated:YES];
+    }
     
 }
 

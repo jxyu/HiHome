@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
 
-@interface TaskDetailPageViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
+#define ZY_PICPICK_BTN_TAG      1
+#define ZY_TAKEPIC_BTN_TAG      2
+#define ZY_REMIND_BTN_TAG       3
+#define ZY_REPEAT_BTN_TAG       4
+#define ZY_PLACE_BTN_TAG        5
+
+@interface TaskDetailPageViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 @end

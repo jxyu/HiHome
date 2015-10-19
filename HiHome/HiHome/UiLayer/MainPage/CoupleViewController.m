@@ -28,7 +28,7 @@
 {
     if(_okBtn==nil)
     {
-        _okBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, (self.view.frame.size.height - ZY_VIEWHEIGHT_IN_HEADVIEW)/2, self.view.frame.size.width-20*2, ZY_VIEWHEIGHT_IN_HEADVIEW)];
+        _okBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, (self.view.frame.size.height - ZY_VIEWHEIGHT_IN_HEADVIEW)/2,SCREEN_WIDTH - 20 * 2, ZY_VIEWHEIGHT_IN_HEADVIEW)];
     }
     _okBtn.backgroundColor = ZY_UIBASECOLOR;
     [_okBtn setTitle:@"确定" forState:UIControlStateNormal];

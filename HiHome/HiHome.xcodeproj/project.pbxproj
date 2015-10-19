@@ -170,6 +170,7 @@
 		B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911D1BD225F800DAB43C /* jinianri_img.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AE51BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */; settings = {ASSET_TAGS = (); }; };
 		C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5067773248DD015B75248D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -435,6 +436,8 @@
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
 		B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
+		B7CC5AE41BD4B92E00A1078F /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -447,6 +450,7 @@
 				8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */,
 				8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */,
 				B5E059ED1BB14DC800DBF786 /* Foundation.framework in Frameworks */,
+				B7CC5AE51BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				B5033BF31BAFD9FC0014935E /* QuartzCore.framework in Frameworks */,
 				C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */,
 			);
@@ -559,6 +563,7 @@
 		B5033BA11BAFA6D60014935E /* HiHome */ = {
 			isa = PBXGroup;
 			children = (
+				B7CC5AE11BD4B8D200A1078F /* ThreeSDK */,
 				8048CC471BD21C2E00B76C59 /* Sources */,
 				B596881A1BCDEFB1001F2715 /* UUDatePicker_Block */,
 				B5741DD21BC26C0A00335B1C /* DataDefine */,
@@ -1114,6 +1119,23 @@
 			name = TaskDetailPage;
 			sourceTree = "<group>";
 		};
+		B7CC5AE11BD4B8D200A1078F /* ThreeSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B7CC5AE21BD4B92E00A1078F /* UMessage_Sdk_1.1.0 */,
+			);
+			name = ThreeSDK;
+			sourceTree = "<group>";
+		};
+		B7CC5AE21BD4B92E00A1078F /* UMessage_Sdk_1.1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */,
+				B7CC5AE41BD4B92E00A1078F /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.1.0;
+			sourceTree = "<group>";
+		};
 		C1C03E818DF32598B7701194 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1583,10 +1605,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/HiHome/HiHomePrefixHeader.pch";
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HiHome/UMessage_Sdk_1.1.0",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HiHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1598,10 +1625,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/HiHome/HiHomePrefixHeader.pch";
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HiHome/UMessage_Sdk_1.1.0",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HiHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

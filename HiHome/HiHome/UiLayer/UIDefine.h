@@ -11,9 +11,6 @@
 
 #pragma mark - define color
 
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
 //各view的head 等一些字体的基本颜色（主题色）
 #define ZY_UIBASECOLOR  [UIColor colorWithRed:204/255.0 green:85/255.0 blue:32/255.0 alpha:1.0]
 //各view的背景色

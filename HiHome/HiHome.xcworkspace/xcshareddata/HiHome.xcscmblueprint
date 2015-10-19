@@ -1,25 +1,25 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E24535091967915042EE63F74A16F00BB9B2B11",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++106BFFA",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : {
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++7A60C51" : {
 
     },
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : {
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582+++6122EC3" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : 0,
-    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E" : 0,
-    "2E24535091967915042EE63F74A16F00BB9B2B11" : 0,
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : 0
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++7A60C51" : 0,
+    "2E24535091967915042EE63F74A16F00BB9B2B11+++106BFFA" : 0,
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582+++6122EC3" : 0,
+    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++0860123" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7D9061BC-CA45-4788-B119-314BD178A210",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
-    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E" : "Project\/",
-    "2E24535091967915042EE63F74A16F00BB9B2B11" : "HiHome\/",
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : "Project\/HiHome\/HiHome\/CustomViewController\/"
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++7A60C51" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
+    "2E24535091967915042EE63F74A16F00BB9B2B11+++106BFFA" : "HiHome\/",
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582+++6122EC3" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
+    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++0860123" : "Project\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "HiHome",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -28,22 +28,22 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.coding.net\/JsonAgony\/HiHome.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++0860123"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.coding.net\/JsonAgony\/HiHome.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E24535091967915042EE63F74A16F00BB9B2B11"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++106BFFA"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582+++6122EC3"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++7A60C51"
     }
   ]
 }

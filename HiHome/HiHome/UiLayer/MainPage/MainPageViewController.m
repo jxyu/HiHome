@@ -329,7 +329,19 @@
     mainLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     mainLabel.text = @"消息提醒";
     
+    UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y - 3, 150, 13)];
+    detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail1.font = [UIFont systemFontOfSize:10];
+    detail1.text = @"您有10条信息未查看";
+    
+    UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
+    detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail2.font = [UIFont systemFontOfSize:10];
+    detail2.text = @"今天19:00";
+    
     [LabelViews addObject:mainLabel];
+    [LabelViews addObject:detail1];
+    [LabelViews addObject:detail2];
     return LabelViews;
 }
 
@@ -357,9 +369,19 @@
     mainLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     mainLabel.text = @"聊天提醒";
     
+    UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
+    detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail1.font = [UIFont systemFontOfSize:10];
+    detail1.text = @"您有10条信息未查看";
     
+    UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
+    detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail2.font = [UIFont systemFontOfSize:10];
+    detail2.text = @"今天19:00";
     
     [LabelViews addObject:mainLabel];
+    [LabelViews addObject:detail1];
+    [LabelViews addObject:detail2];
     return LabelViews;
 }
 //第3个cell添加views
@@ -383,7 +405,19 @@
     mainLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     mainLabel.text = @"任务提醒";
     
+    UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
+    detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail1.font = [UIFont systemFontOfSize:10];
+    detail1.text = @"您有10条信息未查看";
+    
+    UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
+    detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detail2.font = [UIFont systemFontOfSize:10];
+    detail2.text = @"今天19:00";
+    
     [LabelViews addObject:mainLabel];
+    [LabelViews addObject:detail1];
+    [LabelViews addObject:detail2];
     return LabelViews;
 }
 

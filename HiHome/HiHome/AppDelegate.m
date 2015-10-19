@@ -12,12 +12,11 @@
 #import "AddressPageViewController.h"
 #import "ChatPageViewController.h"
 #import "TaskPageViewController.h"
-
 #import "WMCommon.h"
 #import "UIDefine.h"
 #import "ViewController.h"
-
 #import "OptionTextViewController.h"
+#import "UMessage.h"
 @interface AppDelegate ()
 
 @end
@@ -27,6 +26,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //集成短信
+    [UMessage startWithAppkey:@"55ee2fcc67e58e2d20005b57" launchOptions:launchOptions];
+    
     
 #if 1
     ViewController *mainPageCtl = [[ViewController alloc] init];

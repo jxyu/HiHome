@@ -755,6 +755,11 @@
             _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
         }
+    }else{
+        _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
+        _taskDetailPageCtl.navTitle = @"任务名称";
+        _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];

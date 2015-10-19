@@ -7,7 +7,6 @@
 //
 
 #import "AnniversaryTaskDetailView.h"
-#import "UIDefine.h"
 #import "AnniversaryTaskCell.h"
 
 @interface AnniversaryTaskDetailView (){

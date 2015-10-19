@@ -38,7 +38,7 @@
     
     if(_phoneNumField == nil)
     {
-        _phoneNumField = [[UITextField alloc] initWithFrame:CGRectMake(40,ZY_HEADVIEW_HEIGHT +  (self.view.frame.size.height - ZY_VIEWHEIGHT_IN_HEADVIEW)/4, SCREEN_WIDTH-40*2, ZY_VIEWHEIGHT_IN_HEADVIEW)];
+        _phoneNumField = [[UITextField alloc] initWithFrame:CGRectMake(40,ZY_HEADVIEW_HEIGHT +  (SCREEN_HEIGHT - ZY_VIEWHEIGHT_IN_HEADVIEW)/4, SCREEN_WIDTH-40*2, ZY_VIEWHEIGHT_IN_HEADVIEW)];
     }
     _phoneNumField.placeholder = @"请填写对方的账号或手机号";
    // _phoneNumField.borderStyle = UITextBorderStyleRoundedRect;
@@ -48,7 +48,7 @@
     
     if(_tapLabel == nil)
     {
-        _tapLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, ZY_HEADVIEW_HEIGHT+ ((self.view.frame.size.height - ZY_VIEWHEIGHT_IN_HEADVIEW)/4 - ZY_HEADVIEW_HEIGHT)/2, SCREEN_WIDTH-40*2, ZY_VIEWHEIGHT_IN_HEADVIEW*2)];
+        _tapLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, ZY_HEADVIEW_HEIGHT+ ((SCREEN_HEIGHT - ZY_VIEWHEIGHT_IN_HEADVIEW)/4 - ZY_HEADVIEW_HEIGHT)/2, SCREEN_WIDTH-40*2, ZY_VIEWHEIGHT_IN_HEADVIEW*2)];
     }
     _tapLabel.text = @"请填写另一半的手机号或家和账号进行绑定";
     _tapLabel.textColor = [UIColor grayColor];

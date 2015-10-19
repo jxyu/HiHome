@@ -17,6 +17,7 @@
 #import "ViewController.h"
 
 #import "CommenDef.h"
+#import <SMS_SDK/SMSSDK.h>
 #import <RongIMKit/RongIMKit.h>
 
 #import "OptionTextViewController.h"
@@ -26,6 +27,11 @@
 
 #import "OptionTextViewController.h"
 #import "UMessage.h"
+
+#define SMSappKey @""
+#define SMSappSecret @""
+
+
 @interface AppDelegate ()
 
 @end
@@ -42,7 +48,10 @@
     
     
     
-    
+    /**
+     *  短信验证添加
+     */
+    [SMSSDK registerApp:SMSappKey withSecret:SMSappSecret];
     
     
     

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802306A51BD49BCA006CFFEC /* RegisterViewController.m */; settings = {ASSET_TAGS = (); }; };
+		802306A81BD49BCA006CFFEC /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802306A61BD49BCA006CFFEC /* RegisterViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		802306AC1BD4DAFB006CFFEC /* regster_select_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 802306AB1BD4DAFB006CFFEC /* regster_select_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */; };
 		8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */; };
 		8048CC451BD21AD500B76C59 /* AddressLocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC431BD21AD500B76C59 /* AddressLocalViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -189,6 +192,10 @@
 
 /* Begin PBXFileReference section */
 		4A5067773248DD015B75248D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		802306A41BD49BCA006CFFEC /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		802306A51BD49BCA006CFFEC /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		802306A61BD49BCA006CFFEC /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		802306AB1BD4DAFB006CFFEC /* regster_select_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "regster_select_icon@2x.png"; sourceTree = "<group>"; };
 		8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8048CC421BD21AD500B76C59 /* AddressLocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalViewController.h; sourceTree = "<group>"; };
@@ -495,6 +502,7 @@
 		80BC02E01BB0ED890002A267 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				802306AB1BD4DAFB006CFFEC /* regster_select_icon@2x.png */,
 				B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */,
 				B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */,
 				B57F5D851BBA8399009AC336 /* Login */,
@@ -814,6 +822,9 @@
 				B57F5D821BBA77FA009AC336 /* LoginViewController.xib */,
 				B57F5D921BBA925C009AC336 /* InputText.h */,
 				B57F5D931BBA925C009AC336 /* InputText.m */,
+				802306A41BD49BCA006CFFEC /* RegisterViewController.h */,
+				802306A51BD49BCA006CFFEC /* RegisterViewController.m */,
+				802306A61BD49BCA006CFFEC /* RegisterViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1262,6 +1273,7 @@
 				B58D923F1BC64B5F00219E76 /* picture@2x.png in Resources */,
 				B587FF1C1BC8BDA600E9F119 /* recentPic@2x.png in Resources */,
 				B5033BEB1BAFB4320014935E /* AddressPageViewController.xib in Resources */,
+				802306AC1BD4DAFB006CFFEC /* regster_select_icon@2x.png in Resources */,
 				B58DD9621BB67C550040A084 /* headImg@2x.png in Resources */,
 				B55D08B31BB400FD00C10932 /* sendtask_gray@2x.png in Resources */,
 				B56CFC231BCCF89F0081B645 /* repeat_2@2x.png in Resources */,
@@ -1273,6 +1285,7 @@
 				B58DD95D1BB63DED0040A084 /* task@2x.png in Resources */,
 				80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */,
 				B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */,
+				802306A81BD49BCA006CFFEC /* RegisterViewController.xib in Resources */,
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
@@ -1397,6 +1410,7 @@
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
+				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				B587FF141BC8B07700E9F119 /* AlbumPath.m in Sources */,
@@ -1569,7 +1583,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREFIX_HEADER = /User/Snow/Hihome/Hihome/Hihome/HiHomePrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/HiHome/HiHomePrefixHeader.pch";
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1584,7 +1598,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREFIX_HEADER = /User/Snow/Hihome/Hihome/Hihome/HiHomePrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/HiHome/HiHomePrefixHeader.pch";
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

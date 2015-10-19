@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DataDefine.h"
 #import "UIDefine.h"
+#import "BaseNavigationController.h"
 
 #pragma mark - define frame
 
@@ -31,7 +32,7 @@ typedef struct _zyColor
 }zyColor;
 
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate>
+@interface LoginViewController : BaseNavigationController<UITextFieldDelegate>
 {
     @private
     DataDefine *_userData;

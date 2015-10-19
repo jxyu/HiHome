@@ -13,6 +13,7 @@
 #import "JKAlertDialog.h"
 #import "DataProvider.h"
 #import "DataDefine.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()
 
@@ -23,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.frame = [[UIScreen mainScreen] bounds];
-    
+    _topView.hidden=YES;
     [self initViews];
   
 //    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
@@ -176,6 +177,7 @@
     [registerBtn setTitleColor:[UIColor colorWithRed:191/255.0 green:166/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
     [registerBtn setTitle:@"新用户注册" forState:UIControlStateNormal];
     registerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [registerBtn addTarget:self action:@selector(JumpToregisterVC:) forControlEvents:UIControlEventTouchUpInside];
     //设置文字居左
 //    registerBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
 //    registerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -356,7 +358,7 @@
 //         NSLog(@"Out of click");
 //        return;
 //    }
-    
+//    
 //    [self LoginFunc];
 //    [self webViewDidStartLoad];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
@@ -367,7 +369,7 @@
     if (_userData.phoneNum.length > 0) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
-        [dataprovider Login:_userData.phoneNum andpwd:_userData.passWord];
+        [dataprovider Login:_userData.phoneNum andpwd:_userData.passWord andreferrer:@""];
     }
 }
 -(void)loginBackcall:(id)dict
@@ -409,6 +411,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)JumpToregisterVC:(UIButton *)sender
+{
+    NSLog(@"跳转");
+    RegisterViewController * registerVC=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+    [self presentViewController:registerVC animated:YES completion:^{}];
 }
 
 /*

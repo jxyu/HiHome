@@ -9,6 +9,7 @@
 #import "AddressLocalViewController.h"
 #import "CardTableViewCell.h"
 #import "AppDelegate.h"
+#import "CommenDef.h"
 
 @interface AddressLocalViewController ()
 
@@ -394,6 +395,10 @@
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
         cell.nameLabel.text = name;
         cell.nameLabel.textColor = [UIColor grayColor];
+    UIButton * btn_tianjia=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, (cell.frame.size.height-40)/2, 70, 40)];
+    btn_tianjia.backgroundColor=RGB(26, 200, 133);
+    [btn_tianjia setTitle:@"添加" forState:UIControlStateNormal];
+    [cell addSubview:btn_tianjia];
     
     //分割线设置
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )

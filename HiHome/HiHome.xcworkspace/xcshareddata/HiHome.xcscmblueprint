@@ -1,22 +1,17 @@
 {
   "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E24535091967915042EE63F74A16F00BB9B2B11",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : {
-
-    },
     "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : 0,
     "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E" : 0,
     "2E24535091967915042EE63F74A16F00BB9B2B11" : 0,
     "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7D9061BC-CA45-4788-B119-314BD178A210",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
     "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E" : "Project\/",
     "2E24535091967915042EE63F74A16F00BB9B2B11" : "HiHome\/",
     "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : "Project\/HiHome\/HiHome\/CustomViewController\/"
@@ -38,7 +33,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++8582"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",

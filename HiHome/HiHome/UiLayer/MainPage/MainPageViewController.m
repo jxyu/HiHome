@@ -41,6 +41,8 @@
     
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateLabelForTimer) userInfo:nil repeats:YES];
     [self.view addSubview:_mainTableView];
+    
+    
 
 }
 
@@ -113,14 +115,12 @@
         {
             Img_Views = [self addImgViewsForCell3];
             Label_Views = [self addLabelViewsForCell3];
-            
             break;
         }
         case 4:
         {
             Img_Views = [self addImgViewsForCell4];
             Label_Views = [self addLabelViewsForCell4];
-            
             break;
         }
         default:

@@ -40,7 +40,7 @@
     _topView.userInteractionEnabled = YES;
   //   _topView.backgroundColor = [UIColor colorWithRed:237/255.0 green:109/255.0 blue:3/255.0 alpha:1];
     
-    _topView.backgroundColor = [UIColor redColor];
+    _topView.backgroundColor = ZY_UIBASECOLOR;
     [self.view addSubview:_topView];
 //    UIImageView *imageline1=[[UIImageView alloc]initWithFrame:CGRectMake(0,NavigationBar_HEIGHT + _orginY-0.3, SCREEN_WIDTH, 0.3)];
 //    imageline1.backgroundColor=[UIColor colorWithRed:0.88 green:0.89 blue:0.89 alpha:1];

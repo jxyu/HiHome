@@ -168,6 +168,12 @@
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AE51BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AEF1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AED1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AF01BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AEE1BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AF41BD4D17000A1078F /* TaskNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AF21BD4D17000A1078F /* TaskNoticeViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */; settings = {ASSET_TAGS = (); }; };
+		B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */; settings = {ASSET_TAGS = (); }; };
 		C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5067773248DD015B75248D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -431,6 +437,15 @@
 		B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		B7CC5AE41BD4B92E00A1078F /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		B7CC5AEC1BD4C7CB00A1078F /* TaskNoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaskNoticeTableViewCell.h; path = HiHome/UiLayer/MainPage/TaskNoticeTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		B7CC5AED1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaskNoticeTableViewCell.m; path = HiHome/UiLayer/MainPage/TaskNoticeTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		B7CC5AEE1BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskNoticeTableViewCell.xib; path = HiHome/UiLayer/MainPage/TaskNoticeTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		B7CC5AF11BD4D17000A1078F /* TaskNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaskNoticeViewController.h; path = HiHome/UiLayer/MainPage/TaskNoticeViewController.h; sourceTree = SOURCE_ROOT; };
+		B7CC5AF21BD4D17000A1078F /* TaskNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaskNoticeViewController.m; path = HiHome/UiLayer/MainPage/TaskNoticeViewController.m; sourceTree = SOURCE_ROOT; };
+		B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskNoticeViewController.xib; path = HiHome/UiLayer/MainPage/TaskNoticeViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7CC5AF61BD4D5E400A1078F /* SelectTaskNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectTaskNoticeCell.h; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.h; sourceTree = SOURCE_ROOT; };
+		B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectTaskNoticeCell.m; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.m; sourceTree = SOURCE_ROOT; };
+		B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectTaskNoticeCell.xib; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.xib; sourceTree = SOURCE_ROOT; };
 		CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -626,6 +641,7 @@
 		B5033BD61BAFB2310014935E /* MainPage */ = {
 			isa = PBXGroup;
 			children = (
+				B7CC5AE61BD4BD5E00A1078F /* DetailPage */,
 				B587FF0C1BC8AA8000E9F119 /* Album */,
 				B5879D731BC791E8003AACFA /* MainSettings.h */,
 				B56C2EE61BC4BF000030FB83 /* Options */,
@@ -1125,6 +1141,22 @@
 			path = UMessage_Sdk_1.1.0;
 			sourceTree = "<group>";
 		};
+		B7CC5AE61BD4BD5E00A1078F /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				B7CC5AF11BD4D17000A1078F /* TaskNoticeViewController.h */,
+				B7CC5AF21BD4D17000A1078F /* TaskNoticeViewController.m */,
+				B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */,
+				B7CC5AEC1BD4C7CB00A1078F /* TaskNoticeTableViewCell.h */,
+				B7CC5AED1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m */,
+				B7CC5AEE1BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib */,
+				B7CC5AF61BD4D5E400A1078F /* SelectTaskNoticeCell.h */,
+				B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */,
+				B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */,
+			);
+			name = DetailPage;
+			sourceTree = "<group>";
+		};
 		C1C03E818DF32598B7701194 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1203,7 +1235,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = M7YC435M3S;
+						DevelopmentTeam = 6NC56CVL43;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -1304,6 +1336,7 @@
 				B57F5D911BBA8408009AC336 /* logo@2x.png in Resources */,
 				B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */,
 				B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */,
+				B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */,
 				B5879D721BC78DE9003AACFA /* CoupleViewController.xib in Resources */,
 				B5033BE11BAFB4050014935E /* TaskPageViewController.xib in Resources */,
 				B5FA2DBA1BC5159400D5BDB7 /* Default-568h@2x.png in Resources */,
@@ -1312,11 +1345,13 @@
 				B58DD95F1BB640B10040A084 /* bigChat@2x.png in Resources */,
 				B56CFC1F1BCCF1D80081B645 /* remind@2x.png in Resources */,
 				B57F5D841BBA77FA009AC336 /* LoginViewController.xib in Resources */,
+				B7CC5AF01BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib in Resources */,
 				80BC02EE1BB0EDAA0002A267 /* main_tab_gods_icon@2x.png in Resources */,
 				B58DD9561BB638AD0040A084 /* headman.png in Resources */,
 				B58DD94E1BB61F0A0040A084 /* remindTime@2x.png in Resources */,
 				B58196081BCB87A500D69A1E /* uploadPic@2x.png in Resources */,
 				B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */,
+				B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */,
 				B58DD95C1BB63DED0040A084 /* chat@2x.png in Resources */,
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
 				B56CFC181BCC90950081B645 /* CreateTaskViewController.xib in Resources */,
@@ -1408,6 +1443,7 @@
 				B5033BE51BAFB41F0014935E /* ChatPageViewController.m in Sources */,
 				B5FA2DB21BC4F14700D5BDB7 /* ChatLogViewController.m in Sources */,
 				B587FF171BC8B4D500E9F119 /* AlbumTableViewCell.m in Sources */,
+				B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */,
 				B5E059E01BB146E100DBF786 /* WMOtherViewController.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
@@ -1415,12 +1451,14 @@
 				B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */,
 				B5E059DE1BB146E100DBF786 /* WMNavigationController.m in Sources */,
 				8048CC451BD21AD500B76C59 /* AddressLocalViewController.m in Sources */,
+				B7CC5AF41BD4D17000A1078F /* TaskNoticeViewController.m in Sources */,
 				B5033BEA1BAFB4320014935E /* AddressPageViewController.m in Sources */,
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
+				B7CC5AEF1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m in Sources */,
 				B587FF141BC8B07700E9F119 /* AlbumPath.m in Sources */,
 				B5FA2DB71BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.m in Sources */,
 				B583B1A91BC39B72000572CA /* BaseTableViewCell.m in Sources */,
@@ -1591,6 +1629,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/rain/Documents/Projects/WorkProject/Hihome/Hihome/Hihome/HiHomePrefixHeader.pch;
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1610,6 +1649,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/rain/Documents/Projects/WorkProject/Hihome/Hihome/Hihome/HiHomePrefixHeader.pch;
 				INFOPLIST_FILE = HiHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

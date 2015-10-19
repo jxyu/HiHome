@@ -183,8 +183,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-      [tableView deselectRowAtIndexPath:indexPath animated:NO];//选中后的反显颜色即刻消失
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];//选中后的反显颜色即刻消失
     
+    if(indexPath.section == 3){
+        _taskNoticeVC = [[TaskNoticeViewController alloc] init];
+        _taskNoticeVC.navTitle = @"任务提醒";
+        _taskNoticeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:_taskNoticeVC animated:NO];
+    }
 }
 
 
@@ -195,11 +201,7 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
-    
     return indexPath;
-    
 }
 
 //第0个cell添加views

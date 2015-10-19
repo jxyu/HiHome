@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _cellHeight = self.view.frame.size.height/11;
+    _cellHeight = 50;//self.view.frame.size.height/11;
     _keyShow = false;
     [self initViews];
     
@@ -108,7 +108,7 @@
             }
     }
     _cellCount = 3;
-    _cellTextViewHeight = _mainTableView.frame.size.height - 2*_cellHeight;
+    _cellTextViewHeight = SCREEN_HEIGHT - 2*_cellHeight - 64;
     
     _keyHeight = 216;//default
     
@@ -234,7 +234,7 @@
     switch (indexPath.row) {
         case 0:
         {
-            _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+            _titleField.frame = CGRectMake(10, 0, cell.frame.size.width, _cellHeight);
             _titleField.placeholder = @"标题";
             _titleField.delegate = self;
             [cell addSubview:_titleField];
@@ -243,7 +243,7 @@
             break;
         case 1:
         {
-            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
+            _textView.frame = CGRectMake(10, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
             
             _textView.delegate = self;
             _textView.returnKeyType = UIReturnKeyDefault;
@@ -347,7 +347,7 @@
 
 //设置cell每行间隔的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    NSLog(@"%f-%f",SCREEN_HEIGHT,self.view.frame.size.height);
     if(indexPath.row==1)
         return _cellTextViewHeight;
     return _cellHeight;

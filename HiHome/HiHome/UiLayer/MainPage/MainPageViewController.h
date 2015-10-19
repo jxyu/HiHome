@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TaskNoticeViewController.h"
 
 #define ZY_MAINCELL0_HEIGHT     ((self.view.frame.size.height-100)/80.0*18)
 #define ZY_MAINCELL1_HEIGHT     ((self.view.frame.size.height-100)/80.0*22)
@@ -36,6 +37,7 @@ typedef struct _ZY_date_t
     UILabel *_dateLabel;
     ZY_time_t *_time;
     ZY_date_t *_date;
+    TaskNoticeViewController *_taskNoticeVC;
 }
 -(void) initViews;
 

@@ -10,8 +10,8 @@
 #import "AFHTTPRequestOperation.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AFURLRequestSerialization.h"
-//#import "HttpRequest.h"
 #import "SVProgressHUD.h"
+//#import "HttpRequest.h"
 //#define Url @"http://115.28.21.137/mobile/"
 #define Url @"http://hihome.zhongyangjituan.com/"
 
@@ -31,15 +31,15 @@
 -(void)RegisterUserInfo:(id)prm
 {
     if (prm) {
-        NSString * url=[NSString stringWithFormat:@"%@index.php?act=login&op=register",Url];
-        [self PostRequest:url andpram:prm];
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=reg",Url];
+        [self GetRequest:url andpram:prm];
     }
 }
 -(void)Login:(NSString *)mobel andpwd:(NSString *)pwd andreferrer:(NSString *)referrer
 {
-    if (mobel&&pwd) {//http://hihome.zhongyangjituan.com/api.php?c=user&a=reg
-        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=reg",Url];
-        NSDictionary * prm=@{@"mobile":mobel,@"password":pwd,@"referrer":referrer};
+    if (mobel&&pwd) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=login",Url];
+        NSDictionary * prm=@{@"mob":mobel,@"pass":pwd};
         [self PostRequest:url andpram:prm];
     }
 }

@@ -28,8 +28,8 @@
 #import "OptionTextViewController.h"
 #import "UMessage.h"
 
-#define SMSappKey @""
-#define SMSappSecret @""
+#define SMSappKey @"b5174972a9ac"
+#define SMSappSecret @"8536890596fff208c04a3e52c88a2060"
 
 
 @interface AppDelegate ()
@@ -42,7 +42,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-
     
     
     

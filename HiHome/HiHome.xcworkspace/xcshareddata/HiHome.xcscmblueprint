@@ -1,25 +1,30 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++1588CB4",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++71141B7",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++0109EA1" : {
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++3454974" : {
 
     },
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++D2B3B3E" : {
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++54B4A11" : {
+
+    },
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++723835F" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++D2B3B3E" : 0,
-    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++35590FA" : 0,
-    "2E24535091967915042EE63F74A16F00BB9B2B11+++1588CB4" : 0,
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++0109EA1" : 0
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++723835F" : 0,
+    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++1EA23F0" : 0,
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++3454974" : 0,
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++54B4A11" : 0,
+    "2E24535091967915042EE63F74A16F00BB9B2B11+++71141B7" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7D9061BC-CA45-4788-B119-314BD178A210",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++D2B3B3E" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
-    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++35590FA" : "Project\/",
-    "2E24535091967915042EE63F74A16F00BB9B2B11+++1588CB4" : "HiHome\/",
-    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++0109EA1" : "HiHome\/HiHome\/HiHome\/CustomViewController\/"
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++723835F" : "HiHome\/HiHome\/HiHome\/CustomViewController\/",
+    "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++1EA23F0" : "Project\/",
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++3454974" : "Project\/HiHome\/HiHome\/CustomViewController\/",
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++54B4A11" : "Project\/HiHome\/HiHome\/CustomViewController\/",
+    "2E24535091967915042EE63F74A16F00BB9B2B11+++71141B7" : "HiHome\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "HiHome",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -28,22 +33,27 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.coding.net\/JsonAgony\/HiHome.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++35590FA"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29FDC0FCBC982AA3AB1F151D22D56BB919EEC79E+++1EA23F0"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.coding.net\/JsonAgony\/HiHome.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++1588CB4"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E24535091967915042EE63F74A16F00BB9B2B11+++71141B7"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++0109EA1"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++3454974"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++D2B3B3E"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++54B4A11"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134+++723835F"
     }
   ]
 }

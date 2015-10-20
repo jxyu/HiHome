@@ -7,6 +7,9 @@
 //
 
 #import "RegisterViewController.h"
+#import <SMS_SDK/SMSSDK.h>
+#import "DataProvider.h"
+#import "SVProgressHUD.h"
 
 @interface RegisterViewController ()
 
@@ -23,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _lblTitle.text=@"注册";
+    _lblRight.text=@"取消";
+    [self addLeftButton:@"goback@2x.png"];
     
     [self loadAllView];
 }
@@ -34,8 +39,17 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-
-
+-(void)clickRightButton:(UIButton *)sender
+{
+    [txt_phoneNum resignFirstResponder];
+    [txt_vrifyCode resignFirstResponder];
+    [txt_newPwd resignFirstResponder];
+    [txt_againNewPwd resignFirstResponder];
+}
+-(void)clickLeftButton:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -55,6 +69,7 @@
             [btn_GetvrifyCode setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
             [btn_GetvrifyCode setTitle:@"获取验证码" forState:UIControlStateNormal];
             btn_GetvrifyCode.layer.masksToBounds=YES;
+            [btn_GetvrifyCode addTarget:self action:@selector(sendeVerifyCode:) forControlEvents:UIControlEventTouchUpInside];
             btn_GetvrifyCode.layer.borderWidth=0.4;
             btn_GetvrifyCode.layer.borderColor=[ZY_UIBASECOLOR CGColor];
             [cell addSubview:btn_GetvrifyCode];
@@ -96,6 +111,7 @@
             btn_sure.backgroundColor=ZY_UIBASECOLOR;
             [btn_sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [btn_sure setTitle:@"确定" forState:UIControlStateNormal];
+            [btn_sure addTarget:self action:@selector(LoginFunC:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:btn_sure];
         }
             break;
@@ -121,6 +137,100 @@
 {
     return 1;
 }
+
+
+-(void)sendeVerifyCode:(UIButton *)sender
+{
+    [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
+    if (txt_phoneNum.text.length==11) {
+        
+        [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:txt_phoneNum.text
+                                       zone:@"86"
+                           customIdentifier:nil
+                                     result:^(NSError *error)
+         {
+             
+             if (!error)
+             {
+                [SVProgressHUD dismiss];
+                 sender.enabled=NO;
+                 sender.titleLabel.text=@"验证码已发送";
+             }
+             else
+             {
+                 [SVProgressHUD dismiss];
+                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                                                 message:[NSString stringWithFormat:@"错误描述：%@",[error.userInfo objectForKey:@"getVerificationCode"]]
+                                                                delegate:self
+                                                       cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                       otherButtonTitles:nil, nil];
+                 [alert show];
+             }
+             
+         }];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请正确填写手机号" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+
+-(void)LoginFunC:(UIButton * )sender
+{
+    if (txt_newPwd.text==txt_againNewPwd.text&&txt_newPwd.text.length>0&&txt_vrifyCode.text.length>0) {
+        [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
+        [SMSSDK commitVerificationCode:txt_vrifyCode.text phoneNumber:txt_phoneNum.text zone:@"86" result:^(NSError *error) {
+            
+            if (!error) {
+                
+                NSLog(@"验证成功");
+                @try {
+                    DataProvider * dataprovider=[[DataProvider alloc] init];
+                    [dataprovider setDelegateObject:self setBackFunctionName:@"RegisteBackCall:"];
+                    NSDictionary * prm=[[NSDictionary alloc] initWithObjectsAndKeys:txt_phoneNum.text,@"mob",
+                                        txt_newPwd.text,@"pass", nil];
+                    [dataprovider RegisterUserInfo:prm];
+                }
+                @catch (NSException *exception) {
+                    
+                }
+                @finally {
+                    
+                }
+                
+            }
+            else
+            {
+                NSLog(@"验证失败");
+                [SVProgressHUD dismiss];
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", nil)
+                                                                message:[NSString stringWithFormat:@"%@",[error.userInfo objectForKey:@"commitVerificationCode"]]
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                      otherButtonTitles:nil, nil];
+                [alert show];
+                
+            }
+        }];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请正确填写信息" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+-(void)RegisteBackCall:(id)dict
+{
+    [SVProgressHUD dismiss];
+    NSLog(@"注册返回数据%@",dict);
+    if ([dict[@"code"] intValue]==200) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

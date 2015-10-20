@@ -11,7 +11,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "AFURLRequestSerialization.h"
 //#import "HttpRequest.h"
-#import "SVProgressHUD.h"
+//#import "SVProgressHUD.h"
 //#define Url @"http://115.28.21.137/mobile/"
 #define Url @"http://hihome.zhongyangjituan.com/"
 
@@ -32,7 +32,7 @@
 {
     if (prm) {
         NSString * url=[NSString stringWithFormat:@"%@index.php?act=login&op=register",Url];
-        [self PostRequest:url andpram:prm];
+        [self GetRequest:url andpram:prm];
     }
 }
 -(void)Login:(NSString *)mobel andpwd:(NSString *)pwd andreferrer:(NSString *)referrer
@@ -87,12 +87,12 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
-            [SVProgressHUD dismiss];
+//            [SVProgressHUD dismiss];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
     }];
 }
 
@@ -121,11 +121,11 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
-            [SVProgressHUD dismiss];
+//            [SVProgressHUD dismiss];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
     }];
 }
 
@@ -147,12 +147,12 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
-            [SVProgressHUD dismiss];
+//            [SVProgressHUD dismiss];
         }
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
     }];
     
     //执行
@@ -184,12 +184,12 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
-            [SVProgressHUD dismiss];
+//            [SVProgressHUD dismiss];
         }
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
     }];
     
     //执行

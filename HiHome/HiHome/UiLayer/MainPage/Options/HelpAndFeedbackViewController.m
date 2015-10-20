@@ -60,7 +60,7 @@
     //设置view的frame，往上平移
     [_mainTableView setFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height -ZY_HEADVIEW_HEIGHT -keyboardRect.size.height)];
     _cellTextViewHeight = _mainTableView.frame.size.height - 2*_cellHeight;
-  //  [_mainTableView reloadData];
+    //[_mainTableView reloadData];
     [UIView commitAnimations];
     
 }
@@ -75,7 +75,7 @@
     //设置view的frame，往下平移
     [_mainTableView setFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT)];
     _cellTextViewHeight = _mainTableView.frame.size.height - 2*_cellHeight;
-    [_mainTableView reloadData];
+    //[_mainTableView reloadData];
     [UIView commitAnimations];
     
 }
@@ -244,7 +244,7 @@
         case 1:
         {
             _textView.frame = CGRectMake(10, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
-            
+            _textView.font = [UIFont systemFontOfSize:15];
             _textView.delegate = self;
             _textView.returnKeyType = UIReturnKeyDefault;
             _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;

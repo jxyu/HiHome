@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TaskNoticeViewController.h"
+#import <CoreLocation/CoreLocation.h>
+#import <AFNetworking/AFNetworking.h>
 
 #define ZY_MAINCELL0_HEIGHT     ((self.view.frame.size.height-100)/80.0*18)
 #define ZY_MAINCELL1_HEIGHT     ((self.view.frame.size.height-100)/80.0*22)
@@ -30,7 +32,7 @@ typedef struct _ZY_date_t
     NSInteger second;
 }ZY_date_t;
 
-@interface MainPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MainPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate>
 {
     @private
     UILabel *_timeLabel;

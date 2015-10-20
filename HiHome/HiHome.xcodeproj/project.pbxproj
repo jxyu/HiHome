@@ -18,6 +18,8 @@
 		802306BB1BD4EF60006CFFEC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802306BA1BD4EF60006CFFEC /* MessageUI.framework */; };
 		802306BD1BD4EF6A006CFFEC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802306BC1BD4EF6A006CFFEC /* JavaScriptCore.framework */; };
 		802306BF1BD4EF77006CFFEC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 802306BE1BD4EF77006CFFEC /* libstdc++.tbd */; };
+		803534C11BD61D230008C191 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 803534C01BD61D230008C191 /* SVProgressHUD.bundle */; };
+		803534C31BD62DD30008C191 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803534C21BD62DD30008C191 /* UserInfo.plist */; settings = {ASSET_TAGS = (); }; };
 		8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */; };
 		8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */; };
 		8048CC451BD21AD500B76C59 /* AddressLocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC431BD21AD500B76C59 /* AddressLocalViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -217,6 +219,8 @@
 		802306BA1BD4EF60006CFFEC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		802306BC1BD4EF6A006CFFEC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		802306BE1BD4EF77006CFFEC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		803534C01BD61D230008C191 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = Pods/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		803534C21BD62DD30008C191 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 		8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8048CC421BD21AD500B76C59 /* AddressLocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalViewController.h; sourceTree = "<group>"; };
@@ -586,6 +590,7 @@
 		B5033B961BAFA6D60014935E = {
 			isa = PBXGroup;
 			children = (
+				803534C01BD61D230008C191 /* SVProgressHUD.bundle */,
 				B5033BA11BAFA6D60014935E /* HiHome */,
 				B5033BBB1BAFA6D70014935E /* HiHomeTests */,
 				B5033BC61BAFA6D70014935E /* HiHomeUITests */,
@@ -638,6 +643,7 @@
 				B5E059B01BB146E100DBF786 /* Images.xcassets */,
 				B5033BA31BAFA6D60014935E /* main.m */,
 				80BC02F21BB0EF1C0002A267 /* HiHomePrefixHeader.pch */,
+				803534C21BD62DD30008C191 /* UserInfo.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1301,12 +1307,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				803534C11BD61D230008C191 /* SVProgressHUD.bundle in Resources */,
 				B5E0599F1BB0F92900DBF786 /* FirstScrollController.xib in Resources */,
 				B5E059DD1BB146E100DBF786 /* WMMenuViewController.xib in Resources */,
 				B5E059D01BB146E100DBF786 /* Images.xcassets in Resources */,
 				80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */,
 				B58DD9571BB638AD0040A084 /* headwoman.png in Resources */,
 				B56C2EF01BC4BF7A0030FB83 /* TaskLimitViewController.xib in Resources */,
+				803534C31BD62DD30008C191 /* UserInfo.plist in Resources */,
 				B56CFC1B1BCCD4BD0081B645 /* chooseContacts@2x.png in Resources */,
 				8048CC461BD21AD500B76C59 /* AddressLocalViewController.xib in Resources */,
 				B5E059DA1BB146E100DBF786 /* WMHomeViewController.xib in Resources */,

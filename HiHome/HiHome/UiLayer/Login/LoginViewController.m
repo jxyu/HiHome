@@ -14,12 +14,17 @@
 #import "DataProvider.h"
 #import "DataDefine.h"
 #import "RegisterViewController.h"
+#import "SVProgressHUD.h"
 
 @interface LoginViewController ()
 
 @end
 
 @implementation LoginViewController
+{
+    UITextField *userText;
+    UITextField *passWordText;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -162,14 +167,14 @@
     [self.view addSubview:loginBtn];
     
     
-    UIButton *testBtn = [[UIButton alloc] init];
-    testBtn.frame = CGRectMake(100, 100, 100, 50);
-   // [testBtn setHeight: YES];
-    [testBtn setHighlighted:YES];
-    testBtn.backgroundColor = ZY_UIBASECOLOR;
-    [testBtn setTitle:@"密码错误" forState:UIControlStateNormal];
-    [testBtn addTarget:self action:@selector(tempClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:testBtn];
+//    UIButton *testBtn = [[UIButton alloc] init];
+//    testBtn.frame = CGRectMake(100, 100, 100, 50);
+//   // [testBtn setHeight: YES];
+//    [testBtn setHighlighted:YES];
+//    testBtn.backgroundColor = ZY_UIBASECOLOR;
+//    [testBtn setTitle:@"密码错误" forState:UIControlStateNormal];
+//    [testBtn addTarget:self action:@selector(tempClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:testBtn];
     
     
     UIButton *registerBtn = [[UIButton alloc] init];
@@ -229,7 +234,7 @@
     CGFloat centerX = self.view.width * 0.5;
     InputText *inputText = [[InputText alloc] init];
     CGFloat userY = ZY_UIPART_SCREEN_HEIGHT * 35 ;
-    UITextField *userText = [inputText setupWithIcon:nil textY:userY centerX:centerX point:nil];
+    userText = [inputText setupWithIcon:nil textY:userY centerX:centerX point:nil];
     userText.tag = USER_TEXT_TAG;
     userText.delegate = self;
     userText.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
@@ -241,7 +246,7 @@
     
     
     
-    UITextField *passWordText = [inputText setupWithIcon:nil textY:ZY_UIPART_SCREEN_HEIGHT * 45 centerX:self.view.width * 0.5 point:nil];
+    passWordText = [inputText setupWithIcon:nil textY:ZY_UIPART_SCREEN_HEIGHT * 45 centerX:self.view.width * 0.5 point:nil];
     passWordText.delegate = self;
     passWordText.tag = PASSWORD_TEXT_TAG;
     passWordText.secureTextEntry = YES;//设置输入后变为“＊”
@@ -349,47 +354,51 @@
 {
     
     NSLog(@"Click btn");
-//    if(_userData.phoneNum.length == 0|| _userData.passWord.length == 0)
-//    {
-//        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请输入正确的用户名和密码"];
-//        alert.alertType = AlertType_Hint;
-//        [alert addButtonWithTitle:@"确定"];
-//        [alert show];
-//         NSLog(@"Out of click");
-//        return;
-//    }
-//    
-//    [self LoginFunc];
+    if(_userData.phoneNum.length == 0|| _userData.passWord.length == 0)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请输入正确的用户名和密码"];
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+         NSLog(@"Out of click");
+        return;
+    }
+    
+    [self LoginFunc];
 //    [self webViewDidStartLoad];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
 }
 
 -(void)LoginFunc
 {
     if (_userData.phoneNum.length > 0) {
+        [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
-        [dataprovider Login:_userData.phoneNum andpwd:_userData.passWord andreferrer:@""];
+        [dataprovider Login:userText.text andpwd:passWordText.text andreferrer:@""];
     }
 }
 -(void)loginBackcall:(id)dict
 {
+    [SVProgressHUD dismiss];
     printf("[%s] start \r\n",__FUNCTION__);
     NSLog(@"%@",dict);
-    NSLog(@"%@",[dict[@"datas"] objectForKey:@"error"]);
-    if (![dict[@"datas"] objectForKey:@"error"] ) {
+    if ([dict[@"code"] intValue]==200 ) {
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                                   NSUserDomainMask, YES) objectAtIndex:0];
         NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-        BOOL result= [dict[@"datas"] writeToFile:plistPath atomically:YES];
+        NSArray * itemdict=[[NSArray alloc] initWithArray:dict[@"datas"]];
+        BOOL result= [itemdict[0] writeToFile:plistPath atomically:YES];
         if (result) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
+            //[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
+//            [self.navigationController popToRootViewControllerAnimated:YES];
         }
+        
     }
     else
     {
-        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
         [alert show];
     }
     printf("[%s] end\r\n",__FUNCTION__);

@@ -9,6 +9,7 @@
 #import "RegisterViewController.h"
 #import <SMS_SDK/SMSSDK.h>
 #import "DataProvider.h"
+#import "SVProgressHUD.h"
 
 @interface RegisterViewController ()
 
@@ -26,7 +27,7 @@
     [super viewDidLoad];
     _lblTitle.text=@"注册";
     _lblRight.text=@"取消";
-    
+    [self addLeftButton:@"goback@2x.png"];
     
     [self loadAllView];
 }
@@ -45,7 +46,10 @@
     [txt_newPwd resignFirstResponder];
     [txt_againNewPwd resignFirstResponder];
 }
-
+-(void)clickLeftButton:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -137,7 +141,7 @@
 
 -(void)sendeVerifyCode:(UIButton *)sender
 {
-//    [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
     if (txt_phoneNum.text.length==11) {
         
         [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:txt_phoneNum.text
@@ -148,13 +152,13 @@
              
              if (!error)
              {
-//                [SVProgressHUD dismiss];
+                [SVProgressHUD dismiss];
                  sender.enabled=NO;
                  sender.titleLabel.text=@"验证码已发送";
              }
              else
              {
-//                 [SVProgressHUD dismiss];
+                 [SVProgressHUD dismiss];
                  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
                                                                  message:[NSString stringWithFormat:@"错误描述：%@",[error.userInfo objectForKey:@"getVerificationCode"]]
                                                                 delegate:self
@@ -176,7 +180,7 @@
 -(void)LoginFunC:(UIButton * )sender
 {
     if (txt_newPwd.text==txt_againNewPwd.text&&txt_newPwd.text.length>0&&txt_vrifyCode.text.length>0) {
-//        [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
         [SMSSDK commitVerificationCode:txt_vrifyCode.text phoneNumber:txt_phoneNum.text zone:@"86" result:^(NSError *error) {
             
             if (!error) {
@@ -193,14 +197,14 @@
                     
                 }
                 @finally {
-//                    [SVProgressHUD dismiss];
+                    
                 }
                 
             }
             else
             {
                 NSLog(@"验证失败");
-//                [SVProgressHUD dismiss];
+                [SVProgressHUD dismiss];
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", nil)
                                                                 message:[NSString stringWithFormat:@"%@",[error.userInfo objectForKey:@"commitVerificationCode"]]
                                                                delegate:self
@@ -220,9 +224,10 @@
 
 -(void)RegisteBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"注册返回数据%@",dict);
     if ([dict[@"code"] intValue]==200) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

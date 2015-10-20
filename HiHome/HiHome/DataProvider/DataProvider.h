@@ -53,6 +53,8 @@
  */
 -(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key;
 
+//获取天气信息
+-(void)getWeatherInfo:(NSString *)url;
 
 
 
@@ -65,5 +67,6 @@
  *  @param selectorName 回调函数
  */
 - (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName;
+
 
 @end

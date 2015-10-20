@@ -59,7 +59,9 @@
     }
 }
 
-
+-(void)getWeatherInfo:(NSString *)url{
+    [self PostRequest:url andpram:nil];
+}
 
 
 

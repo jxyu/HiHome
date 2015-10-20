@@ -9,6 +9,7 @@
 #import "MainPageViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIDefine.h"
+#import "DataProvider.h"
 
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
@@ -60,14 +61,49 @@
 }
 
 - (void)getWeatherInfo:(CLLocationDegrees) latitude longitude:(CLLocationDegrees) longitude{
-    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
-    NSString *url = @"http://api.openweathermap.org/data/2.5/weather";
-    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%f",latitude],@"lat",[NSString stringWithFormat:@"%f",longitude],@"lon",@"b6bd4b639a3990561bd75a9c133151ae",@"appid", nil];
-    [manager GET:url parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        [self updateWheatherUIInfo:responseObject];
-    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"获取天气信息失败～");
-    }];
+    //AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+    //NSString *url = @"http://m.weather.com.cn/mweather/101120901.shtml";
+//    DataProvider *dataProvider = [[DataProvider alloc] init];
+//    [dataProvider setDelegateObject:self setBackFunctionName:@"WeatherBackcall:"];
+//    [dataProvider getWeatherInfo:url];
+    
+    NSString *httpUrl = @"http://apis.baidu.com/heweather/weather/free";
+    NSString *httpArg = @"city=linyi";
+    [self request: httpUrl withHttpArg: httpArg];
+    
+    
+//    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%f",latitude],@"lat",[NSString stringWithFormat:@"%f",longitude],@"lon",@"b6bd4b639a3990561bd75a9c133151ae",@"appid", nil];
+//    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//        [self updateWheatherUIInfo:responseObject];
+//    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+//        NSLog(@"获取天气信息失败～");
+//    }];
+}
+
+- (void)WeatherBackcall:(id)dic{
+    NSLog(@"%@",dic);
+}
+
+-(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  {
+    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
+    NSURL *url = [NSURL URLWithString: urlStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
+    [request setHTTPMethod: @"GET"];
+    [request addValue: @"4e01ff24cadf672086df1d5f654f4785" forHTTPHeaderField: @"apikey"];
+    
+    
+    [NSURLConnection sendAsynchronousRequest: request
+                                       queue: [NSOperationQueue mainQueue]
+                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
+                               if (error) {
+                                   NSLog(@"Httperror: %@%ld", error.localizedDescription, error.code);
+                               } else {
+                                   NSInteger responseCode = [(NSHTTPURLResponse *)response statusCode];
+                                   NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   NSLog(@"HttpResponseCode:%ld", responseCode);
+                                   NSLog(@"HttpResponseBody %@",responseString);
+                               }
+                           }];
 }
 
 - (void)updateWheatherUIInfo:(NSDictionary *) jsonResult{

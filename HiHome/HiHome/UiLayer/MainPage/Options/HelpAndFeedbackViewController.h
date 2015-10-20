@@ -16,9 +16,8 @@
     NSInteger _cellTextViewHeight;//包含textview的cell的高度
     UITableView *_mainTableView;
     BOOL    _keyShow;       //标记键盘是否显示
-    UITextView *_textView;
     UITextField *_titleField;//标题
-    
+    UITextView *_textView;
     CGFloat _keyHeight;
 
 }

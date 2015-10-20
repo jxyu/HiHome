@@ -29,6 +29,7 @@
 
 - (void)layoutAnimatedLayer {
     CALayer *layer = self.indefiniteAnimatedLayer;
+    
     [self.layer addSublayer:layer];
     layer.position = CGPointMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(layer.bounds) / 2, CGRectGetHeight(self.bounds) - CGRectGetHeight(layer.bounds) / 2);
 }
@@ -70,7 +71,7 @@
         
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
         animation.fromValue = 0;
-        animation.toValue = @(M_PI*2);
+        animation.toValue = [NSNumber numberWithFloat:M_PI*2];
         animation.duration = animationDuration;
         animation.timingFunction = linearCurve;
         animation.removedOnCompletion = NO;
@@ -101,26 +102,21 @@
 }
 
 - (void)setFrame:(CGRect)frame {
-    if(!CGRectEqualToRect(frame, super.frame)){
-        [super setFrame:frame];
-        
-        if (self.superview) {
-            [self layoutAnimatedLayer];
-        }
-    }
+    [super setFrame:frame];
     
+    if (self.superview) {
+        [self layoutAnimatedLayer];
+    }
 }
 
 - (void)setRadius:(CGFloat)radius {
-    if(radius != _radius){
-        _radius = radius;
-        
-        [_indefiniteAnimatedLayer removeFromSuperlayer];
-        _indefiniteAnimatedLayer = nil;
-        
-        if (self.superview) {
-            [self layoutAnimatedLayer];
-        }
+    _radius = radius;
+    
+    [_indefiniteAnimatedLayer removeFromSuperlayer];
+    _indefiniteAnimatedLayer = nil;
+    
+    if (self.superview) {
+        [self layoutAnimatedLayer];
     }
 }
 

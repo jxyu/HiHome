@@ -62,12 +62,14 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/en.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/zh-Hans.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/Emoji.plist"
+  install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/RongCloud.bundle"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/en.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/zh-Hans.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_SDK_v2_3_2_stable/Emoji.plist"
+  install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

@@ -10,7 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIDefine.h"
 
-@interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    CLLocationManager *locationManager;
+}
 
 @end
 
@@ -20,14 +22,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-     // Do any additional setup after loading the view from its nib.
-
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [locationManager requestAlwaysAuthorization];
+    }
+    [locationManager startUpdatingLocation];
 }
 
 -(void) initViews
 {
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
-//    _mainTableView.backgroundColor =[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
     
@@ -36,14 +42,8 @@
     tableHeaderView.frame = CGRectMake(0, 0, 10, 20);
     _mainTableView.tableHeaderView = tableHeaderView;
     
-    
- //   _mainTableView.scrollEnabled  = NO;
-    
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateLabelForTimer) userInfo:nil repeats:YES];
     [self.view addSubview:_mainTableView];
-    
-    
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,7 +51,37 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    CLLocation *location = [locations objectAtIndex:locations.count - 1];
+    if ([location horizontalAccuracy] > 0) {
+        [self getWeatherInfo:location.coordinate.latitude longitude:location.coordinate.longitude];
+    }
+    [locationManager stopUpdatingLocation];
+}
 
+- (void)getWeatherInfo:(CLLocationDegrees) latitude longitude:(CLLocationDegrees) longitude{
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+    NSString *url = @"http://api.openweathermap.org/data/2.5/weather";
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%f",latitude],@"lat",[NSString stringWithFormat:@"%f",longitude],@"lon",@"b6bd4b639a3990561bd75a9c133151ae",@"appid", nil];
+    [manager GET:url parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        [self updateWheatherUIInfo:responseObject];
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        NSLog(@"获取天气信息失败～");
+    }];
+}
+
+- (void)updateWheatherUIInfo:(NSDictionary *) jsonResult{
+    NSLog(@"%@",jsonResult);
+    double tempResult = [[[jsonResult valueForKey:@"main"] valueForKey:@"temp"] doubleValue];
+    double currentTemp;
+    double lowTemp;
+    double highTemp;
+    if ([[[jsonResult valueForKey:@"sys"] valueForKey:@"country"]  isEqual: @"US"]) {
+        currentTemp = round(((tempResult - 273.15) * 1.8) + 32);
+    }else{
+        currentTemp = round(tempResult - 273.15);
+    }
+}
 
 
 
@@ -276,6 +306,7 @@
 -(NSMutableArray *) addLabelViewsForCell0
 {
     NSMutableArray *LabelViews = [NSMutableArray array];
+    
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100-20, 10, 100, ZY_MAINCELL0_HEIGHT/10*3)];
     _timeLabel.textColor = ZY_UIBASECOLOR;

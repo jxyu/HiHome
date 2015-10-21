@@ -64,6 +64,15 @@
 }
 
 
+-(void)GetToken:(NSString *)userid
+{
+    if (userid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=chat&a=getToken",Url];
+        NSDictionary * prm=@{@"uid":userid};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
 
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram

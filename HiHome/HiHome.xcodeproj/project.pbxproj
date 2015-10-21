@@ -20,6 +20,8 @@
 		802306BF1BD4EF77006CFFEC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 802306BE1BD4EF77006CFFEC /* libstdc++.tbd */; };
 		803534C11BD61D230008C191 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 803534C01BD61D230008C191 /* SVProgressHUD.bundle */; };
 		803534C31BD62DD30008C191 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803534C21BD62DD30008C191 /* UserInfo.plist */; settings = {ASSET_TAGS = (); }; };
+		803A30381BD7903600C28F8B /* ChatlistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 803A30361BD7903600C28F8B /* ChatlistViewController.m */; settings = {ASSET_TAGS = (); }; };
+		803A30391BD7903600C28F8B /* ChatlistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803A30371BD7903600C28F8B /* ChatlistViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		8048CC3F1BD1FE5400B76C59 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */; };
 		8048CC411BD1FE5B00B76C59 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */; };
 		8048CC451BD21AD500B76C59 /* AddressLocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC431BD21AD500B76C59 /* AddressLocalViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -221,6 +223,9 @@
 		802306BE1BD4EF77006CFFEC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		803534C01BD61D230008C191 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = Pods/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
 		803534C21BD62DD30008C191 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
+		803A30351BD7903600C28F8B /* ChatlistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatlistViewController.h; sourceTree = "<group>"; };
+		803A30361BD7903600C28F8B /* ChatlistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatlistViewController.m; sourceTree = "<group>"; };
+		803A30371BD7903600C28F8B /* ChatlistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatlistViewController.xib; sourceTree = "<group>"; };
 		8048CC3E1BD1FE5400B76C59 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8048CC401BD1FE5B00B76C59 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8048CC421BD21AD500B76C59 /* AddressLocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalViewController.h; sourceTree = "<group>"; };
@@ -731,6 +736,9 @@
 				B5033BE41BAFB41F0014935E /* ChatPageViewController.xib */,
 				B53562FF1BB244A0002D5F8D /* ChatTableViewCell.h */,
 				B53563001BB244A0002D5F8D /* ChatTableViewCell.m */,
+				803A30351BD7903600C28F8B /* ChatlistViewController.h */,
+				803A30361BD7903600C28F8B /* ChatlistViewController.m */,
+				803A30371BD7903600C28F8B /* ChatlistViewController.xib */,
 			);
 			path = ChatPage;
 			sourceTree = "<group>";
@@ -1313,6 +1321,7 @@
 				B5E059D01BB146E100DBF786 /* Images.xcassets in Resources */,
 				80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */,
 				B58DD9571BB638AD0040A084 /* headwoman.png in Resources */,
+				803A30391BD7903600C28F8B /* ChatlistViewController.xib in Resources */,
 				B56C2EF01BC4BF7A0030FB83 /* TaskLimitViewController.xib in Resources */,
 				803534C31BD62DD30008C191 /* UserInfo.plist in Resources */,
 				B56CFC1B1BCCD4BD0081B645 /* chooseContacts@2x.png in Resources */,
@@ -1512,6 +1521,7 @@
 				B56CFC2C1BCCFD5E0081B645 /* CreateAnniversaryViewController.m in Sources */,
 				8048CC4E1BD21C5200B76C59 /* pinyin.c in Sources */,
 				B58DD9671BB67DCC0040A084 /* CardTableViewCell.m in Sources */,
+				803A30381BD7903600C28F8B /* ChatlistViewController.m in Sources */,
 				B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */,
 				B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */,
 				B5E0599D1BB0F92900DBF786 /* CustomTabBarViewController.m in Sources */,
@@ -1689,7 +1699,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiHome/UMessage_Sdk_1.1.0",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HiHome;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1713,7 +1723,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiHome/UMessage_Sdk_1.1.0",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HiHome;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

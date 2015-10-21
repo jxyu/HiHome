@@ -56,6 +56,7 @@
 //获取天气信息
 -(void)getWeatherInfo:(NSString *)url;
 
+-(void)GetToken:(NSString *)userid;
 
 
 

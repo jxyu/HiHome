@@ -166,7 +166,7 @@
     
     ChatPageViewController *typeView=[[ChatPageViewController alloc]init];
     typeView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    [typeView initViews];
+//    [typeView initViews];
     UINavigationController *typeViewnav = [[UINavigationController alloc] initWithRootViewController:typeView];
     typeView.automaticallyAdjustsScrollViewInsets = NO;
 //    typeView.view.h

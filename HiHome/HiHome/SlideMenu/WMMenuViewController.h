@@ -12,10 +12,10 @@
 @protocol WMMenuViewControllerDelegate <NSObject>
 @optional
 - (void)didSelectItem:(NSString *)title;
-
+-(void) swipLeftAction;
 @end
 
-@interface WMMenuViewController : WMBaseViewController
+@interface WMMenuViewController : WMBaseViewController<UIGestureRecognizerDelegate>
 @property (weak, nonatomic) id<WMMenuViewControllerDelegate> delegate;
 
 @end

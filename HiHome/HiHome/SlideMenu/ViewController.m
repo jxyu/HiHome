@@ -121,13 +121,23 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     
     [self.tabBarController addChildViewController:self.messageNav];
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    /*在判定pan之前先确认下面手势是否完成(上 下 左 右滑动)*/
+    UISwipeGestureRecognizer *tempSwipRight = [[UISwipeGestureRecognizer alloc] init];
+    tempSwipRight.direction = UISwipeGestureRecognizerDirectionLeft;
+    [tempSwipRight addTarget:self action:@selector(slideMenu:)];
+    [self.tabBarController.view addGestureRecognizer:tempSwipRight];
+    [pan requireGestureRecognizerToFail:tempSwipRight];
+    tempSwipRight.delegate = self;
     
-    UISwipeGestureRecognizer *tempSwip = [[UISwipeGestureRecognizer alloc] init];
-    tempSwip.direction = UISwipeGestureRecognizerDirectionLeft;
-    [tempSwip addTarget:self action:@selector(tempSwip)];
-    [self.tabBarController.view addGestureRecognizer:tempSwip];
-    [pan requireGestureRecognizerToFail:tempSwip];
-    tempSwip.delegate = self;
+    
+    
+    
+    UISwipeGestureRecognizer *tempSwipLeft = [[UISwipeGestureRecognizer alloc] init];
+    tempSwipLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [tempSwipLeft addTarget:self action:@selector(swipLeft:)];
+    [self.tabBarController.view addGestureRecognizer:tempSwipLeft];
+    [pan requireGestureRecognizerToFail:tempSwipLeft];
+    tempSwipLeft.delegate = self;
     
     
     UISwipeGestureRecognizer *tempSwipUp = [[UISwipeGestureRecognizer alloc] init];
@@ -156,6 +166,21 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
 }
 
 
+-(void)slideMenu:(id)sender//右划显示menu
+{
+    if (self.sta == kStateHome) {
+        [self showMenu];
+    }
+//    else if(self.sta == kStateMenu)
+}
+
+-(void)swipLeft:(id)sender//menu状态左划home 返回home
+{
+    if(self.sta == kStateMenu)
+       [self showHome:kStateHome];
+    else
+        NSLog(@"swip  left");
+}
 
 -(void)setHideTabBar:(id)sender
 {
@@ -257,7 +282,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
         self.panStartX = [recognizer locationInView:self.view].x;
     }
     NSLog(@"get pan self.panStartX  = %lf",self.panStartX );
-    if (self.sta == kStateHome && self.panStartX >= 75) {
+    if (self.sta == kStateHome && self.panStartX >= 150/*pan 手势有效范围*/) {
         return;
     }
     
@@ -265,7 +290,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     NSLog(@"get pan x  = %lf",x );
     // 禁止在主界面的时候向左滑动
     if (self.sta == kStateHome && x < 0) {
-        [self showHome:kStateHome];//add by wangjc 防止左划出现负值时恢复到home page
+        [self showHome:kStateHome];//add by wangjc 防止左划出现负值,出现时恢复到home page
         return;
     }
     
@@ -352,7 +377,12 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     [self showMenu];
 }
 
-
+-(void)swipLeftAction//menu状态划动menu 返回home
+{
+    NSLog(@"back to home page");
+    if(self.sta == kStateMenu)
+        [self showHome:kStateHome];
+}
 
 
 #pragma mark - WMMenuViewController代理方法

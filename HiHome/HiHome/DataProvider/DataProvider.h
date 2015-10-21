@@ -57,7 +57,99 @@
 -(void)getWeatherInfo:(NSString *)url;
 
 
+/**
+ *  获取任务
+ *
+ *  @param userID       用户id
+ *  @param page         当前页码，   default 1
+ *  @param num          每页显示数量  default  10
+ */
 
+-(void)getMyTask:(NSString *)userID andPage:(NSString *)page andPerPage:(NSString *)num;
+
+
+/**
+ *  创建任务
+ *
+ *  @param userID     user id
+ *  @param title        任务名称
+ *  @param content      任务内容
+ *  @param isDay        是否是全天任务
+ *  @param stime        开始时间
+ *  @param etime        结束时间
+ *  @param tip          任务提醒
+ *  @param repeat       任务重复
+ *  @param tasker       任务执行人数量
+ *
+ *
+ */
+-(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker;
+
+
+/**
+ *  获取任务详情
+ *
+ *  @param taskID       任务id
+ *
+ */
+
+-(void)getTaskInfo:(NSString *)taskID;
+
+/**
+ *  获取任务状态
+ *
+ *  @param taskID       任务id
+ *
+ */
+-(void)getTaskStatus:(NSString *)taskID;
+
+/**
+ *  删除任务
+ *
+ *  @param taskID       任务id
+ *
+ */
+-(void)delTask:(NSString *)taskID;
+
+
+/**
+ *  创建纪念日
+ *
+ *  @param userID       用户id
+ *  @param img          纪念日头像
+ *  @param title        纪念日标题
+ *  @param mdate        纪念日日期
+ *  @param content      纪念日内容
+ *
+ */
+-(void)createAnniversary:(NSString *)userID andImg:(NSString *)img andTitle:(NSString *)title andMdate:(NSString *)mdate andContent:(NSString *)content;
+
+
+/**
+ *  获取纪念日列表
+ *
+ *  @param userID       用户id
+ *  @param nowpage      非必需  当前页     default 1
+ *  @param perpage      非必需  每页显示数量  default 10
+ *
+ */
+-(void)getAnniversaryList:(NSString *)userID andNowPage:(NSString *) nowpage andPerPage : (NSString *)perpage;
+
+/**
+ *  获取纪念日详情
+ *
+ *  @param anniversaryID       纪念日id
+ *
+ */
+-(void)getAnniversaryInfo:(NSString *)anniversaryID;
+
+/**
+ *  删除纪念日
+ *
+ *  @param anniversaryID       纪念日id
+ *
+ */
+-(void)delAnniversary:(NSString *)anniversaryID;
 
 
 /**

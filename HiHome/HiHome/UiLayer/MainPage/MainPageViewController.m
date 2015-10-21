@@ -13,6 +13,12 @@
 
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
+    DataProvider *dataProvider;
+    
+    UIImageView *weatherImg;
+    UILabel *temp;
+    UILabel *lhTempt;
+    UILabel *outNote;
 }
 
 @end
@@ -34,6 +40,8 @@
 
 -(void) initViews
 {
+    dataProvider = [[DataProvider alloc] init];
+    
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
@@ -53,70 +61,48 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
-    CLLocation *location = [locations objectAtIndex:locations.count - 1];
-    if ([location horizontalAccuracy] > 0) {
-        [self getWeatherInfo:location.coordinate.latitude longitude:location.coordinate.longitude];
-    }
+    //获取当前所在地的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    //根据经纬度反向地理编译出地址信息
+    [geocoder reverseGeocodeLocation:locations[0] completionHandler:^(NSArray *array, NSError *error) {
+        if (array.count > 0) {
+            CLPlacemark *placemark = [array objectAtIndex:0];
+            //获取城市
+            NSString *city = placemark.locality;
+            if(!city){
+                city = placemark.administrativeArea;
+            }
+            NSLog(@"%@",city);
+            [self getWeatherInfo:[city substringToIndex:[city length]-1]];
+        }
+    }];
     [locationManager stopUpdatingLocation];
 }
 
-- (void)getWeatherInfo:(CLLocationDegrees) latitude longitude:(CLLocationDegrees) longitude{
-    //AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
-    //NSString *url = @"http://m.weather.com.cn/mweather/101120901.shtml";
-//    DataProvider *dataProvider = [[DataProvider alloc] init];
-//    [dataProvider setDelegateObject:self setBackFunctionName:@"WeatherBackcall:"];
-//    [dataProvider getWeatherInfo:url];
-    
+- (void)getWeatherInfo:(NSString *) city{
     NSString *httpUrl = @"http://apis.baidu.com/heweather/weather/free";
-    NSString *httpArg = @"city=linyi";
-    [self request: httpUrl withHttpArg: httpArg];
-    
-    
-//    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%f",latitude],@"lat",[NSString stringWithFormat:@"%f",longitude],@"lon",@"b6bd4b639a3990561bd75a9c133151ae",@"appid", nil];
-//    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-//        [self updateWheatherUIInfo:responseObject];
-//    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-//        NSLog(@"获取天气信息失败～");
-//    }];
+    NSString *httpArg = [NSString stringWithFormat:@"city=%@",city];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"WeatherBackcall:"];
+    [dataProvider getWeatherInfo:httpUrl withHttpArg:httpArg];
 }
 
 - (void)WeatherBackcall:(id)dic{
-    NSLog(@"%@",dic);
-}
-
--(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  {
-    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
-    NSURL *url = [NSURL URLWithString: urlStr];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
-    [request setHTTPMethod: @"GET"];
-    [request addValue: @"4e01ff24cadf672086df1d5f654f4785" forHTTPHeaderField: @"apikey"];
+    NSString *baseDic = [dic valueForKey:@"HeWeather data service 3.0"];
     
+    weatherImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://files.heweather.com/cond_icon/%@.png",[[[baseDic valueForKey:@"now"] valueForKey:@"cond"] valueForKey:@"code"][0]]]]];
     
-    [NSURLConnection sendAsynchronousRequest: request
-                                       queue: [NSOperationQueue mainQueue]
-                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
-                               if (error) {
-                                   NSLog(@"Httperror: %@%ld", error.localizedDescription, error.code);
-                               } else {
-                                   NSInteger responseCode = [(NSHTTPURLResponse *)response statusCode];
-                                   NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSLog(@"HttpResponseCode:%ld", responseCode);
-                                   NSLog(@"HttpResponseBody %@",responseString);
-                               }
-                           }];
-}
-
-- (void)updateWheatherUIInfo:(NSDictionary *) jsonResult{
-    NSLog(@"%@",jsonResult);
-    double tempResult = [[[jsonResult valueForKey:@"main"] valueForKey:@"temp"] doubleValue];
-    double currentTemp;
-    double lowTemp;
-    double highTemp;
-    if ([[[jsonResult valueForKey:@"sys"] valueForKey:@"country"]  isEqual: @"US"]) {
-        currentTemp = round(((tempResult - 273.15) * 1.8) + 32);
-    }else{
-        currentTemp = round(tempResult - 273.15);
-    }
+    //实时温度
+    temp.text = [[baseDic valueForKey:@"now"] valueForKey:@"tmp"][0];
+    
+    //温度范围
+    NSString *lowTemp = [[[baseDic valueForKey:@"daily_forecast"] valueForKey:@"tmp"] valueForKey:@"min"][0][0];
+    NSString *highTemp = [[[baseDic valueForKey:@"daily_forecast"] valueForKey:@"tmp"] valueForKey:@"max"][0][0];
+    lhTempt.text = [NSString stringWithFormat:@"L%@-H%@",lowTemp,highTemp];
+    
+    //出行注意
+    NSString *outNoteStr = [[[baseDic valueForKey:@"suggestion"] valueForKey:@"drsg"] valueForKey:@"txt"][0];
+    NSArray *outNoteArray = [outNoteStr componentsSeparatedByString:@"。"];
+    outNote.text = [NSString stringWithFormat:@"出行注意:%@",outNoteArray[0]];
 }
 
 
@@ -343,6 +329,24 @@
 {
     NSMutableArray *LabelViews = [NSMutableArray array];
     
+    weatherImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
+    
+    temp = [[UILabel alloc] initWithFrame:CGRectMake(weatherImg.frame.origin.x + weatherImg.frame.size.width + 5, 10, 38, 30)];
+    temp.font = [UIFont systemFontOfSize:30];
+    temp.textColor = ZY_UIBASECOLOR;
+    
+    UILabel *temp2 = [[UILabel alloc] initWithFrame:CGRectMake(temp.frame.origin.x + temp.frame.size.width, 10, 35, 30)];
+    temp2.text = @"℃";
+    temp2.font = [UIFont systemFontOfSize:25];
+    temp2.textColor = ZY_UIBASECOLOR;
+    
+    lhTempt = [[UILabel alloc] initWithFrame:CGRectMake(weatherImg.frame.origin.x + weatherImg.frame.size.width + 5, 12 + temp.frame.size.height, 80, 20)];
+    lhTempt.textColor = [UIColor colorWithRed:0.64 green:0.43 blue:0.13 alpha:1];
+    
+    outNote = [[UILabel alloc] initWithFrame:CGRectMake(30, lhTempt.frame.origin.y + lhTempt.frame.size.height + 10, SCREEN_WIDTH - 35, 21)];
+    outNote.font = [UIFont systemFontOfSize:13];
+    outNote.textAlignment = NSTextAlignmentRight;
+    outNote.textColor = [UIColor colorWithRed:0.74 green:0.6 blue:0.43 alpha:1];
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100-20, 10, 100, ZY_MAINCELL0_HEIGHT/10*3)];
     _timeLabel.textColor = ZY_UIBASECOLOR;
@@ -353,11 +357,16 @@
     
     
     
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100-20, ZY_MAINCELL0_HEIGHT/10*3+10, 100, ZY_MAINCELL0_HEIGHT/10*2)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100-20, ZY_MAINCELL0_HEIGHT/10*3+10, 110, ZY_MAINCELL0_HEIGHT/10*2)];
     _dateLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     _dateLabel.textAlignment = NSTextAlignmentLeft;
-    _dateLabel.font = [UIFont boldSystemFontOfSize:12];
+    _dateLabel.font = [UIFont boldSystemFontOfSize:13];
     
+    [LabelViews addObject:weatherImg];
+    [LabelViews addObject:temp];
+    [LabelViews addObject:temp2];
+    [LabelViews addObject:lhTempt];
+    [LabelViews addObject:outNote];
     [LabelViews addObject:_timeLabel];
     [LabelViews addObject:_dateLabel];
     return LabelViews;
@@ -630,6 +639,163 @@
     }
     return 0;
     
+}
+
+//根据天气编码获取对应图片
+- (NSString *)getWeatherImgByCode:(int) code{
+    NSString *imgUrl = @"http://files.heweather.com/cond_icon/";
+    switch (code) {
+        case 100:
+            break;
+        case 101:
+            
+            break;
+        case 102:
+            
+            break;
+        case 103:
+            
+            break;
+        case 104:
+            
+            break;
+        case 200:
+            
+            break;
+        case 201:
+            
+            break;
+        case 202:
+            
+            break;
+        case 203:
+            
+            break;
+        case 204:
+            
+            break;
+        case 205:
+            
+            break;
+        case 206:
+            
+            break;
+        case 207:
+            
+            break;
+        case 208:
+            
+            break;
+        case 209:
+            
+            break;
+        case 210:
+            
+            break;
+        case 211:
+            
+            break;
+        case 212:
+            
+            break;
+        case 213:
+            
+            break;
+        case 300:
+            
+            break;
+        case 301:
+            
+            break;
+        case 302:
+            
+            break;
+        case 303:
+            
+            break;
+        case 304:
+            
+            break;
+        case 305:
+            
+            break;
+        case 306:
+            
+            break;
+        case 307:
+            
+            break;
+        case 308:
+            
+            break;
+        case 309:
+            
+            break;
+        case 310:
+            
+            break;
+        case 311:
+            
+            break;
+        case 312:
+            
+            break;
+        case 313:
+            
+            break;
+        case 400:
+            
+            break;
+        case 401:
+            
+            break;
+        case 402:
+            
+            break;
+        case 403:
+            
+            break;
+        case 404:
+            
+            break;
+        case 405:
+            
+            break;
+        case 406:
+            
+            break;
+        case 407:
+            
+            break;
+        case 500:
+            
+            break;
+        case 501:
+            
+            break;
+        case 502:
+            
+            break;
+        case 503:
+            
+            break;
+        case 504:
+            
+            break;
+        case 505:
+            
+            break;
+        case 506:
+            
+            break;
+        case 507:
+            
+            break;
+            
+        default:
+            break;
+    }
+    return imgUrl;
 }
 
 

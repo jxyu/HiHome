@@ -81,10 +81,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQV-YJ-gYk">
-                        <rect key="frame" x="70" y="51" width="250" height="1"/>
+                        <rect key="frame" x="70" y="47" width="250" height="1"/>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.35686274509999999" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="dnX-dK-4A2"/>
+                            <constraint firstAttribute="height" constant="1" id="fdP-Rd-C2v"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -107,7 +107,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="fQV-YJ-gYk" secondAttribute="trailing" id="4cN-KA-9Lj"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fQV-YJ-gYk" secondAttribute="trailing" constant="-8" id="7DA-kR-fmr"/>
+                    <constraint firstItem="fQV-YJ-gYk" firstAttribute="leading" secondItem="JDU-8p-YqI" secondAttribute="leading" id="7qf-j2-Kxq"/>
                     <constraint firstItem="fQV-YJ-gYk" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leadingMargin" constant="62" id="9Rd-8Z-ihV"/>
+                    <constraint firstItem="fQV-YJ-gYk" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leadingMargin" constant="62" id="9Xg-Iv-0p2"/>
                     <constraint firstItem="SfP-Bd-XB2" firstAttribute="trailing" secondItem="Thw-RV-gGE" secondAttribute="trailing" id="AUi-9f-iPW"/>
                     <constraint firstItem="s6J-UR-eME" firstAttribute="top" secondItem="KMZ-xY-k0b" secondAttribute="top" id="AzP-tY-crV"/>
                     <constraint firstItem="ugn-aW-kOq" firstAttribute="baseline" secondItem="NlO-aB-XeQ" secondAttribute="baseline" id="CWo-S9-eBg"/>
@@ -116,6 +119,7 @@
                     <constraint firstItem="s6J-UR-eME" firstAttribute="centerY" secondItem="NlO-aB-XeQ" secondAttribute="centerY" id="IMy-ok-WzG"/>
                     <constraint firstItem="iou-vE-u09" firstAttribute="leading" secondItem="ypJ-vR-K4B" secondAttribute="leading" id="Kco-HG-uiy"/>
                     <constraint firstItem="s6J-UR-eME" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leading" id="LhY-Vc-fO6"/>
+                    <constraint firstItem="fQV-YJ-gYk" firstAttribute="bottom" secondItem="s6J-UR-eME" secondAttribute="bottom" id="M4K-fc-Jae"/>
                     <constraint firstItem="yuY-86-Rlv" firstAttribute="leading" secondItem="SfP-Bd-XB2" secondAttribute="trailing" constant="1" id="MRX-eI-TdE"/>
                     <constraint firstItem="DPb-td-CMM" firstAttribute="leading" secondItem="Zg6-7r-fNd" secondAttribute="trailing" constant="14" id="Mqj-Fa-0ni"/>
                     <constraint firstItem="A7i-B6-Vha" firstAttribute="baseline" secondItem="Thw-RV-gGE" secondAttribute="baseline" id="Oc8-yg-bzy"/>
@@ -151,6 +155,15 @@
                     <constraint firstItem="ugn-aW-kOq" firstAttribute="baseline" secondItem="NlO-aB-XeQ" secondAttribute="firstBaseline" id="ywY-FG-j3v"/>
                     <constraint firstItem="DPb-td-CMM" firstAttribute="top" secondItem="MGi-i6-KsN" secondAttribute="top" id="yyV-WL-gh6"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="4cN-KA-9Lj"/>
+                        <exclude reference="9Rd-8Z-ihV"/>
+                        <exclude reference="gjM-PA-Q1Z"/>
+                        <exclude reference="rZ8-ec-Zu6"/>
+                        <exclude reference="iMV-d8-Tlv"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="mDoing" destination="Zg6-7r-fNd" id="8fj-on-iOM"/>

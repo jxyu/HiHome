@@ -54,7 +54,7 @@
 -(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key;
 
 //获取天气信息
--(void)getWeatherInfo:(NSString *)url;
+-(void)getWeatherInfo: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg;
 
 
 

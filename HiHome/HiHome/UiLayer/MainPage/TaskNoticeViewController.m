@@ -43,7 +43,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld",(long)selectSectionIndex);
     NSString *CellIdentifier = @"TaskNoticeCellIdentifier";
     if (indexPath.section == selectSectionIndex) {
         SelectTaskNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

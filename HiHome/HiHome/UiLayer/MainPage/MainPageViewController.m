@@ -89,6 +89,7 @@
 - (void)WeatherBackcall:(id)dic{
     NSString *baseDic = [dic valueForKey:@"HeWeather data service 3.0"];
     
+    //天气图标
     weatherImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://files.heweather.com/cond_icon/%@.png",[[[baseDic valueForKey:@"now"] valueForKey:@"cond"] valueForKey:@"code"][0]]]]];
     
     //实时温度
@@ -236,8 +237,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];//选中后的反显颜色即刻消失
-    
-    if(indexPath.section == 3){
+    if (indexPath.section == 1) {
+        _messageNoticeVC = [[MessageNotice alloc] init];
+        _messageNoticeVC.navTitle = @"申请通知";
+        _messageNoticeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:_messageNoticeVC animated:NO];
+    }
+    if(indexPath.section == 2){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedTabbarIndex1" object:nil];
+    }
+    else if(indexPath.section == 3){
         _taskNoticeVC = [[TaskNoticeViewController alloc] init];
         _taskNoticeVC.navTitle = @"任务提醒";
         _taskNoticeVC.hidesBottomBarWhenPushed = YES;
@@ -329,7 +338,7 @@
 {
     NSMutableArray *LabelViews = [NSMutableArray array];
     
-    weatherImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
+    weatherImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
     
     temp = [[UILabel alloc] initWithFrame:CGRectMake(weatherImg.frame.origin.x + weatherImg.frame.size.width + 5, 10, 38, 30)];
     temp.font = [UIFont systemFontOfSize:30];
@@ -639,163 +648,6 @@
     }
     return 0;
     
-}
-
-//根据天气编码获取对应图片
-- (NSString *)getWeatherImgByCode:(int) code{
-    NSString *imgUrl = @"http://files.heweather.com/cond_icon/";
-    switch (code) {
-        case 100:
-            break;
-        case 101:
-            
-            break;
-        case 102:
-            
-            break;
-        case 103:
-            
-            break;
-        case 104:
-            
-            break;
-        case 200:
-            
-            break;
-        case 201:
-            
-            break;
-        case 202:
-            
-            break;
-        case 203:
-            
-            break;
-        case 204:
-            
-            break;
-        case 205:
-            
-            break;
-        case 206:
-            
-            break;
-        case 207:
-            
-            break;
-        case 208:
-            
-            break;
-        case 209:
-            
-            break;
-        case 210:
-            
-            break;
-        case 211:
-            
-            break;
-        case 212:
-            
-            break;
-        case 213:
-            
-            break;
-        case 300:
-            
-            break;
-        case 301:
-            
-            break;
-        case 302:
-            
-            break;
-        case 303:
-            
-            break;
-        case 304:
-            
-            break;
-        case 305:
-            
-            break;
-        case 306:
-            
-            break;
-        case 307:
-            
-            break;
-        case 308:
-            
-            break;
-        case 309:
-            
-            break;
-        case 310:
-            
-            break;
-        case 311:
-            
-            break;
-        case 312:
-            
-            break;
-        case 313:
-            
-            break;
-        case 400:
-            
-            break;
-        case 401:
-            
-            break;
-        case 402:
-            
-            break;
-        case 403:
-            
-            break;
-        case 404:
-            
-            break;
-        case 405:
-            
-            break;
-        case 406:
-            
-            break;
-        case 407:
-            
-            break;
-        case 500:
-            
-            break;
-        case 501:
-            
-            break;
-        case 502:
-            
-            break;
-        case 503:
-            
-            break;
-        case 504:
-            
-            break;
-        case 505:
-            
-            break;
-        case 506:
-            
-            break;
-        case 507:
-            
-            break;
-            
-        default:
-            break;
-    }
-    return imgUrl;
 }
 
 

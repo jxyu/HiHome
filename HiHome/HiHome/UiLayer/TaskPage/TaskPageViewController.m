@@ -13,11 +13,15 @@
 #import "TaskTableViewCell.h"
 #import "AnniversaryTaskCell.h"
 
+#import "DataProvider.h"
+#import "DataDefine.h"
+
 
 @interface TaskPageViewController ()
 {
     
     NSMutableDictionary *eventsByDate;
+    NSDictionary *_taskDict;
 }
 @end
 
@@ -25,9 +29,149 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+ //   [self loadTaskDatas];
+    
     [self initCalendar];//初始化日历
     // Do any additional setup after loading the view from its nib.
 }
+
+
+#pragma mark - 从服务器获取数据
+
+-(void) createTaskForTest
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"createTaskCallBack:"];
+    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+ //   NSLog(@"id = [%@]",userID);
+    
+    [dataprovider createTask:userID andTitle:@"买东西" andContent:@"去买根油条" andIsDay:@"YES" andStartTime:@"2015-10-21 9:00" andEndTime:@"2015-10-22 12:00" andTip:@"1" andRepeat:@"1" andTasker:@"8"];
+    
+    
+    [dataprovider createTask:userID andTitle:@"买苹果" andContent:@"去买个苹果" andIsDay:@"YES" andStartTime:@"2015-10-21 9:00" andEndTime:@"2015-10-22 12:00" andTip:@"1" andRepeat:@"1" andTasker:@"8"];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+  //  [self createTaskForTest];
+    
+    [self loadTaskDatas:nil andPerPage:nil];
+}
+
+-(void) loadTaskDatas:(NSString *)nowPage andPerPage:(NSString *)perPage
+{
+    
+    NSLog(@"load task datas");
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getTaskCallBack:"];
+
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+ //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider getMyTask:userID andPage:nowPage andPerPage:perPage];
+}
+
+
+-(void)createTaskCallBack:(id)dict
+{
+    if(dict != nil)
+        NSLog(@"createT task dict = [%@]",dict);
+}
+
+
+-(void)getTaskCallBack:(id)dict
+{
+    NSString *resultAll;
+    if(dict != nil)
+    {
+        _taskDict = [dict objectForKey:@"datas"];
+        NSLog(@"task dict = [%@]",dict);
+        
+        NSDictionary *datas = [dict objectForKey:@"datas"];
+        if(datas !=nil)
+        {
+           resultAll = [datas objectForKey:@"resultAll"];
+        
+            NSLog(@"result all = %@",resultAll);
+        }
+        else
+        {
+            NSLog(@"datas = nil");
+        }
+        _cellCountMyTask = [resultAll integerValue]+_myAnniversaryData.count;
+        
+        NSLog(@"_cellCountMyTask = %ld",_cellCountMyTask);
+        
+        [self setTaskDatas];
+        
+        UITableView *tempTableView;
+        tempTableView = [_tableViews objectAtIndex:0];
+        [tempTableView reloadData];//重新载入数据
+    }
+}
+
+
+-(void) setTaskDatas
+{
+    if(_taskDict == nil)
+        return;
+    
+    NSArray *taskList = [_taskDict objectForKey:@"list"];
+    NSString *resultAll = [_taskDict objectForKey:@"resultAll"];
+    
+    
+    for (int i = 0; i < [resultAll integerValue]; i++) {
+        TaskPath * taskPath = [[TaskPath alloc] init];
+        
+        NSDictionary *tempDict = [taskList objectAtIndex:i];
+    
+        
+        taskPath.taskName = [tempDict objectForKey:@"title"];
+        taskPath.taskOwner = @"自己";
+        NSArray *performers = @[@"自己"];
+        taskPath.taskPerformers = performers;
+        taskPath.taskContent =[tempDict objectForKey:@"content"];
+        taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
+        taskPath.taskType = ZY_TASKTYPE_MINE;
+        taskPath.remindTime = ZY_TASkREMIND_RESERVE;
+        taskPath.repeatMode = ZY_TASkREPEAT_RESERVE;
+        taskPath.startTaskDateStr = [tempDict objectForKey:@"start"];
+        taskPath.endTaskDateStr = [tempDict objectForKey:@"end"];
+        
+        NSDate* now = [NSDate date];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+
+        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
+
+        NSDateComponents *startTaskDate;
+        NSDateComponents *endTaskDate;
+        startTaskDate= [cal components:unitFlags fromDate:now];
+        endTaskDate= [cal components:unitFlags fromDate:now];
+
+        taskPath.startTaskDate =startTaskDate;
+        endTaskDate.day ++;
+        taskPath.endTaskDate = endTaskDate;
+        
+        [_myTaskData addObject:taskPath];
+    }
+}
+
 
 -(void) initViews
 {//[[UIScreen mainScreen] bounds].size.height-ZY_CALENDAR_NORMALMODE_HEIGHT,
@@ -105,34 +249,34 @@
     }
     
     _myTaskData = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 4; i++) {
-        TaskPath * taskPath = [[TaskPath alloc] init];
-        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%d",i+1];
-        taskPath.taskOwner = @"自己";
-        NSArray *performers = @[@"自己"];
-        taskPath.taskPerformers = performers;
-        taskPath.taskContent =@"去超市买根黄瓜";
-        taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
-        taskPath.taskType = ZY_TASKTYPE_MINE;
-        taskPath.remindTime = ZY_TASkREMIND_RESERVE;
-        taskPath.repeatMode = ZY_TASkREPEAT_RESERVE;
-        
-        NSDate* now = [NSDate date];
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        
-        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
-        
-        NSDateComponents *startTaskDate;
-        NSDateComponents *endTaskDate;
-        startTaskDate= [cal components:unitFlags fromDate:now];
-        endTaskDate= [cal components:unitFlags fromDate:now];
-        
-        taskPath.startTaskDate =startTaskDate;
-        endTaskDate.day ++;
-        taskPath.endTaskDate = endTaskDate;
-        
-        [_myTaskData addObject:taskPath];
-    }
+//    for (int i = 0; i < 40; i++) {
+//        TaskPath * taskPath = [[TaskPath alloc] init];
+//        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%d",i+1];
+//        taskPath.taskOwner = @"自己";
+//        NSArray *performers = @[@"自己"];
+//        taskPath.taskPerformers = performers;
+//        taskPath.taskContent =@"去超市买根黄瓜";
+//        taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
+//        taskPath.taskType = ZY_TASKTYPE_MINE;
+//        taskPath.remindTime = ZY_TASkREMIND_RESERVE;
+//        taskPath.repeatMode = ZY_TASkREPEAT_RESERVE;
+//        
+//        NSDate* now = [NSDate date];
+//        NSCalendar *cal = [NSCalendar currentCalendar];
+//        
+//        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
+//        
+//        NSDateComponents *startTaskDate;
+//        NSDateComponents *endTaskDate;
+//        startTaskDate= [cal components:unitFlags fromDate:now];
+//        endTaskDate= [cal components:unitFlags fromDate:now];
+//        
+//        taskPath.startTaskDate =startTaskDate;
+//        endTaskDate.day ++;
+//        taskPath.endTaskDate = endTaskDate;
+//        
+//        [_myTaskData addObject:taskPath];
+//    }
     
     _cellCountMyTask = _myAnniversaryData.count + _myTaskData.count + 1;//最后一个元素作废，当站位作用，作为最后的横线
     _cellCountGetTask =4;//最后一个元素作废，当站位作用，作为最后的横线

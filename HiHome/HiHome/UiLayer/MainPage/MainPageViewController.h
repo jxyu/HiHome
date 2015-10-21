@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageNotice.h"
 #import "TaskNoticeViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AFNetworking/AFNetworking.h>
@@ -39,6 +40,8 @@ typedef struct _ZY_date_t
     UILabel *_dateLabel;
     ZY_time_t *_time;
     ZY_date_t *_date;
+    
+    MessageNotice *_messageNoticeVC;
     TaskNoticeViewController *_taskNoticeVC;
 }
 -(void) initViews;

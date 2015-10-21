@@ -179,8 +179,15 @@
 
 -(void)LoginFunC:(UIButton * )sender
 {
-    if (txt_newPwd.text==txt_againNewPwd.text&&txt_newPwd.text.length>0&&txt_vrifyCode.text.length>0) {
-        [SVProgressHUD showWithStatus:@"正在发送验证码..." maskType:SVProgressHUDMaskTypeBlack];
+    NSLog(@"txt_newPwd.text = %@",txt_newPwd.text);
+    NSLog(@"txt_againNewPwd.text = %@",txt_againNewPwd.text);
+    NSLog(@"txt_newPwd.text.length = %ld",txt_newPwd.text.length);
+    NSLog(@"txt_vrifyCode.text.length = %ld",txt_vrifyCode.text.length);
+    
+    if ([txt_newPwd.text isEqualToString:txt_againNewPwd.text]&&txt_newPwd.text.length>0&&txt_vrifyCode.text.length>0) {
+        
+  
+        [SVProgressHUD showWithStatus:@"正在注册..." maskType:SVProgressHUDMaskTypeBlack];
         [SMSSDK commitVerificationCode:txt_vrifyCode.text phoneNumber:txt_phoneNum.text zone:@"86" result:^(NSError *error) {
             
             if (!error) {
@@ -228,6 +235,11 @@
     NSLog(@"注册返回数据%@",dict);
     if ([dict[@"code"] intValue]==200) {
         [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:dict[@"message"] maskType:SVProgressHUDMaskTypeBlack];
+        
     }
 }
 

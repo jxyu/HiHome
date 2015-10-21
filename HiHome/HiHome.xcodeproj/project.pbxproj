@@ -179,6 +179,10 @@
 		B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911D1BD225F800DAB43C /* jinianri_img.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; settings = {ASSET_TAGS = (); }; };
+		B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */; settings = {ASSET_TAGS = (); }; };
+		B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */; settings = {ASSET_TAGS = (); }; };
+		B7A9D8B11BD7864900C37DB5 /* MessageNotice.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AF1BD7864900C37DB5 /* MessageNotice.xib */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AE51BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AEF1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AED1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AF01BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AEE1BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
@@ -458,6 +462,12 @@
 		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
+		B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeCell.h; path = HiHome/UiLayer/MainPage/MessageNoticeCell.h; sourceTree = SOURCE_ROOT; };
+		B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeCell.m; path = HiHome/UiLayer/MainPage/MessageNoticeCell.m; sourceTree = SOURCE_ROOT; };
+		B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeCell.xib; path = HiHome/UiLayer/MainPage/MessageNoticeCell.xib; sourceTree = SOURCE_ROOT; };
+		B7A9D8AD1BD7864900C37DB5 /* MessageNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNotice.h; path = HiHome/UiLayer/MainPage/MessageNotice.h; sourceTree = SOURCE_ROOT; };
+		B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNotice.m; path = HiHome/UiLayer/MainPage/MessageNotice.m; sourceTree = SOURCE_ROOT; };
+		B7A9D8AF1BD7864900C37DB5 /* MessageNotice.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNotice.xib; path = HiHome/UiLayer/MainPage/MessageNotice.xib; sourceTree = SOURCE_ROOT; };
 		B7C4F90E1BD0EC9200C80FD4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B7CC5AE31BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		B7CC5AE41BD4B92E00A1078F /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
@@ -1186,6 +1196,12 @@
 		B7CC5AE61BD4BD5E00A1078F /* DetailPage */ = {
 			isa = PBXGroup;
 			children = (
+				B7A9D8AD1BD7864900C37DB5 /* MessageNotice.h */,
+				B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */,
+				B7A9D8AF1BD7864900C37DB5 /* MessageNotice.xib */,
+				B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */,
+				B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */,
+				B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */,
 				B7CC5AF11BD4D17000A1078F /* TaskNoticeViewController.h */,
 				B7CC5AF21BD4D17000A1078F /* TaskNoticeViewController.m */,
 				B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */,
@@ -1361,6 +1377,7 @@
 				B58D923F1BC64B5F00219E76 /* picture@2x.png in Resources */,
 				B587FF1C1BC8BDA600E9F119 /* recentPic@2x.png in Resources */,
 				B5033BEB1BAFB4320014935E /* AddressPageViewController.xib in Resources */,
+				B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */,
 				802306AC1BD4DAFB006CFFEC /* regster_select_icon@2x.png in Resources */,
 				B58DD9621BB67C550040A084 /* headImg@2x.png in Resources */,
 				B55D08B31BB400FD00C10932 /* sendtask_gray@2x.png in Resources */,
@@ -1401,6 +1418,7 @@
 				B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */,
 				B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */,
 				B58DD95C1BB63DED0040A084 /* chat@2x.png in Resources */,
+				B7A9D8B11BD7864900C37DB5 /* MessageNotice.xib in Resources */,
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
 				B56CFC181BCC90950081B645 /* CreateTaskViewController.xib in Resources */,
 				B58DD9591BB63C2D0040A084 /* bugle@2x.png in Resources */,
@@ -1479,9 +1497,11 @@
 				B5879D6A1BC746A0003AACFA /* TextViewController.m in Sources */,
 				B5E059DF1BB146E100DBF786 /* WMNavigationInteractiveTransition.m in Sources */,
 				B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */,
+				B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */,
 				B56C2EEF1BC4BF7A0030FB83 /* TaskLimitViewController.m in Sources */,
 				B56CFC171BCC90950081B645 /* CreateTaskViewController.m in Sources */,
 				B5E059DC1BB146E100DBF786 /* WMMenuViewController.m in Sources */,
+				B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */,
 				B57F5D971BBA9335009AC336 /* UIView+XD.m in Sources */,
 				B587FF101BC8AB7500E9F119 /* AlbumMainViewController.m in Sources */,
 				B583B1A61BC39B2B000572CA /* BackPageViewController.m in Sources */,

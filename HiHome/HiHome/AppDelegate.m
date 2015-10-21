@@ -152,7 +152,7 @@
             self.window.rootViewController = _loginViewCtl;
             _loginFlag = true;
         }
-    //    self.window.rootViewController =mainPageCtl;
+        self.window.rootViewController =_tempViewcontroller;
     }
     else
     {

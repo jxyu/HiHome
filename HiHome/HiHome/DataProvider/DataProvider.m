@@ -43,6 +43,7 @@
         [self PostRequest:url andpram:prm];
     }
 }
+
 -(void)ResetPwd:(id)prm
 {
     if (prm) {
@@ -59,10 +60,156 @@
     }
 }
 
--(void)getWeatherInfo:(NSString *)url{
-    [self PostRequest:url andpram:nil];
+//获取天气信息
+-(void)getWeatherInfo: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg {
+    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, [HttpArg stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL *url = [NSURL URLWithString: urlStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
+    [request setHTTPMethod: @"POST"];
+    [request addValue: @"4e01ff24cadf672086df1d5f654f4785" forHTTPHeaderField: @"apikey"];
+    
+    [NSURLConnection sendAsynchronousRequest: request
+                                       queue: [NSOperationQueue mainQueue]
+                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
+                               if (error) {
+                                   NSLog(@"error:%@",error);
+                                   [SVProgressHUD dismiss];
+                               } else {
+                                   id dict =[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                   SEL func_selector = NSSelectorFromString(callBackFunctionName);
+                                   if ([CallBackObject respondsToSelector:func_selector]) {
+                                       NSLog(@"回调成功...");
+                                       [CallBackObject performSelector:func_selector withObject:dict];
+                                   }else{
+                                       NSLog(@"回调失败...");
+                                       [SVProgressHUD dismiss];
+                                   }
+                               }
+                           }];
 }
 
+
+-(void)getMyTask:(NSString *)userID andPage:(NSString *)page andPerPage:(NSString *)num
+{
+    NSDictionary * prm;
+    
+    if (userID) {
+        NSLog(@"userId = [%@]-----",userID);
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getMyTask",Url];
+        if(page == nil && num == nil)
+            prm=@{@"uid":userID};
+        else if (page == nil && num != nil)
+            prm=@{@"uid":userID,@"perpage":num};
+        else if (page != nil && num == nil)
+            prm=@{@"uid":userID,@"nowpage":page};
+        else
+            prm=@{@"uid":userID,@"nowpage":page,@"perpage":num};
+        
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker
+{
+    if (userID && title && content
+        && isDay &&stime && etime
+        && tip &&repeat && tasker
+        ) {
+    
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=addInfo",Url];
+        
+        NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"end":etime,@"tip":tip,@"repeat":repeat,@"tasker":tasker};
+        
+        [self PostRequest:url andpram:prm];
+    }
+
+}
+
+-(void)getTaskInfo:(NSString *)taskID
+{
+    if(taskID)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getInfo",Url];
+        NSDictionary * prm=@{@"id":taskID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+-(void)getTaskStatus:(NSString *)taskID
+{
+    if(taskID)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getTaskState",Url];
+        NSDictionary * prm=@{@"id":taskID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)delTask:(NSString *)taskID
+{
+    if(taskID)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=delInfo",Url];
+        NSDictionary * prm=@{@"id":taskID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+-(void)createAnniversary:(NSString *)userID andImg:(NSString *)img andTitle:(NSString *)title andMdate:(NSString *)mdate andContent:(NSString *)content
+{
+    if(userID && img && title && mdate && content)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=memorial&a=addInfo",Url];
+        
+        NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"imgsrc":img,@"mdate":mdate};
+        
+        [self PostRequest:url andpram:prm];
+    }
+    
+}
+
+-(void)getAnniversaryList:(NSString *)userID andNowPage:(NSString *) nowpage andPerPage : (NSString *)perpage
+{
+    NSDictionary * prm;
+    
+    if (userID) {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=memorial&a=getList",Url];
+        if(nowpage == nil && perpage == nil)
+            prm=@{@"uid":userID};
+        else if (nowpage == nil && perpage != nil)
+            prm=@{@"uid":userID,@"perpage":perpage};
+        else if (nowpage != nil && perpage == nil)
+            prm=@{@"uid":userID,@"nowpage":nowpage};
+        else
+            prm=@{@"uid":userID,@"nowpage":nowpage,@"perpage":perpage};
+        
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)getAnniversaryInfo:(NSString *)anniversaryID
+{
+    if(anniversaryID)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=memorial&a=getInfo",Url];
+        NSDictionary * prm=@{@"id":anniversaryID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)delAnniversary:(NSString *)anniversaryID
+{
+    if(anniversaryID)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=memorial&a=delInfo",Url];
+        NSDictionary * prm=@{@"id":anniversaryID};
+        [self PostRequest:url andpram:prm];
+    }
+}
 
 -(void)GetToken:(NSString *)userid
 {

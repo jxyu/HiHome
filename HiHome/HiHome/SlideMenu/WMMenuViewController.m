@@ -39,6 +39,18 @@
     // 设置tableFooterView为一个空的View，这样就不会显示多余的空白格子了
     self.tableView.tableFooterView = [[UIView alloc] init];
     
+    NSLog(@"set gestureRecognizer");
+    
+    UISwipeGestureRecognizer *tempSwipLeft = [[UISwipeGestureRecognizer alloc] init];
+    tempSwipLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [tempSwipLeft addTarget:self action:@selector(swipAction:)];
+   // [self.tabBarController.view addGestureRecognizer:tempSwipLeft];
+    [self.view addGestureRecognizer:tempSwipLeft];
+ //   [pan requireGestureRecognizerToFail:tempSwipLeft];
+    tempSwipLeft.delegate = self;
+    
+    
+    
     self.headerImageView.image = [[UIImage imageNamed:@"me"] getRoundImage];
 }
 
@@ -52,6 +64,17 @@
         }
     }
 }
+
+-(void) swipAction:(id)sender
+{
+    NSLog(@"swip  left");
+    if([self.delegate respondsToSelector:@selector(swipLeftAction)])
+    {
+        [self.delegate swipLeftAction];
+    }
+    
+}
+
 
 #pragma mark - tableView代理方法及数据源方法
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

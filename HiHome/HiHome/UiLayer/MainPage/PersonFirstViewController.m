@@ -8,6 +8,7 @@
 
 #import "PersonFirstViewController.h"
 #import "UIImage+WM.h"
+#import "UserInfoViewController.h"
 
 @interface PersonFirstViewController (){
     UITableView *mTableView;
@@ -107,6 +108,7 @@
         [cell addSubview:mImageView2];
     }else{
         UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
+        [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
         editInfo.layer.borderWidth = 1;
         editInfo.layer.borderColor = [UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1].CGColor;
         [editInfo setTitle:@"编辑资料" forState:UIControlStateNormal];
@@ -145,6 +147,12 @@
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+}
+
+
+-(void)btnEditInfo:(id)sender{
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+    [self presentViewController:userInfoVC animated:YES completion:^{}];
 }
 
 @end

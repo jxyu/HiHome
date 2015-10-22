@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _lblTitle.text = @"个人资料";
+    [self addLeftButton:@"goback@2x.png"];
     isMan=YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     self.tabBarController.hidesBottomBarWhenPushed=YES;
@@ -222,6 +224,10 @@
         isMan=NO;
     }
     [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)clickLeftButton:(UIButton *)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

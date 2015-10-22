@@ -89,22 +89,31 @@
 }
 
 
--(void)getMyTask:(NSString *)userID andPage:(NSString *)page andPerPage:(NSString *)num
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
 {
-    NSDictionary * prm;
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
     if (userID) {
         NSLog(@"userId = [%@]-----",userID);
         
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getMyTask",Url];
-        if(page == nil && num == nil)
-            prm=@{@"uid":userID};
-        else if (page == nil && num != nil)
-            prm=@{@"uid":userID,@"perpage":num};
-        else if (page != nil && num == nil)
-            prm=@{@"uid":userID,@"nowpage":page};
-        else
-            prm=@{@"uid":userID,@"nowpage":page,@"perpage":num};
+//        if(page == nil && num == nil)
+//            prm=@{@"uid":userID};
+//        else if (page == nil && num != nil)
+//            prm=@{@"uid":userID,@"perpage":num};
+//        else if (page != nil && num == nil)
+//            prm=@{@"uid":userID,@"nowpage":page};
+//        else
+//        prm=@{@"uid":userID,@"state":state,@"nowpage":page,@"perpage":num};
+        [prm setObject:userID forKey:@"uid"];
+        if(state!=nil)
+            [prm setObject:state forKey:@"state"];
+        if(page!=nil)
+            [prm setObject:page forKey:@"nowpage"];
+        if(perpage!=nil)
+            [prm setObject:perpage forKey:@"perpage"];
+
+        NSLog(@"send prm = [%@]",prm);
         
         [self PostRequest:url andpram:prm];
     }

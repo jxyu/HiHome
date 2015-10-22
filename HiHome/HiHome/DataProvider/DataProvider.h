@@ -62,11 +62,13 @@
  *  获取任务
  *
  *  @param userID       用户id
+ *  @param state        任务状态
  *  @param page         当前页码，   default 1
- *  @param num          每页显示数量  default  10
+ *  @param perpage          每页显示数量  default  10
  */
 
--(void)getMyTask:(NSString *)userID andPage:(NSString *)page andPerPage:(NSString *)num;
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage;
+
 
 
 /**

@@ -16,6 +16,7 @@
 #define KURL @"http://115.28.208.196:8080/aigz/"
 #define umeng_app_key @"557e958167e58e0b720041ff"
 #define KIMGURL @"http://115.28.208.196:8080/aigz/resources/"
+#define ZY_IMG_PATH @"http://hihome.zhongyangjituan.com/Uploads/"
 
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)

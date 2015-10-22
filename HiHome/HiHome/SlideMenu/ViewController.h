@@ -10,17 +10,18 @@
 #import "WMBaseViewController.h"
 #import "CustomTabBarViewController.h"
 #import "MainSettings.h"
+#import "PersonFirstViewController.h"
 
 @interface ViewController : WMBaseViewController<UIGestureRecognizerDelegate,CustomTabBarViewControllerDelegate>
 {
     @private
     BOOL swipFlag;
-    
     OptionsViewController *_optionPage;
     AnniversaryViewController *_anniversaryPage;
     CoupleViewController *_CoupleSetPage;
     PlanMonthViewController *_planMonthPage;
     AlbumMainViewController *_AlbumPage;
+    PersonFirstViewController *_personFirstVC;
 }
 @end
 

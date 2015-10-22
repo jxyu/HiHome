@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
+#import "TaskPath.h"
 
 #define ZY_PICPICK_BTN_TAG      1
 #define ZY_TAKEPIC_BTN_TAG      2
@@ -15,6 +16,17 @@
 #define ZY_REPEAT_BTN_TAG       4
 #define ZY_PLACE_BTN_TAG        5
 
+typedef enum _taskDetailMode
+{
+    TaskDetail_ReceiveMode  = 0,
+    TaskDetail_SendMode
+    
+}TaskDetailMode;
+
 @interface TaskDetailPageViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@property (nonatomic)TaskDetailMode taskDetailMode;
+
+-(void)setDatas:(TaskPath *)taskPath;
+
 
 @end

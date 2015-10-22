@@ -174,8 +174,23 @@
     self.labelForEndDate.text = taskPath.endTaskDateStr;//[NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];
 
     switch (taskPath.repeatMode) {
+    case Repeat_never :
+        self.labelForRepeat.text = @"不重复";
+        break;
+    case Repeat_day:
+        self.labelForRepeat.text = @"每天";
+        break;
+    case Repeat_week:
+        self.labelForRepeat.text = @"每周";
+        break;
+    case Repeat_month:
+        self.labelForRepeat.text = @"每月";
+        break;
+    case Repeat_year:
+        self.labelForRepeat.text = @"每年";
+        break;
     case ZY_TASkREPEAT_RESERVE:
-            self.labelForRepeat.text = @"每天";
+            self.labelForRepeat.text = @"不重复";
         break;
         
     default:
@@ -183,8 +198,32 @@
     }
     
     switch (taskPath.remindTime) {
+            
+            
+        case Remind_never:
+             self.labelForRemind.text = @"从不提醒";
+            break;
+        case Remind_zhengdian:
+             self.labelForRemind.text = @"正点";
+            break;
+        case Remind_5min:
+             self.labelForRemind.text = @"五分钟前";
+            break;
+        case Remind_10min:
+             self.labelForRemind.text = @"十分钟前";
+            break;
+        case Remind_1hour:
+             self.labelForRemind.text = @"一小时前";
+            break;
+        case Remind_1day:
+             self.labelForRemind.text = @"一天前";
+            break;
+        case Remind_3day:
+             self.labelForRemind.text = @"三天前";
+            break;
+            
         case ZY_TASkREPEAT_RESERVE:
-            self.labelForRemind.text = @"五分钟前";
+            self.labelForRemind.text = @"从不提醒";
             break;
             
         default:
@@ -192,23 +231,44 @@
     }
     
     switch (taskPath.taskStatus) {
+        case State_unreceive:
+            self.labelForStatus.text = @"未接受";
+            break;
+        case State_received:
+            self.labelForStatus.text = @"已接受";
+            break;
+        case State_needDo:
+            self.labelForStatus.text = @"待执行";
+            break;
+        case State_onGoing:
+            self.labelForStatus.text = @"执行中";
+            break;
+        case State_finish:
+            self.labelForStatus.text = @"已完成";
+            break;
+        case State_cancel:
+            self.labelForStatus.text = @"已取消";
+            break;
         case ZY_TASkREPEAT_RESERVE:
-            self.labelForStatus.text = @"未执行";
+            self.labelForStatus.text = @"未接受";
             break;
             
         default:
             break;
     }
-
-    if(taskPath.taskPerformers.count == 1)
-    {
-        self.labelForPerformers.text = [taskPath.taskPerformers objectAtIndex:0];
-    }
-    else
-    {
-        self.labelForPerformers.text = [[NSString alloc] initWithFormat:@"%ld人",taskPath.taskPerformers.count];
-    }
-
+//
+//    if(taskPath.taskPerformers.count == 1)
+//    {
+//        self.labelForPerformers.text = taskPath.taskPerformers objectAtIndex:0];
+//    }
+//    else
+//    {
+//        self.labelForPerformers.text = [[NSString alloc] initWithFormat:@"%ld人",taskPath.taskPerformers.count];
+//    }
+    if(taskPath.taskPerformers!=nil)
+        self.labelForPerformers.text = taskPath.taskPerformers;
+    
+    
     if(taskPath.taskOwner != nil)
         self.labelForSender.text = [[NSString alloc] initWithFormat:@"发布人:%@",taskPath.taskOwner];
     

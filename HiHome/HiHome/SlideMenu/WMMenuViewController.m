@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton    *nightModeBtn;
 @property (weak, nonatomic) IBOutlet UIButton    *settingBtn;
-@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+@property (weak, nonatomic) IBOutlet UIButton *headerImageBtn;
 
 - (IBAction)btnClick:(id)sender;
 
@@ -50,8 +50,7 @@
     tempSwipLeft.delegate = self;
     
     
-    
-    self.headerImageView.image = [[UIImage imageNamed:@"me"] getRoundImage];
+    [[self headerImageBtn] setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
 }
 
 - (void)btnClick:(id)sender {
@@ -100,4 +99,7 @@
     }
 }
 
+- (IBAction)headerImgClick:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"headerImgClickName" object:nil];
+}
 @end

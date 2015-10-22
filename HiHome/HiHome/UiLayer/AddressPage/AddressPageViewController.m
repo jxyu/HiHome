@@ -257,8 +257,13 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     if (indexPath.section==0) {
-        AddressLocalViewController * addresslocalVC=[[AddressLocalViewController alloc] initWithNibName:@"AddressLocalViewController" bundle:[NSBundle mainBundle]];
+        //AddressLocalViewController * addresslocalVC=[[AddressLocalViewController alloc] initWithNibName:@"AddressLocalViewController" bundle:[NSBundle mainBundle]];
+        addresslocalVC = [[AddressLocalViewController alloc] init];
+        addresslocalVC.navTitle = @"手机通讯录";
         [self.navigationController pushViewController:addresslocalVC animated:YES];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
     
 }

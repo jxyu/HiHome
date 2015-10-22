@@ -10,6 +10,7 @@
 #import "CardTableViewCell.h"
 #import "AppDelegate.h"
 #import "CommenDef.h"
+#import "UserInfoViewController.h"
 
 @interface AddressLocalViewController ()
 

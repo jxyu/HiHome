@@ -54,6 +54,9 @@
 		B5033BEF1BAFB46C0014935E /* MainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5033BED1BAFB46C0014935E /* MainPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B5033BF01BAFB46C0014935E /* MainPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5033BEE1BAFB46C0014935E /* MainPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B5033BF31BAFD9FC0014935E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5033BF21BAFD9FC0014935E /* QuartzCore.framework */; };
+		B50FA11F1BD878BE003E80CD /* jinianri_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11C1BD878BE003E80CD /* jinianri_img@2x.png */; settings = {ASSET_TAGS = (); }; };
+		B50FA1201BD878BE003E80CD /* xueren@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11D1BD878BE003E80CD /* xueren@2x.png */; settings = {ASSET_TAGS = (); }; };
+		B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11E1BD878BE003E80CD /* yuandan@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B53563011BB244A0002D5F8D /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563001BB244A0002D5F8D /* ChatTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563A61BB28FDD002D5F8D /* CalendarViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -172,11 +175,8 @@
 		B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */; settings = {ASSET_TAGS = (); }; };
-		B77F91131BD1F11B00DAB43C /* yuandan.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F91121BD1F11B00DAB43C /* yuandan.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */; settings = {ASSET_TAGS = (); }; };
-		B77F911C1BD1FDE500DAB43C /* xueren.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911B1BD1FDE500DAB43C /* xueren.png */; settings = {ASSET_TAGS = (); }; };
-		B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911D1BD225F800DAB43C /* jinianri_img.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; settings = {ASSET_TAGS = (); }; };
@@ -277,6 +277,9 @@
 		B5033BED1BAFB46C0014935E /* MainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainPageViewController.m; path = HiHome/UiLayer/MainPage/MainPageViewController.m; sourceTree = SOURCE_ROOT; };
 		B5033BEE1BAFB46C0014935E /* MainPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainPageViewController.xib; path = HiHome/UiLayer/MainPage/MainPageViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5033BF21BAFD9FC0014935E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B50FA11C1BD878BE003E80CD /* jinianri_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jinianri_img@2x.png"; sourceTree = "<group>"; };
+		B50FA11D1BD878BE003E80CD /* xueren@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xueren@2x.png"; sourceTree = "<group>"; };
+		B50FA11E1BD878BE003E80CD /* yuandan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuandan@2x.png"; sourceTree = "<group>"; };
 		B53562FF1BB244A0002D5F8D /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		B53563001BB244A0002D5F8D /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		B53563A51BB28FDD002D5F8D /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
@@ -453,12 +456,9 @@
 		B77F910D1BD1DDE900DAB43C /* AnniversaryTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskCell.h; sourceTree = "<group>"; };
 		B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskCell.m; sourceTree = "<group>"; };
 		B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskCell.xib; sourceTree = "<group>"; };
-		B77F91121BD1F11B00DAB43C /* yuandan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuandan.png; sourceTree = "<group>"; };
 		B77F91141BD1F29100DAB43C /* AnniversaryTaskDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskDetailView.h; sourceTree = "<group>"; };
 		B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskDetailView.m; sourceTree = "<group>"; };
 		B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskDetailView.xib; sourceTree = "<group>"; };
-		B77F911B1BD1FDE500DAB43C /* xueren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xueren.png; sourceTree = "<group>"; };
-		B77F911D1BD225F800DAB43C /* jinianri_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jinianri_img.png; sourceTree = "<group>"; };
 		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
@@ -789,6 +789,9 @@
 		B55D08A61BB3D4C000C10932 /* Task */ = {
 			isa = PBXGroup;
 			children = (
+				B50FA11C1BD878BE003E80CD /* jinianri_img@2x.png */,
+				B50FA11D1BD878BE003E80CD /* xueren@2x.png */,
+				B50FA11E1BD878BE003E80CD /* yuandan@2x.png */,
 				B56CFC191BCCD4BD0081B645 /* createTask */,
 				B58DD9681BB687A90040A084 /* addtask@2x.png */,
 				B58DD96C1BB6888E0040A084 /* editTask@2x.png */,
@@ -801,9 +804,6 @@
 				B55D08B01BB400FD00C10932 /* sendtask_red@2x.png */,
 				B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */,
 				B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */,
-				B77F91121BD1F11B00DAB43C /* yuandan.png */,
-				B77F911B1BD1FDE500DAB43C /* xueren.png */,
-				B77F911D1BD225F800DAB43C /* jinianri_img.png */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -1332,6 +1332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				803534C11BD61D230008C191 /* SVProgressHUD.bundle in Resources */,
+				B50FA1201BD878BE003E80CD /* xueren@2x.png in Resources */,
 				B5E0599F1BB0F92900DBF786 /* FirstScrollController.xib in Resources */,
 				B5E059DD1BB146E100DBF786 /* WMMenuViewController.xib in Resources */,
 				B5E059D01BB146E100DBF786 /* Images.xcassets in Resources */,
@@ -1350,7 +1351,7 @@
 				B5A77AB71BB4E9780014DD67 /* gettask_gray@2x.png in Resources */,
 				B57F5D8F1BBA8399009AC336 /* wechatlogin@2x.png in Resources */,
 				B58DD9641BB67CF50040A084 /* addressBook@2x.png in Resources */,
-				B77F91131BD1F11B00DAB43C /* yuandan.png in Resources */,
+				B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
 				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
@@ -1390,7 +1391,6 @@
 				B581960E1BCB906400D69A1E /* UploadPicViewController.xib in Resources */,
 				B58DD95D1BB63DED0040A084 /* task@2x.png in Resources */,
 				80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */,
-				B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */,
 				802306A81BD49BCA006CFFEC /* RegisterViewController.xib in Resources */,
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
@@ -1422,11 +1422,11 @@
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
 				B56CFC181BCC90950081B645 /* CreateTaskViewController.xib in Resources */,
 				B58DD9591BB63C2D0040A084 /* bugle@2x.png in Resources */,
-				B77F911C1BD1FDE500DAB43C /* xueren.png in Resources */,
 				B5033BAD1BAFA6D60014935E /* Main.storyboard in Resources */,
 				80BC02F71BB0F07A0002A267 /* index_2.png in Resources */,
 				B58196121BCBAC0D00D69A1E /* pickPicBtn@2x.png in Resources */,
 				B58DD94F1BB61F0A0040A084 /* repeat@2x.png in Resources */,
+				B50FA11F1BD878BE003E80CD /* jinianri_img@2x.png in Resources */,
 				B5FA2DAE1BC4F00200D5BDB7 /* SoundSetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

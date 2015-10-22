@@ -39,8 +39,13 @@
     UITableView *_myTaskView;
     
     //数据
+    //自己的任务
     NSMutableArray *_myAnniversaryData;
     NSMutableArray *_myTaskData;
+    //接受的任务
+    NSMutableArray *_getTaskData;
+    //发布的任务
+    
     
     /*task分页面*/
     

@@ -20,8 +20,8 @@
     UITextField *taskName;
     UITextField *executor;
     UITextView *mTextView;
-    UITextField *startTimeField;
-    UITextField *endTimeField;
+    UILabel *startTimeLabel;
+    UILabel *endTimeLabel;
 }
 
 @end
@@ -42,9 +42,31 @@
     //UITableView
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 60)];
     mTableView.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
+    
     mTableView.dataSource =self;
     mTableView.delegate = self;
+    mTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
+    mTableView.separatorInset = UIEdgeInsetsZero;
+    //下面两句禁止tableview滚动
+    mTableView.scrollEnabled = NO;
+    [mTableView setHidden:NO];
+    
     [self.view addSubview:mTableView];
+    
+    mTableView.separatorColor =  [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+    
+    //设置cell分割线从最左边开始
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+    {
+        if ([mTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+            [mTableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+        }
+        
+        if ([mTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+            [mTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+        }
+    }
+    
     
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
     [self.view addGestureRecognizer:tapGesture];
@@ -55,68 +77,115 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 7;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+    {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     if (indexPath.row == 0) {
+         cell.frame = CGRectMake(0, 0, SCREEN_WIDTH, _cellHeight*2);
+        
         //任务状态UILable
-        UILabel *taskStatus = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 75, 21)];
+        UILabel *taskStatus = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 75, _cellHeight - 10-5)];
         taskStatus.text= @"任务状态:";
         [cell addSubview:taskStatus];
         
-        UILabel *taskStatusShow = [[UILabel alloc] initWithFrame:CGRectMake(taskStatus.frame.size.width + 12, 15, 100, 21)];
+        UILabel *taskStatusShow = [[UILabel alloc] initWithFrame:CGRectMake(taskStatus.frame.size.width + 15, 10, 100, _cellHeight - 10 - 5)];
         taskStatusShow.contentMode = UIViewContentModeLeft;
-        taskStatusShow.textColor = [UIColor colorWithRed:0.91 green:0.27 blue:0 alpha:1];
+        taskStatusShow.textColor = ZY_UIBASECOLOR;
         taskStatusShow.text= @"未完成";
         [cell addSubview:taskStatusShow];
         
         //UIButon
-        UIButton *btnStatus = [[UIButton alloc] initWithFrame:CGRectMake(10, taskStatus.frame.size.height + 25, 100, 30)];
+        UIButton *btnStatus = [[UIButton alloc] initWithFrame:CGRectMake(10, _cellHeight+5, 100, _cellHeight -10 -5)];
         btnStatus.layer.masksToBounds = YES;
         btnStatus.layer.borderWidth = 1;
-        btnStatus.layer.borderColor = [UIColor redColor].CGColor;
+        btnStatus.layer.borderColor = [ZY_UIBASECOLOR CGColor];
         btnStatus.layer.cornerRadius = 8;
-        [btnStatus setTitle:@"删除任务" forState:UIControlStateNormal];
-        [btnStatus setTitleColor:[UIColor colorWithRed:0.91 green:0.27 blue:0 alpha:1] forState:UIControlStateNormal];
+        [btnStatus setTitle:@"开始执行" forState:UIControlStateNormal];
+        [btnStatus setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
         [cell addSubview:btnStatus];
-    }else if(indexPath.row == 1){
+        
+        UIButton *btndeal = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 100 -10,_cellHeight+5, 100, _cellHeight -10 -5)];
+        btndeal.layer.masksToBounds = YES;
+        btndeal.layer.borderWidth = 1;
+        btndeal.layer.borderColor = [ZY_UIBASECOLOR CGColor];
+        btndeal.layer.cornerRadius = 8;
+        [btndeal setTitle:@"删除任务" forState:UIControlStateNormal];
+        [btndeal setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
+        [cell addSubview:btndeal];
+    }
+    else if(indexPath.row == 1){
+        
+        UILabel *head = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 75, _cellHeight - 10*2)];
+        head.text =@"发布人:";
+        
+        UIImageView *headImgView = [[UIImageView alloc]initWithFrame:CGRectMake(10+head.frame.size.width+5,5,_cellHeight -10  , _cellHeight - 10 )];
+        
+        headImgView.image = [UIImage imageNamed:@"me"];
+        headImgView.layer.cornerRadius = headImgView.frame.size.width * 0.5;
+        headImgView.layer.borderWidth = 0.1;
+        headImgView.layer.masksToBounds = YES;
+        
+        UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(headImgView.frame.origin.x+headImgView.frame.size.width + 10, 10, 200, _cellHeight - 10*2)];
+        userName.text = @"用户名";
+        userName.textColor = [UIColor grayColor];
+        userName.font = [UIFont systemFontOfSize:14];
+        
+        [cell addSubview:headImgView];
+        [cell addSubview:head];
+        [cell addSubview:userName];
+        
+    }
+    else if(indexPath.row == 2){
         taskName = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
         taskName.textColor = [UIColor grayColor];
         taskName.text = @"下载hihomeapp";
+        taskName.font = [UIFont systemFontOfSize:14];
+        taskName.enabled = NO;
         //左UILabel
         UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 50)];
-        leftlbl.textColor = [UIColor grayColor];
         leftlbl.text = @"任务名称:";
         taskName.leftView = leftlbl;
         taskName.leftViewMode = UITextFieldViewModeAlways;
         
         [cell addSubview:taskName];
-    }else if(indexPath.row == 2){
+    }else if(indexPath.row == 3){
         executor = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
         executor.textColor = [UIColor grayColor];
         executor.text = @"自己";
+        executor.font = [UIFont systemFontOfSize:14];
+        executor.enabled = NO;
         //左UILabel
         UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 50)];
-        leftlbl.textColor = [UIColor grayColor];
-        leftlbl.textAlignment = NSTextAlignmentRight;
+        leftlbl.textAlignment = NSTextAlignmentLeft;
         leftlbl.text = @"执行人:";
         executor.leftView = leftlbl;
         executor.leftViewMode = UITextFieldViewModeAlways;
         
         [cell addSubview:executor];
-    }else if(indexPath.row == 3){
+    }else if(indexPath.row == 4){
         mTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 80)];
         mTextView.textColor = [UIColor grayColor];
-        mTextView.font = [UIFont systemFontOfSize:15];
+        mTextView.font = [UIFont systemFontOfSize:14];
         mTextView.text = @"学习hihomeapp并且下载";
+        mTextView.editable = NO;
         [cell addSubview:mTextView];
-    }else if(indexPath.row == 4){
-        [self createDate:cell];
+    }else if(indexPath.row == 5){
+       // [self createDate:cell];
+        
+        [self showDate:cell];
     }
-    else{
+    else if(indexPath.row == 6){
+       
+        
         cell.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
         SegmentedButton *remindBtn = [[SegmentedButton alloc] init];
         remindBtn.frame = CGRectMake(20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
@@ -176,14 +245,23 @@
 
 //设置cell每行间隔的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return 91;
-    }else if(indexPath.row == 3){
-        return 80;
-    }else if(indexPath.row == 5){
-        return 190;
+    
+    switch (indexPath.row) {
+        case 0:
+        case 3:
+        case 4:
+            return _cellHeight*2;
+        case 1:
+        case 2:
+        case 5:
+            return _cellHeight;
+        case 6:
+            return _cellHeight*2+50;
+        default:
+            break;
     }
-    return 50;
+    
+    return _cellHeight;
 }
 
 -(void)clickBtns:(UIButton *)sender
@@ -202,9 +280,47 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
--(void)btnRightClick:(id)sender;{
+-(void)btnRightClick:(id)sender
+{
     NSLog(@"编辑");
 }
+
+-(void)showDate:(UITableViewCell *) cell
+{
+    
+    UILabel *startTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, _cellHeight/2)];
+    UILabel *endTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 0, self.view.frame.size.width/2, _cellHeight/2)];
+//    
+    startTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+    endTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+    
+    startTimeLabel.textAlignment = NSTextAlignmentCenter;
+    startTimeLabel.text = @"2015-10-22  17:50";
+    startTimeLabel.font = [UIFont systemFontOfSize:14];
+    endTimeLabel.font = [UIFont systemFontOfSize:14];
+    endTimeLabel.textAlignment = NSTextAlignmentCenter;
+    endTimeLabel.text= @"2015-10-23  17:50";
+//
+    startTimeLab.text = @"开始时间";
+    startTimeLab.textAlignment = NSTextAlignmentCenter;
+    startTimeLab.font = [UIFont boldSystemFontOfSize:14];
+    startTimeLab.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1];
+    endTimeLab.text = @"结束时间";
+    endTimeLab.textAlignment = NSTextAlignmentCenter;
+    endTimeLab.font = [UIFont boldSystemFontOfSize:14];
+    endTimeLab.textColor = [UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1];
+    
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 1, 1, _cellHeight - 2)];
+    lineView.backgroundColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+    
+    [cell addSubview:startTimeLab];
+    [cell addSubview:endTimeLab];
+    [cell addSubview:startTimeLabel];
+    [cell addSubview:endTimeLabel];
+    [cell addSubview:lineView];
+}
+
 
 -(void)createDate:(UITableViewCell *) cell{
     NSDate *now = [NSDate date];
@@ -212,8 +328,8 @@
     UILabel *startTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, _cellHeight/2)];
     UILabel *endTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 0, self.view.frame.size.width/2, _cellHeight/2)];
     
-    startTimeField = [[UITextField alloc] initWithFrame:CGRectMake(0, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
-    endTimeField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+    UITextField * startTimeField = [[UITextField alloc] initWithFrame:CGRectMake(0, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
+    UITextField * endTimeField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
     
     startTimeField.textAlignment = NSTextAlignmentCenter;
     endTimeField.textAlignment = NSTextAlignmentCenter;
@@ -357,8 +473,8 @@
     [taskName resignFirstResponder];
     [executor resignFirstResponder];
     [mTextView resignFirstResponder];
-    [startTimeField resignFirstResponder];
-    [endTimeField resignFirstResponder];
+//    [startTimeField resignFirstResponder];
+//    [endTimeField resignFirstResponder];
 }
 
 @end

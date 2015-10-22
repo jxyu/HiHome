@@ -11,6 +11,7 @@
 #import "TaskNoticeViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AFNetworking/AFNetworking.h>
+#import "AppDelegate.h"
 
 #define ZY_MAINCELL0_HEIGHT     ((self.view.frame.size.height-100)/80.0*18)
 #define ZY_MAINCELL1_HEIGHT     ((self.view.frame.size.height-100)/80.0*22)

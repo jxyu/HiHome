@@ -50,6 +50,8 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didHeaderImgClick) name:@"headerImgClickName" object:nil];
+    
     swipFlag = false;
     NSLog(@"run Here ");
     
@@ -198,6 +200,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
 
 -(void)initCustomView
 {
+    _personFirstVC = [[PersonFirstViewController alloc] init];
     _anniversaryPage= [[AnniversaryViewController alloc] init];
     _optionPage = [[OptionsViewController alloc] init];
     _CoupleSetPage = [[CoupleViewController alloc]init];
@@ -390,7 +393,10 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     
     BackPageViewController *other;
     NSLog(@"title = [%@]",title);
-    if([title isEqualToString:@"纪念日总览"])
+    if ([title isEqualToString:@"我的资料"]) {
+        other = (BackPageViewController *)_personFirstVC;
+    }
+    else if([title isEqualToString:@"纪念日总览"])
     {
         other = (BackPageViewController *)_anniversaryPage;
     }
@@ -424,6 +430,10 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     [self presentViewController:other animated:YES completion:^{}];
     
     [self showHome:kStateOption];
+}
+
+-(void)didHeaderImgClick{
+    [self didSelectItem:@"我的资料"];
 }
 
 @end

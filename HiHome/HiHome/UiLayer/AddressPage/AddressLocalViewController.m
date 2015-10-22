@@ -10,6 +10,7 @@
 #import "CardTableViewCell.h"
 #import "AppDelegate.h"
 #import "CommenDef.h"
+#import "UserInfoViewController.h"
 
 @interface AddressLocalViewController ()
 
@@ -22,6 +23,9 @@
     
     _tableView.dataSource=self;
     _tableView.delegate=self;
+    
+    //去除多余的横线
+    _tableView.tableFooterView = [[UIView alloc] init];
     
     
     [self address];
@@ -387,14 +391,10 @@
         name = [array lastObject];
     }
     
-    
-    
-    
-    
-        // cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = name;
-        cell.nameLabel.textColor = [UIColor grayColor];
+    // cell.iconView.image = [UIImage imageNamed:@"headImg"];
+    cell.iconView.image = [UIImage imageNamed:@"headImg"];
+    cell.nameLabel.text = name;
+    cell.nameLabel.textColor = [UIColor grayColor];
     UIButton * btn_tianjia=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, (cell.frame.size.height-40)/2, 70, 40)];
     btn_tianjia.backgroundColor=RGB(26, 200, 133);
     [btn_tianjia setTitle:@"添加" forState:UIControlStateNormal];
@@ -405,10 +405,23 @@
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];
         [cell setLayoutMargins:UIEdgeInsetsZero];
+        [cell setPreservesSuperviewLayoutMargins:NO];
     }
     return cell;
-    
+}
+
+//重写退出页面方法
+-(void)quitView
+{
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
     }
+    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

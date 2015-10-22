@@ -11,9 +11,9 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "Model.h"
 #import "pinyin.h"
-#import "BaseNavigationController.h"
+#import "BackPageViewController.h"
 
-@interface AddressLocalViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
+@interface AddressLocalViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
 {
     NSMutableArray *dataSource;
     NSMutableArray *userSource;

@@ -10,6 +10,7 @@
 #import "CardTableViewCell.h"
 #import "AppDelegate.h"
 #import "CommenDef.h"
+#import "UserInfoViewController.h"
 
 @interface AddressLocalViewController ()
 
@@ -409,6 +410,9 @@
     return cell;
     
     }
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

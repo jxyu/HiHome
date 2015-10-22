@@ -29,6 +29,8 @@
 #define DEFAULTS [NSUserDefaults standardUserDefaults]
 #define ZY_UIBASECOLOR  [UIColor colorWithRed:204/255.0 green:85/255.0 blue:32/255.0 alpha:1.0]
 #define ZY_UIBASE_BACKGROUND_COLOR ([UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0])
+#define ZY_UIBASE_FONT_COLOR    ([UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0])
+
 
 
 #define remove_sp(a) [[NSUserDefaults standardUserDefaults] removeObjectForKey:a]

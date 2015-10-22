@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddressLocalViewController.h"
 
 @interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
@@ -18,6 +19,7 @@
     UISearchBar *_searchBar;
     BOOL    _keyShow;       //标记键盘是否显示
     UISearchDisplayController *_searchDisplayController;
+    AddressLocalViewController *addresslocalVC;
 }
 -(void) initViews;
 @property(strong,nonatomic) UITableView *mainTableView;

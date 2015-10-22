@@ -11,6 +11,7 @@
 #import "UIDefine.h"
 #import "UUDatePicker.h"
 #import "SegmentedButton.h"
+#import "TaskPath.h"
 
 @interface TaskDetailPageViewController (){
     UITableView *mTableView;
@@ -22,6 +23,19 @@
     UITextView *mTextView;
     UILabel *startTimeLabel;
     UILabel *endTimeLabel;
+    
+    
+    /*
+     *任务参数
+     */
+    NSString *stateStr;
+    NSString *remindStr;
+    NSString *repeatStr;
+    NSString *senderNameStr;
+    NSString *taskTitleStr;
+    NSString *taskContentStr;
+    
+    
 }
 
 @end
@@ -30,6 +44,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.taskDetailMode = TaskDetail_ReceiveMode;
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _startDateArray = [[NSMutableArray alloc] init];
     [self initView];
@@ -72,6 +88,129 @@
     [self.view addGestureRecognizer:tapGesture];
 }
 
+
+
+-(void)setDatas:(TaskPath *)taskPath
+{
+    if(taskPath == nil)
+        return;
+    
+    repeatStr = [self modeValueToStr:Mode_Repeat andValue:taskPath.repeatMode];
+    remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
+    stateStr = [self modeValueToStr:Mode_state andValue:taskPath.taskStatus];
+    
+    
+    senderNameStr = taskPath.taskOwner;
+    taskTitleStr = taskPath.taskName;
+    taskContentStr = taskPath.taskContent;
+    
+    
+    [mTableView reloadData];
+    
+}
+
+-(NSString *) modeValueToStr:(ValueMode)mode andValue:(NSInteger)value
+{
+    NSString *str;
+    
+    switch (mode) {
+        case Mode_Repeat:
+            switch (value) {
+                case Repeat_never :
+                    str = @"不重复";
+                    break;
+                case Repeat_day:
+                    str = @"每天";
+                    break;
+                case Repeat_week:
+                    str = @"每周";
+                    break;
+                case Repeat_month:
+                    str = @"每月";
+                    break;
+                case Repeat_year:
+                    str = @"每年";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"不重复";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case  Mode_Remind:
+            switch (value) {
+                    
+                    
+                case Remind_never:
+                    str = @"从不提醒";
+                    break;
+                case Remind_zhengdian:
+                    str = @"正点";
+                    break;
+                case Remind_5min:
+                    str = @"五分钟前";
+                    break;
+                case Remind_10min:
+                    str = @"十分钟前";
+                    break;
+                case Remind_1hour:
+                    str = @"一小时前";
+                    break;
+                case Remind_1day:
+                    str = @"一天前";
+                    break;
+                case Remind_3day:
+                    str = @"三天前";
+                    break;
+                    
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"从不提醒";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case Mode_state:
+            switch (value) {
+                case State_unreceive:
+                    str= @"未接受";
+                    break;
+                case State_received:
+                    str = @"已接受";
+                    break;
+                case State_needDo:
+                    str = @"待执行";
+                    break;
+                case State_onGoing:
+                    str = @"执行中";
+                    break;
+                case State_finish:
+                    str = @"已完成";
+                    break;
+                case State_cancel:
+                    str = @"已取消";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"未接受";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        default:
+            str = nil;
+            break;
+    }
+    
+    return str;
+
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -100,7 +239,7 @@
         UILabel *taskStatusShow = [[UILabel alloc] initWithFrame:CGRectMake(taskStatus.frame.size.width + 15, 10, 100, _cellHeight - 10 - 5)];
         taskStatusShow.contentMode = UIViewContentModeLeft;
         taskStatusShow.textColor = ZY_UIBASECOLOR;
-        taskStatusShow.text= @"未完成";
+        taskStatusShow.text= stateStr;
         [cell addSubview:taskStatusShow];
         
         //UIButon
@@ -135,7 +274,7 @@
         headImgView.layer.masksToBounds = YES;
         
         UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(headImgView.frame.origin.x+headImgView.frame.size.width + 10, 10, 200, _cellHeight - 10*2)];
-        userName.text = @"用户名";
+        userName.text = senderNameStr;//发布人
         userName.textColor = [UIColor grayColor];
         userName.font = [UIFont systemFontOfSize:14];
         
@@ -147,7 +286,7 @@
     else if(indexPath.row == 2){
         taskName = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
         taskName.textColor = [UIColor grayColor];
-        taskName.text = @"下载hihomeapp";
+        taskName.text = taskTitleStr;
         taskName.font = [UIFont systemFontOfSize:14];
         taskName.enabled = NO;
         //左UILabel
@@ -175,7 +314,7 @@
         mTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 80)];
         mTextView.textColor = [UIColor grayColor];
         mTextView.font = [UIFont systemFontOfSize:14];
-        mTextView.text = @"学习hihomeapp并且下载";
+        mTextView.text = taskContentStr;
         mTextView.editable = NO;
         [cell addSubview:mTextView];
     }else if(indexPath.row == 5){

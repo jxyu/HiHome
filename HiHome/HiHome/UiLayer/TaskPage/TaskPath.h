@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum _valueMode
+{
+    Mode_Repeat = 0,
+    Mode_Remind,
+    Mode_state
+    
+}ValueMode;
 
 typedef enum _taskStatue
 {
@@ -63,6 +70,7 @@ typedef enum _taskType
 
 }
 @property(nonatomic) NSString *taskName;//任务名称
+@property(nonatomic) NSString *taskID;//任务名称
 @property(nonatomic) NSString *taskContent;//任务内容
 @property(nonatomic) NSString *taskOwner;//发布者
 @property(nonatomic) NSString *taskPerformers;//执行者
@@ -71,6 +79,7 @@ typedef enum _taskType
 
 @property(nonatomic) NSString *startTaskDateStr;//开始时间
 @property(nonatomic) NSString *endTaskDateStr;//结束时间
+
 
 
 @property(nonatomic) ZYTaskStatue taskStatus;//任务状态

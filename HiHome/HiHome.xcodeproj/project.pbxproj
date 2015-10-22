@@ -179,6 +179,9 @@
 		B77F911E1BD225F800DAB43C /* jinianri_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B77F911D1BD225F800DAB43C /* jinianri_img.png */; settings = {ASSET_TAGS = (); }; };
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7942BA31BD882CA007D6F17 /* PersonFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B7942BA41BD882CA007D6F17 /* PersonFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7942BA61BD8B5C5007D6F17 /* person_top_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */; settings = {ASSET_TAGS = (); }; };
 		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; settings = {ASSET_TAGS = (); }; };
 		B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */; settings = {ASSET_TAGS = (); }; };
 		B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */; settings = {ASSET_TAGS = (); }; };
@@ -462,6 +465,10 @@
 		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
+		B7942BA01BD882CA007D6F17 /* PersonFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonFirstViewController.h; path = HiHome/UiLayer/MainPage/PersonFirstViewController.h; sourceTree = SOURCE_ROOT; };
+		B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonFirstViewController.m; path = HiHome/UiLayer/MainPage/PersonFirstViewController.m; sourceTree = SOURCE_ROOT; };
+		B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonFirstViewController.xib; path = HiHome/UiLayer/MainPage/PersonFirstViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person_top_bg.png; sourceTree = "<group>"; };
 		B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeCell.h; path = HiHome/UiLayer/MainPage/MessageNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeCell.m; path = HiHome/UiLayer/MainPage/MessageNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeCell.xib; path = HiHome/UiLayer/MainPage/MessageNoticeCell.xib; sourceTree = SOURCE_ROOT; };
@@ -570,6 +577,7 @@
 		80BC02E01BB0ED890002A267 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */,
 				802306AB1BD4DAFB006CFFEC /* regster_select_icon@2x.png */,
 				B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */,
 				B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */,
@@ -685,6 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				B5A77AB91BB4EBAF0014DD67 /* UIDefine.h */,
+				B7942B9F1BD88134007D6F17 /* PersonPage */,
 				B583B1A31BC39B2B000572CA /* BaseUnits */,
 				B596BF491BBBB75C00349B1E /* AlertView */,
 				B57F5D7F1BBA77E1009AC336 /* Login */,
@@ -1175,6 +1184,17 @@
 			name = TaskDetailPage;
 			sourceTree = "<group>";
 		};
+		B7942B9F1BD88134007D6F17 /* PersonPage */ = {
+			isa = PBXGroup;
+			children = (
+				B7942BA01BD882CA007D6F17 /* PersonFirstViewController.h */,
+				B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */,
+				B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */,
+			);
+			name = PersonPage;
+			path = mainPage;
+			sourceTree = "<group>";
+		};
 		B7CC5AE11BD4B8D200A1078F /* ThreeSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1349,6 +1369,7 @@
 				B56CFC1E1BCCF1D80081B645 /* place@2x.png in Resources */,
 				B5A77AB71BB4E9780014DD67 /* gettask_gray@2x.png in Resources */,
 				B57F5D8F1BBA8399009AC336 /* wechatlogin@2x.png in Resources */,
+				B7942BA41BD882CA007D6F17 /* PersonFirstViewController.xib in Resources */,
 				B58DD9641BB67CF50040A084 /* addressBook@2x.png in Resources */,
 				B77F91131BD1F11B00DAB43C /* yuandan.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
@@ -1382,6 +1403,7 @@
 				B58DD9621BB67C550040A084 /* headImg@2x.png in Resources */,
 				B55D08B31BB400FD00C10932 /* sendtask_gray@2x.png in Resources */,
 				B56CFC231BCCF89F0081B645 /* repeat_2@2x.png in Resources */,
+				B7942BA61BD8B5C5007D6F17 /* person_top_bg.png in Resources */,
 				B58D923B1BC6497D00219E76 /* other@2x.png in Resources */,
 				80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */,
 				B58DD9501BB61F0A0040A084 /* set@2x.png in Resources */,
@@ -1509,6 +1531,7 @@
 				B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */,
 				B5033BE51BAFB41F0014935E /* ChatPageViewController.m in Sources */,
 				B5FA2DB21BC4F14700D5BDB7 /* ChatLogViewController.m in Sources */,
+				B7942BA31BD882CA007D6F17 /* PersonFirstViewController.m in Sources */,
 				B587FF171BC8B4D500E9F119 /* AlbumTableViewCell.m in Sources */,
 				B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */,
 				B5E059E01BB146E100DBF786 /* WMOtherViewController.m in Sources */,

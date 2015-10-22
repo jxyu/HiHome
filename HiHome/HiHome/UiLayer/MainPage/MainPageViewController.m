@@ -244,7 +244,11 @@
         [self.navigationController pushViewController:_messageNoticeVC animated:NO];
     }
     if(indexPath.section == 2){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedTabbarIndex1" object:nil];
+        self.tabBarController.selectedIndex = 1;
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        
+        //[(AppDelegate *)[[UIApplication sharedApplication] delegate] selectTableBarIndex:1];
     }
     else if(indexPath.section == 3){
         _taskNoticeVC = [[TaskNoticeViewController alloc] init];

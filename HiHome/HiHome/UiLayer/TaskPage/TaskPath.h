@@ -45,6 +45,10 @@ typedef enum _taskType
 @property(nonatomic) NSDateComponents *startTaskDate;//开始时间
 @property(nonatomic) NSDateComponents *endTaskDate;//结束时间
 
+@property(nonatomic) NSString *startTaskDateStr;//开始时间
+@property(nonatomic) NSString *endTaskDateStr;//结束时间
+
+
 @property(nonatomic) ZYTaskStatue taskStatus;//任务状态
 @property(nonatomic) ZYTaskRemind remindTime;//提醒时间
 @property(nonatomic) ZYTaskRepeat repeatMode;//任务重复日期

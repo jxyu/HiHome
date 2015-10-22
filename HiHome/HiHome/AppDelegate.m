@@ -15,6 +15,7 @@
 #import "WMCommon.h"
 #import "UIDefine.h"
 #import "ViewController.h"
+#import "DataProvider.h"
 
 #import "CommenDef.h"
 #import <SMS_SDK/SMSSDK.h>
@@ -55,89 +56,16 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     //初始化融云SDK。
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUD_IM_APPKEY ];
-    
-    
-    //登录
-    NSString *token =[[NSUserDefaults standardUserDefaults] objectForKey:@"userToken"];
-    NSString *userId=[DEFAULTS objectForKey:@"userId"];
-    NSString *userName = [DEFAULTS objectForKey:@"userName"];
-    NSString *password = [DEFAULTS objectForKey:@"userPwd"];
-    if (token.length && userId.length && password.length) {
-        RCUserInfo *_currentUserInfo =
-        [[RCUserInfo alloc] initWithUserId:userId
-                                      name:userName
-                                  portrait:nil];
-        [RCIMClient sharedRCIMClient].currentUserInfo = _currentUserInfo;
-        [[RCIM sharedRCIM] connectWithToken:token
-                                    success:^(NSString *userId) {
-//                                        [AFHttpTool loginWithEmail:userName
-//                                                          password:password
-//                                                               env:1
-//                                                           success:^(id response) {
-//                                                               if ([response[@"code"] intValue] == 200) {
-//                                                                   [RCDHTTPTOOL getUserInfoByUserID:userId
-//                                                                                         completion:^(RCUserInfo *user) {
-//                                                                                             [[RCIM sharedRCIM]
-//                                                                                              refreshUserInfoCache:user
-//                                                                                              withUserId:userId];
-//                                                                                         }];
-//                                                                   //登陆demoserver成功之后才能调demo 的接口
-//                                                                   [RCDDataSource syncGroups];
-//                                                                   [RCDDataSource syncFriendList:^(NSMutableArray * result) {}];
-//                                                               }
-//                                                           }
-//                                                           failure:^(NSError *err){
-//                                                           }];
-                                        //设置当前的用户信息
-                                        
-                                        //同步群组
-                                        //调用connectWithToken时数据库会同步打开，不用再等到block返回之后再访问数据库，因此不需要这里刷新
-                                        //这里仅保证之前已经成功登陆过，如果第一次登陆必须等block 返回之后才操作数据
-                                        //          dispatch_async(dispatch_get_main_queue(), ^{
-                                        //            UIStoryboard *storyboard =
-                                        //                [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                        //            UINavigationController *rootNavi = [storyboard
-                                        //                instantiateViewControllerWithIdentifier:@"rootNavi"];
-                                        //            self.window.rootViewController = rootNavi;
-                                        //          });
-                                    }
-                                      error:^(RCConnectErrorCode status) {
-//                                          RCUserInfo *_currentUserInfo =[[RCUserInfo alloc] initWithUserId:userId
-//                                                                                                      name:userName
-//                                                                                                  portrait:nil];
-//                                          [RCIMClient sharedRCIMClient].currentUserInfo = _currentUserInfo;
-//                                          [RCDDataSource syncGroups];
-//                                          NSLog(@"connect error %ld", (long)status);
-//                                          dispatch_async(dispatch_get_main_queue(), ^{
-//                                              UIStoryboard *storyboard =
-//                                              [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                                              UINavigationController *rootNavi = [storyboard
-//                                                                                  instantiateViewControllerWithIdentifier:@"rootNavi"];
-//                                              self.window.rootViewController = rootNavi;
-//                                          });
-                                      }
-                             tokenIncorrect:^{
-//                                 dispatch_async(dispatch_get_main_queue(), ^{
-//                                     RCDLoginViewController *loginVC =
-//                                     [[RCDLoginViewController alloc] init];
-//                                     UINavigationController *_navi = [[UINavigationController alloc]
-//                                                                      initWithRootViewController:loginVC];
-//                                     self.window.rootViewController = _navi;
-//                                     UIAlertView *alertView =
-//                                     [[UIAlertView alloc] initWithTitle:nil
-//                                                                message:@"Token已过期，请重新登录"
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"确定"
-//                                                      otherButtonTitles:nil, nil];
-//                                     ;
-//                                     [alertView show];
-//                                 });
-                             }];
-    }
-    
-    
     
     /**
      * 推送处理1
@@ -156,17 +84,41 @@
         UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
-    
-    
+
     
     
     
     
     
 
+    
+    
+    
+    
+    
+    
+    
+    
     //集成短信
     [UMessage startWithAppkey:@"55ee2fcc67e58e2d20005b57" launchOptions:launchOptions];
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 #if 1
@@ -248,9 +200,17 @@
     
     if([viewName isEqualToString:@"mainpage"])
     {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
         self.window.rootViewController=_tempViewcontroller;
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
+        [dataprovider GetToken:userinfoWithFile[@"id"]];
         return;
     }
+    
     
     if([viewName isEqualToString:@"loginpage"])
     {
@@ -264,6 +224,25 @@
         return;
     }
     
+}
+
+-(void)GetTokenBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue]==200) {
+        // 快速集成第二步，连接融云服务器
+        [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
+            // Connect 成功
+            NSLog(@"Connect 成功");
+        }
+                                      error:^(RCConnectErrorCode status) {
+                                          // Connect 失败
+                                          NSLog(@"Connect 失败");
+                                      }
+                             tokenIncorrect:^() {
+                                 // Token 失效的状态处理
+                             }];
+    }
 }
 - (void)showTabBar
 {

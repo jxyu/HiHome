@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ChatTableViewCell.h"
 #import "UIDefine.h"
+#import "ChatlistViewController.h"
 
 @interface ChatPageViewController ()
 
@@ -20,7 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self initViews];
-
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    
+    RCConversationListViewController * chat=[[RCConversationListViewController alloc]initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
+    ChatlistViewController * chatListViewController=[[ChatlistViewController alloc] initWithNibName:@"ChatlistViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:chatListViewController animated:YES];
     // Do any additional setup after loading the view from its nib.
 }
 

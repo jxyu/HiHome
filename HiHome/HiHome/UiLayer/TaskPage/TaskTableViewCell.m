@@ -168,10 +168,10 @@
     if(taskPath == nil)
         return;
     
-    NSLog(@"1111111111111111111111111111111");
+   // NSLog(@"1111111111111111111111111111111");
     self.labelForTaskName.text = taskPath.taskName;
-    self.labelForStartDate.text = [NSString stringWithFormat:@"%02ld/%02ld",[taskPath.startTaskDate month],[taskPath.startTaskDate day]];
-    self.labelForEndDate.text = [NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];
+    self.labelForStartDate.text = taskPath.startTaskDateStr;//[NSString stringWithFormat:@"%02ld/%02ld",[taskPath.startTaskDate month],[taskPath.startTaskDate day]];
+    self.labelForEndDate.text = taskPath.endTaskDateStr;//[NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];
 
     switch (taskPath.repeatMode) {
     case ZY_TASkREPEAT_RESERVE:

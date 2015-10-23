@@ -201,6 +201,11 @@
 		B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91161BD1F29100DAB43C /* AnniversaryTaskDetailView.xib */; settings = {ASSET_TAGS = (); }; };
 		B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B78E4A431BD9FAA800F23976 /* AddFriendFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B78E4A441BD9FAA800F23976 /* AddFriendFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B78E4A481BDA0AB600F23976 /* search_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B78E4A471BDA0AB600F23976 /* search_img.png */; settings = {ASSET_TAGS = (); }; };
+		B78E4A4C1BDA0FE800F23976 /* AddFriendSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78E4A4A1BDA0FE800F23976 /* AddFriendSecondViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B78E4A4D1BDA0FE800F23976 /* AddFriendSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78E4A4B1BDA0FE800F23976 /* AddFriendSecondViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B7942BA31BD882CA007D6F17 /* PersonFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */; settings = {ASSET_TAGS = (); }; };
 		B7942BA41BD882CA007D6F17 /* PersonFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B7942BA61BD8B5C5007D6F17 /* person_top_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */; settings = {ASSET_TAGS = (); }; };
@@ -529,6 +534,13 @@
 		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
+		B78E4A401BD9FAA800F23976 /* AddFriendFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendFirstViewController.h; sourceTree = "<group>"; };
+		B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendFirstViewController.m; sourceTree = "<group>"; };
+		B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriendFirstViewController.xib; sourceTree = "<group>"; };
+		B78E4A471BDA0AB600F23976 /* search_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_img.png; sourceTree = "<group>"; };
+		B78E4A491BDA0FE800F23976 /* AddFriendSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendSecondViewController.h; sourceTree = "<group>"; };
+		B78E4A4A1BDA0FE800F23976 /* AddFriendSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendSecondViewController.m; sourceTree = "<group>"; };
+		B78E4A4B1BDA0FE800F23976 /* AddFriendSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriendSecondViewController.xib; sourceTree = "<group>"; };
 		B7942BA01BD882CA007D6F17 /* PersonFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonFirstViewController.h; path = HiHome/UiLayer/MainPage/PersonFirstViewController.h; sourceTree = SOURCE_ROOT; };
 		B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonFirstViewController.m; path = HiHome/UiLayer/MainPage/PersonFirstViewController.m; sourceTree = SOURCE_ROOT; };
 		B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonFirstViewController.xib; path = HiHome/UiLayer/MainPage/PersonFirstViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1145,6 +1157,7 @@
 		B58DD9601BB67BC20040A084 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				B78E4A471BDA0AB600F23976 /* search_img.png */,
 				B58DD9631BB67CF50040A084 /* addressBook@2x.png */,
 				B58DD9611BB67C550040A084 /* headImg@2x.png */,
 			);
@@ -1315,6 +1328,12 @@
 		B78E4A3A1BD9F9BB00F23976 /* AddFriend */ = {
 			isa = PBXGroup;
 			children = (
+				B78E4A401BD9FAA800F23976 /* AddFriendFirstViewController.h */,
+				B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */,
+				B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */,
+				B78E4A491BDA0FE800F23976 /* AddFriendSecondViewController.h */,
+				B78E4A4A1BDA0FE800F23976 /* AddFriendSecondViewController.m */,
+				B78E4A4B1BDA0FE800F23976 /* AddFriendSecondViewController.xib */,
 			);
 			name = AddFriend;
 			sourceTree = "<group>";
@@ -1513,6 +1532,7 @@
 				80124C131BD8B4F900DBE369 /* select_Radio_icon@2x.png in Resources */,
 				B58DD9641BB67CF50040A084 /* addressBook@2x.png in Resources */,
 				B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */,
+				B78E4A481BDA0AB600F23976 /* search_img.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
 				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
@@ -1522,6 +1542,7 @@
 				80BC02F01BB0EDAA0002A267 /* metion_tab_gods_icon@2x.png in Resources */,
 				B5033BB21BAFA6D60014935E /* LaunchScreen.storyboard in Resources */,
 				B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */,
+				B78E4A441BD9FAA800F23976 /* AddFriendFirstViewController.xib in Resources */,
 				B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */,
 				B57F5D8D1BBA8399009AC336 /* password@2x.png in Resources */,
 				B58DD96A1BB687A90040A084 /* addtask@2x.png in Resources */,
@@ -1558,6 +1579,7 @@
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
+				B78E4A4D1BDA0FE800F23976 /* AddFriendSecondViewController.xib in Resources */,
 				B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */,
 				B5E059E11BB146E100DBF786 /* WMOtherViewController.xib in Resources */,
 				B56C2EEB1BC4BF330030FB83 /* OptionsViewController.xib in Resources */,
@@ -1670,6 +1692,7 @@
 				B587FF101BC8AB7500E9F119 /* AlbumMainViewController.m in Sources */,
 				B583B1A61BC39B2B000572CA /* BackPageViewController.m in Sources */,
 				B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */,
+				B78E4A4C1BDA0FE800F23976 /* AddFriendSecondViewController.m in Sources */,
 				80124C101BD885E800DBE369 /* UIView+WebCacheOperation.m in Sources */,
 				B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */,
 				B5033BE51BAFB41F0014935E /* ChatPageViewController.m in Sources */,
@@ -1734,6 +1757,7 @@
 				80124C021BD885E800DBE369 /* NSData+ImageContentType.m in Sources */,
 				80124C031BD885E800DBE369 /* SDImageCache.m in Sources */,
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,
+				B78E4A431BD9FAA800F23976 /* AddFriendFirstViewController.m in Sources */,
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
 				80124C061BD885E800DBE369 /* SDWebImageDownloader.m in Sources */,
 				8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */,

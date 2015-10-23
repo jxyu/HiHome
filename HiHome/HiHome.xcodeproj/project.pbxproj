@@ -49,6 +49,7 @@
 		8048CC4D1BD21C5200B76C59 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC491BD21C5200B76C59 /* Model.m */; settings = {ASSET_TAGS = (); }; };
 		8048CC4E1BD21C5200B76C59 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC4B1BD21C5200B76C59 /* pinyin.c */; settings = {ASSET_TAGS = (); }; };
 		8093B3D21BD8C21F00DE7A49 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093B3D11BD8C21F00DE7A49 /* ZHPickView.m */; settings = {ASSET_TAGS = (); }; };
+		8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093B3D51BD8D36A00DE7A49 /* VPImageCropperViewController.m */; settings = {ASSET_TAGS = (); }; };
 		80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -303,6 +304,8 @@
 		8048CC4C1BD21C5200B76C59 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		8093B3D01BD8C21F00DE7A49 /* ZHPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHPickView.h; sourceTree = "<group>"; };
 		8093B3D11BD8C21F00DE7A49 /* ZHPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHPickView.m; sourceTree = "<group>"; };
+		8093B3D41BD8D36A00DE7A49 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
+		8093B3D51BD8D36A00DE7A49 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
 		80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gods_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fridnes_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
@@ -659,6 +662,7 @@
 		8048CC471BD21C2E00B76C59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8093B3D31BD8D36A00DE7A49 /* UpLoadImage */,
 				8093B3CF1BD8C21F00DE7A49 /* PickerView */,
 				80124BDF1BD885E800DBE369 /* SDWebImage */,
 				8048CC481BD21C5200B76C59 /* Model.h */,
@@ -684,6 +688,15 @@
 				8093B3D11BD8C21F00DE7A49 /* ZHPickView.m */,
 			);
 			path = PickerView;
+			sourceTree = "<group>";
+		};
+		8093B3D31BD8D36A00DE7A49 /* UpLoadImage */ = {
+			isa = PBXGroup;
+			children = (
+				8093B3D41BD8D36A00DE7A49 /* VPImageCropperViewController.h */,
+				8093B3D51BD8D36A00DE7A49 /* VPImageCropperViewController.m */,
+			);
+			path = UpLoadImage;
 			sourceTree = "<group>";
 		};
 		80BC02E01BB0ED890002A267 /* Images */ = {
@@ -1715,6 +1728,7 @@
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
 				80124C061BD885E800DBE369 /* SDWebImageDownloader.m in Sources */,
+				8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */,
 				B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */,
 				B56C2EEA1BC4BF330030FB83 /* OptionsViewController.m in Sources */,
 				8093B3D21BD8C21F00DE7A49 /* ZHPickView.m in Sources */,

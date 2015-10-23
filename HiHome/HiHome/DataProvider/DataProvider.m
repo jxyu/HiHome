@@ -229,6 +229,28 @@
     }
 }
 
+-(void)UploadImgWithImgdata:(NSString *)imagePath
+{
+    if (imagePath) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=public&a=upload",Url];
+        NSDictionary * prm=@{@"name":@"avatar"};
+        [self uploadImageWithImage:imagePath andurl:url andprm:prm];
+//        [self ShowOrderuploadImageWithImage:imagePath andurl:url andprm:prm];
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
@@ -296,11 +318,11 @@
     }];
 }
 
-- (void)uploadImageWithImage:(NSString *)imagePath andurl:(NSString *)url andprm:(NSDictionary *)prm andkey:(NSString *)key
+- (void)uploadImageWithImage:(NSString *)imagePath andurl:(NSString *)url andprm:(NSDictionary *)prm
 {
     NSData *data=[NSData dataWithContentsOfFile:imagePath];
     NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:data name:@"avatar" fileName:@"avatar.jpg" mimeType:@"image/jpg"];
+        [formData appendPartWithFileData:data name:@"imgsrc" fileName:@"avatar.jpg" mimeType:@"image/jpg"];
     }];
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -334,7 +356,7 @@
 //    NSLog(@"%@",result);
 }
 
-- (void)ShowOrderuploadImageWithImage:(NSData *)imagedata andurl:(NSString *)url andprm:(NSDictionary *)prm andkey:(NSString *)key
+- (void)ShowOrderuploadImageWithImage:(NSData *)imagedata andurl:(NSString *)url andprm:(NSDictionary *)prm
 {
     NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:imagedata name:@"showorder_img" fileName:@"showorder_img.jpg" mimeType:@"image/jpg"];

@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80076ABF1BDA155000DEFD35 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80076A9E1BDA155000DEFD35 /* JKImagePickerController.strings */; settings = {ASSET_TAGS = (); }; };
+		80076AC01BDA155000DEFD35 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80076AA01BDA155000DEFD35 /* ImagesPicker.xcassets */; settings = {ASSET_TAGS = (); }; };
+		80076AC11BDA155000DEFD35 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AA41BDA155000DEFD35 /* JKAssets.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC21BDA155000DEFD35 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AA61BDA155000DEFD35 /* JKAssetsCollectionFooterView.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC31BDA155000DEFD35 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AA81BDA155000DEFD35 /* JKAssetsGroupCell.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC41BDA155000DEFD35 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AAA1BDA155000DEFD35 /* JKAssetsGroupsView.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC51BDA155000DEFD35 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AAC1BDA155000DEFD35 /* JKAssetsThumbnailView.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC61BDA155000DEFD35 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AAE1BDA155000DEFD35 /* JKAssetsViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC71BDA155000DEFD35 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AB01BDA155000DEFD35 /* JKImagePickerController.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC81BDA155000DEFD35 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AB21BDA155000DEFD35 /* JKPhotoBrowser.m */; settings = {ASSET_TAGS = (); }; };
+		80076AC91BDA155000DEFD35 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AB41BDA155000DEFD35 /* JKPhotoBrowserCell.m */; settings = {ASSET_TAGS = (); }; };
+		80076ACA1BDA155000DEFD35 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AB61BDA155000DEFD35 /* JKPromptView.m */; settings = {ASSET_TAGS = (); }; };
+		80076ACB1BDA155000DEFD35 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AB81BDA155000DEFD35 /* JKUtil.m */; settings = {ASSET_TAGS = (); }; };
+		80076ACC1BDA155000DEFD35 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076ABA1BDA155000DEFD35 /* PhotoAlbumManager.m */; settings = {ASSET_TAGS = (); }; };
+		80076ACD1BDA155000DEFD35 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076ABC1BDA155000DEFD35 /* UIView+JKPicker.m */; settings = {ASSET_TAGS = (); }; };
+		80076ACE1BDA155000DEFD35 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076ABE1BDA155000DEFD35 /* PhotoCell.m */; settings = {ASSET_TAGS = (); }; };
 		80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
 		80124BDE1BD882BD00DBE369 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		80124C011BD885E800DBE369 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BE11BD885E800DBE369 /* MKAnnotationView+WebCache.m */; settings = {ASSET_TAGS = (); }; };
@@ -237,6 +253,37 @@
 
 /* Begin PBXFileReference section */
 		4A5067773248DD015B75248D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		80076A9F1BDA155000DEFD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JKImagePickerController.strings; sourceTree = "<group>"; };
+		80076AA01BDA155000DEFD35 /* ImagesPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPicker.xcassets; sourceTree = "<group>"; };
+		80076AA11BDA155000DEFD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/JKImagePickerController.strings"; sourceTree = "<group>"; };
+		80076AA31BDA155000DEFD35 /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
+		80076AA41BDA155000DEFD35 /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
+		80076AA51BDA155000DEFD35 /* JKAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsCollectionFooterView.h; sourceTree = "<group>"; };
+		80076AA61BDA155000DEFD35 /* JKAssetsCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsCollectionFooterView.m; sourceTree = "<group>"; };
+		80076AA71BDA155000DEFD35 /* JKAssetsGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupCell.h; sourceTree = "<group>"; };
+		80076AA81BDA155000DEFD35 /* JKAssetsGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupCell.m; sourceTree = "<group>"; };
+		80076AA91BDA155000DEFD35 /* JKAssetsGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupsView.h; sourceTree = "<group>"; };
+		80076AAA1BDA155000DEFD35 /* JKAssetsGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupsView.m; sourceTree = "<group>"; };
+		80076AAB1BDA155000DEFD35 /* JKAssetsThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsThumbnailView.h; sourceTree = "<group>"; };
+		80076AAC1BDA155000DEFD35 /* JKAssetsThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsThumbnailView.m; sourceTree = "<group>"; };
+		80076AAD1BDA155000DEFD35 /* JKAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsViewCell.h; sourceTree = "<group>"; };
+		80076AAE1BDA155000DEFD35 /* JKAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsViewCell.m; sourceTree = "<group>"; };
+		80076AAF1BDA155000DEFD35 /* JKImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKImagePickerController.h; sourceTree = "<group>"; };
+		80076AB01BDA155000DEFD35 /* JKImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKImagePickerController.m; sourceTree = "<group>"; };
+		80076AB11BDA155000DEFD35 /* JKPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowser.h; sourceTree = "<group>"; };
+		80076AB21BDA155000DEFD35 /* JKPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowser.m; sourceTree = "<group>"; };
+		80076AB31BDA155000DEFD35 /* JKPhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowserCell.h; sourceTree = "<group>"; };
+		80076AB41BDA155000DEFD35 /* JKPhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowserCell.m; sourceTree = "<group>"; };
+		80076AB51BDA155000DEFD35 /* JKPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPromptView.h; sourceTree = "<group>"; };
+		80076AB61BDA155000DEFD35 /* JKPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPromptView.m; sourceTree = "<group>"; };
+		80076AB71BDA155000DEFD35 /* JKUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUtil.h; sourceTree = "<group>"; };
+		80076AB81BDA155000DEFD35 /* JKUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUtil.m; sourceTree = "<group>"; };
+		80076AB91BDA155000DEFD35 /* PhotoAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoAlbumManager.h; sourceTree = "<group>"; };
+		80076ABA1BDA155000DEFD35 /* PhotoAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumManager.m; sourceTree = "<group>"; };
+		80076ABB1BDA155000DEFD35 /* UIView+JKPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JKPicker.h"; sourceTree = "<group>"; };
+		80076ABC1BDA155000DEFD35 /* UIView+JKPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JKPicker.m"; sourceTree = "<group>"; };
+		80076ABD1BDA155000DEFD35 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
+		80076ABE1BDA155000DEFD35 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = HiHome/UiLayer/MainPage/UserInfoViewController.h; sourceTree = SOURCE_ROOT; };
 		80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoViewController.m; path = HiHome/UiLayer/MainPage/UserInfoViewController.m; sourceTree = SOURCE_ROOT; };
 		80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserInfoViewController.xib; path = HiHome/UiLayer/MainPage/UserInfoViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -609,6 +656,59 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		80076A9C1BDA155000DEFD35 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				80076A9D1BDA155000DEFD35 /* Assets */,
+				80076AA21BDA155000DEFD35 /* Classes */,
+				80076ABD1BDA155000DEFD35 /* PhotoCell.h */,
+				80076ABE1BDA155000DEFD35 /* PhotoCell.m */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		80076A9D1BDA155000DEFD35 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				80076A9E1BDA155000DEFD35 /* JKImagePickerController.strings */,
+				80076AA01BDA155000DEFD35 /* ImagesPicker.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		80076AA21BDA155000DEFD35 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				80076AA31BDA155000DEFD35 /* JKAssets.h */,
+				80076AA41BDA155000DEFD35 /* JKAssets.m */,
+				80076AA51BDA155000DEFD35 /* JKAssetsCollectionFooterView.h */,
+				80076AA61BDA155000DEFD35 /* JKAssetsCollectionFooterView.m */,
+				80076AA71BDA155000DEFD35 /* JKAssetsGroupCell.h */,
+				80076AA81BDA155000DEFD35 /* JKAssetsGroupCell.m */,
+				80076AA91BDA155000DEFD35 /* JKAssetsGroupsView.h */,
+				80076AAA1BDA155000DEFD35 /* JKAssetsGroupsView.m */,
+				80076AAB1BDA155000DEFD35 /* JKAssetsThumbnailView.h */,
+				80076AAC1BDA155000DEFD35 /* JKAssetsThumbnailView.m */,
+				80076AAD1BDA155000DEFD35 /* JKAssetsViewCell.h */,
+				80076AAE1BDA155000DEFD35 /* JKAssetsViewCell.m */,
+				80076AAF1BDA155000DEFD35 /* JKImagePickerController.h */,
+				80076AB01BDA155000DEFD35 /* JKImagePickerController.m */,
+				80076AB11BDA155000DEFD35 /* JKPhotoBrowser.h */,
+				80076AB21BDA155000DEFD35 /* JKPhotoBrowser.m */,
+				80076AB31BDA155000DEFD35 /* JKPhotoBrowserCell.h */,
+				80076AB41BDA155000DEFD35 /* JKPhotoBrowserCell.m */,
+				80076AB51BDA155000DEFD35 /* JKPromptView.h */,
+				80076AB61BDA155000DEFD35 /* JKPromptView.m */,
+				80076AB71BDA155000DEFD35 /* JKUtil.h */,
+				80076AB81BDA155000DEFD35 /* JKUtil.m */,
+				80076AB91BDA155000DEFD35 /* PhotoAlbumManager.h */,
+				80076ABA1BDA155000DEFD35 /* PhotoAlbumManager.m */,
+				80076ABB1BDA155000DEFD35 /* UIView+JKPicker.h */,
+				80076ABC1BDA155000DEFD35 /* UIView+JKPicker.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		80124BDF1BD885E800DBE369 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +762,7 @@
 		8048CC471BD21C2E00B76C59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				80076A9C1BDA155000DEFD35 /* ImagePicker */,
 				8093B3D31BD8D36A00DE7A49 /* UpLoadImage */,
 				8093B3CF1BD8C21F00DE7A49 /* PickerView */,
 				80124BDF1BD885E800DBE369 /* SDWebImage */,
@@ -1443,7 +1544,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = M7YC435M3S;
+						DevelopmentTeam = 7X578356T4;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -1494,6 +1595,7 @@
 				803534C31BD62DD30008C191 /* UserInfo.plist in Resources */,
 				B56CFC1B1BCCD4BD0081B645 /* chooseContacts@2x.png in Resources */,
 				8048CC461BD21AD500B76C59 /* AddressLocalViewController.xib in Resources */,
+				80076AC01BDA155000DEFD35 /* ImagesPicker.xcassets in Resources */,
 				B5E059DA1BB146E100DBF786 /* WMHomeViewController.xib in Resources */,
 				B587FF111BC8AB7500E9F119 /* AlbumMainViewController.xib in Resources */,
 				B59688251BCE0929001F2715 /* RepeatViewController.xib in Resources */,
@@ -1552,6 +1654,7 @@
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
 				B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */,
 				B5E059E11BB146E100DBF786 /* WMOtherViewController.xib in Resources */,
+				80076ABF1BDA155000DEFD35 /* JKImagePickerController.strings in Resources */,
 				B56C2EEB1BC4BF330030FB83 /* OptionsViewController.xib in Resources */,
 				B57F5D911BBA8408009AC336 /* logo@2x.png in Resources */,
 				B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */,
@@ -1643,25 +1746,32 @@
 				B5879D711BC78DE9003AACFA /* CoupleViewController.m in Sources */,
 				B59688241BCE0929001F2715 /* RemindViewController.m in Sources */,
 				B5E059D61BB146E100DBF786 /* ViewController.m in Sources */,
+				80076AC11BDA155000DEFD35 /* JKAssets.m in Sources */,
 				B5E059D91BB146E100DBF786 /* WMHomeViewController.m in Sources */,
 				B5879D771BC7A0C4003AACFA /* PlanMonthViewController.m in Sources */,
 				B58196021BCB862900D69A1E /* PullDownButtonsTab.m in Sources */,
 				B5E059D81BB146E100DBF786 /* WMCommon.m in Sources */,
 				B5879D7F1BC7A755003AACFA /* SegmentedPageView.m in Sources */,
+				80076ACB1BDA155000DEFD35 /* JKUtil.m in Sources */,
 				B596881F1BCDEFB1001F2715 /* UUDatePicker.m in Sources */,
 				80124C0D1BD885E800DBE369 /* UIImage+WebP.m in Sources */,
 				B5879D6A1BC746A0003AACFA /* TextViewController.m in Sources */,
 				B5E059DF1BB146E100DBF786 /* WMNavigationInteractiveTransition.m in Sources */,
 				B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */,
+				80076ACD1BDA155000DEFD35 /* UIView+JKPicker.m in Sources */,
 				B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */,
 				B56C2EEF1BC4BF7A0030FB83 /* TaskLimitViewController.m in Sources */,
 				B56CFC171BCC90950081B645 /* CreateTaskViewController.m in Sources */,
+				80076ACA1BDA155000DEFD35 /* JKPromptView.m in Sources */,
 				B5E059DC1BB146E100DBF786 /* WMMenuViewController.m in Sources */,
+				80076AC41BDA155000DEFD35 /* JKAssetsGroupsView.m in Sources */,
 				B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */,
 				B57F5D971BBA9335009AC336 /* UIView+XD.m in Sources */,
+				80076AC31BDA155000DEFD35 /* JKAssetsGroupCell.m in Sources */,
 				B587FF101BC8AB7500E9F119 /* AlbumMainViewController.m in Sources */,
 				B583B1A61BC39B2B000572CA /* BackPageViewController.m in Sources */,
 				B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */,
+				80076AC21BDA155000DEFD35 /* JKAssetsCollectionFooterView.m in Sources */,
 				80124C101BD885E800DBE369 /* UIView+WebCacheOperation.m in Sources */,
 				B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */,
 				B5033BE51BAFB41F0014935E /* ChatPageViewController.m in Sources */,
@@ -1686,11 +1796,14 @@
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				80124C0C1BD885E800DBE369 /* UIImage+MultiFormat.m in Sources */,
+				80076ACC1BDA155000DEFD35 /* PhotoAlbumManager.m in Sources */,
 				B7CC5AEF1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m in Sources */,
 				B587FF141BC8B07700E9F119 /* AlbumPath.m in Sources */,
+				80076AC61BDA155000DEFD35 /* JKAssetsViewCell.m in Sources */,
 				80124C011BD885E800DBE369 /* MKAnnotationView+WebCache.m in Sources */,
 				B5FA2DB71BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.m in Sources */,
 				B583B1A91BC39B72000572CA /* BaseTableViewCell.m in Sources */,
+				80076ACE1BDA155000DEFD35 /* PhotoCell.m in Sources */,
 				8048CC4D1BD21C5200B76C59 /* Model.m in Sources */,
 				B5E059D51BB146E100DBF786 /* UIImage+WM.m in Sources */,
 				B5E0599E1BB0F92900DBF786 /* FirstScrollController.m in Sources */,
@@ -1707,6 +1820,7 @@
 				8048CC4E1BD21C5200B76C59 /* pinyin.c in Sources */,
 				B58DD9671BB67DCC0040A084 /* CardTableViewCell.m in Sources */,
 				803A30381BD7903600C28F8B /* ChatlistViewController.m in Sources */,
+				80076AC91BDA155000DEFD35 /* JKPhotoBrowserCell.m in Sources */,
 				B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */,
 				80124C0F1BD885E800DBE369 /* UIImageView+WebCache.m in Sources */,
 				B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */,
@@ -1717,16 +1831,19 @@
 				80124C081BD885E800DBE369 /* SDWebImageManager.m in Sources */,
 				80124C071BD885E800DBE369 /* SDWebImageDownloaderOperation.m in Sources */,
 				B5879D6D1BC747ED003AACFA /* OptionTextViewController.m in Sources */,
+				80076AC81BDA155000DEFD35 /* JKPhotoBrowser.m in Sources */,
 				B57F5D941BBA925C009AC336 /* InputText.m in Sources */,
 				B59688281BCE4508001F2715 /* RepeatViewController.m in Sources */,
 				80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */,
 				B5741DD51BC26C3C00335B1C /* DataDefine.m in Sources */,
+				80076AC51BDA155000DEFD35 /* JKAssetsThumbnailView.m in Sources */,
 				80124C0E1BD885E800DBE369 /* UIImageView+HighlightedWebCache.m in Sources */,
 				B5A77ABF1BB4FBA10014DD67 /* TaskPath.m in Sources */,
 				80124C021BD885E800DBE369 /* NSData+ImageContentType.m in Sources */,
 				80124C031BD885E800DBE369 /* SDImageCache.m in Sources */,
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
+				80076AC71BDA155000DEFD35 /* JKImagePickerController.m in Sources */,
 				80124C061BD885E800DBE369 /* SDWebImageDownloader.m in Sources */,
 				8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */,
 				B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */,
@@ -1767,6 +1884,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		80076A9E1BDA155000DEFD35 /* JKImagePickerController.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80076A9F1BDA155000DEFD35 /* en */,
+				80076AA11BDA155000DEFD35 /* zh-Hans */,
+			);
+			name = JKImagePickerController.strings;
+			sourceTree = "<group>";
+		};
 		802306AE1BD4ED66006CFFEC /* SMS_SDKLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

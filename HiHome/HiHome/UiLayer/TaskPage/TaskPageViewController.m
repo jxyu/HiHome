@@ -73,7 +73,6 @@
 -(void)resetDatas
 {
     _cellCountMyTask = 1;
-    
     [_myTaskData removeAllObjects];
     [_myAnniversaryData removeAllObjects];
    

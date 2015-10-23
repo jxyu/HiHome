@@ -892,6 +892,7 @@
 		B5033BDC1BAFB3B90014935E /* AddressPage */ = {
 			isa = PBXGroup;
 			children = (
+				B78E4A3A1BD9F9BB00F23976 /* AddFriend */,
 				B5033BE71BAFB4320014935E /* AddressPageViewController.h */,
 				B5033BE81BAFB4320014935E /* AddressPageViewController.m */,
 				B5033BE91BAFB4320014935E /* AddressPageViewController.xib */,
@@ -1309,6 +1310,13 @@
 				B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */,
 			);
 			name = TaskDetailPage;
+			sourceTree = "<group>";
+		};
+		B78E4A3A1BD9F9BB00F23976 /* AddFriend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AddFriend;
 			sourceTree = "<group>";
 		};
 		B7942B9F1BD88134007D6F17 /* PersonPage */ = {

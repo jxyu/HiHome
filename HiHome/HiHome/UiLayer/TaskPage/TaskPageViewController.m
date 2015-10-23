@@ -864,7 +864,7 @@
     [UIView animateWithDuration:.5
                      animations:^{
                        //  self.calendarContentViewHeight.constant = newHeight;
-                         self.calendarContentView.frame =CGRectMake(0, 50+50, self.view.frame.size.width, newHeight);
+                         self.calendarContentView.frame =CGRectMake(0, ZY_HEADVIEW_HEIGHT+ZY_CALENDAR_MENU_HEIGHT, self.view.frame.size.width, newHeight);
                          [self.view layoutIfNeeded];
                      }];
     

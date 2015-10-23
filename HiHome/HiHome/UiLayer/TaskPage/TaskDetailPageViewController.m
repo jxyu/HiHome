@@ -316,7 +316,7 @@
     }else if(indexPath.row == 4){
         mTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 80)];
         mTextView.textColor = [UIColor grayColor];
-//        mTextView.font = [UIFont systemFontOfSize:14];
+        mTextView.font = [UIFont systemFontOfSize:16];
         mTextView.text = taskContentStr;
         mTextView.editable = NO;
         [cell addSubview:mTextView];

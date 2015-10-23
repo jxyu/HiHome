@@ -17,10 +17,16 @@
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
 
+#import "JKImagePickerController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "PhotoCell.h"
+
 #define ORIGINAL_MAX_WIDTH 640.0f
 
-@interface CreateAnniversaryViewController ()<VPImageCropperDelegate,UIActionSheetDelegate>
+@interface CreateAnniversaryViewController ()<VPImageCropperDelegate,UIActionSheetDelegate,JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic, strong) UIImageView *portraitImageView;
+@property (nonatomic, retain) UICollectionView *collectionView;
+@property (nonatomic, strong) NSMutableArray   *assetsArray;
 
 @end
 
@@ -28,11 +34,17 @@
 {
     UITextField *titleField;//标题
     UITextField *field;//日期
+    NSDictionary *userInfoWithFile;
+    
+    NSString * imgAvatar;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _keyShow = false;
     [self initViews];
@@ -98,6 +110,19 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"click done button");
+    
+    if (imgAvatar&&titleField.text&&field.text&&_textView.text) {
+        [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitBackCall:"];
+        [dataprovider createAnniversary:userInfoWithFile[@"id"] andImg:imgAvatar andTitle:titleField.text andMdate:field.text andContent:_textView.text];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
+    
 }
 
 -(void) initViews
@@ -105,6 +130,9 @@
     
     self.titleLabel.text = @"创建纪念日";
     [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
+//    [self.mBtnRight addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
@@ -155,6 +183,26 @@
     [self.view addSubview:_mainTableView];
     
 }
+
+
+
+
+-(void)SubmitBackCall:(id)dict
+{
+    [SVProgressHUD dismiss];
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue]==200) {
+        [SVProgressHUD showSuccessWithStatus:@"保存成功" maskType:SVProgressHUDMaskTypeBlack];
+        [self quitView];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+    
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -331,10 +379,33 @@
         
         [cell addSubview:_textView];
     }else{
+        cell.bounds=CGRectMake(0, 0, cell.frame.size.width, 50);
+        
         UIButton *picBtns = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.height, cell.frame.size.height)];
         [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
         picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
         [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        
+        if (!_collectionView) {
+            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            layout.minimumLineSpacing = 5.0;
+            layout.minimumInteritemSpacing = 5.0;
+            layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+            
+            _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+            _collectionView.backgroundColor = [UIColor clearColor];
+            [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
+            _collectionView.delegate = self;
+            _collectionView.dataSource = self;
+            _collectionView.showsHorizontalScrollIndicator = NO;
+            _collectionView.showsVerticalScrollIndicator = NO;
+            
+            [cell addSubview:_collectionView];
+            
+        }
+        
         
 //        UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
 //        [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
@@ -395,7 +466,8 @@
 {
     switch (sender.tag) {
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
-              [self showLocalAlbum];
+//              [self showLocalAlbum];
+            [self composePicAdd];
             break;
         case ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG:
             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -408,7 +480,6 @@
                 alert.alertType = AlertType_Hint;
                 [alert addButtonWithTitle:@"确定"];
                 [alert show];
-                
             }
             break;
         default:
@@ -751,10 +822,10 @@
     }];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:^(){
-    }];
-}
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+//    [picker dismissViewControllerAnimated:YES completion:^(){
+//    }];
+//}
 
 #pragma mark - UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -880,9 +951,7 @@
     //     ];
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue]==200) {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"ChangeAvatarBackCall:"];
-//        [dataprovider SaveAvatarWithAvatarName:dict[@"datas"][@"avatar"] andkey:userinfoWithFile[@"key"]];
+        imgAvatar=[dict[@"datas"][@"imgsrc"][@"imgsrc"] isEqual:[NSNull null]]?@"":dict[@"datas"][@"imgsrc"][@"imgsrc"];
     }
     else
     {
@@ -893,6 +962,78 @@
 /*************************************上传图片结束******************************************/
 
 
+#pragma mark 新浪图片多选
+
+
+- (void)composePicAdd
+{
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 3;
+    imagePickerController.selectedAssetArray = self.assetsArray;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
+}
+
+#pragma mark - JKImagePickerControllerDelegate
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
+{
+    self.assetsArray = [NSMutableArray arrayWithArray:assets];
+    
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.assetsArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCellIdentifier forIndexPath:indexPath];
+    
+    cell.tag=indexPath.row;
+    
+    cell.asset = [self.assetsArray objectAtIndex:[indexPath row]];
+    
+    return cell;
+    
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(40, 40);
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld",(long)[indexPath row]);
+    
+}
 
 
 

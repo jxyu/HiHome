@@ -32,9 +32,6 @@
 @end
 
 @implementation CreateTaskViewController
-{
-    NSMutableArray *_startDateArray;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

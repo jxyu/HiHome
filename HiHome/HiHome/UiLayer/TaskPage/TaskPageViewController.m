@@ -501,6 +501,7 @@
     taskDetailPath = [[TaskPath alloc] init];
     _myTaskData = [[NSMutableArray alloc] init];
     _getTaskData = [[NSMutableArray alloc] init];
+    _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
 //    for (int i = 0; i < 40; i++) {
 //        TaskPath * taskPath = [[TaskPath alloc] init];
 //        taskPath.taskName = [NSString stringWithFormat:@"去超市买黄瓜%d",i+1];
@@ -1182,16 +1183,21 @@
 
     taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
     taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
-    taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"state"];
+    taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
     taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
     taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
     taskDetailPath.remindTime = (ZYTaskRemind)[(NSString *)[taskDetailDict objectForKey:@"tip"] integerValue];
+    taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
+    taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
     
   //  [self setTaskDetails];
+
+    _taskDetailPageCtl.navTitle = taskDetailPath.taskName;
     
-    UITableView *tempTableView;
-    tempTableView = [_tableViews objectAtIndex:1];
-    [tempTableView reloadData];//重新载入接收的任务页数据
+    [_taskDetailPageCtl setDatas:taskDetailPath];
+    _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
+    
     [SVProgressHUD dismiss];
 
 }
@@ -1222,21 +1228,14 @@
             [self.navigationController pushViewController:_anniversaryTaskDetailCtl animated:NO];
         }else{
             TaskPath *tempPath;
-            tempPath = [_myTaskData objectAtIndex:indexPath.row];
+            tempPath = [_myTaskData objectAtIndex:indexPath.row-_myAnniversaryData.count];
             
             [self loadTaskDetails:tempPath.taskID];
             
-            _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
-            TaskPath *mSelectTask = [_myTaskData objectAtIndex:(indexPath.row - _myAnniversaryData.count)];
-            NSLog(@"任务名称:%@",mSelectTask.taskName);
             
-            _taskDetailPageCtl.navTitle = mSelectTask.taskName;
+           
             
             
-            _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
-            
-            [_taskDetailPageCtl setDatas:taskDetailPath];
         }
     }else{
         _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];

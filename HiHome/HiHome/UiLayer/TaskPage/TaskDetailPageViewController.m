@@ -28,12 +28,14 @@
     /*
      *任务参数
      */
-    NSString *stateStr;
-    NSString *remindStr;
-    NSString *repeatStr;
-    NSString *senderNameStr;
-    NSString *taskTitleStr;
-    NSString *taskContentStr;
+    NSString *stateStr; //状态
+    NSString *remindStr;//提醒
+    NSString *repeatStr;//重复
+    NSString *senderNameStr;//发布人
+    NSString *taskTitleStr;//任务名
+    NSString *taskContentStr;//任务内容
+    NSString *startTime;//开始时间
+    NSString *endTime;//结束时间
     
     
 }
@@ -64,8 +66,8 @@
     mTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
     mTableView.separatorInset = UIEdgeInsetsZero;
     //下面两句禁止tableview滚动
-    mTableView.scrollEnabled = NO;
-    [mTableView setHidden:NO];
+//    mTableView.scrollEnabled = NO;
+//    [mTableView setHidden:NO];
     
     [self.view addSubview:mTableView];
     
@@ -99,11 +101,12 @@
     remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
     stateStr = [self modeValueToStr:Mode_state andValue:taskPath.taskStatus];
     
-    
     senderNameStr = taskPath.taskOwner;
     taskTitleStr = taskPath.taskName;
     taskContentStr = taskPath.taskContent;
     
+    startTime = taskPath.startTaskDateStr;
+    endTime   = taskPath.endTaskDateStr;
     
     [mTableView reloadData];
     
@@ -287,7 +290,7 @@
         taskName = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
         taskName.textColor = [UIColor grayColor];
         taskName.text = taskTitleStr;
-        taskName.font = [UIFont systemFontOfSize:14];
+//        taskName.font = [UIFont systemFontOfSize:14];
         taskName.enabled = NO;
         //左UILabel
         UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 50)];
@@ -300,7 +303,7 @@
         executor = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
         executor.textColor = [UIColor grayColor];
         executor.text = @"自己";
-        executor.font = [UIFont systemFontOfSize:14];
+//        executor.font = [UIFont systemFontOfSize:14];
         executor.enabled = NO;
         //左UILabel
         UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 50)];
@@ -313,7 +316,7 @@
     }else if(indexPath.row == 4){
         mTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 80)];
         mTextView.textColor = [UIColor grayColor];
-        mTextView.font = [UIFont systemFontOfSize:14];
+//        mTextView.font = [UIFont systemFontOfSize:14];
         mTextView.text = taskContentStr;
         mTextView.editable = NO;
         [cell addSubview:mTextView];
@@ -347,7 +350,7 @@
         
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
+        [remindBtn setTitle:remindStr forState:UIControlStateNormal];
         [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;
@@ -355,7 +358,7 @@
         
         [repeatBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [repeatBtn setImage:[UIImage imageNamed:@"repeat_2"] forState:UIControlStateNormal];
-        [repeatBtn setTitle:@"重复" forState:UIControlStateNormal];
+        [repeatBtn setTitle:repeatStr forState:UIControlStateNormal];
         [repeatBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         repeatBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         repeatBtn.imageView.contentMode = UIViewContentModeCenter;
@@ -434,11 +437,11 @@
     endTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, _cellHeight/2, self.view.frame.size.width/2, _cellHeight/2)];
     
     startTimeLabel.textAlignment = NSTextAlignmentCenter;
-    startTimeLabel.text = @"2015-10-22  17:50";
+    startTimeLabel.text = startTime;
     startTimeLabel.font = [UIFont systemFontOfSize:14];
     endTimeLabel.font = [UIFont systemFontOfSize:14];
     endTimeLabel.textAlignment = NSTextAlignmentCenter;
-    endTimeLabel.text= @"2015-10-23  17:50";
+    endTimeLabel.text= endTime;
 //
     startTimeLab.text = @"开始时间";
     startTimeLab.textAlignment = NSTextAlignmentCenter;

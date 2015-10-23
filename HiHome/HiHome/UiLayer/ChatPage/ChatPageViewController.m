@@ -25,10 +25,11 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     
-    RCConversationListViewController * chat=[[RCConversationListViewController alloc]initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
-    ChatlistViewController * chatListViewController=[[ChatlistViewController alloc] initWithNibName:@"ChatlistViewController" bundle:[NSBundle mainBundle]];
-    [self.navigationController pushViewController:chatListViewController animated:YES];
+//    RCConversationListViewController * chat=[[RCConversationListViewController alloc]initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
+//    ChatlistViewController * chatListViewController=[[ChatlistViewController alloc] initWithNibName:@"ChatlistViewController" bundle:[NSBundle mainBundle]];
+//    [self.navigationController pushViewController:chatListViewController animated:YES];
     // Do any additional setup after loading the view from its nib.
+    [self initViews];
 }
 
 

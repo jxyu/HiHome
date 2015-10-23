@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
             endingLineNumber = "229"
-            landmarkName = "-UploadImgWithImgdata:"
+            landmarkName = "-GetToken:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
-            landmarkName = "-uploadImageWithImage:andurl:andprm:"
+            landmarkName = "-GetRequest:andpram:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,7 +255,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "317"
             endingLineNumber = "317"
-            landmarkName = "-uploadImageWithImage:andurl:andprm:"
+            landmarkName = "-GetRequest:andpram:"
             landmarkType = "5">
             <Locations>
                <Location

@@ -342,7 +342,7 @@
 {
     NSMutableArray *LabelViews = [NSMutableArray array];
     
-    weatherImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
+    weatherImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 80, 80)];
     
     temp = [[UILabel alloc] initWithFrame:CGRectMake(weatherImg.frame.origin.x + weatherImg.frame.size.width + 5, 10, 38, 30)];
     temp.font = [UIFont systemFontOfSize:30];

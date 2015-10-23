@@ -850,9 +850,6 @@
 				B5879D741BC7A0C4003AACFA /* PlanMonthViewController.h */,
 				B5879D751BC7A0C4003AACFA /* PlanMonthViewController.m */,
 				B5879D761BC7A0C4003AACFA /* PlanMonthViewController.xib */,
-				80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */,
-				80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */,
-				80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */,
 			);
 			name = MainPage;
 			path = mainPage;
@@ -1320,6 +1317,9 @@
 				B7942BA01BD882CA007D6F17 /* PersonFirstViewController.h */,
 				B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */,
 				B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */,
+				80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */,
+				80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */,
+				80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */,
 			);
 			name = PersonPage;
 			path = mainPage;

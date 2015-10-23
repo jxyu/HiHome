@@ -152,7 +152,7 @@
 
 -(void)btnEditInfo:(id)sender{
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
-    [self presentViewController:userInfoVC animated:YES completion:^{}];
+    [self presentViewController:userInfoVC animated:NO completion:^{}];
 }
 
 @end

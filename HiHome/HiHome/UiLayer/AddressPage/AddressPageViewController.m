@@ -11,6 +11,7 @@
 #import "UIDefine.h"
 #import "CardTableViewCell.h"
 #import "AddressLocalViewController.h"
+#import "AddFriendFirstViewController.h"
 
 
 @interface AddressPageViewController ()
@@ -127,6 +128,7 @@
     
     [addtaskBtn setImage:[UIImage imageNamed:@"addtask"] forState:UIControlStateNormal];
     addtaskBtn.imageView.contentMode = UIViewContentModeCenter;
+    [addtaskBtn addTarget:self action:@selector(addFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
     
     
     tableHeaderView.contentMode = UIViewContentModeCenter;
@@ -167,6 +169,12 @@
     }
     
     return _cellCount;
+}
+
+-(void)addFriendEvent:(id)sender{
+    AddFriendFirstViewController *addFriendFirstVC = [[AddFriendFirstViewController alloc] init];
+    addFriendFirstVC.navTitle = @"添加联系人";
+    [self.navigationController presentViewController:addFriendFirstVC animated:NO completion:nil];
 }
 
 

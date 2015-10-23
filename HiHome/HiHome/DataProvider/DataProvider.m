@@ -89,7 +89,7 @@
 }
 
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -106,6 +106,8 @@
 //        else
 //        prm=@{@"uid":userID,@"state":state,@"nowpage":page,@"perpage":num};
         [prm setObject:userID forKey:@"uid"];
+        if(my!=nil)
+             [prm setObject:my forKey:@"my"];
         if(state!=nil)
             [prm setObject:state forKey:@"state"];
         if(page!=nil)
@@ -118,6 +120,35 @@
         [self PostRequest:url andpram:prm];
     }
 }
+
+
+-(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
+{
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    
+    if (userID) {
+        NSLog(@"userId = [%@]-----",userID);
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getList",Url];
+
+        [prm setObject:userID forKey:@"uid"];
+
+        if(state!=nil)
+            [prm setObject:state forKey:@"state"];
+        if(page!=nil)
+            [prm setObject:page forKey:@"nowpage"];
+        if(perpage!=nil)
+            [prm setObject:perpage forKey:@"perpage"];
+        
+        NSLog(@"send prm = [%@]",prm);
+        
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+
+
 
 -(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker
 {
@@ -241,7 +272,17 @@
 }
 
 
+-(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state
+{
 
+    if (taskID&&state) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=modTaskState",Url];
+        NSDictionary * prm=@{@"id":taskID,@"state":state};
+       [self PostRequest:url andpram:prm];
+       
+    }
+    
+}
 
 
 

@@ -70,7 +70,7 @@ typedef enum _taskType
 
 }
 @property(nonatomic) NSString *taskName;//任务名称
-@property(nonatomic) NSString *taskID;//任务名称
+@property(nonatomic) NSString *taskID;//任务ID
 @property(nonatomic) NSString *taskContent;//任务内容
 @property(nonatomic) NSString *taskOwner;//发布者
 @property(nonatomic) NSString *taskPerformers;//执行者
@@ -94,6 +94,7 @@ typedef enum _taskType
     
 }
 @property(nonatomic) NSString *title;//纪念日名称
+@property(nonatomic) NSString *anniversaryID;//纪念日ID
 @property(nonatomic) NSString *content;//纪念日内容
 @property(nonatomic) NSString *date;//日期
 

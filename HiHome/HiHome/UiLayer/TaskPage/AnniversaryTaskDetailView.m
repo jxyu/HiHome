@@ -8,8 +8,11 @@
 
 #import "AnniversaryTaskDetailView.h"
 #import "AnniversaryTaskCell.h"
+#import "TaskPath.h"
 
 @interface AnniversaryTaskDetailView (){
+    NSString *anniversaryTitle;
+    NSString *dateStr;
     NSString *contentTxt;
     AnniversaryTaskCell * anniversaryTask;
 }
@@ -26,8 +29,23 @@
 }
 
 - (void)initData{
-    contentTxt = @"元旦，即世界多数国家通称的“新年”，是公历新一年的第一天。元，谓“首”；旦，谓“日”；“元旦”意即“首日”。“元旦”一词最早出现于《晋书》，但其含义已经沿用4000多年。[1]  中国古代曾以腊月、十月等的月首为元旦，汉武帝起为农历1月1日";
+   // contentTxt = @"元旦，即世界多数国家通称的“新年”，是公历新一年的第一天。元，谓“首”；旦，谓“日”；“元旦”意即“首日”。“元旦”一词最早出现于《晋书》，但其含义已经沿用4000多年。[1]  中国古代曾以腊月、十月等的月首为元旦，汉武帝起为农历1月1日";
 }
+
+
+-(void) setDatas:(anniversaryPath *)annPath
+{
+
+    if(annPath == nil)
+        return;
+    
+    contentTxt = annPath.content;
+    dateStr = [annPath.date substringToIndex:10];
+    anniversaryTitle = annPath.title;
+    
+    
+}
+
 
 - (void)initView{
     
@@ -39,11 +57,11 @@
     
     //UILabel
     UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(mImageView.frame.size.width + 20, 80, 50, 21)];
-    name.text = @"元旦";
+    name.text =anniversaryTitle;
     [self.view addSubview:name];
     UILabel *date = [[UILabel alloc] initWithFrame:CGRectMake(mImageView.frame.size.width + 20, 110, 120, 21)];
     date.font = [UIFont systemFontOfSize:15];
-    date.text = @"2015年10月17日";
+    date.text = dateStr;
     [self.view addSubview:date];
     
     //横线

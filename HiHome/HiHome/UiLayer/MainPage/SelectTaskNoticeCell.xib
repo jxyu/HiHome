@@ -182,6 +182,6 @@
     </objects>
     <resources>
         <image name="set.png" width="8" height="14"/>
-        <image name="xueren.png" width="83" height="74"/>
+        <image name="xueren.png" width="41" height="37"/>
     </resources>
 </document>

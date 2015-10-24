@@ -15,6 +15,9 @@
     DataProvider *dataProvider;
     AddFriendSecondViewController *addFriendSecondVC;
     UITextField *mUserNumber;
+    UILabel *detail1;
+    UIButton *detail2;
+    UILabel *detail3;
 }
 
 @end
@@ -47,6 +50,26 @@
     mSearchBtn.backgroundColor = [UIColor colorWithRed:0.92 green:0.35 blue:0.14 alpha:1];
     [mSearchBtn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mSearchBtn];
+    
+    detail1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 74 + mUserNumber.frame.size.height + 50, SCREEN_WIDTH - 20, 21)];
+    detail1.textColor = [UIColor grayColor];
+    detail1.textAlignment = NSTextAlignmentCenter;
+    detail1.text = @"没有找到符合搜索条件的用户";
+    detail1.hidden = YES;
+    [self.view addSubview:detail1];
+    
+    detail2 = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 175) / 2, detail1.frame.origin.y + detail1.frame.size.height + 10, 175, 21)];
+    [detail2 setTitle:@"点击此处邀请好友加入" forState:UIControlStateNormal];
+    detail2.titleLabel.font = [UIFont systemFontOfSize:17];
+    [detail2 setTitleColor:[UIColor colorWithRed:0.92 green:0.47 blue:0.35 alpha:1] forState:UIControlStateNormal];
+    detail2.hidden = YES;
+    [self.view addSubview:detail2];
+    
+    detail3 = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 170) / 2, detail2.frame.origin.y + detail2.frame.size.height, 170, 1)];
+    detail3.backgroundColor = [UIColor colorWithRed:0.92 green:0.47 blue:0.35 alpha:1];
+    detail3.hidden = YES;
+    [self.view addSubview:detail3];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,6 +77,9 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)searchAction:(id)sender {
+    if ([mUserNumber.text isEqual:@""]) {
+        return;
+    }
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"searchContacterBackCall:"];
     [dataProvider getContacterByPhone:mUserNumber.text];
@@ -66,17 +92,20 @@
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
         personDetailDict = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+        addFriendSecondVC.mContacterID = [[personDetailDict valueForKey:@"id"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"id"][0];
+        addFriendSecondVC.mHeaderImgTxt = @"me";
+        addFriendSecondVC.mNameTxt = [[personDetailDict valueForKey:@"nick"][0] isEqual: [NSNull null]]?@"":[personDetailDict valueForKey:@"nick"][0];
+        addFriendSecondVC.mSexTxt = [[personDetailDict valueForKey:@"sex"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"sex"][0];
+        
+        addFriendSecondVC.navTitle = @"添加好友";
+        [self presentViewController:addFriendSecondVC animated:NO completion:nil];
     }else{
         NSLog(@"访问服务器失败！");
+        detail1.hidden = NO;
+        detail2.hidden = NO;
+        detail3.hidden = NO;
     }
-    addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
-    addFriendSecondVC.mContacterID = [[personDetailDict valueForKey:@"id"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"id"][0];
-    addFriendSecondVC.mHeaderImgTxt = @"me";
-    addFriendSecondVC.mNameTxt = [[personDetailDict valueForKey:@"nick"][0] isEqual: [NSNull null]]?@"":[personDetailDict valueForKey:@"nick"][0];
-    addFriendSecondVC.mSexTxt = [[personDetailDict valueForKey:@"sex"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"sex"][0];
-    
-    addFriendSecondVC.navTitle = @"添加好友";
-    [self presentViewController:addFriendSecondVC animated:NO completion:nil];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

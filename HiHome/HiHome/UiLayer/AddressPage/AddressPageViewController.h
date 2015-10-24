@@ -12,7 +12,6 @@
 @interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
 @private
-    NSInteger _cellCount;
     NSInteger _mateCellCount;
     NSInteger _starFriendCellCount;
     NSInteger _normalFriendcellCount;

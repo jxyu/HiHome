@@ -9,6 +9,7 @@
 #import "AddFriendSecondViewController.h"
 #import "UIImage+WM.h"
 #import "DataProvider.h"
+#import "AddressPageViewController.h"
 
 
 @interface AddFriendSecondViewController (){
@@ -70,13 +71,26 @@
         [cell addSubview:mRemark];
     }else{
         cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1];
-        
-        UIButton *mAddFriendBtn =[[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
-        [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
-        [mAddFriendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        mAddFriendBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
-        [mAddFriendBtn addTarget:self action:@selector(addFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:mAddFriendBtn];
+        if ([_mIFlag isEqual:@"1"]) {
+            UIButton *mRejectBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+            [mRejectBtn setTitle:@"拒绝" forState:UIControlStateNormal];
+            [mRejectBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
+            mRejectBtn.backgroundColor = [UIColor whiteColor];
+            [cell addSubview:mRejectBtn];
+            
+            UIButton *mAccesstBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mRejectBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+            [mAccesstBtn setTitle:@"同意" forState:UIControlStateNormal];
+            [mAccesstBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            mAccesstBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+            [cell addSubview:mAccesstBtn];
+        }else{
+            UIButton *mAddFriendBtn =[[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
+            [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+            [mAddFriendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            mAddFriendBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+            [mAddFriendBtn addTarget:self action:@selector(addFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:mAddFriendBtn];
+        }
     }
     
     
@@ -120,8 +134,11 @@
     if (code == 200) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
+        AddressPageViewController *addressPage = [[AddressPageViewController alloc] init];
+        [self presentViewController:addressPage animated:NO completion:nil];
     }else{
-        NSLog(@"访问服务器失败！");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
     }
 }
 

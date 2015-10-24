@@ -13,11 +13,13 @@
     UIImageView *mHeadImg;
     UILabel *mName;
     UILabel *mSex;
+    int IFlag;
 }
 
 @property(nonatomic) NSString *mContacterID;
 @property(nonatomic) NSString *mHeaderImgTxt;
 @property(nonatomic) NSString *mNameTxt;
 @property(nonatomic) NSString *mSexTxt;
+@property(nonatomic) NSString *mIFlag;
 
 @end

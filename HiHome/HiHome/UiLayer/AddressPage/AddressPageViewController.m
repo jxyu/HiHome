@@ -12,9 +12,13 @@
 #import "CardTableViewCell.h"
 #import "AddressLocalViewController.h"
 #import "AddFriendFirstViewController.h"
+#import "DataProvider.h"
 
 
-@interface AddressPageViewController ()
+@interface AddressPageViewController (){
+    DataProvider *dataProvider;
+    NSArray *friendArray;
+}
 
 @end
 
@@ -23,6 +27,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self initData];
+}
+-(void)initData{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
+    [dataProvider getFriendList:[self getUserID]];
+}
+
+-(void)friendListBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+    _mateCellCount =2;
+    _starFriendCellCount =3;
+    _normalFriendcellCount =4;
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
 }
 
 -(void) initViews
@@ -55,10 +89,7 @@
             [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
             }
      }
-    _cellCount = 1;
-    _mateCellCount =2;
-    _starFriendCellCount =3;
-    _normalFriendcellCount =4;
+    
     
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width
                                                                     , ZY_VIEWHEIGHT_IN_HEADVIEW)];
@@ -168,7 +199,7 @@
             break;
     }
     
-    return _cellCount;
+    return 0;
 }
 
 -(void)addFriendEvent:(id)sender{

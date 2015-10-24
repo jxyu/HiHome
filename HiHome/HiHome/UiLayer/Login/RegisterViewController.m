@@ -181,8 +181,8 @@
 {
     NSLog(@"txt_newPwd.text = %@",txt_newPwd.text);
     NSLog(@"txt_againNewPwd.text = %@",txt_againNewPwd.text);
-    NSLog(@"txt_newPwd.text.length = %ld",txt_newPwd.text.length);
-    NSLog(@"txt_vrifyCode.text.length = %ld",txt_vrifyCode.text.length);
+    NSLog(@"txt_newPwd.text.length = %lu",txt_newPwd.text.length);
+    NSLog(@"txt_vrifyCode.text.length = %lu",txt_vrifyCode.text.length);
     
     if ([txt_newPwd.text isEqualToString:txt_againNewPwd.text]&&txt_newPwd.text.length>0&&txt_vrifyCode.text.length>0) {
         

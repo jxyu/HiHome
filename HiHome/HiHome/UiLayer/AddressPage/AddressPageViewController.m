@@ -310,7 +310,7 @@
     NSMutableArray *numberRowOfCellArray = [NSMutableArray array] ;
     [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    NSLog(@"点击了删除  Section  = %ld Row =%ld",indexPath.section,indexPath.row);
+    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         

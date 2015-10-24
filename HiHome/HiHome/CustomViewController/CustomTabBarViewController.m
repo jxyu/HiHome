@@ -260,7 +260,7 @@
     if (_btnSelected)
         _btnSelected.selected = !_btnSelected.selected;
     
-    NSLog(@"select this tab %ld ",sender.tag);
+    NSLog(@"select this tab %ld ",(long)sender.tag);
     sender.selected = !sender.selected;
     _btnSelected = sender;
     [self setSelectedIndex:sender.tag - 1000];

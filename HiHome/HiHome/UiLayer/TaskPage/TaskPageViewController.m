@@ -158,7 +158,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -181,7 +181,7 @@
     }
     _cellCountMyTask += [resultAll integerValue];
     
-    NSLog(@"_cellCountMyTask = %ld",_cellCountMyTask);
+    NSLog(@"_cellCountMyTask = %ld",(long)_cellCountMyTask);
     
     [self setTaskDatas];
     
@@ -256,7 +256,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -279,7 +279,7 @@
     }
     _cellCountGetTask += [resultAll integerValue];
     
-    NSLog(@"_cellCountGetTask = %ld",_cellCountGetTask);
+    NSLog(@"_cellCountGetTask = %ld",(long)_cellCountGetTask);
     
     [self setReceiveTaskDatas];
     
@@ -314,7 +314,7 @@
         NSString *performers;
         if(tasker > 1 )
         {
-            performers = [NSString stringWithFormat:@"%ld人",tasker];
+            performers = [NSString stringWithFormat:@"%ld人",(long)tasker];
         }
         else
             performers = @"仅自己";
@@ -368,7 +368,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -391,7 +391,7 @@
     }
     _cellCountSendTask += [resultAll integerValue];
     
-    NSLog(@"_cellCountGetTask = %ld",_cellCountSendTask);
+    NSLog(@"_cellCountGetTask = %ld",(long)_cellCountSendTask);
     
     [self setSendTaskDatas];
     
@@ -426,7 +426,7 @@
         NSString *performers;
         if(tasker > 1 )
         {
-            performers = [NSString stringWithFormat:@"%ld人",tasker];
+            performers = [NSString stringWithFormat:@"%ld人",(long)tasker];
         }
         else
             performers = @"仅自己";
@@ -477,7 +477,7 @@
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -501,7 +501,7 @@
     }
     _cellCountMyTask += [resultAll integerValue];
     
-    NSLog(@"_cellCountMyTask = %ld",_cellCountMyTask);
+    NSLog(@"_cellCountMyTask = %ld",(long)_cellCountMyTask);
     
     [self setAnniversaryDatas];
     
@@ -536,7 +536,7 @@
         [_myAnniversaryData addObject:anniversary];
     }
     
-    NSLog(@"++++++++++++_myAnniversaryData count  = [%ld]",_myAnniversaryData.count);
+    NSLog(@"++++++++++++_myAnniversaryData count  = [%ld]",(unsigned long)_myAnniversaryData.count);
     
 }
 
@@ -756,7 +756,7 @@
 
 -(void)setPageIndex:(NSInteger)page//分页的代理方法
 {
-    NSLog(@"Page = %ld",page);
+    NSLog(@"Page = %ld",(long)page);
     if(_tableViews.count>0)
         [_mainView bringSubviewToFront:[_tableViews objectAtIndex:page]];
     if(page == 0)
@@ -860,7 +860,7 @@
             
             NSString *monthText = [[dateFormatter standaloneMonthSymbols][currentMonthIndex - 1] capitalizedString];
             
-            return [NSString stringWithFormat:@"%ld\n%@", comps.year, monthText];
+            return [NSString stringWithFormat:@"%ld\n%@", (long)comps.year, monthText];
         };
     }
     self.calendar.calendarAppearance.isWeekMode = false;
@@ -963,7 +963,7 @@
     NSString *key = [[self dateFormatter] stringFromDate:date];
     NSArray *events = eventsByDate[key];
     
-    NSLog(@"Date: %@ - %ld events", date, [events count]);
+    NSLog(@"Date: %@ - %ld events", date, (unsigned long)[events count]);
 }
 
 - (void)calendarDidLoadPreviousPage
@@ -1184,8 +1184,8 @@
     else if(tableView.tag == 2)
     {
         TaskTableViewCell *cell = [[TaskTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-        NSLog(@"_cellCountSendTask = %ld",_cellCountSendTask);
-        NSLog(@"indexPath.row= %ld",indexPath.row);
+        NSLog(@"_cellCountSendTask = %ld",(long)_cellCountSendTask);
+        NSLog(@"indexPath.row= %ld",(long)indexPath.row);
 
         if(indexPath.row == _cellCountSendTask -1)
             return cell;
@@ -1266,7 +1266,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -1338,7 +1338,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -1459,7 +1459,7 @@
     NSMutableArray *numberRowOfCellArray = [NSMutableArray array] ;
     [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    NSLog(@"点击了删除  Section  = %ld Row =%ld",indexPath.section,indexPath.row);
+    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
     

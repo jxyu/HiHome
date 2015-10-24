@@ -48,7 +48,7 @@
             
             NSString *monthText = [[dateFormatter standaloneMonthSymbols][currentMonthIndex - 1] capitalizedString];
             
-            return [NSString stringWithFormat:@"%ld\n%@", comps.year, monthText];
+            return [NSString stringWithFormat:@"%ld\n%@", (long)comps.year, monthText];
         };
     }
     
@@ -98,7 +98,7 @@
     NSString *key = [[self dateFormatter] stringFromDate:date];
     NSArray *events = eventsByDate[key];
     
-    NSLog(@"Date: %@ - %ld events", date, [events count]);
+    NSLog(@"Date: %@ - %ld events", date, (unsigned long)[events count]);
 }
 
 - (void)calendarDidLoadPreviousPage

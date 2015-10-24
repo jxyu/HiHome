@@ -307,7 +307,7 @@
     UITextField *tempText;
     tempText =(UITextField *)sender;
 //    tempText.text
-    NSLog(@"text tag [%ld] tempText.text = %@",tempText.tag,tempText.text);
+    NSLog(@"text tag [%ld] tempText.text = %@",(long)tempText.tag,tempText.text);
     
     switch (tempText.tag) {
         case USER_TEXT_TAG:
@@ -326,7 +326,7 @@
 {
     UITextField *tempText;
     tempText =(UITextField *)sender;
-    NSLog(@"text tag [%ld] tempText.text = %@",tempText.tag,tempText.text);
+    NSLog(@"text tag [%ld] tempText.text = %@",(long)tempText.tag,tempText.text);
 
     switch (tempText.tag) {
         case USER_TEXT_TAG:

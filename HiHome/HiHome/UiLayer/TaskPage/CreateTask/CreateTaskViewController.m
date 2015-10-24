@@ -455,19 +455,19 @@
             _hour=&hour;
             _minute=&min;
             
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
             startTimeField.text =timeStr;
             startTimeField.font = [UIFont systemFontOfSize:14];
             
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d+1,hour,min];
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
             endTimeField.text =timeStr2;
             endTimeField.font = [UIFont systemFontOfSize:14];
             
-            [_startDateArray addObject:[NSString stringWithFormat:@"%ld",y]];
-            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",m]];
-            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",d]];
-            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",hour]];
-            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",min]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%ld",(long)y]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)m]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)d]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)hour]];
+            [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)min]];
             [_startDateArray addObject:weekStr];
             
         }
@@ -647,20 +647,20 @@
         
         
         if (sender.isOn) {
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",y,m,d];
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
             startTimeField.text =timeStr;
             
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",y,m,d];
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
             endTimeField.text =timeStr2;
             isday=YES;
         }
         else
         {
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
             startTimeField.text =timeStr;
             startTimeField.font = [UIFont systemFontOfSize:14];
             
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d+1,hour,min];
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
             endTimeField.text =timeStr2;
             endTimeField.font = [UIFont systemFontOfSize:14];
             isday=NO;
@@ -886,7 +886,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    NSLog(@"click cell section : %ld row : %ld",indexPath.section,indexPath.row);
+    NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     
 }
 
@@ -924,7 +924,7 @@
     NSMutableArray *numberRowOfCellArray = [NSMutableArray array] ;
     [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    NSLog(@"点击了删除  Section  = %ld Row =%ld",indexPath.section,indexPath.row);
+    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         

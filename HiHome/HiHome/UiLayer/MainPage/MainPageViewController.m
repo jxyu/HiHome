@@ -324,8 +324,8 @@
                 break;
         }
         
-        _dateLabel.text = [NSString stringWithFormat:@"%2ld月%2ld日(%@)",m,d,weekStr];
-        _timeLabel.text =[NSString stringWithFormat:@"%02ld:%02ld",hour,min];
+        _dateLabel.text = [NSString stringWithFormat:@"%2ld月%2ld日(%@)",(long)m,(long)d,weekStr];
+        _timeLabel.text =[NSString stringWithFormat:@"%02ld:%02ld",(long)hour,(long)min];
         
     }
     @catch (NSException *exception) {

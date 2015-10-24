@@ -8,6 +8,7 @@
 
 #import "MessageNotice.h"
 #import "DataProvider.h"
+#import "AddFriendSecondViewController.h"
 
 @interface MessageNotice (){
     UITableView *mTableView;
@@ -95,8 +96,8 @@
     
     cell.mName.text = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
     cell.mDetail.text = [personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
-    [cell.mAccept addTarget:self action:@selector(accessEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.mAccept setTitle:@"同意" forState:UIControlStateNormal];
+    [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.mAccept setTitle:@"处理" forState:UIControlStateNormal];
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
@@ -108,6 +109,21 @@
     return cell;
 }
 
+-(void)handleEvent:(id)sender{
+    UIView * v=[sender superview];
+    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
+    NSIndexPath *indexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
+    
+    
+    AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+    addFriendSecondVC.navTitle = @"好友申请";
+    addFriendSecondVC.mNameTxt = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
+    addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
+    addFriendSecondVC.mIFlag = @"1";
+    NSLog(@"ddddd=%@",addFriendSecondVC.mNameTxt);
+    [self presentViewController:addFriendSecondVC animated:NO completion:nil];
+}
+
 -(void)accessEvent:(id)sender{
     UIView * v=[sender superview];
     UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
@@ -116,7 +132,7 @@
     
     NSString *FID = [personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"];
     [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
-    [dataProvider accessApplyFriend:FID andStatus:@"2"];
+    [dataProvider accessApplyFriend:FID andStatus:@"1"];
     
 }
 

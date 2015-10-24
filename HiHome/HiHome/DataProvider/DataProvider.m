@@ -280,7 +280,7 @@
 
 -(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark{
     if (FID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,FID,userID,remark];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,userID,FID,remark];
         [self GetRequest:url andpram:nil];
     }
 }

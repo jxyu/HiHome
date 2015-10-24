@@ -281,14 +281,28 @@
 -(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark{
     if (FID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,FID,userID,remark];
-        [self PostRequest:url andpram:nil];
+        [self GetRequest:url andpram:nil];
+    }
+}
+
+-(void)getFriendApplyList:(NSString *)userID{
+    if (userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&uid=%@",Url,userID];
+        [self GetRequest:url andpram:nil];
+    }
+}
+
+-(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status{
+    if (FID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=applyFriend&id=%@&state=%@",Url,FID,status];
+        [self GetRequest:url andpram:nil];
     }
 }
 
 -(void)getFriendList:(NSString *)userID{
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&state=1&uid=%@",Url,userID];
-        [self PostRequest:url andpram:nil];
+        [self GetRequest:url andpram:nil];
     }
 }
 

@@ -15,8 +15,9 @@
     UILabel *mSex;
 }
 
-@property(nonatomic) NSString *mHeaderImg;
-@property(nonatomic) NSString *mName;
-@property(nonatomic) NSString *mSex;
+@property(nonatomic) NSString *mContacterID;
+@property(nonatomic) NSString *mHeaderImgTxt;
+@property(nonatomic) NSString *mNameTxt;
+@property(nonatomic) NSString *mSexTxt;
 
 @end

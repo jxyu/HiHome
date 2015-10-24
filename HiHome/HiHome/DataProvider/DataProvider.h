@@ -178,6 +178,16 @@
 //获取好友列表
 -(void)getFriendList:(NSString *)userID;
 
+//获取用户资料
+-(void)GetUserInfoWithUid:(NSString *)uid;
+
+
+
+
+
+
+
+
 
 
 

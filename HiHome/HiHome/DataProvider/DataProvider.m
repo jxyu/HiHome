@@ -318,6 +318,15 @@
     
 }
 
+-(void)GetUserInfoWithUid:(NSString *)uid
+{
+    if (uid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
+        NSDictionary * prm=@{@"id":uid};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
 
 
 

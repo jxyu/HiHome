@@ -236,6 +236,12 @@
 		B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */; settings = {ASSET_TAGS = (); }; };
 		B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */; settings = {ASSET_TAGS = (); }; };
+		B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FB16761BDB65510048551C /* SelectContacterViewController.m */; settings = {ASSET_TAGS = (); }; };
+		B7FB16791BDB65510048551C /* SelectContacterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FB16771BDB65510048551C /* SelectContacterViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		B7FB16821BDB6AA70048551C /* SelectContacterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FB16801BDB6AA70048551C /* SelectContacterCell.m */; settings = {ASSET_TAGS = (); }; };
+		B7FB16831BDB6AA70048551C /* SelectContacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FB16811BDB6AA70048551C /* SelectContacterCell.xib */; settings = {ASSET_TAGS = (); }; };
+		B7FB16861BDB765D0048551C /* checkbox_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FB16841BDB765D0048551C /* checkbox_normal.png */; settings = {ASSET_TAGS = (); }; };
+		B7FB16871BDB765D0048551C /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FB16851BDB765D0048551C /* checkbox_checked.png */; settings = {ASSET_TAGS = (); }; };
 		C9474454EFD0AFA5DF0E4EC3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5067773248DD015B75248D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -610,6 +616,14 @@
 		B7CC5AF61BD4D5E400A1078F /* SelectTaskNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectTaskNoticeCell.h; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectTaskNoticeCell.m; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectTaskNoticeCell.xib; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.xib; sourceTree = SOURCE_ROOT; };
+		B7FB16751BDB65510048551C /* SelectContacterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContacterViewController.h; sourceTree = "<group>"; };
+		B7FB16761BDB65510048551C /* SelectContacterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContacterViewController.m; sourceTree = "<group>"; };
+		B7FB16771BDB65510048551C /* SelectContacterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectContacterViewController.xib; sourceTree = "<group>"; };
+		B7FB167F1BDB6AA70048551C /* SelectContacterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContacterCell.h; sourceTree = "<group>"; };
+		B7FB16801BDB6AA70048551C /* SelectContacterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContacterCell.m; sourceTree = "<group>"; };
+		B7FB16811BDB6AA70048551C /* SelectContacterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectContacterCell.xib; sourceTree = "<group>"; };
+		B7FB16841BDB765D0048551C /* checkbox_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkbox_normal.png; path = ../../../HiHome/UiLayer/TaskPage/CreateTask/checkbox_normal.png; sourceTree = "<group>"; };
+		B7FB16851BDB765D0048551C /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkbox_checked.png; path = ../../../HiHome/UiLayer/TaskPage/CreateTask/checkbox_checked.png; sourceTree = "<group>"; };
 		CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1102,6 +1116,12 @@
 				B59688231BCE0929001F2715 /* RepeatViewController.xib */,
 				B59688261BCE4508001F2715 /* RepeatViewController.h */,
 				B59688271BCE4508001F2715 /* RepeatViewController.m */,
+				B7FB16751BDB65510048551C /* SelectContacterViewController.h */,
+				B7FB16761BDB65510048551C /* SelectContacterViewController.m */,
+				B7FB16771BDB65510048551C /* SelectContacterViewController.xib */,
+				B7FB167F1BDB6AA70048551C /* SelectContacterCell.h */,
+				B7FB16801BDB6AA70048551C /* SelectContacterCell.m */,
+				B7FB16811BDB6AA70048551C /* SelectContacterCell.xib */,
 			);
 			path = CreateTask;
 			sourceTree = "<group>";
@@ -1109,6 +1129,8 @@
 		B56CFC191BCCD4BD0081B645 /* createTask */ = {
 			isa = PBXGroup;
 			children = (
+				B7FB16841BDB765D0048551C /* checkbox_normal.png */,
+				B7FB16851BDB765D0048551C /* checkbox_checked.png */,
 				B56CFC2E1BCD08F00081B645 /* redcamera@2x.png */,
 				B56CFC221BCCF89F0081B645 /* repeat_2@2x.png */,
 				B56CFC1C1BCCF1D80081B645 /* place@2x.png */,
@@ -1610,6 +1632,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				803534C11BD61D230008C191 /* SVProgressHUD.bundle in Resources */,
+				B7FB16831BDB6AA70048551C /* SelectContacterCell.xib in Resources */,
 				B50FA1201BD878BE003E80CD /* xueren@2x.png in Resources */,
 				B5E0599F1BB0F92900DBF786 /* FirstScrollController.xib in Resources */,
 				B5E059DD1BB146E100DBF786 /* WMMenuViewController.xib in Resources */,
@@ -1681,6 +1704,7 @@
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
+				B7FB16861BDB765D0048551C /* checkbox_normal.png in Resources */,
 				B78E4A4D1BDA0FE800F23976 /* AddFriendSecondViewController.xib in Resources */,
 				B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */,
 				B5E059E11BB146E100DBF786 /* WMOtherViewController.xib in Resources */,
@@ -1689,6 +1713,7 @@
 				B57F5D911BBA8408009AC336 /* logo@2x.png in Resources */,
 				B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */,
 				B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */,
+				B7FB16791BDB65510048551C /* SelectContacterViewController.xib in Resources */,
 				B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */,
 				B5879D721BC78DE9003AACFA /* CoupleViewController.xib in Resources */,
 				B5033BE11BAFB4050014935E /* TaskPageViewController.xib in Resources */,
@@ -1705,6 +1730,7 @@
 				B58196081BCB87A500D69A1E /* uploadPic@2x.png in Resources */,
 				B77F91181BD1F29100DAB43C /* AnniversaryTaskDetailView.xib in Resources */,
 				B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */,
+				B7FB16871BDB765D0048551C /* checkbox_checked.png in Resources */,
 				B58DD95C1BB63DED0040A084 /* chat@2x.png in Resources */,
 				B7A9D8B11BD7864900C37DB5 /* MessageNotice.xib in Resources */,
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
@@ -1823,6 +1849,7 @@
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
+				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
@@ -1867,6 +1894,7 @@
 				B59688281BCE4508001F2715 /* RepeatViewController.m in Sources */,
 				80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */,
 				B5741DD51BC26C3C00335B1C /* DataDefine.m in Sources */,
+				B7FB16821BDB6AA70048551C /* SelectContacterCell.m in Sources */,
 				80076AC51BDA155000DEFD35 /* JKAssetsThumbnailView.m in Sources */,
 				80124C0E1BD885E800DBE369 /* UIImageView+HighlightedWebCache.m in Sources */,
 				B5A77ABF1BB4FBA10014DD67 /* TaskPath.m in Sources */,

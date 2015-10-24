@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "466676514.470008"
+            timestampString = "467363616.620377"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
-            landmarkName = "-clickBtns:"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "466676514.470008"
+            timestampString = "467363616.620377"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "720"
-            endingLineNumber = "720"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "728"
+            endingLineNumber = "728"
+            landmarkName = "-clickBtns:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "-setViewsFrame"
+            landmarkName = "-setDispInfo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,7 +255,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
             endingLineNumber = "229"
-            landmarkName = "-setViewsFrame"
+            landmarkName = "-setDispInfo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -271,7 +271,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
             endingLineNumber = "232"
-            landmarkName = "-setViewsFrame"
+            landmarkName = "-setDispInfo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1066,22 +1066,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/MessageNotice.m"
-            timestampString = "467361351.999719"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "-accessEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HiHome/UiLayer/MainPage/MessageNotice.m"
             timestampString = "467359776.870088"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -1130,11 +1114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/MessageNotice.m"
-            timestampString = "467361351.999719"
+            timestampString = "467369088.664611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "-accessApplyFriendBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1232,6 +1216,38 @@
             startingLineNumber = "120"
             endingLineNumber = "120"
             landmarkName = "-handleEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467363616.620377"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
+            landmarkName = "-clickBtns:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/SelectContacterViewController.m"
+            timestampString = "467370759.169464"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

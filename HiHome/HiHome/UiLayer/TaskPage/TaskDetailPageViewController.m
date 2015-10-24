@@ -505,7 +505,7 @@
     }
     
     
-    [self setTaskState:[NSString stringWithFormat:@"%ld",(NSInteger)localTaskStatus]];//上传状态
+    [self setTaskState:[NSString stringWithFormat:@"%ld",(long)localTaskStatus]];//上传状态
     
 }
 
@@ -517,7 +517,7 @@
         case State_received://取消
         case State_needDo://取消
         case State_onGoing://取消
-            [self setTaskState:[NSString stringWithFormat:@"%ld",(NSInteger)State_cancel]];//上传状态
+            [self setTaskState:[NSString stringWithFormat:@"%ld",(long)State_cancel]];//上传状态
             break;
         case State_finish://删除
         case State_unreceive://删除
@@ -614,7 +614,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"状态提交失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"状态提交失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -650,7 +650,7 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务详情获取失败:%ld",code]];
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务详情获取失败:%ld",(long)code]];
         
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];
@@ -700,7 +700,7 @@
 
 -(void)setBtnStr:(NSInteger)state
 {
-    NSLog(@"state = %ld",state);
+    NSLog(@"state = %ld",(long)state);
     
     switch (state) {
         case State_unreceive:
@@ -852,7 +852,7 @@
         
         
         //NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];//年月日 时分
-        NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",y,m,d];
+        NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,d];
         startTimeField.text =timeStr;
         startTimeField.font = [UIFont systemFontOfSize:14];
         
@@ -861,11 +861,11 @@
         endTimeField.text =timeStr2;
         endTimeField.font = [UIFont systemFontOfSize:14];
         
-        [_startDateArray addObject:[NSString stringWithFormat:@"%ld",y]];
-        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",m]];
-        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",d]];
-        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",hour]];
-        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",min]];
+        [_startDateArray addObject:[NSString stringWithFormat:@"%ld",(long)y]];
+        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)m]];
+        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)d]];
+        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)hour]];
+        [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)min]];
         [_startDateArray addObject:weekStr];
         
     }

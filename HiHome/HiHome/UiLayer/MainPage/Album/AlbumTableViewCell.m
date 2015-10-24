@@ -81,8 +81,8 @@
         _albumNameLabel.textColor = ZY_UIBASECOLOR;
         _albumDateLabel.textColor = [UIColor grayColor];
         
-        _albumNameLabel.text = [NSString stringWithFormat:@"%@(%ld)",albumPath.albumName,albumPath.picNum];//[taskPath.endTaskDate month]
-        _albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",[albumPath.albumChangeDate year],[albumPath.albumChangeDate month],[albumPath.albumChangeDate day]];
+        _albumNameLabel.text = [NSString stringWithFormat:@"%@(%ld)",albumPath.albumName,(long)albumPath.picNum];//[taskPath.endTaskDate month]
+        _albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[albumPath.albumChangeDate year],(long)[albumPath.albumChangeDate month],[albumPath.albumChangeDate day]];
         _picView.image = [UIImage imageNamed:albumPath.fristPicName];
         
         _picView.contentMode = UIViewContentModeScaleAspectFit;
@@ -109,7 +109,7 @@
     
     _picDescribeLabel.text = picPath.picDescribe;
     _picDescribeLabel.numberOfLines = 0;
-    _albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",[picPath.picDate year],[picPath.picDate  month],[picPath.picDate  day]];
+    _albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[picPath.picDate year],(long)[picPath.picDate  month],[picPath.picDate  day]];
     
 }
 

@@ -9,6 +9,7 @@
 #import "BackPageViewController.h"
 #import "RemindViewController.h"
 #import "RepeatViewController.h"
+#import "DataProvider.h"
 #define ZY_PICPICK_BTN_TAG      1
 #define ZY_TAKEPIC_BTN_TAG      2
 #define ZY_REMIND_BTN_TAG       3

@@ -41,6 +41,9 @@
     NSMutableArray *_arrayRemind;
     NSInteger _oneLineHight;
     UIView *customView;
+    
+    NSString * tip;
+    NSString * tipName;
 }
 @end
 
@@ -206,6 +209,7 @@
 //    _textLab.text =_remindStr;
 //    [customView addSubview:_textLab];
 }
+
 
 
 -(NSTimeInterval)timeconvert:(NSString*)str andFormat:(NSString *)format
@@ -540,6 +544,8 @@
     
     [self relayoutCustomView];
     
+    tip=[NSString stringWithFormat:@"%ld",sender.tag-2315];
+    tipName=[sender currentTitle];
 }
 
 #endif
@@ -556,11 +562,26 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"tixing done");
+    SEL func_selector = NSSelectorFromString(callBackFunctionName);
+    if ([CallBackObject respondsToSelector:func_selector]) {
+        NSDictionary * dict=[[NSDictionary alloc] initWithObjectsAndKeys:tip,@"tip",tipName,@"tipname", nil];
+        [CallBackObject performSelector:func_selector withObject:dict];
+        [self quitView];
+    }else{
+        NSLog(@"回调失败...");
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName
+{
+    CallBackObject = cbobject;
+    callBackFunctionName = selectorName;
 }
 
 /*

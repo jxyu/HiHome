@@ -32,12 +32,17 @@
 
 @interface RemindViewController : BackPageViewController
 {
-@private
     CGFloat _btnWidth;
 
+    id CallBackObject;
+    NSString * callBackFunctionName;
 }
 @property(nonatomic)NSMutableArray *dateArr;
 @property(nonatomic)NSString *remindDate;
 @property(strong,nonatomic)NSString *remindModeStr;
+
+
+- (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName;
+
 //-(ZYTaskRemind)getRemindMode;
 @end

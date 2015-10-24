@@ -220,7 +220,7 @@
 
 -(void)setPageIndex:(NSInteger)page
 {
-    NSLog(@"Page = %ld",page);
+    NSLog(@"Page = %ld",(long)page);
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
 }
@@ -383,7 +383,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    NSLog(@"click cell section : %ld row : %ld",indexPath.section,indexPath.row);
+    NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     
 }
 
@@ -421,7 +421,7 @@
     NSMutableArray *numberRowOfCellArray = [NSMutableArray array] ;
     [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    NSLog(@"点击了删除  Section  = %ld Row =%ld",indexPath.section,indexPath.row);
+    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         

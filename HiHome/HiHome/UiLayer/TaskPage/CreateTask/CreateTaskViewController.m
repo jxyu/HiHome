@@ -14,22 +14,24 @@
 #import "JKAlertDialog.h"
 #import "RemindViewController.h"
 #import "RepeatViewController.h"
-
 #import "JKImagePickerController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "PhotoCell.h"
 
 @interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
-
+{
+    
+    NSMutableArray *_startDateArray;
+    NSString *remindStr;
+    NSString *repeatStr;
+}
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
+
 
 @end
 
 @implementation CreateTaskViewController
-{
-    NSMutableArray *_startDateArray;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -161,6 +163,13 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+   remindStr = _remindViewCtl.remindModeStr;
+
+    
+}
+
 
 -(void)tapViewAction:(id)sender
 {
@@ -178,6 +187,7 @@
 //        
 //    }
 }
+
 
 //指定每个分区中有多少行，默认为1
 
@@ -500,7 +510,7 @@
         
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
+        [remindBtn setTitle:remindStr forState:UIControlStateNormal];
         [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;

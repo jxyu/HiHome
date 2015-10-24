@@ -45,7 +45,7 @@
     //接受的任务
     NSMutableArray *_getTaskData;
     //发布的任务
-    
+    NSMutableArray *_sendTaskData;
     
     /*task分页面*/
     
@@ -53,7 +53,7 @@
     CreateAnniversaryViewController *_createAnniversaryViewCtl;
     
     //纪念日详情页面
-    AnniversaryTaskDetailView *_anniversaryTaskDetailCtl;
+ //   AnniversaryTaskDetailView *_anniversaryTaskDetailCtl;
     //任务详情
     TaskDetailPageViewController *_taskDetailPageCtl;
 }

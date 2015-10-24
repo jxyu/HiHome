@@ -12,6 +12,10 @@
 #import "UUDatePicker.h"
 #import "SegmentedButton.h"
 #import "TaskPath.h"
+#import "DataProvider.h"
+#import "SVProgressHUD.h"
+#import "JKAlertDialog.h"
+
 
 @interface TaskDetailPageViewController (){
     UITableView *mTableView;
@@ -24,10 +28,15 @@
     UILabel *startTimeLabel;
     UILabel *endTimeLabel;
     
-    
+    UIButton *btnLeft ;
+    UIButton *btnRight;
     /*
      *任务参数
      */
+    TaskPath *taskPathLocal;
+    ZYTaskStatue localTaskStatus;
+    
+    NSString *TaskId;
     NSString *stateStr; //状态
     NSString *remindStr;//提醒
     NSString *repeatStr;//重复
@@ -36,7 +45,8 @@
     NSString *taskContentStr;//任务内容
     NSString *startTime;//开始时间
     NSString *endTime;//结束时间
-    
+    NSString *btnLeftStr;//左边操作按键
+    NSString *btnRightStr;//右边
     
 }
 
@@ -47,6 +57,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    taskPathLocal = [[TaskPath alloc] init];
     self.taskDetailMode = TaskDetail_ReceiveMode;
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _startDateArray = [[NSMutableArray alloc] init];
@@ -85,6 +96,8 @@
         }
     }
     
+    btnRight = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 100 -10,_cellHeight+5, 100, _cellHeight -10 -5)];
+    btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(10, _cellHeight+5, 100, _cellHeight -10 -5)];
     
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
     [self.view addGestureRecognizer:tapGesture];
@@ -96,6 +109,13 @@
 {
     if(taskPath == nil)
         return;
+    
+    TaskId = taskPath.taskID ;
+    
+    taskPathLocal = taskPath;
+    
+    localTaskStatus = taskPath.taskStatus;
+    [self setBtnStr:taskPath.taskStatus];
     
     repeatStr = [self modeValueToStr:Mode_Repeat andValue:taskPath.repeatMode];
     remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
@@ -246,23 +266,36 @@
         [cell addSubview:taskStatusShow];
         
         //UIButon
-        UIButton *btnStatus = [[UIButton alloc] initWithFrame:CGRectMake(10, _cellHeight+5, 100, _cellHeight -10 -5)];
-        btnStatus.layer.masksToBounds = YES;
-        btnStatus.layer.borderWidth = 1;
-        btnStatus.layer.borderColor = [ZY_UIBASECOLOR CGColor];
-        btnStatus.layer.cornerRadius = 8;
-        [btnStatus setTitle:@"开始执行" forState:UIControlStateNormal];
-        [btnStatus setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
-        [cell addSubview:btnStatus];
-        
-        UIButton *btndeal = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 100 -10,_cellHeight+5, 100, _cellHeight -10 -5)];
-        btndeal.layer.masksToBounds = YES;
-        btndeal.layer.borderWidth = 1;
-        btndeal.layer.borderColor = [ZY_UIBASECOLOR CGColor];
-        btndeal.layer.cornerRadius = 8;
-        [btndeal setTitle:@"删除任务" forState:UIControlStateNormal];
-        [btndeal setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
-        [cell addSubview:btndeal];
+        if(btnLeftStr != nil)
+        {
+
+           
+            btnLeft.layer.masksToBounds = YES;
+            btnLeft.layer.borderWidth = 1;
+            btnLeft.layer.borderColor = [ZY_UIBASECOLOR CGColor];
+            btnLeft.layer.cornerRadius = 8;
+            
+            [btnLeft setTitle:btnLeftStr forState:UIControlStateNormal];
+            [btnLeft setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
+            
+            [btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell addSubview:btnLeft];
+        }
+        if(btnRightStr != nil)
+        {
+            
+            btnRight.layer.masksToBounds = YES;
+            btnRight.layer.borderWidth = 1;
+            btnRight.layer.borderColor = [ZY_UIBASECOLOR CGColor];
+            btnRight.layer.cornerRadius = 8;
+            [btnRight setTitle:btnRightStr forState:UIControlStateNormal];
+            [btnRight setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
+            
+            [btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell addSubview:btnRight];
+        }
     }
     else if(indexPath.row == 1){
         
@@ -406,10 +439,302 @@
     return _cellHeight;
 }
 
+#pragma mark - btn actions
+
 -(void)clickBtns:(UIButton *)sender
 {
     NSLog(@"click choose contact btn");
 }
+
+-(void)clickLeftButton:(UIButton *)sender
+{
+    ZYTaskStatue oldTaskStatus;
+    
+    oldTaskStatus = localTaskStatus;
+    
+    switch (localTaskStatus) {
+        case State_unreceive:
+        case State_received://不现实已完成 直接显示待执行
+            stateStr = @"待执行";
+            localTaskStatus = State_needDo;
+            break;
+        case State_needDo:
+            stateStr = @"执行中";
+            localTaskStatus ++;
+            break;
+        case State_onGoing:
+            stateStr = @"已完成";
+            localTaskStatus ++;
+            break;
+        case State_finish:
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+            
+            alert.alertType = AlertType_Alert;
+            [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click ok");
+                
+                [self delTask:TaskId];
+                
+                
+            }];
+            
+            //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+            [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click canel");
+                
+            }];
+            [alert show];
+            
+        }
+
+            return;//如果已是完成状态 则再按删除任务
+        //    btnLeftStr = @"删除任务";
+        //    btnRightStr = nil;//设置成nil则btn不显示
+            break;
+        case State_cancel:
+            btnLeftStr = @"接受任务";
+            stateStr = @"已接受";
+            localTaskStatus  = State_received;
+
+           // btnRightStr = @"删除任务";
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    [self setTaskState:[NSString stringWithFormat:@"%ld",(NSInteger)localTaskStatus]];//上传状态
+    
+}
+
+
+-(void)clickRightButton:(UIButton *)sender
+{
+    switch (localTaskStatus) {
+
+        case State_received://取消
+        case State_needDo://取消
+        case State_onGoing://取消
+            [self setTaskState:[NSString stringWithFormat:@"%ld",(NSInteger)State_cancel]];//上传状态
+            break;
+        case State_finish://删除
+        case State_unreceive://删除
+        case State_cancel://删除
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+            
+            alert.alertType = AlertType_Alert;
+            [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click ok");
+    
+                [self delTask:TaskId];
+                        
+
+            }];
+            
+            //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+            [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click canel");
+                
+            }];
+            [alert show];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
+
+-(void)delTask:(NSString *)taskID
+{
+    
+    NSLog(@"del task datas");
+    
+    [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"delTaskCallBack:"];
+    
+    [dataprovider delTask:taskID];
+}
+
+
+
+-(void)delTaskCallBack:(id)dict
+{
+    
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"删除失败"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
+    //[self loadTaskDetails:TaskId];
+    
+    [self quitView];
+
+}
+
+
+
+
+-(void)setTaskState:(NSString *)state
+{
+    NSLog(@"start update state");
+   [SVProgressHUD showWithStatus:@"更新数据" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"setTaskStateCallBack:"];
+    NSLog(@"Task id  =%@",TaskId);
+    [dataprovider ChangeTaskState:TaskId andState:state];
+}
+
+
+-(void)setTaskStateCallBack:(id)dict
+{
+    NSInteger code;
+
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    NSLog(@" update state callBack");
+    
+    NSLog(@"dict = %@",dict);
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"状态提交失败:%ld",code]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
+    
+    
+    
+//    [self setBtnStr:localTaskStatus];
+    [self loadTaskDetails:TaskId];
+   
+}
+
+
+-(void)loadTaskDetails:(NSString *)taskID
+{
+    NSLog(@"load task Details");
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"taskDetailCallBack:"];
+    
+    [dataprovider getTaskInfo:taskID];
+}
+
+
+-(void)taskDetailCallBack:(id)dict
+{
+    
+    NSInteger code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    NSDictionary *taskDetailDict;
+    TaskPath *taskDetailPath = [[TaskPath alloc] init];
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务详情获取失败:%ld",code]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
+    
+    NSLog(@"task detail dict = [%@]",dict);
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        taskDetailDict = [(NSArray *)[dict objectForKey:@"datas"] objectAtIndex:0];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+    }
+    
+    taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
+    taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+    taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
+    taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
+    taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
+    taskDetailPath.remindTime = (ZYTaskRemind)[(NSString *)[taskDetailDict objectForKey:@"tip"] integerValue];
+    taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
+    taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
+    taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+    //  [self setTaskDetails];
+    
+    [self setDatas:taskDetailPath];
+    
+    [SVProgressHUD dismiss];
+    [mTableView reloadData];
+    
+}
+
+
+-(TaskPath *)setTaskDetails
+{
+    TaskPath *tempPath = [[TaskPath alloc] init];
+    
+    
+    return tempPath;
+}
+
+
+
+-(void)setBtnStr:(NSInteger)state
+{
+    NSLog(@"state = %ld",state);
+    
+    switch (state) {
+        case State_unreceive:
+            btnLeftStr = @"接受任务";
+            btnRightStr = @"删除任务";
+            break;
+        case State_received:
+            btnLeftStr = @"开始执行";
+            btnRightStr = @"取消任务";
+            break;
+        case State_needDo:
+            btnLeftStr = @"开始执行";
+            btnRightStr = @"取消任务";
+            break;
+        case State_onGoing:
+            btnLeftStr = @"标记完成";
+            btnRightStr = @"取消任务";
+            break;
+        case State_finish:
+            btnLeftStr = @"删除任务";
+            btnRightStr = nil;//设置成nil则btn不显示
+            break;
+        case State_cancel:
+//            btnLeftStr = @"接受任务";
+//            btnRightStr = @"删除任务";
+            btnLeftStr = @"已取消";
+            btnRightStr = @"删除任务";
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 //重写返回按钮
 -(void)quitView{

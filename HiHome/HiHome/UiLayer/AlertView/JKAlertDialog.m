@@ -60,10 +60,10 @@
     [_alertView addSubview:_labelTitle];
     
     //message
-    CGFloat messageHeigh = [self heightWithString:_message fontSize:14 width:AlertWidth-2*AlertPadding];
+    CGFloat messageHeigh = [self heightWithString:_message fontSize:20 width:AlertWidth-2*AlertPadding];
 
     _labelmessage =  [[UILabel alloc]initWithFrame:CGRectMake(AlertPadding, _labelTitle.frame.origin.y+_labelTitle.frame.size.height+15, AlertWidth-2*AlertPadding, messageHeigh+2*AlertPadding)];
-    _labelmessage.font = [UIFont systemFontOfSize:14];
+    _labelmessage.font = [UIFont systemFontOfSize:20];
     _labelmessage.textColor = [UIColor grayColor];
     _labelmessage.textAlignment = NSTextAlignmentCenter;
     _labelmessage.text = _message;

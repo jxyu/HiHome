@@ -8,8 +8,13 @@
 
 #import "AddFriendFirstViewController.h"
 #import "AddFriendSecondViewController.h"
+#import "DataProvider.h"
+#import "AddFriendSecondViewController.h"
 
-@interface AddFriendFirstViewController ()
+@interface AddFriendFirstViewController (){
+    DataProvider *dataProvider;
+    AddFriendSecondViewController *addFriendSecondVC;
+}
 
 @end
 
@@ -48,7 +53,32 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)searchAction:(id)sender {
-    AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+    NSString *userID = [self getUserID];
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"searchContacterBackCall:"];
+    [dataProvider getContacterByPhone:@"15165561652"];
+    
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
+-(void)searchContacterBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+    addFriendSecondVC.mHeaderImg = @"me";
+    addFriendSecondVC.mName = @"唐嫣";
+    addFriendSecondVC.mSex = @"女";
+    
     addFriendSecondVC.navTitle = @"添加好友";
     [self presentViewController:addFriendSecondVC animated:NO completion:nil];
 }

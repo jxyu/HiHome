@@ -57,7 +57,7 @@
         [cell addSubview:mHeadImage];
         
         UILabel *mUserLbl = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImage.frame.size.width + 10, 15 + 35 - 10, 120, 21)];
-        mUserLbl.text = @"唐嫣   女";
+        mUserLbl.text = [NSString stringWithFormat:@"%@   %@",_mNameTxt,_mSexTxt];//@"唐嫣   女";
         [cell addSubview:mUserLbl];
     }else if(indexPath.section == 1){
         UITextField *mRemark = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 20, 40)];
@@ -111,11 +111,29 @@
 -(void)addFriendEvent:(id)sender{
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
-    [dataProvider addFriend:@"8" andUserID:@"10" andRemark:@"12333"];
+    [dataProvider addFriend:_mContacterID andUserID:[self getUserID] andRemark:@"12333"];
 }
 
 -(void)addFriendBackCall:(id)dict{
     NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
 }
 
 @end

@@ -169,6 +169,12 @@
 //remark 备注信息
 -(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark;
 
+//获取好友申请列表
+-(void)getFriendApplyList:(NSString *)userID;
+
+//通过/拒绝好友申请
+-(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status;
+
 //获取好友列表
 -(void)getFriendList:(NSString *)userID;
 

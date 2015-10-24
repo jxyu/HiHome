@@ -14,6 +14,7 @@
 @interface AddFriendFirstViewController (){
     DataProvider *dataProvider;
     AddFriendSecondViewController *addFriendSecondVC;
+    UITextField *mUserNumber;
 }
 
 @end
@@ -27,10 +28,10 @@
 }
 
 -(void)initView{
-    UITextField *mUserNumber = [[UITextField alloc] initWithFrame:CGRectMake(8, 74, SCREEN_WIDTH - 16 - 70, 40)];
+    mUserNumber = [[UITextField alloc] initWithFrame:CGRectMake(8, 74, SCREEN_WIDTH - 16 - 70, 40)];
     mUserNumber.delegate = self;
     mUserNumber.borderStyle = UITextBorderStyleRoundedRect;
-    mUserNumber.placeholder = @"请输入用户序列号";
+    mUserNumber.placeholder = @"请输入用户手机号";
     UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     UIImageView *search_img = [[UIImageView alloc] initWithFrame:CGRectMake(5, 2.5, 25, 25)];
     search_img.contentMode = UIViewContentModeCenter;
@@ -53,31 +54,26 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)searchAction:(id)sender {
-    NSString *userID = [self getUserID];
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"searchContacterBackCall:"];
-    [dataProvider getContacterByPhone:@"15165561652"];
+    [dataProvider getContacterByPhone:mUserNumber.text];
     
-}
-
--(NSString *)getUserID
-{
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    //   NSLog(@"dict = [%@]",userInfoWithFile);
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
-    
-    return  userID;
 }
 
 -(void)searchContacterBackCall:(id)dict{
     NSLog(@"%@",dict);
+    NSArray *personDetailDict;
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        personDetailDict = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
     addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
-    addFriendSecondVC.mHeaderImg = @"me";
-    addFriendSecondVC.mName = @"唐嫣";
-    addFriendSecondVC.mSex = @"女";
+    addFriendSecondVC.mContacterID = [[personDetailDict valueForKey:@"id"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"id"][0];
+    addFriendSecondVC.mHeaderImgTxt = @"me";
+    addFriendSecondVC.mNameTxt = [[personDetailDict valueForKey:@"nick"][0] isEqual: [NSNull null]]?@"":[personDetailDict valueForKey:@"nick"][0];
+    addFriendSecondVC.mSexTxt = [[personDetailDict valueForKey:@"sex"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"sex"][0];
     
     addFriendSecondVC.navTitle = @"添加好友";
     [self presentViewController:addFriendSecondVC animated:NO completion:nil];

@@ -89,7 +89,7 @@
 }
 
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -106,6 +106,8 @@
 //        else
 //        prm=@{@"uid":userID,@"state":state,@"nowpage":page,@"perpage":num};
         [prm setObject:userID forKey:@"uid"];
+        if(my!=nil)
+             [prm setObject:my forKey:@"my"];
         if(state!=nil)
             [prm setObject:state forKey:@"state"];
         if(page!=nil)
@@ -118,6 +120,35 @@
         [self PostRequest:url andpram:prm];
     }
 }
+
+
+-(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
+{
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    
+    if (userID) {
+        NSLog(@"userId = [%@]-----",userID);
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getList",Url];
+
+        [prm setObject:userID forKey:@"uid"];
+
+        if(state!=nil)
+            [prm setObject:state forKey:@"state"];
+        if(page!=nil)
+            [prm setObject:page forKey:@"nowpage"];
+        if(perpage!=nil)
+            [prm setObject:perpage forKey:@"perpage"];
+        
+        NSLog(@"send prm = [%@]",prm);
+        
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+
+
 
 -(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker
 {
@@ -261,6 +292,17 @@
     }
 }
 
+-(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state
+{
+
+    if (taskID&&state) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=modTaskState",Url];
+        NSDictionary * prm=@{@"id":taskID,@"state":state};
+       [self PostRequest:url andpram:prm];
+       
+    }
+    
+}
 
 
 
@@ -300,7 +342,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
     }];
 }
 
@@ -333,7 +375,7 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
     }];
 }
 
@@ -360,7 +402,7 @@
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
     }];
     
     //执行
@@ -378,7 +420,7 @@
 - (void)ShowOrderuploadImageWithImage:(NSData *)imagedata andurl:(NSString *)url andprm:(NSDictionary *)prm
 {
     NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imagedata name:@"showorder_img" fileName:@"showorder_img.jpg" mimeType:@"image/jpg"];
+        [formData appendPartWithFileData:imagedata name:@"imgsrc" fileName:@"showorder_img.jpg" mimeType:@"image/jpg"];
     }];
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -397,7 +439,7 @@
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
     }];
     
     //执行

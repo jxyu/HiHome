@@ -46,13 +46,23 @@
  *
  *  @param userID       用户id
  *  @param state        任务状态
+ *  @param my           是否是自己的任务
  *  @param page         当前页码，   default 1
  *  @param perpage          每页显示数量  default  10
  */
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage;
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage;
+/**
+ *  获取发布的任务
+ *
+ *  @param userID       用户id
+ *  @param state        任务状态
+ *  @param page         当前页码，   default 1
+ *  @param perpage          每页显示数量  default  10
+ */
 
 
+-(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage;
 
 /**
  *  创建任务
@@ -136,6 +146,16 @@
  *
  */
 -(void)delAnniversary:(NSString *)anniversaryID;
+
+/**
+ *  修改任务状态
+ *
+ *  @param taskID       任务id
+ *  @param state        状态
+ *
+ */
+
+-(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state;
 
 //根据路径上传图片
 -(void)UploadImgWithImgdata:(NSString *)imagePath;

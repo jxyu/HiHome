@@ -9,13 +9,17 @@
 #import "RemindViewController.h"
 #import "UIDefine.h"
 
-#define  Remind_zhengdian   0
-#define  Remind_5min        1
-#define  Remind_10min       2
-#define  Remind_1hour       3
-#define  Remind_1day        4
-#define  Remind_3day        5
-#define  Remind_never       6
+
+#define MULTI_CHOICE       0
+
+//#define  Remind_never       0
+//#define  Remind_zhengdian   1
+//#define  Remind_5min        2
+//#define  Remind_10min       3
+//#define  Remind_1hour       4
+//#define  Remind_1day        5
+//#define  Remind_3day        6
+
 
 
 #define YEAR_INDEX       0
@@ -42,6 +46,7 @@
 
 @implementation RemindViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _arrayBtn = [NSMutableArray array];
@@ -63,12 +68,14 @@
         _dateArr = [NSMutableArray array];
     }
     
+    
     return self;
 }
 
+
 -(void) initViews
 {
-    NSArray *repeatMode = @[@"正点",@"五分钟前",@"十分钟前",@"一小时之前",@"一天前",@"三天前",@"不提醒"];
+    NSArray *repeatMode = @[@"不提醒",@"正点",@"五分钟前",@"十分钟前",@"一小时之前",@"一天前",@"三天前"];
     NSInteger rownum  = 0;
     for (int i = 0; i<repeatMode.count; i++) {
        // if(rownum)
@@ -105,7 +112,7 @@
         remindLineInfo *tempInfo = [[remindLineInfo alloc] init];
         tempInfo->existState = NO;
         tempInfo->title = [repeatMode objectAtIndex:i];
-        //先显示相同时间 具体时间的计算后续添加
+        
         switch (i) {
             case Remind_zhengdian:
                 str = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
@@ -184,8 +191,9 @@
     [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
     
     _oneLineHight = (self.view.frame.size.height -(ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20) -20)/repeatMode.count;
-    
+
     customView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20, self.view.frame.size.width, _oneLineHight*0)];
+    
     customView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:customView];
 //
@@ -225,10 +233,16 @@
     return str;
 }
 
+
+
+
 -(void) setDefault//默认正点提醒
 {
     remindLineInfo *tempInfo;
-    tempInfo = [_arrayRemind objectAtIndex:Remind_zhengdian];
+    
+    _remindModeStr  = [self modeValueToStr:Mode_Remind andValue:Remind_zhengdian];
+    NSLog(@"1213123123123123123213123123123123213_remindModeStr = %@",_remindModeStr);
+    ;    tempInfo = [_arrayRemind objectAtIndex:Remind_zhengdian];
     
     tempInfo->existState = YES;
     UIButton *tempBtn;
@@ -238,6 +252,110 @@
     [customView addSubview:[self remindView:0 andInfo:tempInfo]];
     
 }
+
+
+-(NSString *) modeValueToStr:(ValueMode)mode andValue:(NSInteger)value
+{
+    NSString *str;
+    
+    switch (mode) {
+        case Mode_Repeat:
+            switch (value) {
+                case Repeat_never :
+                    str = @"不重复";
+                    break;
+                case Repeat_day:
+                    str = @"每天";
+                    break;
+                case Repeat_week:
+                    str = @"每周";
+                    break;
+                case Repeat_month:
+                    str = @"每月";
+                    break;
+                case Repeat_year:
+                    str = @"每年";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"不重复";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case  Mode_Remind:
+            switch (value) {
+                    
+                    
+                case Remind_never:
+                    str = @"从不提醒";
+                    break;
+                case Remind_zhengdian:
+                    str = @"正点";
+                    break;
+                case Remind_5min:
+                    str = @"五分钟前";
+                    break;
+                case Remind_10min:
+                    str = @"十分钟前";
+                    break;
+                case Remind_1hour:
+                    str = @"一小时前";
+                    break;
+                case Remind_1day:
+                    str = @"一天前";
+                    break;
+                case Remind_3day:
+                    str = @"三天前";
+                    break;
+                    
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"从不提醒";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case Mode_state:
+            switch (value) {
+                case State_unreceive:
+                    str= @"未接受";
+                    break;
+                case State_received:
+                    str = @"已接受";
+                    break;
+                case State_needDo:
+                    str = @"待执行";
+                    break;
+                case State_onGoing:
+                    str = @"执行中";
+                    break;
+                case State_finish:
+                    str = @"已完成";
+                    break;
+                case State_cancel:
+                    str = @"已取消";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"未接受";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        default:
+            str = nil;
+            break;
+    }
+    
+    return str;
+    
+}
+
+
 
 
 -(void)setDateArr:(NSMutableArray *)dateArr
@@ -262,6 +380,7 @@
 
 -(void) relayoutCustomView
 {
+#if 1
     NSInteger availedCount =0 ;
     CGRect tempRect;
     remindLineInfo *tempInfo;
@@ -270,7 +389,7 @@
     [self clearCustomSubView];
     
     
-    for(int i =0 ;i < _arrayRemind.count -1 ;i++)
+    for(int i =1/*跳过不提醒的显示*/ ;i < _arrayRemind.count ;i++)
     {
         tempInfo = [_arrayRemind objectAtIndex:i];
         if(tempInfo->existState == YES)
@@ -283,7 +402,7 @@
     tempRect= customView.frame;
     customView.frame = CGRectMake(tempRect.origin.x, tempRect.origin.y, tempRect.size.width, _oneLineHight*availedCount);
     
-    
+#endif
 }
 
 -(UIView *) remindView:(NSInteger)lineNum  andInfo:(remindLineInfo *)remindInfo
@@ -312,6 +431,8 @@
     [remindView addSubview:timeLab];
     return remindView;
 }
+
+#if MULTI_CHOICE
 
 -(void) clickBtns:(UIButton *)sender
 {
@@ -378,13 +499,50 @@
         }
         
     }
+    
+    [self relayoutCustomView];
+    
+}
+#else//单选模式
 
+-(void) clickBtns:(UIButton *)sender
+{
+    UIButton *tempBtn;
+    remindLineInfo *tempInfo;
+    
+    if(sender.tag == ZY_UIBUTTON_TAG_BASE + 20)
+    {
+        [self clearCustomSubView];
         
+        return;
+    }
+   // if([sender.titleLabel.text isEqualToString:@"不提醒"])
+    {//设置为未提醒关闭所有提醒
+        for(int i =0;i <_arrayBtn.count;i++)
+        {
+            tempBtn = [_arrayBtn objectAtIndex:i];
+            tempBtn.selected = NO;
+            tempBtn.backgroundColor = [UIColor whiteColor];
+            
+            tempInfo = [_arrayRemind objectAtIndex:i];
+            tempInfo->existState =NO;
+        }
+        
+        tempInfo = [_arrayRemind objectAtIndex:(sender.tag-ZY_UIBUTTON_TAG_BASE)];
+        tempInfo->existState =YES;
+        
+     //   _remindMode = (ZYTaskRemind)(sender.tag-ZY_UIBUTTON_TAG_BASE);
+        _remindModeStr  = [self modeValueToStr:Mode_Remind andValue:(ZYTaskRemind)(sender.tag-ZY_UIBUTTON_TAG_BASE)];
+        
+        sender.backgroundColor = [UIColor blueColor];
+        sender.selected = YES;
+    }
     
     [self relayoutCustomView];
     
 }
 
+#endif
 //重写退出页面方法
 -(void)quitView
 {

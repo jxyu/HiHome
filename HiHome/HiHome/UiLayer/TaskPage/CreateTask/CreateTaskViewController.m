@@ -14,12 +14,21 @@
 #import "JKAlertDialog.h"
 #import "RemindViewController.h"
 #import "RepeatViewController.h"
+#import "JKImagePickerController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "PhotoCell.h"
 
-@interface CreateTaskViewController ()
+@interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
     
     NSMutableArray *_startDateArray;
+    NSString *remindStr;
+    NSString *repeatStr;
 }
+@property (nonatomic, retain) UICollectionView *collectionView;
+@property (nonatomic, strong) NSMutableArray   *assetsArray;
+
+
 @end
 
 @implementation CreateTaskViewController
@@ -154,6 +163,13 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+   remindStr = _remindViewCtl.remindModeStr;
+
+    
+}
+
 
 -(void)tapViewAction:(id)sender
 {
@@ -171,6 +187,7 @@
 //        
 //    }
 }
+
 
 //指定每个分区中有多少行，默认为1
 
@@ -296,16 +313,29 @@
         picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
         [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *photoBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-        [photoBtns setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
-        photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
-        [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+        if (!_collectionView) {
+            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            layout.minimumLineSpacing = 5.0;
+            layout.minimumInteritemSpacing = 5.0;
+            layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+            
+            _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+            _collectionView.backgroundColor = [UIColor clearColor];
+            [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
+            _collectionView.delegate = self;
+            _collectionView.dataSource = self;
+            _collectionView.showsHorizontalScrollIndicator = NO;
+            _collectionView.showsVerticalScrollIndicator = NO;
+            
+            [cell addSubview:_collectionView];
+            
+        }
         
         UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
         [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
         
         [cell addSubview:picBtns];
-        [cell addSubview:photoBtns];
+//        [cell addSubview:photoBtns];
         [cell addSubview:otherBtns];
 
     }else if(indexPath.row == 4){
@@ -480,7 +510,7 @@
         
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
+        [remindBtn setTitle:remindStr forState:UIControlStateNormal];
         [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;
@@ -557,7 +587,8 @@
 {
     switch (sender.tag) {
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
-            [self showLocalAlbum];
+//            [self showLocalAlbum];
+            [self composePicAdd];
             break;
         case ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG:
             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -842,6 +873,88 @@
         _placeHolderLabel.text = @"";
     }
 }
+
+
+
+
+
+
+#pragma mark 新浪图片多选
+
+
+- (void)composePicAdd
+{
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 3;
+    imagePickerController.selectedAssetArray = self.assetsArray;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
+}
+
+#pragma mark - JKImagePickerControllerDelegate
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
+{
+    self.assetsArray = [NSMutableArray arrayWithArray:assets];
+    
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.assetsArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCellIdentifier forIndexPath:indexPath];
+    
+    cell.tag=indexPath.row;
+    
+    cell.asset = [self.assetsArray objectAtIndex:[indexPath row]];
+    
+    return cell;
+    
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(40, 40);
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld",(long)[indexPath row]);
+    
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

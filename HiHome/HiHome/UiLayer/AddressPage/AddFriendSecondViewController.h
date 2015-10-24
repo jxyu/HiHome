@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
 
-@interface AddFriendSecondViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface AddFriendSecondViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>{
+    UIImageView *mHeadImg;
+    UILabel *mName;
+    UILabel *mSex;
+}
+
+@property(nonatomic) NSString *mHeaderImg;
+@property(nonatomic) NSString *mName;
+@property(nonatomic) NSString *mSex;
 
 @end

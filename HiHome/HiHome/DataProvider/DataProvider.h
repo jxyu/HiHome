@@ -140,10 +140,17 @@
 //根据路径上传图片
 -(void)UploadImgWithImgdata:(NSString *)imagePath;
 
+//根据手机号搜索联系人
+-(void)getContacterByPhone:(NSString *)phone;
 
+//添加好友
+//FID 好友ID
+//userID 用户ID
+//remark 备注信息
+-(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark;
 
-
-
+//获取好友列表
+-(void)getFriendList:(NSString *)userID;
 
 
 

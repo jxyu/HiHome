@@ -8,9 +8,12 @@
 
 #import "AddFriendSecondViewController.h"
 #import "UIImage+WM.h"
+#import "DataProvider.h"
+
 
 @interface AddFriendSecondViewController (){
     UITableView *mTableView;
+    DataProvider *dataProvider;
 }
 
 @end
@@ -68,19 +71,13 @@
     }else{
         cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1];
         
-        UIButton *mReject =[[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
-        [mReject setTitle:@"拒绝" forState:UIControlStateNormal];
-        [mReject setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
-        mReject.backgroundColor = [UIColor whiteColor];
-        [cell addSubview:mReject];
-        
-        UIButton *mAgree =[[UIButton alloc] initWithFrame:CGRectMake(10 + mReject.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
-        [mAgree setTitle:@"同意" forState:UIControlStateNormal];
-        [mAgree setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        mAgree.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
-        [cell addSubview:mAgree];
+        UIButton *mAddFriendBtn =[[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
+        [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+        [mAddFriendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        mAddFriendBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+        [mAddFriendBtn addTarget:self action:@selector(addFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:mAddFriendBtn];
     }
-    
     
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
@@ -109,6 +106,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void)addFriendEvent:(id)sender{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
+    [dataProvider addFriend:@"8" andUserID:@"10" andRemark:@"12333"];
+}
+
+-(void)addFriendBackCall:(id)dict{
+    NSLog(@"%@",dict);
 }
 
 @end

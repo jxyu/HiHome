@@ -240,7 +240,26 @@
 
 }
 
+-(void)getContacterByPhone:(NSString *)phone{
+    if (phone) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=getSearchUser&keys=%@",Url,phone];
+        [self GetRequest:url andpram:nil];
+    }
+}
 
+-(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark{
+    if (FID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,FID,userID,remark];
+        [self PostRequest:url andpram:nil];
+    }
+}
+
+-(void)getFriendList:(NSString *)userID{
+    if (userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&state=1&uid=%@",Url,userID];
+        [self PostRequest:url andpram:nil];
+    }
+}
 
 
 

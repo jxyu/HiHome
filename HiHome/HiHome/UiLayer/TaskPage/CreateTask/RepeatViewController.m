@@ -22,6 +22,9 @@
     NSMutableArray *_arrayBtn;
     BOOL _defaultFlag;
     NSArray *repeatMode;
+    
+    NSString * repeat;
+    NSString * repeatName;
 }
 @end
 
@@ -196,6 +199,10 @@
         str = [NSString stringWithFormat:@"%@月%@日重复",[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX]];
         _repeatTimeLab.text = str;
     }
+    
+//    NSLog(@"%ld%@",(long)sender.tag,sender.currentTitle);
+    repeat=[NSString stringWithFormat:@"%ld",sender.tag-2315];
+    repeatName=sender.currentTitle;
 }
 
 //重写退出页面方法
@@ -211,6 +218,15 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"repeat done");
+    SEL func_selector = NSSelectorFromString(callBackFunctionName);
+    if ([CallBackObject respondsToSelector:func_selector]) {
+        NSDictionary * dict=[[NSDictionary alloc] initWithObjectsAndKeys:repeat,@"repeat",repeatName,@"repeatname", nil];
+        [CallBackObject performSelector:func_selector withObject:dict];
+        [self quitView];
+    }else{
+        NSLog(@"回调失败...");
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -227,5 +243,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName
+{
+    CallBackObject = cbobject;
+    callBackFunctionName = selectorName;
+}
 
 @end

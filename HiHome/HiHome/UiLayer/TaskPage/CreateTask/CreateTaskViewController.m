@@ -24,6 +24,21 @@
     NSMutableArray *_startDateArray;
     NSString *remindStr;
     NSString *repeatStr;
+    UITextField *titleField;
+    NSDictionary *userInfoWithFile;
+    SegmentedButton *repeatBtn;
+    SegmentedButton *remindBtn;
+    SegmentedButton *placeBtn;
+    
+    NSString * tipID;
+    NSString * repeatID;
+    
+    NSInteger *_year;
+    NSInteger *_month;
+    NSInteger *_day;
+    NSInteger *_hour;
+    NSInteger *_minute;
+    BOOL isday;
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -35,9 +50,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isday=NO;
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _keyShow = false;
+    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
     [self initViews];
     
     //添加键盘的监听事件
@@ -101,6 +122,25 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"click done button");
+    
+    if (_titleField.text.length>0&&titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
+        
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+    }
+    
+}
+-(void)SubmitTaskBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue]==200) {
+        
+    }
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
+    alert.alertType = AlertType_Hint;
+    [alert addButtonWithTitle:@"确定"];
+    [alert show];
 }
 
 -(void) initViews
@@ -279,7 +319,7 @@
         [cell addSubview:_titleField];
     }else if (indexPath.row == 1){
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
-        UITextField *titleField = [[UITextField alloc]init];
+        titleField = [[UITextField alloc]init];
         titleLabel.text = @"   执行人:";
         titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
         titleField.placeholder = @"请输入执行人";
@@ -346,7 +386,7 @@
         UISwitch *swtBtn = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-(20+50), _cellHeight/3, 50, _cellHeight/3)];
         swtBtn.center =  CGPointMake( self.view.frame.size.width-(20+50)+20,_cellHeight/2);
         swtBtn.tag = ZY_UISWITCH_TAG_BASE + indexPath.section*10+indexPath.row;
-        
+        [swtBtn addTarget:self action:@selector(CreatAllDayTaskOrNot:)forControlEvents:UIControlEventValueChanged];
         [cell addSubview:lab];
         [cell addSubview:swtBtn];
     }else if(indexPath.row == 5){
@@ -409,7 +449,11 @@
                 default:
                     break;
             }
-            
+            _year=&y;
+            _month=&m;
+            _day=&d;
+            _hour=&hour;
+            _minute=&min;
             
             NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
             startTimeField.text =timeStr;
@@ -446,6 +490,13 @@
                                      [_startDateArray addObject:hour];
                                      [_startDateArray addObject:minute];
                                      [_startDateArray addObject:weekDay];
+                                     
+//                                     
+//                                     if (<#condition#>) {
+//                                         <#statements#>
+//                                     }
+//                                     
+                                     
                                      startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
                                      NSLog(@"---%@",startTimeField.text);
                                  }];
@@ -464,6 +515,10 @@
                                                NSString *hour,
                                                NSString *minute,
                                                NSString *weekDay) {
+                                     
+//                                     if (<#condition#>) {
+//                                         <#statements#>
+//                                     }
                                      endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
                                  }];
         
@@ -487,7 +542,7 @@
         //            UIButtonTypeInfoDark,
         //            UIButtonTypeContactAdd,
         
-        SegmentedButton *remindBtn = [[SegmentedButton alloc] init];
+        remindBtn = [[SegmentedButton alloc] init];
         remindBtn.frame = CGRectMake(20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
         // remindBtn.layer.borderWidth = 1.0;
         //  remindBtn.layer.borderColor = [[UIColor grayColor] CGColor];
@@ -495,14 +550,14 @@
         remindBtn.alpha = 0.8;
         remindBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REMIND_BTN_TAG;
         
-        SegmentedButton *repeatBtn = [[SegmentedButton alloc] init];
+        repeatBtn = [[SegmentedButton alloc] init];
         repeatBtn.frame =CGRectMake(self.view.frame.size.width/3+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
         repeatBtn.backgroundColor = [UIColor whiteColor];
         repeatBtn.alpha = 0.8;
         repeatBtn.tag = ZY_UIBUTTON_TAG_BASE +ZY_REPEAT_BTN_TAG;
         
         
-        SegmentedButton *placeBtn = [[SegmentedButton alloc] init];
+        placeBtn = [[SegmentedButton alloc] init];
         placeBtn.frame =  CGRectMake(self.view.frame.size.width/3*2+20, 20, self.view.frame.size.width/3-20*2, self.view.frame.size.width/3-20*2);
         placeBtn.backgroundColor = [UIColor whiteColor];
         placeBtn.alpha = 0.8;
@@ -546,6 +601,72 @@
     
 }
 
+
+-(void)CreatAllDayTaskOrNot:(UISwitch *)sender
+{
+    {
+        NSDateComponents *temp = [self updateLabelForTimer];
+        
+        NSInteger y = [temp year];
+        NSInteger m = [temp month];
+        NSInteger d = [temp day];
+        
+        NSInteger hour = [temp hour];
+        NSInteger min = [temp minute];
+        
+        NSInteger week = [temp weekday];
+        NSString *weekStr;
+        switch (week) {
+            case 1:
+                weekStr = @"周日";
+                break;
+            case 2:
+                weekStr = @"周一";
+                break;
+            case 3:
+                weekStr = @"周二";
+                break;
+            case 4:
+                weekStr = @"周三";
+                break;
+            case 5:
+                weekStr = @"周四";
+                break;
+            case 6:
+                weekStr = @"周五";
+                break;
+            case 7:
+                weekStr = @"周六";
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+        
+        
+        if (sender.isOn) {
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",y,m,d];
+            startTimeField.text =timeStr;
+            
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",y,m,d];
+            endTimeField.text =timeStr2;
+            isday=YES;
+        }
+        else
+        {
+            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d,hour,min];
+            startTimeField.text =timeStr;
+            startTimeField.font = [UIFont systemFontOfSize:14];
+            
+            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",y,m,d+1,hour,min];
+            endTimeField.text =timeStr2;
+            endTimeField.font = [UIFont systemFontOfSize:14];
+            isday=NO;
+        }
+    }
+}
 
 ////关闭日历
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -614,6 +735,7 @@
                   );
             _repeatViewCtl.dateArr = _startDateArray;
             _repeatViewCtl.navTitle = sender.titleLabel.text;
+            [_repeatViewCtl setDelegateObject:self setBackFunctionName:@"ChongfuBackCall:"];
             [self.navigationController pushViewController:_repeatViewCtl animated:YES];
         }
             break;
@@ -624,6 +746,7 @@
                       );
             _remindViewCtl.dateArr = _startDateArray;
             _remindViewCtl.navTitle = sender.titleLabel.text;
+            [_remindViewCtl setDelegateObject:self setBackFunctionName:@"TixingBackCall:"];
             [self.navigationController pushViewController:_remindViewCtl animated:YES];
         }
             
@@ -632,6 +755,20 @@
             break;
     }
     NSLog(@"click choose contact btn");
+}
+
+-(void)TixingBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    tipID=dict[@"tip"];
+    [remindBtn setTitle:dict[@"tipname"] forState:UIControlStateNormal];
+}
+
+-(void)ChongfuBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    repeatID=dict[@"repeat"];
+    [repeatBtn setTitle:dict[@"repeatname"] forState:UIControlStateNormal];
 }
 
 
@@ -953,7 +1090,7 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
 }
 
 
-
+//-(BOOL)compareDatewittyear:(NSString *)year andmoth:(NSString *)moth andday:(NSString *)day
 
 
 - (void)didReceiveMemoryWarning {

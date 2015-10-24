@@ -145,14 +145,24 @@
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];
     _loginFlag = false;
     
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]) {
         
-        if(!_loginFlag)
+//        if(!_loginFlag)
+            if (!userinfoWithFile[@"id"])
         {
             self.window.rootViewController = _loginViewCtl;
             _loginFlag = true;
         }
-        self.window.rootViewController =_tempViewcontroller;
+        else
+        {
+            self.window.rootViewController =_tempViewcontroller;
+        }
+//        self.window.rootViewController =_tempViewcontroller;
     }
     else
     {

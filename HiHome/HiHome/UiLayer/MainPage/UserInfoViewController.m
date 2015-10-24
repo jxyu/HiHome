@@ -9,6 +9,7 @@
 #import "UserInfoViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ZHPickView.h"
+#import "DataProvider.h"
 
 @interface UserInfoViewController ()<ZHPickViewDelegate>
 @property(nonatomic,strong)ZHPickView *pickview;
@@ -21,6 +22,8 @@
     NSString * birthDay;
     UILabel * lbl_birtiday;
     BOOL isMan;
+    
+    NSMutableDictionary *userInfoWithFile;
 }
 
 - (void)viewDidLoad {
@@ -28,14 +31,29 @@
     // Do any additional setup after loading the view from its nib.
     _lblTitle.text = @"个人资料";
     [self addLeftButton:@"goback@2x.png"];
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userInfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];//read plist
     isMan=YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    self.tabBarController.hidesBottomBarWhenPushed=YES;
+    
+    
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
+    [dataprovider GetUserInfoWithUid:userInfoWithFile[@"id"]];
+    
+}
+
+
+-(void)GetInfoBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
     _myTableview.dataSource=self;
     _myTableview.delegate=self;
     _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
 }
-
 
 
 
@@ -89,10 +107,10 @@
             case 1:
             {
                 cell.textLabel.text=@"序列号";
-                UILabel * lbl_birtiday=[[UILabel alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
-                lbl_birtiday.text=birthDay?birthDay:@"123456789";
-                lbl_birtiday.textColor=ZY_UIBASE_FONT_COLOR;
-                [cell addSubview:lbl_birtiday];
+                UILabel * lbl_birtiday1=[[UILabel alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
+                lbl_birtiday1.text=birthDay?birthDay:@"123456789";
+                lbl_birtiday1.textColor=ZY_UIBASE_FONT_COLOR;
+                [cell addSubview:lbl_birtiday1];
             }
                 break;
             case 2:

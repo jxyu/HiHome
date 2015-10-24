@@ -18,6 +18,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "PhotoCell.h"
 #import "SelectContacterViewController.h"
+#import "SVProgressHUD.h"
 
 @interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -125,7 +126,7 @@
     NSLog(@"click done button");
     
     if (_titleField.text.length>0&&titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
-        
+        [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
         [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
@@ -134,6 +135,7 @@
 }
 -(void)SubmitTaskBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     if ([dict[@"code"] intValue]==200) {
         

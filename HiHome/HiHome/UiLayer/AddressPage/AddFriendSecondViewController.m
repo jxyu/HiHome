@@ -134,8 +134,7 @@
     if (code == 200) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
-        AddressPageViewController *addressPage = [[AddressPageViewController alloc] init];
-        [self presentViewController:addressPage animated:NO completion:nil];
+        [self.navigationController popToRootViewControllerAnimated:NO];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];

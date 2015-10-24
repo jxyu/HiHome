@@ -11,7 +11,7 @@
 
 @interface SelectContacterViewController (){
     UITableView *mTableView;
-    BOOL isSelect;
+    NSMutableArray *selectContacterArray;//已选择的联系人数组
 }
 
 @end
@@ -20,12 +20,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initView];
 }
 
 -(void)initView{
+    
     [self.mBtnRight setTitle:@"确定" forState:UIControlStateNormal];
+    
+    selectContacterArray = [[NSMutableArray alloc] init];
     
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT)];
     mTableView.delegate = self;
@@ -42,8 +44,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
-
-//指定每个分区中有多少行，默认为1
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -62,10 +62,7 @@
     }
     cell.mHeaderImg.image = [UIImage imageNamed:@"me"];
     cell.mName.text = @"唐嫣";
-    isSelect = NO;
     [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
-    cell.mSelectCheckBoxBtn.tag = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row].intValue;
-    //[cell.mSelectCheckBoxBtn addTarget:self action:@selector(selectCheckBoxEvent:) forControlEvents:UIControlEventTouchUpInside];
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
@@ -79,22 +76,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SelectContacterCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateNormal];
-    NSLog(@"%ld",(long)cell.mSelectCheckBoxBtn.tag);
-}
-
--(void)selectCheckBoxEvent:(id)sender{
-    UIView * v=[sender superview];
-    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
-    NSIndexPath *indexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
-    
-    UIButton *mCheckBoxBtn = (UIButton *)sender;
-    if (isSelect) {
-        isSelect = NO;
-        [mCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    if ([selectContacterArray containsObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]]) {
+        [selectContacterArray removeObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        
     }else{
-        isSelect = YES;
-        [mCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateNormal];
+        [selectContacterArray addObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateNormal];
     }
 }
 

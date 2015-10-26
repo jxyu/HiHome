@@ -263,7 +263,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSUInteger row = [indexPath row];
+//    NSUInteger row = [indexPath row];
     
     return indexPath;
     

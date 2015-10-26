@@ -587,11 +587,18 @@
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",(long)code]];
+        if(code != 400)
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
         
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
+        UITableView *tempTableView;
+        tempTableView = [_tableViews objectAtIndex:0];
+        [tempTableView reloadData];//重新载入数据
         return;
     }
     
@@ -876,23 +883,16 @@
 {
     switch (sender.tag) {
         case ADD_ANNIVERSARY_BTNTAG:
-            
-            
-            if(_createAnniversaryViewCtl == nil)
-            {
-                _createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
-            }
+        {
+            CreateAnniversaryViewController *_createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
             _createAnniversaryViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createAnniversaryViewCtl animated:NO];
+        }
             break;
         case ADD_TASK_BTNTAG:
         {
             NSString *str = @"创建任务";
-            if(_createTaskViewCtl == nil)
-            {
-                _createTaskViewCtl = [[CreateTaskViewController alloc] init];
-
-            }
+            CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
             _createTaskViewCtl.navTitle = str;
             _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createTaskViewCtl animated:NO];

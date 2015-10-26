@@ -587,11 +587,18 @@
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",(long)code]];
+        if(code != 400)
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"纪念日获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
         
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
+        UITableView *tempTableView;
+        tempTableView = [_tableViews objectAtIndex:0];
+        [tempTableView reloadData];//重新载入数据
         return;
     }
     

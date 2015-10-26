@@ -51,7 +51,7 @@
  *  @param perpage          每页显示数量  default  10
  */
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage;
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date;
 /**
  *  获取发布的任务
  *
@@ -62,7 +62,7 @@
  */
 
 
--(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage;
+-(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date;
 
 /**
  *  创建任务
@@ -106,6 +106,15 @@
  *
  */
 -(void)delTask:(NSString *)taskID;
+
+/**
+ *  获取任务日历
+ *
+ *  @param uid      用户务id
+ *
+ */
+
+-(void)GetTaskCalender:(NSString *)uid;
 
 
 /**

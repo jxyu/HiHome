@@ -89,7 +89,7 @@
 }
 
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -114,7 +114,8 @@
             [prm setObject:page forKey:@"nowpage"];
         if(perpage!=nil)
             [prm setObject:perpage forKey:@"perpage"];
-
+        if(date!=nil)
+            [prm setObject:date forKey:@"addtime"];
         NSLog(@"send prm = [%@]",prm);
         
         [self PostRequest:url andpram:prm];
@@ -122,7 +123,7 @@
 }
 
 
--(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage
+-(void)getSendTask:(NSString *)userID andState:(NSString*)state andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -139,6 +140,9 @@
             [prm setObject:page forKey:@"nowpage"];
         if(perpage!=nil)
             [prm setObject:perpage forKey:@"perpage"];
+        if(date !=nil)
+            [prm setObject:date forKey:@"addtime"];
+        
         
         NSLog(@"send prm = [%@]",prm);
         
@@ -338,7 +342,15 @@
 
 
 
+-(void)GetTaskCalender:(NSString *)uid
+{
+    if (uid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=getDateTaskList",Url];
+        NSDictionary * prm=@{@"uid":uid};
+        [self PostRequest:url andpram:prm];
+    }
 
+}
 
 
 

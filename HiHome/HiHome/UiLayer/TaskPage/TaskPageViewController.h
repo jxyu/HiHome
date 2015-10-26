@@ -51,8 +51,8 @@
     
     /*task分页面*/
     
-    CreateTaskViewController *_createTaskViewCtl;
-    CreateAnniversaryViewController *_createAnniversaryViewCtl;
+    
+    
     
     //纪念日详情页面
  //   AnniversaryTaskDetailView *_anniversaryTaskDetailCtl;

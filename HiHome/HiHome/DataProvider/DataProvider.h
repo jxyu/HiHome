@@ -79,7 +79,7 @@
  *
  *
  */
--(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker;
+-(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3;
 
 
 /**
@@ -193,8 +193,8 @@
 //保存用户资料
 -(void)SaveUserInfo:(NSString *)userID andNick:(NSString *) nick andSex:(NSString *) sex andAge:(NSString *)age andSign:(NSString *) sign;
 
-
-
+//上传图片
+-(void)UploadImgWithImgdataSlider:(NSData *)imagedata;
 
 
 

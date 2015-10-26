@@ -16,8 +16,12 @@
 
 
 @interface AddressPageViewController (){
-    DataProvider *dataProvider;
-    NSArray *friendArray;
+    DataProvider *dataProviderNormal;
+    DataProvider *dataProviderSpouse;
+    DataProvider *dataProviderStar;
+    NSArray *friendArrayNormal;
+    NSArray *friendArraySpouse;
+    NSArray *friendArrayStar;
 }
 
 @end
@@ -30,22 +34,47 @@
     [self initData];
 }
 -(void)initData{
-    dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
-    [dataProvider getFriendList:[self getUserID]];
+    dataProviderNormal = [[DataProvider alloc] init];
+    [dataProviderNormal setDelegateObject:self setBackFunctionName:@"friendListNormalBackCall:"];
+    [dataProviderNormal getFriendList:@"0" andUserID:[self getUserID]];
+    
+    dataProviderStar = [[DataProvider alloc] init];
+    [dataProviderStar setDelegateObject:self setBackFunctionName:@"friendListStarBackCall:"];
+    [dataProviderStar getFriendList:@"1" andUserID:[self getUserID]];
+    
+    dataProviderSpouse = [[DataProvider alloc] init];
+    [dataProviderSpouse setDelegateObject:self setBackFunctionName:@"friendListSpouseBackCall:"];
+    [dataProviderSpouse getFriendList:@"2" andUserID:[self getUserID]];
 }
 
--(void)friendListBackCall:(id)dict{
+-(void)friendListNormalBackCall:(id)dict{
     NSLog(@"%@",dict);
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
     }else{
         NSLog(@"访问服务器失败！");
     }
-    _mateCellCount =2;
-    _starFriendCellCount =3;
-    _normalFriendcellCount =4;
+}
+
+-(void)friendListSpouseBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(void)friendListStarBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
 }
 
 -(NSString *)getUserID
@@ -111,6 +140,8 @@
 //    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
 //    [self.view addGestureRecognizer:tapGesture];
 
+    
+    _mainTableView.tableFooterView = [[UIView alloc] init];
     
 }
 
@@ -187,13 +218,13 @@
             return  1;
             break;
         case 1:
-             return _mateCellCount;
+             return friendArraySpouse.count;
             break;
         case 2:
-             return _starFriendCellCount;
+             return friendArrayStar.count;
             break;
         case 3:
-             return _normalFriendcellCount;
+             return friendArrayNormal.count;
             break;
         default:
             break;
@@ -230,12 +261,17 @@
         cell.iconView.image = [UIImage imageNamed:@"addressBook"];
         cell.nameLabel.text = @"通讯录";
         cell.nameLabel.textColor = [UIColor grayColor];
-    }
-    else
-    {
-       // cell.iconView.image = [UIImage imageNamed:@"headImg"];
+    }else if(indexPath.section == 1){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = @"唐嫣";
+        cell.nameLabel.text = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        cell.nameLabel.textColor = [UIColor grayColor];
+    }else if(indexPath.section == 2){
+        cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        cell.nameLabel.text = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        cell.nameLabel.textColor = [UIColor grayColor];
+    }else if(indexPath.section == 3){
+        cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        cell.nameLabel.text = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }
     //分割线设置
@@ -440,9 +476,24 @@
 //设置section header 的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
+    if(section == 0){
         return 0;
-    return 40;
+    }else{
+        if (section == 1) {
+            if (friendArraySpouse.count > 0) {
+                return 40;
+            }
+        }else if(section == 2){
+            if (friendArrayStar.count > 0) {
+                return 40;
+            }
+        }else{
+            if(friendArrayNormal.count > 0){
+                return 40;
+            }
+        }
+    }
+    return 0;
 }
 //设置section footer的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

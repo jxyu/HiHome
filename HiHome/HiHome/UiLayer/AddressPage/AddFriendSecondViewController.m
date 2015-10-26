@@ -75,6 +75,7 @@
             UIButton *mRejectBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
             [mRejectBtn setTitle:@"拒绝" forState:UIControlStateNormal];
             [mRejectBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
+            [mRejectBtn addTarget:self action:@selector(rejectBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
             mRejectBtn.backgroundColor = [UIColor whiteColor];
             [cell addSubview:mRejectBtn];
             
@@ -82,6 +83,7 @@
             [mAccesstBtn setTitle:@"同意" forState:UIControlStateNormal];
             [mAccesstBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             mAccesstBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+            [mAccesstBtn addTarget:self action:@selector(accessBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:mAccesstBtn];
         }else{
             UIButton *mAddFriendBtn =[[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
@@ -122,6 +124,45 @@
     return YES;
 }
 
+//拒绝好友事件
+-(void)rejectBtnEvent:(id)sender{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"rejectApplyFriendBackCall:"];
+    [dataProvider accessApplyFriend:_mContacterID andStatus:@"2"];
+}
+
+-(void)rejectApplyFriendBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"拒绝好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
+//同意好友事件
+-(void)accessBtnEvent:(id)sender{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
+    [dataProvider accessApplyFriend:_mContacterID andStatus:@"1"];
+}
+
+-(void)accessApplyFriendBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
+//添加好友事件
 -(void)addFriendEvent:(id)sender{
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
@@ -153,6 +194,7 @@
 }
 
 -(void)quitView{
+    [self dismissViewControllerAnimated:NO completion:nil];
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
     {
         [self popoverPresentationController];

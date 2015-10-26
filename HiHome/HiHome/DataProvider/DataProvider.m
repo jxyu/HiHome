@@ -280,14 +280,14 @@
 
 -(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark{
     if (FID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,userID,FID,remark];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,FID,userID,remark];
         [self GetRequest:url andpram:nil];
     }
 }
 
 -(void)getFriendApplyList:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&uid=%@",Url,userID];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getApplyList&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
     }
 }
@@ -299,9 +299,9 @@
     }
 }
 
--(void)getFriendList:(NSString *)userID{
+-(void)getFriendList:(NSString *) type andUserID:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&state=1&uid=%@",Url,userID];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&type=%@&uid=%@",Url,type,userID];
         [self GetRequest:url andpram:nil];
     }
 }
@@ -324,6 +324,14 @@
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
         NSDictionary * prm=@{@"id":uid};
         [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)SaveUserInfo:(NSString *)userID andNick:(NSString *) nick andSex:(NSString *) sex andAge:(NSString *)age andSign:(NSString *) sign{
+    if (userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=modInfo",Url];
+        NSDictionary *prm = @{@"id":userID,@"nick":nick,@"sex":sex,@"age":age,@"sign":sign};
+        [self PostRequest:url andpram:prm];
     }
 }
 

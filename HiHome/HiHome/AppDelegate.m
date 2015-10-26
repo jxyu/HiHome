@@ -21,6 +21,8 @@
 #import <SMS_SDK/SMSSDK.h>
 #import <RongIMKit/RongIMKit.h>
 
+#import "APService.h"
+
 #import "OptionTextViewController.h"
 
 
@@ -112,8 +114,37 @@
     
     
     
+    // Required
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+            //categories
+            [APService
+             registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                 UIUserNotificationTypeSound |
+                                                 UIUserNotificationTypeAlert)
+             categories:nil];
+        } else {
+            //categories nil
+            [APService
+             registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                 UIRemoteNotificationTypeSound |
+                                                 UIRemoteNotificationTypeAlert)
+#else
+             //categories nil
+             categories:nil];
+            [APService
+             registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                 UIRemoteNotificationTypeSound |
+                                                 UIRemoteNotificationTypeAlert)
+#endif
+             // Required
+             categories:nil];
+        
     
     
+    
+    
+        }
     
     
     
@@ -298,11 +329,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
      withString:@""];
     
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+    [APService registerDeviceToken:deviceToken];
 }
 
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Required
+    [APService handleRemoteNotification:userInfo];
+}
 
-
-
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void
+                        (^)(UIBackgroundFetchResult))completionHandler {
+    // IOS 7 Support Required
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

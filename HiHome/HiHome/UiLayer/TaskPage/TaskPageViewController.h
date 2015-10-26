@@ -46,6 +46,8 @@
     NSMutableArray *_getTaskData;
     //发布的任务
     NSMutableArray *_sendTaskData;
+    //任务日历
+    NSMutableArray *_taskCalenderData;
     
     /*task分页面*/
     

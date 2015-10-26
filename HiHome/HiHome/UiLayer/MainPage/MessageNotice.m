@@ -96,8 +96,21 @@
     
     cell.mName.text = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
     cell.mDetail.text = [personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
-    [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.mAccept setTitle:@"处理" forState:UIControlStateNormal];
+    
+    NSString *mState = [personDetailArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"state"];
+    if ([mState isEqual:@"0"]) {
+        [cell.mAccept setTitle:@"处理" forState:UIControlStateNormal];
+        [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
+    }else if([mState isEqual:@"1"]){
+        [cell.mAccept setTitle:@"已同意" forState:UIControlStateNormal];
+        [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        cell.mAccept.backgroundColor = [UIColor clearColor];
+    }else{
+        [cell.mAccept setTitle:@"已拒绝" forState:UIControlStateNormal];
+        [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        cell.mAccept.backgroundColor = [UIColor clearColor];
+    }
+    
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
@@ -117,22 +130,14 @@
     
     AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
     addFriendSecondVC.navTitle = @"好友申请";
+    NSLog(@"%@",personDetailArray);
+    addFriendSecondVC.mContacterID = [[personDetailArray valueForKey:@"id"][0] isEqual:[NSNull null]]?@"":[personDetailArray valueForKey:@"id"][0];
     addFriendSecondVC.mNameTxt = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
     addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
     addFriendSecondVC.mIFlag = @"1";
     NSLog(@"ddddd=%@",addFriendSecondVC.mNameTxt);
-    [self presentViewController:addFriendSecondVC animated:NO completion:nil];
-}
-
--(void)accessApplyFriendBackCall:(id)dict{
-    NSInteger code = [dict[@"code"] integerValue];
-    if (code == 200) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-    }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-    }
+    //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
+    [self.navigationController pushViewController:addFriendSecondVC animated:NO];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

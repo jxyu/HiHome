@@ -9,10 +9,12 @@
 #import "PersonFirstViewController.h"
 #import "UIImage+WM.h"
 #import "UserInfoViewController.h"
+#import "DataProvider.h"
 
 @interface PersonFirstViewController (){
     UITableView *mTableView;
     NSInteger cellHeight;
+    NSArray *userInfoArray;
 }
 
 @end
@@ -22,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self initView];
+    
     [self initData];
 }
 
@@ -37,6 +39,34 @@
 
 -(void)initData{
     cellHeight = SCREEN_HEIGHT / 11;
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
+    [dataprovider GetUserInfoWithUid:[self getUserID]];
+}
+
+-(void)GetInfoBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        userInfoArray = (NSArray *)[dict objectForKey:@"datas"];
+        NSLog(@"%@",userInfoArray);
+        [self initView];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -59,9 +89,9 @@
         [mHeadImg setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
         [cell addSubview:mHeadImg];
         
-        UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 200, 21)];
+        UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];
         mDetail.textColor = [UIColor whiteColor];
-        mDetail.text = @"唐嫣  女  21岁";
+        mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],@"22"];//@"唐嫣  女  21岁";
         [cell addSubview:mDetail];
     }else if(indexPath.row == 1){
         UITextField *accountInfo = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
@@ -149,6 +179,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [mTableView reloadData];
+}
 
 -(void)btnEditInfo:(id)sender{
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];

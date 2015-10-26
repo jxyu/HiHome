@@ -162,6 +162,7 @@
     [self setOptionCell:cell andBtnImg:[(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectAtIndex:0]
                             andTitleLabels:CELL_TITLE(indexPath.section,indexPath.row)
                             andContentLabel:[(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectAtIndex:2]];
+    
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -303,6 +304,31 @@
                     break;
             }
             break;
+        case 3:{
+            switch (indexPath.row) {
+                case 0:
+                {
+                    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                              NSUserDomainMask, YES) objectAtIndex:0];
+                    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+                    NSDictionary *mDic = [[NSDictionary alloc] init];
+                    
+                    
+                    //NSArray * itemdict=[[NSArray alloc] initWithArray:dict[@"datas"]];
+                    BOOL result= [mDic writeToFile:plistPath atomically:YES];
+                    if (result) {
+                        [self dismissViewControllerAnimated:NO completion:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"loginpage" forKey:@"rootView"]];
+                        //[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
+                        //            [self.navigationController popToRootViewControllerAnimated:YES];
+                    }
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
         default:
             break;
     }

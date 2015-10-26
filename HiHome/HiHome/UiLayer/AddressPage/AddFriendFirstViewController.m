@@ -34,6 +34,7 @@
     mUserNumber = [[UITextField alloc] initWithFrame:CGRectMake(8, 74, SCREEN_WIDTH - 16 - 70, 40)];
     mUserNumber.delegate = self;
     mUserNumber.borderStyle = UITextBorderStyleRoundedRect;
+    mUserNumber.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
     mUserNumber.placeholder = @"请输入用户手机号";
     UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     UIImageView *search_img = [[UIImageView alloc] initWithFrame:CGRectMake(5, 2.5, 25, 25)];
@@ -100,7 +101,8 @@
         
         addFriendSecondVC.navTitle = @"添加好友";
         [self.navigationController pushViewController:addFriendSecondVC animated:NO];
-        //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     }else{
         NSLog(@"访问服务器失败！");
         detail1.hidden = NO;
@@ -112,6 +114,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void)quitView{
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
 @end

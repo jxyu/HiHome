@@ -10,6 +10,8 @@
 #import "UIImageView+WebCache.h"
 #import "ZHPickView.h"
 #import "DataProvider.h"
+#import "LoginViewController.h"
+#import "PersonFirstViewController.h"
 
 @interface UserInfoViewController ()<ZHPickViewDelegate>
 @property(nonatomic,strong)ZHPickView *pickview;
@@ -18,12 +20,16 @@
 @implementation UserInfoViewController
 {
     UITextField * txt_name;
+    UIButton * btn_nan;
+    UIButton * btn_nv;
     UITextField * txt_signe;
     NSString * birthDay;
     UILabel * lbl_birtiday;
     BOOL isMan;
     
     NSMutableDictionary *userInfoWithFile;
+    
+    NSArray *userInfoArray;
 }
 
 - (void)viewDidLoad {
@@ -44,15 +50,29 @@
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
     [dataprovider GetUserInfoWithUid:userInfoWithFile[@"id"]];
     
+    if ([_mIFlag isEqual:@"1"]) {
+        _myTableview.dataSource=self;
+        _myTableview.delegate=self;
+        _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+    }
 }
 
 
 -(void)GetInfoBackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    _myTableview.dataSource=self;
-    _myTableview.delegate=self;
-    _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+    if (![_mIFlag isEqual:@"1"]) {
+        _myTableview.dataSource=self;
+        _myTableview.delegate=self;
+        _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+    }
+    
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        userInfoArray = (NSArray *)[dict objectForKey:@"datas"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
 }
 
 
@@ -101,6 +121,8 @@
                 cell.textLabel.text=@"名称";
                 txt_name=[[UITextField alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
                 txt_name.placeholder=@"请输入您的名称";
+                txt_name.text = [userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"];
+                txt_name.delegate = self;
                 [cell addSubview:txt_name];
             }
                 break;
@@ -118,8 +140,8 @@
                 cell.textLabel.text=@"性别";
                 UIView * Sex_BackView=[[UIView alloc] initWithFrame:CGRectMake(80, 0, cell.frame.size.width-100, cell.frame.size.height)];
                 
-                UIButton * btn_nan=[[UIButton alloc] initWithFrame:CGRectMake(0, 15, Sex_BackView.frame.size.width/2, 30)];
-                UIButton * btn_nv=[[UIButton alloc] initWithFrame:CGRectMake(Sex_BackView.frame.size.width/2, btn_nan.frame.origin.y, Sex_BackView.frame.size.width/2, 30)];
+                btn_nan=[[UIButton alloc] initWithFrame:CGRectMake(0, 15, Sex_BackView.frame.size.width/2, 30)];
+                btn_nv=[[UIButton alloc] initWithFrame:CGRectMake(Sex_BackView.frame.size.width/2, btn_nan.frame.origin.y, Sex_BackView.frame.size.width/2, 30)];
                 [btn_nan setImage:[UIImage imageNamed:isMan?@"select_Radio_icon@2x.png":@"unselect_Radio_icon@2x.png"] forState:UIControlStateNormal];
                 [btn_nv setImage:[UIImage imageNamed:isMan? @"unselect_Radio_icon@2x.png":@"select_Radio_icon@2x.png"] forState:UIControlStateNormal];
                 [btn_nan setTitle:@"   男" forState:UIControlStateNormal];
@@ -149,6 +171,7 @@
                 cell.textLabel.text=@"签名";
                 txt_signe=[[UITextField alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
                 txt_signe.placeholder=@"请输入您的签名";
+                txt_signe.delegate = self;
                 [cell addSubview:txt_signe];
             }
                 break;
@@ -158,6 +181,7 @@
                 
                 btn_sure.backgroundColor=ZY_UIBASECOLOR;
                 [btn_sure setTitle:@"确定" forState:UIControlStateNormal];
+                [btn_sure addTarget:self action:@selector(btn_sureEvent:) forControlEvents:UIControlEventTouchUpInside];
                 [btn_sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [cell addSubview:btn_sure];
             }
@@ -228,8 +252,36 @@
     return 7;
 }
 
+//保存资料
+-(void)btn_sureEvent:(id)sender{
+    
+    if (txt_name.text.length > 0 && lbl_birtiday.text.length > 0 && txt_signe.text.length > 0) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SaveUserInfoBackCall:"];
+        
+        
+        [dataprovider SaveUserInfo:userInfoWithFile[@"id"] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:lbl_birtiday.text andSign:txt_signe.text];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
 
-
+-(void)SaveUserInfoBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    
+    if (code == 200) {
+        if ([_mIFlag isEqual:@"1"]) {
+            
+        }else{
+            [self dismissViewControllerAnimated:NO completion:nil];
+        }
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
 
 
 -(void)btn_selectSex:(UIButton *)sender
@@ -248,6 +300,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [txt_name resignFirstResponder];
+    [txt_signe resignFirstResponder];
+    return true;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

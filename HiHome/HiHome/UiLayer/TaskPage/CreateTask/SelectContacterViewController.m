@@ -8,10 +8,18 @@
 
 #import "SelectContacterViewController.h"
 #import "SelectContacterCell.h"
+#import "DataProvider.h"
 
 @interface SelectContacterViewController (){
     UITableView *mTableView;
     NSMutableArray *selectContacterArray;//已选择的联系人数组
+    
+    DataProvider *dataProviderNormal;
+    DataProvider *dataProviderSpouse;
+    DataProvider *dataProviderStar;
+    NSArray *friendArrayNormal;
+    NSArray *friendArraySpouse;
+    NSArray *friendArrayStar;
 }
 
 @end
@@ -21,6 +29,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
+}
+
+-(void)initData{
+    dataProviderNormal = [[DataProvider alloc] init];
+    [dataProviderNormal setDelegateObject:self setBackFunctionName:@"friendListNormalBackCall:"];
+    [dataProviderNormal getFriendList:@"0" andUserID:[self getUserID]];
+    
+    dataProviderStar = [[DataProvider alloc] init];
+    [dataProviderStar setDelegateObject:self setBackFunctionName:@"friendListStarBackCall:"];
+    [dataProviderStar getFriendList:@"1" andUserID:[self getUserID]];
+    
+    dataProviderSpouse = [[DataProvider alloc] init];
+    [dataProviderSpouse setDelegateObject:self setBackFunctionName:@"friendListSpouseBackCall:"];
+    [dataProviderSpouse getFriendList:@"2" andUserID:[self getUserID]];
+    
 }
 
 -(void)initView{
@@ -36,6 +59,47 @@
     mTableView.tableFooterView = [[UIView alloc] init];
 }
 
+-(void)friendListNormalBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(void)friendListSpouseBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(void)friendListStarBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -48,8 +112,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return 1;
+    }else if (section == 1){
+        return 1;//friendArraySpouse.count;
+    }else if(section == 2){
+        return 3;//friendArrayStar.count;
+    }else{
+        return 3;//friendArrayNormal.count;
     }
-    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -60,9 +129,25 @@
         cell = [nib objectAtIndex:0];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.mHeaderImg.image = [UIImage imageNamed:@"me"];
-    cell.mName.text = @"唐嫣";
-    [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    
+    if (indexPath.section == 0) {
+        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        cell.mName.text = @"自己";
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    }else if(indexPath.section == 1){
+        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        cell.mName.text = @"唐嫣";//[friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    }else if(indexPath.section == 2){
+        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        cell.mName.text = @"唐嫣";//[friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    }else{
+        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        cell.mName.text = @"唐嫣";//[friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
+        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+    }
+    
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
@@ -91,11 +176,25 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
+    if(section == 0){
         return 0;
-    }else{
-        return 40;
     }
+//    else{
+//        if (section == 1) {
+//            if (friendArraySpouse.count > 0) {
+//                return 40;
+//            }
+//        }else if(section == 2){
+//            if (friendArrayStar.count > 0) {
+//                return 40;
+//            }
+//        }else{
+//            if(friendArrayNormal.count > 0){
+//                return 40;
+//            }
+//        }
+//    }
+    return 40;
 }
 
 //设置section的header view

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 
-@interface UserInfoViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
+@interface UserInfoViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *myTableview;
+@property(strong,nonatomic) NSString *mIFlag;
 
 @end

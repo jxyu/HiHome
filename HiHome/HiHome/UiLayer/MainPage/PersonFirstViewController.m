@@ -91,7 +91,7 @@
         
         UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];
         mDetail.textColor = [UIColor whiteColor];
-        mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],@"22"];//@"唐嫣  女  21岁";
+        mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]];//@"唐嫣  女  21岁";
         [cell addSubview:mDetail];
     }else if(indexPath.row == 1){
         UITextField *accountInfo = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
@@ -105,7 +105,7 @@
         [cell addSubview:accountInfo];
     }else if(indexPath.row == 2){
         UITextField *gxqm = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
-        gxqm.text = @"做自己喜欢的事情";
+        gxqm.text = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
         gxqm.textColor = [UIColor colorWithRed:0.53 green:0.53 blue:0.54 alpha:1];
         UILabel *gxqmLeftlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 21)];
         gxqmLeftlabel.text = @"个性签名:";
@@ -180,11 +180,15 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [self initData];
     [mTableView reloadData];
 }
 
 -(void)btnEditInfo:(id)sender{
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+    userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
+    userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
+    userInfoVC.mSign = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
     [self presentViewController:userInfoVC animated:NO completion:^{}];
 }
 

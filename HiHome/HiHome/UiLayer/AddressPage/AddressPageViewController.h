@@ -21,5 +21,7 @@
     AddressLocalViewController *addresslocalVC;
 }
 -(void) initViews;
-@property(strong,nonatomic) UITableView *mainTableView;
+@property (weak, nonatomic) IBOutlet UITableView *mytableView;
+
+
 @end

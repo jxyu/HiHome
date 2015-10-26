@@ -154,7 +154,7 @@
 
 
 
--(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker
+-(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3
 {
     if (userID && title && content
         && isDay &&stime && etime
@@ -268,11 +268,21 @@
 {
     if (imagePath) {
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=public&a=upload",Url];
-        NSDictionary * prm=@{@"name":@"avatar"};
+        NSDictionary * prm=@{@"name":@"imgsrc"};
         [self uploadImageWithImage:imagePath andurl:url andprm:prm];
 //        [self ShowOrderuploadImageWithImage:imagePath andurl:url andprm:prm];
     }
 
+}
+
+-(void)UploadImgWithImgdataSlider:(NSData *)imagedata
+{
+    if (imagedata) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=public&a=upload",Url];
+        NSDictionary * prm=@{@"name":@"imgsrc"};
+        [self ShowOrderuploadImageWithImage:imagedata andurl:url andprm:prm];
+    }
+    
 }
 
 -(void)getContacterByPhone:(NSString *)phone{
@@ -303,9 +313,9 @@
     }
 }
 
--(void)getFriendList:(NSString *) type andUserID:(NSString *)userID{
+-(void)getFriendList:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&type=%@&uid=%@",Url,type,userID];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
     }
 }

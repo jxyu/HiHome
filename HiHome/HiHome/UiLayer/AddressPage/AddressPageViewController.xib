@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressPageViewController">
             <connections>
+                <outlet property="mytableView" destination="hq6-aj-jds" id="bfj-Kl-mNX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +15,41 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hq6-aj-jds">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="hq6-aj-jds" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Jws-M7-mLt"/>
+                <constraint firstAttribute="bottom" secondItem="hq6-aj-jds" secondAttribute="bottom" id="NOo-KZ-kpr"/>
+                <constraint firstAttribute="trailing" secondItem="hq6-aj-jds" secondAttribute="trailing" id="izI-0h-prs"/>
+                <constraint firstItem="hq6-aj-jds" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="108" id="jeM-YR-miT"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="hq6-aj-jds"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="Jws-M7-mLt"/>
+                    <exclude reference="NOo-KZ-kpr"/>
+                    <exclude reference="izI-0h-prs"/>
+                    <exclude reference="jeM-YR-miT"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="hq6-aj-jds"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="Jws-M7-mLt"/>
+                    <include reference="NOo-KZ-kpr"/>
+                    <include reference="izI-0h-prs"/>
+                    <include reference="jeM-YR-miT"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

@@ -883,23 +883,16 @@
 {
     switch (sender.tag) {
         case ADD_ANNIVERSARY_BTNTAG:
-            
-            
-            if(_createAnniversaryViewCtl == nil)
-            {
-                _createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
-            }
+        {
+            CreateAnniversaryViewController *_createAnniversaryViewCtl = [[CreateAnniversaryViewController alloc] init];
             _createAnniversaryViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createAnniversaryViewCtl animated:NO];
+        }
             break;
         case ADD_TASK_BTNTAG:
         {
             NSString *str = @"创建任务";
-            if(_createTaskViewCtl == nil)
-            {
-                _createTaskViewCtl = [[CreateTaskViewController alloc] init];
-
-            }
+            CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
             _createTaskViewCtl.navTitle = str;
             _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createTaskViewCtl animated:NO];

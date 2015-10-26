@@ -16,12 +16,16 @@
 
 
 @interface AddressPageViewController (){
-    DataProvider *dataProviderNormal;
-    DataProvider *dataProviderSpouse;
-    DataProvider *dataProviderStar;
-    NSArray *friendArrayNormal;
-    NSArray *friendArraySpouse;
-    NSArray *friendArrayStar;
+    DataProvider *dataProvider;
+    
+    NSArray *friendArray;
+    NSMutableArray *friendArrayNormal;
+    NSMutableArray *friendArraySpouse;
+    NSMutableArray *friendArrayStar;
+    
+    int normalNum;
+    int spouseNum;
+    int starNum;
 }
 
 @end
@@ -32,49 +36,45 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initData];
+    
 }
 -(void)initData{
-    dataProviderNormal = [[DataProvider alloc] init];
-    [dataProviderNormal setDelegateObject:self setBackFunctionName:@"friendListNormalBackCall:"];
-    [dataProviderNormal getFriendList:@"0" andUserID:[self getUserID]];
     
-    dataProviderStar = [[DataProvider alloc] init];
-    [dataProviderStar setDelegateObject:self setBackFunctionName:@"friendListStarBackCall:"];
-    [dataProviderStar getFriendList:@"1" andUserID:[self getUserID]];
+    normalNum = 0;
+    spouseNum = 0;
+    starNum = 0;
     
-    dataProviderSpouse = [[DataProvider alloc] init];
-    [dataProviderSpouse setDelegateObject:self setBackFunctionName:@"friendListSpouseBackCall:"];
-    [dataProviderSpouse getFriendList:@"2" andUserID:[self getUserID]];
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
+    [dataProvider getFriendList:[self getUserID]];
 }
 
--(void)friendListNormalBackCall:(id)dict{
+-(void)friendListBackCall:(id)dict{
     NSLog(@"%@",dict);
+    friendArrayNormal = [[NSMutableArray alloc] init];
+    friendArrayStar = [[NSMutableArray alloc] init];
+    friendArraySpouse = [[NSMutableArray alloc] init];
+    
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        for (int i =0; i < friendArray.count; i++) {
+            if([friendArray[i][@"type"] isEqual:@"0"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArrayNormal addObject:mTempArray];
+            }else if([friendArray[i][@"type"] isEqual:@"1"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArrayStar addObject:mTempArray];
+            }else if([friendArray[i][@"type"] isEqual:@"2"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArraySpouse addObject:mTempArray];
+            }
+        }
     }else{
         NSLog(@"访问服务器失败！");
     }
-}
-
--(void)friendListSpouseBackCall:(id)dict{
-    NSLog(@"%@",dict);
-    NSInteger code = [dict[@"code"] integerValue];
-    if (code == 200) {
-        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-    }else{
-        NSLog(@"访问服务器失败！");
-    }
-}
-
--(void)friendListStarBackCall:(id)dict{
-    NSLog(@"%@",dict);
-    NSInteger code = [dict[@"code"] integerValue];
-    if (code == 200) {
-        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-    }else{
-        NSLog(@"访问服务器失败！");
-    }
+    [self initViews];
+    NSLog(@"%lu-%lu-%lu",(unsigned long)friendArrayNormal.count,(unsigned long)friendArrayStar.count,(unsigned long)friendArraySpouse.count);
 }
 
 -(NSString *)getUserID
@@ -90,37 +90,36 @@
 
 -(void) initViews
 {
-    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT+ZY_VIEWHEIGHT_IN_HEADVIEW-20, SCREEN_WIDTH,SCREEN_HEIGHT -ZY_HEADVIEW_HEIGHT )];
-    _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
-    [_mainTableView setDelegate:self];
-    [_mainTableView setDataSource:self];
+    _mytableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
+    [_mytableView setDelegate:self];
+    [_mytableView setDataSource:self];
     
-    //    _mainTableView.tableHeaderView.contentMode = UIViewContentModeCenter;
-    //    _mainTableView.tableHeaderView = [self headerViewForChatPage];
+    //    _mytableView.tableHeaderView.contentMode = UIViewContentModeCenter;
+    //    _mytableView.tableHeaderView = [self headerViewForChatPage];
     
     
-    _mainTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
-    _mainTableView.separatorInset = UIEdgeInsetsZero;
-    _mainTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _mytableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
+    _mytableView.separatorInset = UIEdgeInsetsZero;
+    _mytableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
    
-    _mainTableView.separatorColor =  [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
-    //_mainTableView.separatorEffect = ;
+    _mytableView.separatorColor =  [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+    //_mytableView.separatorEffect = ;
     
      if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
      {
     //设置cell分割线从最左边开始
-         if ([_mainTableView respondsToSelector:@selector(setSeparatorInset:)]) {
-            [_mainTableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+         if ([_mytableView respondsToSelector:@selector(setSeparatorInset:)]) {
+            [_mytableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
             }
     
-         if ([_mainTableView respondsToSelector:@selector(setLayoutMargins:)]) {
-            [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+         if ([_mytableView respondsToSelector:@selector(setLayoutMargins:)]) {
+            [_mytableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
             }
      }
     
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH
                                                                     , ZY_VIEWHEIGHT_IN_HEADVIEW)];
     _searchBar.placeholder = @"搜索";
     
@@ -131,9 +130,9 @@
     // searchResultsDelegate 就是 UITableViewDelegate
     _searchDisplayController.searchResultsDelegate = self;
     
-  //  _mainTableView.tableHeaderView = _searchBar;
+  //  _mytableView.tableHeaderView = _searchBar;
     
-    [self.view addSubview:_mainTableView];
+    [self.view addSubview:_mytableView];
     [self.view addSubview:[self headerView]];
     [self.view addSubview:_searchBar];
     
@@ -141,7 +140,7 @@
 //    [self.view addGestureRecognizer:tapGesture];
 
     
-    _mainTableView.tableFooterView = [[UIView alloc] init];
+    _mytableView.tableFooterView = [[UIView alloc] init];
     
 }
 
@@ -176,7 +175,7 @@
 //    titleBtn.layer.borderColor = [[UIColor yellowColor] CGColor];
 //    titleBtn.backgroundColor = [UIColor blueColor];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, (self.view.frame.size.width - 100*2), ZY_VIEWHEIGHT_IN_HEADVIEW)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, (SCREEN_WIDTH - 100*2), ZY_VIEWHEIGHT_IN_HEADVIEW)];
     titleLabel.text = @"好友";
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -218,13 +217,13 @@
             return  1;
             break;
         case 1:
-             return friendArraySpouse.count;
+            return friendArraySpouse.count;
             break;
         case 2:
              return friendArrayStar.count;
             break;
         case 3:
-             return friendArrayNormal.count;
+            return friendArrayNormal.count;
             break;
         default:
             break;
@@ -263,16 +262,19 @@
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 1){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        cell.nameLabel.text = [friendArraySpouse[spouseNum][0] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][0];
         cell.nameLabel.textColor = [UIColor grayColor];
+        spouseNum++;
     }else if(indexPath.section == 2){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        cell.nameLabel.text = [friendArrayStar[starNum][0] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][0];
         cell.nameLabel.textColor = [UIColor grayColor];
+        starNum++;
     }else if(indexPath.section == 3){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
+        cell.nameLabel.text = [friendArrayNormal[normalNum][0] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][0];
         cell.nameLabel.textColor = [UIColor grayColor];
+        normalNum++;
     }
     //分割线设置
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
@@ -383,11 +385,11 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView beginUpdates];
+        //        [_mytableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
+        //        [_mytableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
+        //        [_mytableView beginUpdates];
         //        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-        //        [_mainTableView endUpdates];
+        //        [_mytableView endUpdates];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

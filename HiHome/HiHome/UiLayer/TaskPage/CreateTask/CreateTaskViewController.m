@@ -41,6 +41,11 @@
     NSInteger *_hour;
     NSInteger *_minute;
     BOOL isday;
+    
+    NSMutableArray * img_uploaded;
+    int uploadImgIndex;
+    
+    NSMutableArray * img_prm;
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -52,6 +57,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    uploadImgIndex=0;
+    img_uploaded=[[NSMutableArray alloc] init];
+    img_prm=[[NSMutableArray alloc] init];
     isday=NO;
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
@@ -124,13 +132,24 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"click done button");
+    [titleField resignFirstResponder];
+    [_titleField resignFirstResponder];
+    [_textView resignFirstResponder];
     
     
-    if (_titleField.text.length>0&&titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
+
+    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+//        DataProvider * dataprovider=[[DataProvider alloc] init];
+//        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+//        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+//        if (self.assetsArray.count>0) {
+//            DataProvider * dataprovider=[[DataProvider alloc] init];
+//            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+//            dataprovider
+//        }
+        
+        [self BuildSliderData];
     }
     else
     {
@@ -141,13 +160,50 @@
         [alert show];
     }
     
+    else
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请完善任务信息，例如：提醒、重复"];
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+    }
+    
+    
+    
+}
+-(void)UpdateAndRequest
+{
+    if (img_uploaded.count>0) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
+        [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
+    }
+}
+
+-(void)uploadImgBackCall:(id)dict
+{
+    if ([dict[@"code"] intValue]==200) {
+        ++uploadImgIndex;
+        [img_prm addObject:[dict[@"datas"][@"imgsrc"][@"imgsrc"] isEqual:[NSNull null]]?@"":dict[@"datas"][@"imgsrc"][@"imgsrc"]];
+        if (uploadImgIndex<=img_uploaded.count) {
+            [self UpdateAndRequest];
+        }
+        else
+        {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+            
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count==1?img_prm[0]:@"" andimgsrc2:img_prm.count==2?img_prm[1]:@"" andimgsrc3:img_prm.count==3?img_prm[2]:@""];
+        }
+        
+    }
 }
 -(void)SubmitTaskBackCall:(id)dict
 {
     [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     if ([dict[@"code"] intValue]==200) {
-        
+        [self.navigationController popViewControllerAnimated:YES];
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
     alert.alertType = AlertType_Hint;
@@ -1110,6 +1166,49 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
     NSLog(@"%ld",(long)[indexPath row]);
     
 }
+
+
+
+
+
+-(void)BuildSliderData
+{
+    [SVProgressHUD showWithStatus:@"正在保存数据" maskType:SVProgressHUDMaskTypeBlack];
+    @try {
+        NSUserDefaults * userdefaults=[NSUserDefaults standardUserDefaults];
+        for (int i=0; i<self.assetsArray.count; i++) {
+            //            UIImage * itemimg=[UIImage imageWithCGImage:[[self.assetsArray[i] defaultRepresentation] fullScreenImage]];
+            
+            //            if (uplodaimage<self.assetsArray.count) {
+            //                JKAssets * itemasset=(JKAssets *)self.assetsArray[i];
+            //                ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+            //                [lib assetForURL:itemasset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+            //                    if (asset) {
+            //                        [sliderSelectArray addObject:UIImageJPEGRepresentation([UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]], 1.0)];
+            //                    }
+            //                } failureBlock:^(NSError *error) {
+            //
+            //                }];
+            //
+            //            }
+            [img_uploaded addObject:[userdefaults objectForKey:[NSString stringWithFormat:@"%d",i]]];
+        }
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"构造轮播图数据出错");
+    }
+    @finally {
+        [self UpdateAndRequest];
+    }
+    
+    
+    
+    
+}
+
+
+
 
 
 //-(BOOL)compareDatewittyear:(NSString *)year andmoth:(NSString *)moth andday:(NSString *)day

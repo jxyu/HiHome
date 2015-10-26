@@ -927,6 +927,7 @@
     else
     {
         dateStr = [[[self dateFormatterForLoadFromNet] stringFromDate:self.calendar.currentDateSelected] substringToIndex:10];
+        NSLog(@"dateStr = %@",dateStr);
     }
     
     
@@ -1631,7 +1632,8 @@
         }else{
             TaskPath *tempPath;
             tempPath = [_myTaskData objectAtIndex:indexPath.row-_myAnniversaryData.count];
-            
+    
+            _taskDetailPageCtl.taskDetailMode = TaskDetail_MyMode;
             [self loadTaskDetails:tempPath.taskID];
             
         }
@@ -1640,7 +1642,7 @@
         tempPath = [_getTaskData objectAtIndex:indexPath.row];
         
        // NSLog(@"task ID" = );
-        
+        _taskDetailPageCtl.taskDetailMode = TaskDetail_ReceiveMode;
         [self loadTaskDetails:tempPath.taskID];
     }
     else if(tableView.tag == 2){
@@ -1648,7 +1650,7 @@
         tempPath = [_sendTaskData objectAtIndex:indexPath.row];
         
         // NSLog(@"task ID" = );
-        
+        _taskDetailPageCtl.taskDetailMode = TaskDetail_SendMode;
         [self loadTaskDetails:tempPath.taskID];
     }
     

@@ -31,7 +31,7 @@
 }
 
 -(void)initData{
-    selectSectionIndex = -1;
+    selectSectionIndex = 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -45,9 +45,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *CellIdentifier = @"TaskNoticeCellIdentifier";
     
-     SelectTaskNoticeCell *cell = [[SelectTaskNoticeCell alloc] init];
+    //UITableViewCell *cell = [[UITableViewCell alloc] init];
     
-    if (indexPath.section == selectSectionIndex) {
+    if (0) {
+//        SelectTaskNoticeCell *cell = [[SelectTaskNoticeCell alloc] init];
         SelectTaskNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SelectTaskNoticeCell" owner:self options:nil];
@@ -95,6 +96,8 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskNoticeTableViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
+     
+        
         @try {
             cell.mImageView.image = [UIImage imageNamed:@"xueren.png"];
             cell.mReleaseTaskPerson.text = @"小雪人";
@@ -117,7 +120,7 @@
         return cell;
     }
     
-    return cell;
+    //return cell;
     
 }
 

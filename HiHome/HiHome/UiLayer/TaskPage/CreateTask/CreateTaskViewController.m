@@ -125,11 +125,20 @@
 -(void)btnRightClick:(id)sender{
     NSLog(@"click done button");
     
+    
     if (_titleField.text.length>0&&titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
         [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+    }
+    else
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请补全信息"];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
     }
     
 }
@@ -476,6 +485,23 @@
             
         }
         
+        UUDatePicker *endDatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     
+                                     endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                 }];
+        
+        
+        endDatePicker.ScrollToDate = now;
+        endTimeField.inputView = endDatePicker;
+
         
         UUDatePicker *startDatePicker
         = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
@@ -494,40 +520,25 @@
                                      [_startDateArray addObject:hour];
                                      [_startDateArray addObject:minute];
                                      [_startDateArray addObject:weekDay];
-                                     
-//                                     
-//                                     if (<#condition#>) {
-//                                         <#statements#>
-//                                     }
-//                                     
+                                    
                                      
                                      startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
                                      NSLog(@"---%@",startTimeField.text);
+                                     
+                                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                     [formatter setDateFormat:@"yyyy-MM-dd"];
+                                     NSLog(@"[startTimeField.text substringToIndex:10] = %@",[startTimeField.text substringToIndex:10]);
+                                     NSDate *date = [formatter dateFromString:[startTimeField.text substringToIndex:10]];
+                                     
+                                     endDatePicker.ScrollToDate = date;
+                                     endDatePicker.minLimitDate = date;
+                                     
                                  }];
         
         startDatePicker.ScrollToDate = now;
         startTimeField.inputView = startDatePicker;
         
-        
-        
-        UUDatePicker *endDatePicker
-        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
-                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
-                                 didSelected:^(NSString *year,
-                                               NSString *month,
-                                               NSString *day,
-                                               NSString *hour,
-                                               NSString *minute,
-                                               NSString *weekDay) {
-                                     
-//                                     if (<#condition#>) {
-//                                         <#statements#>
-//                                     }
-                                     endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
-                                 }];
-        
-        endDatePicker.ScrollToDate = now;
-        endTimeField.inputView = endDatePicker;
+    
         
         
         
@@ -569,7 +580,7 @@
         
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-        [remindBtn setTitle:remindStr forState:UIControlStateNormal];
+        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
         [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;

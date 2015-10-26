@@ -18,8 +18,10 @@
 
 typedef enum _taskDetailMode
 {
-    TaskDetail_ReceiveMode  = 0,
+    TaskDetail_MyMode= 0,
+    TaskDetail_ReceiveMode,
     TaskDetail_SendMode
+    
     
 }TaskDetailMode;
 

@@ -41,6 +41,8 @@
     NSInteger *_hour;
     NSInteger *_minute;
     BOOL isday;
+    
+    NSMutableArray * img_uploaded;
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -52,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    img_uploaded=[[NSMutableArray alloc] init];
     isday=NO;
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
@@ -124,13 +127,27 @@
 
 -(void)btnRightClick:(id)sender{
     NSLog(@"click done button");
+    [titleField resignFirstResponder];
+    [_titleField resignFirstResponder];
+    [_textView resignFirstResponder];
+    
     
     if (_titleField.text.length>0&&titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
         [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+//        if (self.assetsArray.count>0) {
+//            DataProvider * dataprovider=[[DataProvider alloc] init];
+//            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+//            dataprovider
+//        }
     }
+    
+}
+
+-(void)uploadImgBackCall:(id)dict
+{
     
 }
 -(void)SubmitTaskBackCall:(id)dict

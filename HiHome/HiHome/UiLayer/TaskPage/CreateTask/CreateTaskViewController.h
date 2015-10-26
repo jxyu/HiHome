@@ -15,6 +15,7 @@
 #define ZY_REMIND_BTN_TAG       3
 #define ZY_REPEAT_BTN_TAG       4
 #define ZY_PLACE_BTN_TAG        5
+#define ZY_CONTACTER_BTN_TAG    6
 
 @interface CreateTaskViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 

@@ -17,6 +17,7 @@
 #import "JKImagePickerController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "PhotoCell.h"
+#import "SelectContacterViewController.h"
 #import "SVProgressHUD.h"
 
 @interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
@@ -330,6 +331,7 @@
         titleField.leftViewMode = UITextFieldViewModeAlways;
         
         UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
+        chooseContactsBtn.tag = ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG;
         [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside
         [chooseContactsBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         titleField.rightView = chooseContactsBtn;
@@ -709,6 +711,13 @@
 -(void)clickBtns:(UIButton *)sender
 {
     switch (sender.tag) {
+        case ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG:
+        {
+            SelectContacterViewController *selectContacterVC = [[SelectContacterViewController alloc] init];
+            selectContacterVC.navTitle = @"选择执行人";
+            [self presentViewController:selectContacterVC animated:NO completion:nil];
+        }
+            break;
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
 //            [self showLocalAlbum];
             [self composePicAdd];

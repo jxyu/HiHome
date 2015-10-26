@@ -124,18 +124,6 @@
     [self presentViewController:addFriendSecondVC animated:NO completion:nil];
 }
 
--(void)accessEvent:(id)sender{
-    UIView * v=[sender superview];
-    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
-    NSIndexPath *indexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
-    NSLog(@"%ld",(long)indexPath.row);
-    
-    NSString *FID = [personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
-    [dataProvider accessApplyFriend:FID andStatus:@"1"];
-    
-}
-
 -(void)accessApplyFriendBackCall:(id)dict{
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {

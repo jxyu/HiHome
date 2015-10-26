@@ -99,7 +99,8 @@
         addFriendSecondVC.mSexTxt = [[personDetailDict valueForKey:@"sex"][0] isEqual:[NSNull null]]?@"":[personDetailDict valueForKey:@"sex"][0];
         
         addFriendSecondVC.navTitle = @"添加好友";
-        [self presentViewController:addFriendSecondVC animated:NO completion:nil];
+        [self.navigationController pushViewController:addFriendSecondVC animated:NO];
+        //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
     }else{
         NSLog(@"访问服务器失败！");
         detail1.hidden = NO;

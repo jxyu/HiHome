@@ -205,7 +205,8 @@
 -(void)addFriendEvent:(id)sender{
     AddFriendFirstViewController *addFriendFirstVC = [[AddFriendFirstViewController alloc] init];
     addFriendFirstVC.navTitle = @"添加联系人";
-    [self.navigationController presentViewController:addFriendFirstVC animated:NO completion:nil];
+    [self.navigationController pushViewController:addFriendFirstVC animated:NO];
+    //[self.navigationController presentViewController:addFriendFirstVC animated:NO completion:nil];
 }
 
 

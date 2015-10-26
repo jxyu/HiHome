@@ -206,7 +206,8 @@
     AddFriendFirstViewController *addFriendFirstVC = [[AddFriendFirstViewController alloc] init];
     addFriendFirstVC.navTitle = @"添加联系人";
     [self.navigationController pushViewController:addFriendFirstVC animated:NO];
-    //[self.navigationController presentViewController:addFriendFirstVC animated:NO completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
 

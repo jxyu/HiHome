@@ -303,9 +303,9 @@
     }
 }
 
--(void)getFriendList:(NSString *) type andUserID:(NSString *)userID{
+-(void)getFriendList:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&type=%@&uid=%@",Url,type,userID];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
     }
 }

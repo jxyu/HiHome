@@ -41,35 +41,37 @@
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
     userInfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    isMan=YES;
+    if ([_mSex isEqual:@"男"]) {
+        isMan = YES;
+    }else{
+        isMan=NO;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
     
     
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    [dataprovider GetUserInfoWithUid:userInfoWithFile[@"id"]];
+//    DataProvider * dataprovider=[[DataProvider alloc] init];
+//    [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
+//    [dataprovider GetUserInfoWithUid:userInfoWithFile[@"id"]];
     
-    if ([_mIFlag isEqual:@"1"]) {
-        _myTableview.dataSource=self;
-        _myTableview.delegate=self;
-        _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-    }
+    _myTableview.dataSource=self;
+    _myTableview.delegate=self;
+    _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
 }
 
 
 -(void)GetInfoBackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    if (![_mIFlag isEqual:@"1"]) {
-        _myTableview.dataSource=self;
-        _myTableview.delegate=self;
-        _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-    }
     
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
         userInfoArray = (NSArray *)[dict objectForKey:@"datas"];
+        if (![_mIFlag isEqual:@"1"]) {
+            _myTableview.dataSource=self;
+            _myTableview.delegate=self;
+            _myTableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+        }
     }else{
         NSLog(@"访问服务器失败！");
     }
@@ -121,7 +123,7 @@
                 cell.textLabel.text=@"名称";
                 txt_name=[[UITextField alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
                 txt_name.placeholder=@"请输入您的名称";
-                txt_name.text = [userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"];
+                txt_name.text = _mName;
                 txt_name.delegate = self;
                 [cell addSubview:txt_name];
             }
@@ -172,6 +174,7 @@
                 txt_signe=[[UITextField alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
                 txt_signe.placeholder=@"请输入您的签名";
                 txt_signe.delegate = self;
+                txt_signe.text = _mSign;
                 [cell addSubview:txt_signe];
             }
                 break;
@@ -260,11 +263,23 @@
         [dataprovider setDelegateObject:self setBackFunctionName:@"SaveUserInfoBackCall:"];
         
         
-        [dataprovider SaveUserInfo:userInfoWithFile[@"id"] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:lbl_birtiday.text andSign:txt_signe.text];
+        [dataprovider SaveUserInfo:userInfoWithFile[@"id"] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:[self getAgeByBirthday] andSign:txt_signe.text];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
+}
+
+-(NSString *)getAgeByBirthday{
+    int mYear = [[lbl_birtiday.text substringToIndex:4] intValue];
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+    
+    NSInteger currentYear = [dateComponent year];
+    
+    return [NSString stringWithFormat:@"%ld",currentYear - mYear];
 }
 
 -(void)SaveUserInfoBackCall:(id)dict{

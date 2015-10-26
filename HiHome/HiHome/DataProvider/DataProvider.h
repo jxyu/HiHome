@@ -184,8 +184,8 @@
 //通过/拒绝好友申请
 -(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status;
 
-//获取好友列表--type:好友类型   userID：用户ID
--(void)getFriendList:(NSString *) type andUserID:(NSString *)userID;
+//获取好友列表--  userID：用户ID
+-(void)getFriendList:(NSString *)userID;
 
 //获取用户资料
 -(void)GetUserInfoWithUid:(NSString *)uid;

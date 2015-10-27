@@ -11,6 +11,11 @@
 
 @interface UserInfoViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *myTableview;
+
 @property(strong,nonatomic) NSString *mIFlag;
+@property(strong,nonatomic) NSString *mName;
+@property(strong,nonatomic) NSString *mSex;
+@property(strong,nonatomic) NSString *mBirthday;
+@property(strong,nonatomic) NSString *mSign;
 
 @end

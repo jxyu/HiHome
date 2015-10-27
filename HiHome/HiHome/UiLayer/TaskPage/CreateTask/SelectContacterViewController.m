@@ -14,12 +14,16 @@
     UITableView *mTableView;
     NSMutableArray *selectContacterArray;//已选择的联系人数组
     
-    DataProvider *dataProviderNormal;
-    DataProvider *dataProviderSpouse;
-    DataProvider *dataProviderStar;
-    NSArray *friendArrayNormal;
-    NSArray *friendArraySpouse;
-    NSArray *friendArrayStar;
+    DataProvider *dataProvider;
+    
+    NSArray *friendArray;
+    NSMutableArray *friendArrayNormal;
+    NSMutableArray *friendArraySpouse;
+    NSMutableArray *friendArrayStar;
+    
+    int normalNum;
+    int spouseNum;
+    int starNum;
 }
 
 @end
@@ -28,22 +32,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initView];
+    [self initData];
 }
 
 -(void)initData{
-    dataProviderNormal = [[DataProvider alloc] init];
-    [dataProviderNormal setDelegateObject:self setBackFunctionName:@"friendListNormalBackCall:"];
-    [dataProviderNormal getFriendList:@"0" andUserID:[self getUserID]];
+    normalNum = 0;
+    spouseNum = 0;
+    starNum = 0;
     
-    dataProviderStar = [[DataProvider alloc] init];
-    [dataProviderStar setDelegateObject:self setBackFunctionName:@"friendListStarBackCall:"];
-    [dataProviderStar getFriendList:@"1" andUserID:[self getUserID]];
-    
-    dataProviderSpouse = [[DataProvider alloc] init];
-    [dataProviderSpouse setDelegateObject:self setBackFunctionName:@"friendListSpouseBackCall:"];
-    [dataProviderSpouse getFriendList:@"2" andUserID:[self getUserID]];
-    
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
+    [dataProvider getFriendList:[self getUserID]];
 }
 
 -(void)initView{
@@ -59,34 +58,31 @@
     mTableView.tableFooterView = [[UIView alloc] init];
 }
 
--(void)friendListNormalBackCall:(id)dict{
+-(void)friendListBackCall:(id)dict{
     NSLog(@"%@",dict);
+    friendArrayNormal = [[NSMutableArray alloc] init];
+    friendArrayStar = [[NSMutableArray alloc] init];
+    friendArraySpouse = [[NSMutableArray alloc] init];
+    
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        for (int i =0; i < friendArray.count; i++) {
+            if([friendArray[i][@"type"] isEqual:@"0"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArrayNormal addObject:mTempArray];
+            }else if([friendArray[i][@"type"] isEqual:@"1"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArrayStar addObject:mTempArray];
+            }else if([friendArray[i][@"type"] isEqual:@"2"]){
+                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
+                [friendArraySpouse addObject:mTempArray];
+            }
+        }
     }else{
         NSLog(@"访问服务器失败！");
     }
-}
-
--(void)friendListSpouseBackCall:(id)dict{
-    NSLog(@"%@",dict);
-    NSInteger code = [dict[@"code"] integerValue];
-    if (code == 200) {
-        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-    }else{
-        NSLog(@"访问服务器失败！");
-    }
-}
-
--(void)friendListStarBackCall:(id)dict{
-    NSLog(@"%@",dict);
-    NSInteger code = [dict[@"code"] integerValue];
-    if (code == 200) {
-        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-    }else{
-        NSLog(@"访问服务器失败！");
-    }
+    [self initView];
 }
 
 -(NSString *)getUserID
@@ -113,11 +109,11 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 1;//friendArraySpouse.count;
+        return friendArraySpouse.count;
     }else if(section == 2){
-        return 3;//friendArrayStar.count;
+        return friendArrayStar.count;
     }else{
-        return 3;//friendArrayNormal.count;
+        return friendArrayNormal.count;
     }
 }
 
@@ -136,16 +132,19 @@
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
     }else if(indexPath.section == 1){
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = @"唐嫣";//[friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        cell.mName.text = [friendArraySpouse[spouseNum][0] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][0];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        spouseNum++;
     }else if(indexPath.section == 2){
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = @"唐嫣";//[friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        cell.mName.text = [friendArrayStar[starNum][0] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][0];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        starNum++;
     }else{
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = @"唐嫣";//[friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
+        cell.mName.text = [friendArrayNormal[normalNum][0] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][0];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        normalNum++;
     }
     
     
@@ -178,23 +177,22 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
         return 0;
+    }else{
+        if (section == 1) {
+            if (friendArraySpouse.count > 0) {
+                return 40;
+            }
+        }else if(section == 2){
+            if (friendArrayStar.count > 0) {
+                return 40;
+            }
+        }else{
+            if(friendArrayNormal.count > 0){
+                return 40;
+            }
+        }
     }
-//    else{
-//        if (section == 1) {
-//            if (friendArraySpouse.count > 0) {
-//                return 40;
-//            }
-//        }else if(section == 2){
-//            if (friendArrayStar.count > 0) {
-//                return 40;
-//            }
-//        }else{
-//            if(friendArrayNormal.count > 0){
-//                return 40;
-//            }
-//        }
-//    }
-    return 40;
+    return 0;
 }
 
 //设置section的header view

@@ -30,6 +30,7 @@
     
     UIButton *btnLeft ;
     UIButton *btnRight;
+    NSString *rightBtnStr;
     /*
      *任务参数
      */
@@ -58,15 +59,16 @@
     [super viewDidLoad];
     
     taskPathLocal = [[TaskPath alloc] init];
-    self.taskDetailMode = TaskDetail_ReceiveMode;
+   // self.taskDetailMode = TaskDetail_ReceiveMode;
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _startDateArray = [[NSMutableArray alloc] init];
+    rightBtnStr = @"编辑";
     [self initView];
 }
 
 -(void)initView{
     //right title button
-    [self.mBtnRight setTitle:@"编辑" forState:UIControlStateNormal];
+    [self.mBtnRight setTitle:rightBtnStr forState:UIControlStateNormal];
     
     //UITableView
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 60)];
@@ -749,7 +751,40 @@
 
 -(void)btnRightClick:(id)sender
 {
-    NSLog(@"编辑");
+    NSLog(@"编辑 TaskDetail_MyMode = %d",self.taskDetailMode);
+    if(self.taskDetailMode == TaskDetail_MyMode)
+    {
+        if([rightBtnStr isEqualToString:@"编辑"])
+        {
+            mTextView.editable = YES;
+            taskName.enabled = YES;
+            rightBtnStr = @"完成";
+            [taskName becomeFirstResponder];
+            
+        }
+        else if([rightBtnStr isEqualToString:@"完成"])
+        {
+            mTextView.editable = NO;
+            taskName.enabled = NO;
+            rightBtnStr = @"编辑";
+        }
+        
+        [self.mBtnRight setTitle:rightBtnStr forState:UIControlStateNormal];
+    }
+        
+}
+
+-(void)setTaskDetailMode:(TaskDetailMode)taskDetailMode
+{
+    _taskDetailMode = taskDetailMode;
+    if(_taskDetailMode != TaskDetail_MyMode)
+    {
+        self.mBtnRight.hidden = YES;
+    }
+    else
+    {
+        self.mBtnRight.hidden = NO;
+    }
 }
 
 -(void)showDate:(UITableViewCell *) cell

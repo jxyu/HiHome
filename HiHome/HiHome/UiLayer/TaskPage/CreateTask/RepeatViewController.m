@@ -104,11 +104,11 @@
     }
     
     
-    UIButton *finishBtn = [[UIButton alloc] init];
-    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
-    finishBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
-    finishBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [self->_tableHeaderView addSubview:finishBtn];
+//    UIButton *finishBtn = [[UIButton alloc] init];
+//    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
+//    finishBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
+//    finishBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+//    [self->_tableHeaderView addSubview:finishBtn];
     
     
     UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20, self.view.frame.size.width, 60)];

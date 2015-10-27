@@ -425,7 +425,8 @@
     UIColor *textColor = [UIColor blackColor];
     NSString *title;
     
-    
+    if(row>=dayArray.count)//防止在重设大小限制时，row计算错误导致dayarray访问越界而崩溃
+        goto end;
     
     switch (self.datePickerStyle) {
         case UUDateStyle_YearMonthDayHourMinute:{
@@ -503,6 +504,7 @@
         default:
             break;
     }
+end:
     customLabel.text = title;
     customLabel.textColor = textColor;
     return customLabel;

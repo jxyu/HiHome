@@ -162,27 +162,6 @@
 
 #pragma mark - 从服务器获取数据
 
--(void) createTaskForTest
-{
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"createTaskCallBack:"];
-    
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSLog(@"dict = [%@]",userInfoWithFile);
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
-    
- //   NSLog(@"id = [%@]",userID);
-    
-    [dataprovider createTask:userID andTitle:@"买东西" andContent:@"去买根油条" andIsDay:@"YES" andStartTime:@"2015-10-21 9:00" andEndTime:@"2015-10-22 12:00" andTip:@"1" andRepeat:@"1" andTasker:@"8"];
-    
-    
-    [dataprovider createTask:userID andTitle:@"买苹果" andContent:@"去买个苹果" andIsDay:@"YES" andStartTime:@"2015-10-21 9:00" andEndTime:@"2015-10-22 12:00" andTip:@"1" andRepeat:@"1" andTasker:@"8"];
-
-}
-
 
 -(void) createAnniversaryForTest
 {
@@ -754,6 +733,8 @@
         
         NSLog(@"[tempDict objectForKey:date] = %@",[tempDict objectForKey:@"date"]);
         
+        if([[tempDict objectForKey:@"date"]  isEqual:[NSNull null]])
+            return;
         NSDate *date = [formatter dateFromString:[tempDict objectForKey:@"date"]];
         
         
@@ -920,6 +901,7 @@
     else
     {
         dateStr = [[[self dateFormatterForLoadFromNet] stringFromDate:self.calendar.currentDateSelected] substringToIndex:10];
+        NSLog(@"dateStr = %@",dateStr);
     }
     
     
@@ -1352,6 +1334,9 @@
             if (indexPath.row == _cellCountMyTask - 1) {
                 return cell;
             }
+            if(indexPath.row - _myAnniversaryData.count > _myTaskData.count - 1)
+                return cell;
+            
             TaskPath *taskValue = [_myTaskData objectAtIndex:(indexPath.row - _myAnniversaryData.count )];
 //            taskPath.taskName = taskValue.taskName;
 //            taskPath.taskOwner = taskValue.taskOwner;
@@ -1624,7 +1609,8 @@
         }else{
             TaskPath *tempPath;
             tempPath = [_myTaskData objectAtIndex:indexPath.row-_myAnniversaryData.count];
-            
+    
+            _taskDetailPageCtl.taskDetailMode = TaskDetail_MyMode;
             [self loadTaskDetails:tempPath.taskID];
             
         }
@@ -1633,7 +1619,7 @@
         tempPath = [_getTaskData objectAtIndex:indexPath.row];
         
        // NSLog(@"task ID" = );
-        
+        _taskDetailPageCtl.taskDetailMode = TaskDetail_ReceiveMode;
         [self loadTaskDetails:tempPath.taskID];
     }
     else if(tableView.tag == 2){
@@ -1641,7 +1627,7 @@
         tempPath = [_sendTaskData objectAtIndex:indexPath.row];
         
         // NSLog(@"task ID" = );
-        
+        _taskDetailPageCtl.taskDetailMode = TaskDetail_SendMode;
         [self loadTaskDetails:tempPath.taskID];
     }
     

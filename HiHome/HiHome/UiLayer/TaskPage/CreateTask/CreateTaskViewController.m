@@ -46,6 +46,10 @@
     int uploadImgIndex;
     
     NSMutableArray * img_prm;
+    
+    
+    
+    SelectContacterViewController *selectContacterVC;
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -265,8 +269,13 @@
 -(void)viewDidAppear:(BOOL)animated
 {
    remindStr = _remindViewCtl.remindModeStr;
-
-    
+    for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
+        if (i == 0) {
+            titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
+        }else{
+            titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterVC.selectContacterArrayName[i]];
+        }
+    }
 }
 
 
@@ -771,9 +780,10 @@
     switch (sender.tag) {
         case ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG:
         {
-            SelectContacterViewController *selectContacterVC = [[SelectContacterViewController alloc] init];
+            selectContacterVC = [[SelectContacterViewController alloc] init];
             selectContacterVC.navTitle = @"选择执行人";
-            [self presentViewController:selectContacterVC animated:NO completion:nil];
+            //[self presentViewController:selectContacterVC animated:NO completion:nil];
+            [self.navigationController pushViewController:selectContacterVC animated:NO];
         }
             break;
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
@@ -1197,9 +1207,6 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
     
     
 }
-
-
-
 
 
 //-(BOOL)compareDatewittyear:(NSString *)year andmoth:(NSString *)moth andday:(NSString *)day

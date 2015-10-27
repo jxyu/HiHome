@@ -186,7 +186,7 @@
     AddressPageViewController *ShoppingCart=[[AddressPageViewController alloc]init];
     UINavigationController *ShoppingCartnav = [[UINavigationController alloc] initWithRootViewController:ShoppingCart];
     
-    ShoppingCart .view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    ShoppingCart .view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 //    [ShoppingCart initViews];
     ShoppingCart.hidesBottomBarWhenPushed=YES;
     ShoppingCartnav.navigationBar.hidden=YES;

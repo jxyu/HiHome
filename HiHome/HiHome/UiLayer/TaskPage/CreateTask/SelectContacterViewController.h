@@ -11,4 +11,7 @@
 
 @interface SelectContacterViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property(strong,nonatomic) NSMutableArray *selectContacterArrayID;//已选择的联系人数组
+@property(strong,nonatomic) NSMutableArray *selectContacterArrayName;//已选择的联系人数组
+
 @end

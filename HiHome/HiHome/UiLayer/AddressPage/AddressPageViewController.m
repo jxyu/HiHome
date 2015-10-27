@@ -18,10 +18,9 @@
 @interface AddressPageViewController (){
     DataProvider *dataProvider;
     
-    NSArray *friendArray;
-    NSMutableArray *friendArrayNormal;
-    NSMutableArray *friendArraySpouse;
-    NSMutableArray *friendArrayStar;
+    NSArray *friendArrayNormal;
+    NSArray *friendArraySpouse;
+    NSArray *friendArrayStar;
     
     int normalNum;
     int spouseNum;
@@ -57,19 +56,9 @@
     
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-        for (int i =0; i < friendArray.count; i++) {
-            if([friendArray[i][@"type"] isEqual:@"0"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArrayNormal addObject:mTempArray];
-            }else if([friendArray[i][@"type"] isEqual:@"1"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArrayStar addObject:mTempArray];
-            }else if([friendArray[i][@"type"] isEqual:@"2"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArraySpouse addObject:mTempArray];
-            }
-        }
+        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list0"];
+        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list1"];
+        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list2"];
     }else{
         NSLog(@"访问服务器失败！");
     }
@@ -262,17 +251,17 @@
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 1){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArraySpouse[spouseNum][0] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][0];
+        cell.nameLabel.text = [friendArraySpouse[spouseNum][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
         spouseNum++;
     }else if(indexPath.section == 2){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayStar[starNum][0] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][0];
+        cell.nameLabel.text = [friendArrayStar[starNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
         starNum++;
     }else if(indexPath.section == 3){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayNormal[normalNum][0] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][0];
+        cell.nameLabel.text = [friendArrayNormal[normalNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
         normalNum++;
     }

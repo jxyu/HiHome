@@ -1498,6 +1498,29 @@
 
     _taskDetailPageCtl.navTitle = taskDetailPath.taskName;
     
+    if(taskDetailPath.imgSrc.count > 0)
+    {
+        [taskDetailPath.imgSrc removeAllObjects];
+    }
+    
+    if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+    }
+    if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+    }
+    if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+    }
+    NSLog(@"img1 = [%@]",[taskDetailDict objectForKey:@"imgsrc1"]);
+    NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
+    NSLog(@"img3 = [%@]",[taskDetailDict objectForKey:@"imgsrc3"]);
+    
+    NSLog(@"taskDetailPath.imgSrc count = %ld",taskDetailPath.imgSrc.count);
+    
     [_taskDetailPageCtl setDatas:taskDetailPath];
     _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];

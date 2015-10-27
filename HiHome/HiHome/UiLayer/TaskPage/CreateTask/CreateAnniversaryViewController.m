@@ -37,10 +37,18 @@
     NSDictionary *userInfoWithFile;
     
     NSString * imgAvatar;
+    
+    NSMutableArray * img_uploaded;
+    int uploadImgIndex;
+    
+    NSMutableArray * img_prm;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    uploadImgIndex=0;
+    img_uploaded=[[NSMutableArray alloc] init];
+    img_prm=[[NSMutableArray alloc] init];
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
@@ -113,9 +121,7 @@
     
     if (imgAvatar&&titleField.text&&field.text&&_textView.text) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitBackCall:"];
-        [dataprovider createAnniversary:userInfoWithFile[@"id"] andImg:imgAvatar andTitle:titleField.text andMdate:field.text andContent:_textView.text];
+        [self BuildSliderData];
     }
     else
     {
@@ -124,6 +130,43 @@
     }
     
 }
+
+
+-(void)UpdateAndRequest
+{
+    if (img_uploaded.count>0) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
+        [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
+    }
+    else
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitBackCall:"];
+        [dataprovider createAnniversary:userInfoWithFile[@"id"] andImg:imgAvatar andTitle:titleField.text andMdate:field.text andContent:_textView.text andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+    }
+}
+
+-(void)uploadImgBackCall:(id)dict
+{
+    if ([dict[@"code"] intValue]==200) {
+        NSLog(@"%@",dict);
+        ++uploadImgIndex;
+        [img_prm addObject:[dict[@"datas"][@"imgsrc"][@"imgsrc"] isEqual:[NSNull null]]?@"":dict[@"datas"][@"imgsrc"][@"imgsrc"]];
+        if (uploadImgIndex<img_uploaded.count) {
+            [self UpdateAndRequest];
+        }
+        else
+        {
+            [SVProgressHUD dismiss];
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitBackCall:"];
+            [dataprovider createAnniversary:userInfoWithFile[@"id"] andImg:imgAvatar andTitle:titleField.text andMdate:field.text andContent:_textView.text andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        }
+        
+    }
+}
+
 
 -(void) initViews
 {
@@ -1036,7 +1079,41 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
 }
 
 
-
+-(void)BuildSliderData
+{
+    [SVProgressHUD showWithStatus:@"正在保存数据" maskType:SVProgressHUDMaskTypeBlack];
+    @try {
+        NSUserDefaults * userdefaults=[NSUserDefaults standardUserDefaults];
+        for (int i=0; i<self.assetsArray.count; i++) {
+            //            UIImage * itemimg=[UIImage imageWithCGImage:[[self.assetsArray[i] defaultRepresentation] fullScreenImage]];
+            
+            //            if (uplodaimage<self.assetsArray.count) {
+            //                JKAssets * itemasset=(JKAssets *)self.assetsArray[i];
+            //                ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+            //                [lib assetForURL:itemasset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+            //                    if (asset) {
+            //                        [sliderSelectArray addObject:UIImageJPEGRepresentation([UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]], 1.0)];
+            //                    }
+            //                } failureBlock:^(NSError *error) {
+            //
+            //                }];
+            //
+            //            }
+            [img_uploaded addObject:[userdefaults objectForKey:[NSString stringWithFormat:@"%d",i]]];
+        }
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"构造轮播图数据出错");
+    }
+    @finally {
+        [self UpdateAndRequest];
+    }
+    
+    
+    
+    
+}
 
 
 

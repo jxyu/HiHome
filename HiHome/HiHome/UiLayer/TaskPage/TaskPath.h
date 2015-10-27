@@ -80,7 +80,7 @@ typedef enum _taskType
 @property(nonatomic) NSString *startTaskDateStr;//开始时间
 @property(nonatomic) NSString *endTaskDateStr;//结束时间
 
-
+@property(nonatomic) NSMutableArray *imgSrc;
 
 @property(nonatomic) ZYTaskStatue taskStatus;//任务状态
 @property(nonatomic) ZYTaskRemind remindTime;//提醒时间

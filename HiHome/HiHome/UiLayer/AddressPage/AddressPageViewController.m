@@ -13,6 +13,7 @@
 #import "AddressLocalViewController.h"
 #import "AddFriendFirstViewController.h"
 #import "DataProvider.h"
+#import "JKAlertDialog.h"
 
 
 @interface AddressPageViewController (){
@@ -25,6 +26,9 @@
     int normalNum;
     int spouseNum;
     int starNum;
+    
+    NSInteger currentSection;
+    NSIndexPath *currentRow;
 }
 
 @end
@@ -372,20 +376,62 @@
     
     NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+    
+    alert.alertType = AlertType_Alert;
+    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"delFriendBackCall:"];
+        if (indexPath.section == 1) {
+            [dataProvider delFriend:friendArraySpouse[indexPath.row][@"fid"] andUserID:[self getUserID]];
+        }else if(indexPath.section == 2){
+            [dataProvider delFriend:friendArrayStar[indexPath.row][@"fid"] andUserID:[self getUserID]];
+        }else if(indexPath.section == 3){
+            [dataProvider delFriend:friendArrayNormal[indexPath.row][@"fid"] andUserID:[self getUserID]];
+        }
+        currentSection = indexPath.section;
+        currentRow = indexPath;
+    }];
+    
+    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+        NSLog(@"Click canel");
         
-        //        [_mytableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mytableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mytableView beginUpdates];
-        //        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-        //        [_mytableView endUpdates];
-    }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
+    }];
+    [alert show];
 }
 
-
+-(void)delFriendBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        NSMutableArray *tempArray;
+        if (currentSection == 1) {
+            tempArray = [[NSMutableArray alloc] initWithArray:friendArraySpouse];
+            [tempArray removeObjectAtIndex:currentRow.row];
+            friendArraySpouse = [[NSArray alloc] initWithArray:tempArray];
+        }else if(currentSection == 2){
+            tempArray = [[NSMutableArray alloc] initWithArray:friendArrayStar];
+            [tempArray removeObjectAtIndex:currentRow.row];
+            friendArrayStar = [[NSArray alloc] initWithArray:tempArray];
+        }else if(currentSection == 3){
+            tempArray = [[NSMutableArray alloc] initWithArray:friendArrayNormal];
+            [tempArray removeObjectAtIndex:currentRow.row];
+            friendArrayNormal = [[NSArray alloc] initWithArray:tempArray];
+        }
+        
+        
+        [_mytableView reloadSections:[[NSIndexSet alloc]initWithIndex:currentRow.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除好友成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        //[self.navigationController popToRootViewControllerAnimated:NO];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除好友失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+}
 
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath

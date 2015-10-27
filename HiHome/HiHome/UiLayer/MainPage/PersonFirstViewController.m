@@ -15,6 +15,8 @@
     UITableView *mTableView;
     NSInteger cellHeight;
     NSArray *userInfoArray;
+    DataProvider *dataProvider;
+    UITextField *gxqm;
 }
 
 @end
@@ -25,13 +27,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self initData];
+    if ([_mIFlag isEqual:@"1"]) {
+        [self initView];
+    }else{
+        [self initData];
+    }
 }
 
 -(void)initView{
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     mTableView.dataSource = self;
     mTableView.delegate = self;
+    mTableView.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
     [self.view addSubview:mTableView];
     
     mTableView.tableFooterView = [[UIView alloc] init];
@@ -40,9 +47,9 @@
 -(void)initData{
     cellHeight = SCREEN_HEIGHT / 11;
     
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    [dataprovider GetUserInfoWithUid:[self getUserID]];
+    dataProvider=[[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
+    [dataProvider GetUserInfoWithUid:[self getUserID]];
 }
 
 -(void)GetInfoBackCall:(id)dict
@@ -91,11 +98,17 @@
         
         UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];
         mDetail.textColor = [UIColor whiteColor];
-        mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]];//@"唐嫣  女  21岁";
+        if ([_mIFlag isEqual:@"1"]) {
+            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",_mName,_mSex,_mAge];//@"唐嫣  女  21岁";
+        }else{
+            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@岁",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]];//@"唐嫣  女  21岁";
+        }
+        
         [cell addSubview:mDetail];
     }else if(indexPath.row == 1){
         UITextField *accountInfo = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
         accountInfo.text = @"123456789";
+        accountInfo.enabled = NO;
         accountInfo.textColor = [UIColor colorWithRed:0.53 green:0.53 blue:0.54 alpha:1];
         UILabel *accountInfoLeftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 21)];
         accountInfoLeftLabel.text = @"账号信息:";
@@ -104,8 +117,13 @@
         accountInfo.leftViewMode = UITextFieldViewModeAlways;
         [cell addSubview:accountInfo];
     }else if(indexPath.row == 2){
-        UITextField *gxqm = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
-        gxqm.text = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
+        gxqm = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
+        gxqm.enabled = NO;
+        if ([_mIFlag isEqual:@"1"]) {
+            gxqm.text = _mSign;
+        }else{
+            gxqm.text = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
+        }
         gxqm.textColor = [UIColor colorWithRed:0.53 green:0.53 blue:0.54 alpha:1];
         UILabel *gxqmLeftlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 21)];
         gxqmLeftlabel.text = @"个性签名:";
@@ -116,6 +134,7 @@
     }else if(indexPath.row == 3){
         UITextField *jrrw = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
         jrrw.text = @"点击查看";
+        [jrrw setEnabled:NO];
         jrrw.textColor = [UIColor colorWithRed:0.53 green:0.53 blue:0.54 alpha:1];
         UILabel *jrrwLeftlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 21)];
         jrrwLeftlabel.text = @"今日任务:";
@@ -137,13 +156,30 @@
         mImageView2.image = [UIImage imageNamed:@"recentPic"];
         [cell addSubview:mImageView2];
     }else{
-        UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
-        [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
-        editInfo.layer.borderWidth = 1;
-        editInfo.layer.borderColor = [UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1].CGColor;
-        [editInfo setTitle:@"编辑资料" forState:UIControlStateNormal];
-        [editInfo setTitleColor:[UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1] forState:UIControlStateNormal];
-        [cell addSubview:editInfo];
+        if ([_mIFlag isEqual:@"1"]) {
+            cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
+            UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+            [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+            [mAddFriendBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
+            [mAddFriendBtn addTarget:self action:@selector(mAddFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
+            mAddFriendBtn.backgroundColor = [UIColor whiteColor];
+            [cell addSubview:mAddFriendBtn];
+            
+            UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mAddFriendBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+            [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
+            [mHiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+            [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:mHiBtn];
+        }else{
+            UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
+            [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
+            editInfo.layer.borderWidth = 1;
+            editInfo.layer.borderColor = [UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1].CGColor;
+            [editInfo setTitle:@"编辑资料" forState:UIControlStateNormal];
+            [editInfo setTitleColor:[UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1] forState:UIControlStateNormal];
+            [cell addSubview:editInfo];
+        }
     }
     
     
@@ -190,6 +226,33 @@
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
     userInfoVC.mSign = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
     [self presentViewController:userInfoVC animated:NO completion:^{}];
+}
+
+//加为好友
+-(void)mAddFriendEvent:(id)sender{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
+    [dataProvider addFriend:_mFriendID andUserID:[self getUserID] andRemark:gxqm.text];
+}
+
+-(void)addFriendBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
+//打招呼
+-(void)mHiEvent:(id)sender{
 }
 
 @end

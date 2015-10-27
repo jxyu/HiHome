@@ -181,11 +181,17 @@
 //获取好友申请列表
 -(void)getFriendApplyList:(NSString *)userID;
 
+//删除申请好友 －－ FID：申请好友列表ID
+-(void)delApplyFriend:(NSString *)FID;
+
 //通过/拒绝好友申请
 -(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status;
 
 //获取好友列表--  userID：用户ID
 -(void)getFriendList:(NSString *)userID;
+
+//删除好友 －－ FID：好友ID   userID：自己的ID
+-(void)delFriend:(NSString *)FID andUserID:(NSString *) userID;
 
 //获取用户资料
 -(void)GetUserInfoWithUid:(NSString *)uid;

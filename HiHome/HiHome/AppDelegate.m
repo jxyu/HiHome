@@ -29,7 +29,7 @@
 #define RONGCLOUD_IM_APPKEY @"lmxuhwagxp4yd"
 
 #import "OptionTextViewController.h"
-#import "UMessage.h"
+#import "UMSocial.h"
 
 #define SMSappKey @"b5174972a9ac"
 #define SMSappSecret @"8536890596fff208c04a3e52c88a2060"
@@ -58,8 +58,8 @@
     
     
     
-    
-    
+    //友盟
+    [UMSocialData setAppKey:@"55ee2fcc67e58e2d20005b57"];
     
     
     
@@ -100,9 +100,7 @@
     
     
     
-    
-    //集成短信
-    [UMessage startWithAppkey:@"55ee2fcc67e58e2d20005b57" launchOptions:launchOptions];
+
 
     
     

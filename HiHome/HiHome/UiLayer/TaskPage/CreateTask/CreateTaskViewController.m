@@ -158,9 +158,6 @@
         [alert addButtonWithTitle:@"确定"];
         [alert show];
     }
-    
-    
-    
 }
 -(void)UpdateAndRequest
 {

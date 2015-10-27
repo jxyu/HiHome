@@ -15,6 +15,7 @@
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
 #import "JKAlertDialog.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface TaskDetailPageViewController (){
@@ -49,6 +50,12 @@
     NSString *btnLeftStr;//左边操作按键
     NSString *btnRightStr;//右边
     
+    NSMutableArray *imgSrc;
+    NSInteger imgCount;
+    
+    UIView *showImgView;
+    BOOL showImgViewState;
+    
 }
 
 @end
@@ -63,6 +70,7 @@
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _startDateArray = [[NSMutableArray alloc] init];
     rightBtnStr = @"编辑";
+    showImgViewState = false;
     [self initView];
 }
 
@@ -102,6 +110,8 @@
     btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(10, _cellHeight+5, 100, _cellHeight -10 -5)];
     
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
+    
+    showImgView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT)];
     [self.view addGestureRecognizer:tapGesture];
 }
 
@@ -129,6 +139,24 @@
     
     startTime = taskPath.startTaskDateStr;
     endTime   = taskPath.endTaskDateStr;
+    
+    
+    if(imgSrc ==nil)
+        imgSrc = [NSMutableArray array];
+    else
+    {
+        if(imgSrc.count!=0)
+            [imgSrc removeAllObjects];
+    }
+    for (int i = 0; i < taskPath.imgSrc.count; i++) {
+        
+        NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
+        
+        [imgSrc addObject:[taskPath.imgSrc objectAtIndex:i]];
+    }
+    
+    imgCount = imgSrc.count;
+    
     
     [mTableView reloadData];
     
@@ -241,7 +269,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 7;
+    return 8;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -356,11 +384,38 @@
         mTextView.editable = NO;
         [cell addSubview:mTextView];
     }else if(indexPath.row == 5){
-       // [self createDate:cell];
+        NSLog(@"imgCount = %ld",imgCount);
         
-        [self showDate:cell];
+       // [self createDate:cell];
+        for (int i=0; i<imgCount; i++) {
+            UIButton *imgBtn = [[UIButton alloc] initWithFrame:CGRectMake(10+i*(_cellHeight - 6 +5), 1, _cellHeight - 3, _cellHeight - 3)];
+            imgBtn.backgroundColor = [UIColor blueColor];
+            
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[imgSrc objectAtIndex:i]];
+            NSLog(@"img url = [%@]",url);
+            UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight - 3, _cellHeight - 3)];
+            [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+//            img_avatar.layer.masksToBounds=YES;
+//            img_avatar.layer.cornerRadius=_cellHeight - 3/2;
+//            img_avatar.layer.borderWidth=0.5;
+//            img_avatar.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+//            [btn_selectImg addSubview:img_avatar];
+
+            imgBtn.tag = ZY_UIBUTTON_TAG_BASE + i;
+            [imgBtn addTarget:self action:@selector(clickImgBtns:) forControlEvents:UIControlEventTouchUpInside];
+            [imgBtn addSubview:img_avatar];
+            
+            [cell addSubview:imgBtn];
+            
+        }
+        
     }
     else if(indexPath.row == 6){
+        // [self createDate:cell];
+        
+       [self showDate:cell];
+    }
+    else if(indexPath.row == 7){
        
         
         cell.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
@@ -431,8 +486,9 @@
         case 1:
         case 2:
         case 5:
-            return _cellHeight;
         case 6:
+            return _cellHeight;
+        case 7:
             return _cellHeight*2+50;
         default:
             break;
@@ -447,6 +503,29 @@
 {
     NSLog(@"click choose contact btn");
 }
+
+-(void)clickImgBtns:(UIButton *)sender
+{
+    if(showImgViewState == false)
+    {
+        showImgView.alpha = 0.5;
+        showImgView.backgroundColor = [UIColor blackColor];
+        
+        if(sender.tag - ZY_UIBUTTON_TAG_BASE > imgSrc.count-1)
+            return;
+        
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[imgSrc objectAtIndex:(sender.tag - ZY_UIBUTTON_TAG_BASE)]];
+        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(50, ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT -100)];
+        [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+        img_avatar.contentMode =UIViewContentModeScaleAspectFit;
+        
+        [self.view addSubview:showImgView];
+        [self.view addSubview:img_avatar];
+        [self.view bringSubviewToFront:img_avatar];
+        showImgViewState = true;
+    }
+}
+
 
 -(void)clickLeftButton:(UIButton *)sender
 {
@@ -495,9 +574,31 @@
         //    btnRightStr = nil;//设置成nil则btn不显示
             break;
         case State_cancel:
-            btnLeftStr = @"接受任务";
-            stateStr = @"已接受";
-            localTaskStatus  = State_received;
+            
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+            
+            alert.alertType = AlertType_Alert;
+            [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click ok");
+                
+                [self delTask:TaskId];
+                
+                
+            }];
+            
+            //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+            [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click canel");
+                
+            }];
+            [alert show];
+            
+        }
+            return;
+//            btnLeftStr = @"删除任务";
+//            stateStr = nil;
+//            localTaskStatus  = State_received;
 
            // btnRightStr = @"删除任务";
             break;
@@ -680,6 +781,25 @@
     taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
     taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
     taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+    
+    if(taskDetailPath.imgSrc.count > 0)
+    {
+        [taskDetailPath.imgSrc removeAllObjects];
+    }
+    
+    if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+    }
+    if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+    }
+    if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+    {
+        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+    }
+
     //  [self setTaskDetails];
     
     [self setDatas:taskDetailPath];
@@ -728,8 +848,8 @@
         case State_cancel:
 //            btnLeftStr = @"接受任务";
 //            btnRightStr = @"删除任务";
-            btnLeftStr = @"已取消";
-            btnRightStr = @"删除任务";
+            btnLeftStr = @"删除任务";
+            btnRightStr = nil;
             break;
             
         default:
@@ -972,9 +1092,21 @@
 }
 
 -(void)tapViewAction:(id)sender{
-    [taskName resignFirstResponder];
-    [executor resignFirstResponder];
-    [mTextView resignFirstResponder];
+    
+    if(showImgViewState == true)
+    {
+        showImgViewState = false;
+        
+        [showImgView removeFromSuperview];
+        [[self.view.subviews objectAtIndex:(self.view.subviews.count-1)] removeFromSuperview];//移除图片展示view
+    }
+    else
+    {
+        [taskName resignFirstResponder];
+        [executor resignFirstResponder];
+        [mTextView resignFirstResponder];
+
+    }
 //    [startTimeField resignFirstResponder];
 //    [endTimeField resignFirstResponder];
 }

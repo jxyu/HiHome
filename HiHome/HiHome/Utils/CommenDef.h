@@ -9,6 +9,9 @@
 #ifndef BestOne_CommenDef_h
 #define BestOne_CommenDef_h
 
+#import "UIDefine.h"
+
+
 #define NavigationBar_HEIGHT 44
 #define StatusBar_HEIGHT 20
 #define TabBar_HEIGHT 49

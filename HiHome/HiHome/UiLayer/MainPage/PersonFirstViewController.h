@@ -11,4 +11,11 @@
 
 @interface PersonFirstViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource>
 
+@property(strong,nonatomic) NSString *mIFlag;
+@property(strong,nonatomic) NSString *mFriendID;
+@property(strong,nonatomic) NSString *mName;
+@property(strong,nonatomic) NSString *mSex;
+@property(strong,nonatomic) NSString *mAge;
+@property(strong,nonatomic) NSString *mSign;
+
 @end

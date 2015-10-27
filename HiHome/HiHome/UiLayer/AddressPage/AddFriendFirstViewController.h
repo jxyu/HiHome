@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
 
-@interface AddFriendFirstViewController : BackPageViewController<UITextFieldDelegate>
+@interface AddFriendFirstViewController : BackPageViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @end

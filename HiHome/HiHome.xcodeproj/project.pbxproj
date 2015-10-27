@@ -35,7 +35,6 @@
 		800A4DAD1BDF865800A22EA4 /* UMSnsAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800A4D721BDF865800A22EA4 /* UMSnsAccountViewController.xib */; };
 		800A4DAE1BDF865800A22EA4 /* UMSShareListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800A4D731BDF865800A22EA4 /* UMSShareListController.xib */; };
 		800A4DAF1BDF865800A22EA4 /* UMSocialSDKResourcesNew.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 800A4D741BDF865800A22EA4 /* UMSocialSDKResourcesNew.bundle */; };
-		800A4DB01BDF865800A22EA4 /* RennSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D7B1BDF865800A22EA4 /* RennSDK.framework */; };
 		800A4DB11BDF865800A22EA4 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D7D1BDF865800A22EA4 /* libSocialSina.a */; };
 		800A4DB21BDF865800A22EA4 /* libSocialSinaSSO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D801BDF865800A22EA4 /* libSocialSinaSSO.a */; };
 		800A4DB31BDF865800A22EA4 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D811BDF865800A22EA4 /* libWeiboSDK.a */; };
@@ -249,6 +248,8 @@
 		B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */; };
 		B5FA2DBA1BC5159400D5BDB7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */; };
 		B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */; };
+		B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */; };
+		B770E6021BDF617E00EF2FFA /* AddFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */; };
 		B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */; };
 		B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */; };
 		B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */; };
@@ -357,7 +358,6 @@
 		800A4D731BDF865800A22EA4 /* UMSShareListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSShareListController.xib; sourceTree = "<group>"; };
 		800A4D741BDF865800A22EA4 /* UMSocialSDKResourcesNew.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResourcesNew.bundle; sourceTree = "<group>"; };
 		800A4D751BDF865800A22EA4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/UMSocialLocalizable.strings"; sourceTree = "<group>"; };
-		800A4D7B1BDF865800A22EA4 /* RennSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RennSDK.framework; sourceTree = "<group>"; };
 		800A4D7D1BDF865800A22EA4 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
 		800A4D7E1BDF865800A22EA4 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		800A4D801BDF865800A22EA4 /* libSocialSinaSSO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSinaSSO.a; sourceTree = "<group>"; };
@@ -684,6 +684,9 @@
 		B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpAndFeedbackViewController.xib; path = HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goback@2x.png"; sourceTree = "<group>"; };
+		B770E5FE1BDF617E00EF2FFA /* AddFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTableViewCell.h; sourceTree = "<group>"; };
+		B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendTableViewCell.m; sourceTree = "<group>"; };
+		B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriendTableViewCell.xib; sourceTree = "<group>"; };
 		B77F910D1BD1DDE900DAB43C /* AnniversaryTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskCell.h; sourceTree = "<group>"; };
 		B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskCell.m; sourceTree = "<group>"; };
 		B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskCell.xib; sourceTree = "<group>"; };
@@ -768,7 +771,6 @@
 				B7CC5AE51BD4B92E00A1078F /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				800A4DB81BDF865800A22EA4 /* libSocialTumblr.a in Frameworks */,
 				800A4DBC1BDF865800A22EA4 /* libUMSocial_Sdk_Shake_1.0.a in Frameworks */,
-				800A4DB01BDF865800A22EA4 /* RennSDK.framework in Frameworks */,
 				B5033BF31BAFD9FC0014935E /* QuartzCore.framework in Frameworks */,
 				801838801BDDCB0B0046B814 /* libPushSDK-1.8.7.a in Frameworks */,
 				800A4DA61BDF865800A22EA4 /* libUMSocial_Sdk_Comment_4.2.3.a in Frameworks */,
@@ -933,7 +935,6 @@
 				800A4D771BDF865800A22EA4 /* Facebook */,
 				800A4D781BDF865800A22EA4 /* LaiWang */,
 				800A4D791BDF865800A22EA4 /* Line */,
-				800A4D7A1BDF865800A22EA4 /* Renren */,
 				800A4D7C1BDF865800A22EA4 /* Sina */,
 				800A4D7F1BDF865800A22EA4 /* SinaSSO */,
 				800A4D8D1BDF865800A22EA4 /* TencentOpenAPI */,
@@ -965,14 +966,6 @@
 			children = (
 			);
 			path = Line;
-			sourceTree = "<group>";
-		};
-		800A4D7A1BDF865800A22EA4 /* Renren */ = {
-			isa = PBXGroup;
-			children = (
-				800A4D7B1BDF865800A22EA4 /* RennSDK.framework */,
-			);
-			path = Renren;
 			sourceTree = "<group>";
 		};
 		800A4D7C1BDF865800A22EA4 /* Sina */ = {
@@ -1802,6 +1795,9 @@
 				B78E4A401BD9FAA800F23976 /* AddFriendFirstViewController.h */,
 				B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */,
 				B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */,
+				B770E5FE1BDF617E00EF2FFA /* AddFriendTableViewCell.h */,
+				B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */,
+				B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */,
 				B78E4A491BDA0FE800F23976 /* AddFriendSecondViewController.h */,
 				B78E4A4A1BDA0FE800F23976 /* AddFriendSecondViewController.m */,
 				B78E4A4B1BDA0FE800F23976 /* AddFriendSecondViewController.xib */,
@@ -2062,6 +2058,7 @@
 				800A4DA71BDF865800A22EA4 /* UMSCommentDetailController.xib in Resources */,
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
+				B770E6021BDF617E00EF2FFA /* AddFriendTableViewCell.xib in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
 				B7FB16861BDB765D0048551C /* checkbox_normal.png in Resources */,
 				B78E4A4D1BDA0FE800F23976 /* AddFriendSecondViewController.xib in Resources */,
@@ -2234,6 +2231,7 @@
 				80124C051BD885E800DBE369 /* SDWebImageDecoder.m in Sources */,
 				80124C0B1BD885E800DBE369 /* UIImage+GIF.m in Sources */,
 				B5E059A61BB0F93200DBF786 /* Toolkit.m in Sources */,
+				B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */,
 				80124C0A1BD885E800DBE369 /* UIButton+WebCache.m in Sources */,
 				B5033BA41BAFA6D60014935E /* main.m in Sources */,
 				B5741DD11BC2600D00335B1C /* DataProvider.m in Sources */,

@@ -10,7 +10,15 @@
 
 @implementation TaskPath
 
-
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        
+        _imgSrc = [NSMutableArray array];
+    }
+    return self;
+}
 
 @end
 
@@ -18,5 +26,14 @@
 @implementation anniversaryPath
 
 
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        
+        _imgSrc = [NSMutableArray array];
+    }
+    return self;
+}
 
 @end

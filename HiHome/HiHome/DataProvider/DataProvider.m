@@ -294,8 +294,9 @@
 
 -(void)addFriend:(NSString *)FID andUserID:(NSString *) userID andRemark:(NSString *) remark{
     if (FID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend&fid=%@&uid=%@&intro=%@",Url,FID,userID,remark];
-        [self GetRequest:url andpram:nil];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=addFriend",Url];
+        NSDictionary *prm = @{@"fid":FID,@"uid":userID,@"intro":remark};
+        [self PostRequest:url andpram:prm];
     }
 }
 
@@ -303,6 +304,14 @@
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getApplyList&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
+    }
+}
+
+-(void)delApplyFriend:(NSString *)FID{
+    if (FID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delApplyInfo",Url];
+        NSDictionary *prm = @{@"id":FID};
+        [self PostRequest:url andpram:prm];
     }
 }
 
@@ -317,6 +326,14 @@
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getListGroup&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
+    }
+}
+
+-(void)delFriend:(NSString *)FID andUserID:(NSString *) userID{
+    if (userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delInfo",Url];
+        NSDictionary *prm = @{@"fid":FID,@"uid":userID};
+        [self PostRequest:url andpram:prm];
     }
 }
 

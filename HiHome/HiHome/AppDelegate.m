@@ -170,7 +170,10 @@
      设置根VC
      */
     firstCol=[[FirstScrollController alloc]init];
-    _tabBarViewCol = [[CustomTabBarViewController alloc] init];
+    if (_tabBarViewCol==nil) {
+        _tabBarViewCol = [[CustomTabBarViewController alloc] init];
+        
+    }
     if(self.window == nil)
         
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];

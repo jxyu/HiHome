@@ -1334,6 +1334,9 @@
             if (indexPath.row == _cellCountMyTask - 1) {
                 return cell;
             }
+            if(indexPath.row - _myAnniversaryData.count > _myTaskData.count - 1)
+                return cell;
+            
             TaskPath *taskValue = [_myTaskData objectAtIndex:(indexPath.row - _myAnniversaryData.count )];
 //            taskPath.taskName = taskValue.taskName;
 //            taskPath.taskOwner = taskValue.taskOwner;

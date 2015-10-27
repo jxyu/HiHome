@@ -28,7 +28,12 @@
     // Do any additional setup after loading the view.
 }
 
-
+-(void) setNavTitle:(NSString *)navTitle
+{
+    _navTitle = navTitle;
+    
+    _titleLabel.text = navTitle;
+}
 
 
 -(void)setContentHeadView:(NSMutableArray *)contentHeadView

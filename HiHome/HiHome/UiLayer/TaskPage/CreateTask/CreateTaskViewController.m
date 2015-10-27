@@ -169,22 +169,29 @@
         [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
         [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
     }
+    else
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+    }
 }
 
 -(void)uploadImgBackCall:(id)dict
 {
     if ([dict[@"code"] intValue]==200) {
+        NSLog(@"%@",dict);
         ++uploadImgIndex;
         [img_prm addObject:[dict[@"datas"][@"imgsrc"][@"imgsrc"] isEqual:[NSNull null]]?@"":dict[@"datas"][@"imgsrc"][@"imgsrc"]];
-        if (uploadImgIndex<=img_uploaded.count) {
+        if (uploadImgIndex<img_uploaded.count) {
             [self UpdateAndRequest];
         }
         else
         {
+            [SVProgressHUD dismiss];
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-            
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count==1?img_prm[0]:@"" andimgsrc2:img_prm.count==2?img_prm[1]:@"" andimgsrc3:img_prm.count==3?img_prm[2]:@""];
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
         }
         
     }

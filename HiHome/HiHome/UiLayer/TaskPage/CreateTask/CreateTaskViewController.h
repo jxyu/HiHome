@@ -17,6 +17,12 @@
 #define ZY_PLACE_BTN_TAG        5
 #define ZY_CONTACTER_BTN_TAG    6
 
+typedef enum _createTaskMode
+{
+    Mode_CreateTask = 0,
+    Mode_EditTask
+}CreateTaskMode;
+
 @interface CreateTaskViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 {
@@ -39,4 +45,8 @@
     RemindViewController *_remindViewCtl;
     RepeatViewController *_repeatViewCtl;
 }
+
+@property(nonatomic)CreateTaskMode createTaskMode;
+@property(nonatomic)TaskPath *loadDefaultPath;
+
 @end

@@ -24,8 +24,6 @@
 {
     
     NSMutableArray *_startDateArray;
-    NSString *remindStr;
-    NSString *repeatStr;
     UITextField *titleField;
     NSDictionary *userInfoWithFile;
     SegmentedButton *repeatBtn;
@@ -50,7 +48,31 @@
     NSString *taskUserID;
     
     
+    UUDatePicker *endDatePicker;
+    UUDatePicker *startDatePicker;
+    
     SelectContacterViewController *selectContacterVC;
+    
+    
+    
+    /*
+     *任务参数
+     */
+    TaskPath *taskPathLocal;
+    ZYTaskStatue localTaskStatus;
+    
+    NSString *TaskId;
+    NSString *stateStr; //状态
+    NSString *remindStr;//提醒
+    NSString *repeatStr;//重复
+    NSString *senderNameStr;//发布人
+    NSString *taskTitleStr;//任务名
+    NSString *taskContentStr;//任务内容
+    NSString *startTime;//开始时间
+    NSString *endTime;//结束时间
+    NSString *btnLeftStr;//左边操作按键
+    NSString *btnRightStr;//右边
+    
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -69,6 +91,13 @@
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _keyShow = false;
+    
+    
+    repeatID = @"0";
+    repeatStr = @"不重复";
+    tipID = @"1";
+    remindStr = @"正点";
+    //_createTaskMode = Mode_CreateTask;
     
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
@@ -265,6 +294,163 @@
     
 }
 
+
+
+
+-(void)setLoadDefaultPath:(TaskPath *)loadDefaultPath
+{
+    if(_createTaskMode==Mode_CreateTask)
+        return;
+    
+    
+     NSLog(@"run here -- [%d]",__LINE__);
+    
+    
+    TaskId = loadDefaultPath.taskID ;
+    
+    _loadDefaultPath = loadDefaultPath;
+    
+    localTaskStatus = loadDefaultPath.taskStatus;
+    
+    repeatID = [NSString stringWithFormat:@"%d",loadDefaultPath.repeatMode];
+    tipID = [NSString stringWithFormat:@"%d",loadDefaultPath.remindTime];
+    
+    repeatStr = [self modeValueToStr:Mode_Repeat andValue:loadDefaultPath.repeatMode];
+    remindStr = [self modeValueToStr:Mode_Remind andValue:loadDefaultPath.remindTime];
+    stateStr = [self modeValueToStr:Mode_state andValue:loadDefaultPath.taskStatus];
+    
+    // senderNameStr = taskPath.taskOwner;
+    taskTitleStr = loadDefaultPath.taskName;
+    taskContentStr = loadDefaultPath.taskContent;
+    NSLog(@"taskTitleStr%@",taskTitleStr);
+    startTime = loadDefaultPath.startTaskDateStr;
+    endTime   = loadDefaultPath.endTaskDateStr;
+    
+//    
+//    if(imgSrc ==nil)
+//        imgSrc = [NSMutableArray array];
+//    else
+//    {
+//        if(imgSrc.count!=0)
+//            [imgSrc removeAllObjects];
+//    }
+//    for (int i = 0; i < taskPath.imgSrc.count; i++) {
+//        
+//        NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
+//        
+//        [imgSrc addObject:[taskPath.imgSrc objectAtIndex:i]];
+//    }
+    
+//    imgCount = imgSrc.count;
+//
+    
+    [_mainTableView reloadData];
+    
+}
+
+-(NSString *) modeValueToStr:(ValueMode)mode andValue:(NSInteger)value
+{
+    NSString *str;
+    
+    switch (mode) {
+        case Mode_Repeat:
+            switch (value) {
+                case Repeat_never :
+                    str = @"不重复";
+                    break;
+                case Repeat_day:
+                    str = @"每天";
+                    break;
+                case Repeat_week:
+                    str = @"每周";
+                    break;
+                case Repeat_month:
+                    str = @"每月";
+                    break;
+                case Repeat_year:
+                    str = @"每年";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"不重复";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case  Mode_Remind:
+            switch (value) {
+                    
+                    
+                case Remind_never:
+                    str = @"从不提醒";
+                    break;
+                case Remind_zhengdian:
+                    str = @"正点";
+                    break;
+                case Remind_5min:
+                    str = @"五分钟前";
+                    break;
+                case Remind_10min:
+                    str = @"十分钟前";
+                    break;
+                case Remind_1hour:
+                    str = @"一小时前";
+                    break;
+                case Remind_1day:
+                    str = @"一天前";
+                    break;
+                case Remind_3day:
+                    str = @"三天前";
+                    break;
+                    
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"从不提醒";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case Mode_state:
+            switch (value) {
+                case State_unreceive:
+                    str= @"未接受";
+                    break;
+                case State_received:
+                    str = @"已接受";
+                    break;
+                case State_needDo:
+                    str = @"待执行";
+                    break;
+                case State_onGoing:
+                    str = @"执行中";
+                    break;
+                case State_finish:
+                    str = @"已完成";
+                    break;
+                case State_cancel:
+                    str = @"已取消";
+                    break;
+                case ZY_TASkREPEAT_RESERVE:
+                    str = @"未接受";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        default:
+            str = nil;
+            break;
+    }
+    
+    return str;
+    
+}
+
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;
@@ -273,7 +459,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-   remindStr = _remindViewCtl.remindModeStr;
+  // remindStr = _remindViewCtl.remindModeStr;
     for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
         if (i == 0) {
             titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
@@ -387,10 +573,19 @@
         
         titleLabel.text = @"   任务名称:";
         _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-        _titleField.placeholder = @"请输入任务名字";
+       
         _titleField.delegate = self;
         _titleField.leftView = titleLabel;
         _titleField.leftViewMode = UITextFieldViewModeAlways;
+         NSLog(@"_createTaskMode 2= %d",_createTaskMode);
+        if(_createTaskMode == Mode_EditTask)
+        {
+            NSLog(@"taskTitleStr 2= %@",taskTitleStr);
+            _titleField.text = taskTitleStr;
+        }
+        else
+             _titleField.placeholder = @"请输入任务名字";
+        
         [cell addSubview:_titleField];
     }else if (indexPath.row == 1){
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,100, _cellHeight)];
@@ -401,7 +596,8 @@
         titleField.delegate = self;
         titleField.leftView = titleLabel;
         titleField.leftViewMode = UITextFieldViewModeAlways;
-        
+//        if(_createTaskMode == Mode_EditTask)
+//            titleField.text =
         UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
         chooseContactsBtn.tag = ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG;
         [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside
@@ -416,6 +612,9 @@
         _textView.returnKeyType = UIReturnKeyDefault;
         _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
+        if(_createTaskMode == Mode_EditTask)
+            _textView.text = taskContentStr;
+        
         _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, -15, 200, 60)];
         _placeHolderLabel.text = @"请输入任务内容";
         _placeHolderLabel.textColor = [UIColor grayColor];
@@ -428,7 +627,7 @@
         [picBtns setImage:[UIImage imageNamed:@"picture"] forState:UIControlStateNormal];
         picBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG;
         [picBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [cell addSubview:picBtns];
         if (!_collectionView) {
             UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
             layout.minimumLineSpacing = 5.0;
@@ -447,12 +646,12 @@
             
         }
         
-        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
+//        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+//        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
+//        
         
-        [cell addSubview:picBtns];
-//        [cell addSubview:photoBtns];
-        [cell addSubview:otherBtns];
+////        [cell addSubview:photoBtns];
+//        [cell addSubview:otherBtns];
 
     }else if(indexPath.row == 4){
         UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, _cellHeight)];
@@ -548,7 +747,7 @@
             
         }
         
-        UUDatePicker *endDatePicker
+        endDatePicker
         = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
                                  PickerStyle:UUDateStyle_YearMonthDayHourMinute
                                  didSelected:^(NSString *year,
@@ -557,15 +756,23 @@
                                                NSString *hour,
                                                NSString *minute,
                                                NSString *weekDay) {
-                                     endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                     
+                                     if(isday==NO)
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                     else
+                                     {
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ ",year,month,day];
+                                     }
+
                                  }];
         
-        
+    
         endDatePicker.ScrollToDate = now;
         endTimeField.inputView = endDatePicker;
 
+        endDatePicker.minLimitDate = now;//默认限制
         
-        UUDatePicker *startDatePicker
+        startDatePicker
         = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
                                  PickerStyle:UUDateStyle_YearMonthDayHourMinute
                                  didSelected:^(NSString *year,
@@ -582,8 +789,12 @@
                                      [_startDateArray addObject:minute];
                                      [_startDateArray addObject:weekDay];
                                     
-                                     
-                                     startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                     if(isday==NO)
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                     else
+                                     {
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ ",year,month,day];
+                                     }
                                      NSLog(@"---%@",startTimeField.text);
                                      
                                      NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -641,7 +852,7 @@
         
         [remindBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [remindBtn setImage:[UIImage imageNamed:@"remind"] forState:UIControlStateNormal];
-        [remindBtn setTitle:@"提醒" forState:UIControlStateNormal];
+        [remindBtn setTitle:remindStr forState:UIControlStateNormal];
         [remindBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         remindBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         remindBtn.imageView.contentMode = UIViewContentModeCenter;
@@ -649,7 +860,7 @@
         
         [repeatBtn addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
         [repeatBtn setImage:[UIImage imageNamed:@"repeat_2"] forState:UIControlStateNormal];
-        [repeatBtn setTitle:@"重复" forState:UIControlStateNormal];
+        [repeatBtn setTitle:repeatStr forState:UIControlStateNormal];
         [repeatBtn setTitleColor:[UIColor colorWithRed:0.36 green:0.36 blue:0.36 alpha:1] forState:UIControlStateNormal];
         repeatBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         repeatBtn.imageView.contentMode = UIViewContentModeCenter;
@@ -728,6 +939,9 @@
             
             NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
             endTimeField.text =timeStr2;
+            
+            startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDay;
+            endDatePicker.datePickerStyle =UUDateStyle_YearMonthDay;
             isday=YES;
         }
         else
@@ -739,6 +953,8 @@
             NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
             endTimeField.text =timeStr2;
             endTimeField.font = [UIFont systemFontOfSize:14];
+            startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDayHourMinute;
+            endDatePicker.datePickerStyle =UUDateStyle_YearMonthDayHourMinute;
             isday=NO;
         }
     }

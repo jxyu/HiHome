@@ -23,7 +23,7 @@
 #define ADD_ANNIVERSARY_BTNTAG  (ZY_UIBUTTON_TAG_BASE+1)//创建纪念日
 #define ADD_TASK_BTNTAG (ZY_UIBUTTON_TAG_BASE+2)//创建任务
 
-@interface TaskPageViewController : UIViewController<JTCalendarDataSource,UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate>
+@interface TaskPageViewController : UIViewController<JTCalendarDataSource,UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate,TaskDetailDelegate>
 {
     @private
     NSInteger _cellCount;

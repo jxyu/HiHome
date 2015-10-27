@@ -153,15 +153,6 @@
     }
     else
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请补全信息"];
-        
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
-    }
-    
-    else
-    {
         JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请完善任务信息，例如：提醒、重复"];
         alert.alertType = AlertType_Hint;
         [alert addButtonWithTitle:@"确定"];

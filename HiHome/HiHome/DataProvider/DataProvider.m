@@ -315,7 +315,7 @@
 
 -(void)getFriendList:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList&uid=%@",Url,userID];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getListGroup&uid=%@",Url,userID];
         [self GetRequest:url andpram:nil];
     }
 }

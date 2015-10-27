@@ -202,13 +202,13 @@
 }
 
 
--(void)createAnniversary:(NSString *)userID andImg:(NSString *)img andTitle:(NSString *)title andMdate:(NSString *)mdate andContent:(NSString *)content
+-(void)createAnniversary:(NSString *)userID andImg:(NSString *)img andTitle:(NSString *)title andMdate:(NSString *)mdate andContent:(NSString *)content andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3
 {
     if(userID && img && title && mdate && content)
     {
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=memorial&a=addInfo",Url];
         
-        NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"imgsrc":img,@"mdate":mdate};
+        NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"imgsrc":img,@"mdate":mdate,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3};
         
         [self PostRequest:url andpram:prm];
     }

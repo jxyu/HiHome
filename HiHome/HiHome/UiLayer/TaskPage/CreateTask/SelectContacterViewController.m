@@ -12,14 +12,15 @@
 
 @interface SelectContacterViewController (){
     UITableView *mTableView;
+    
     NSMutableArray *selectContacterArray;//已选择的联系人数组
+    
     
     DataProvider *dataProvider;
     
-    NSArray *friendArray;
-    NSMutableArray *friendArrayNormal;
-    NSMutableArray *friendArraySpouse;
-    NSMutableArray *friendArrayStar;
+    NSArray *friendArrayNormal;
+    NSArray *friendArraySpouse;
+    NSArray *friendArrayStar;
     
     int normalNum;
     int spouseNum;
@@ -66,19 +67,9 @@
     
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
-        for (int i =0; i < friendArray.count; i++) {
-            if([friendArray[i][@"type"] isEqual:@"0"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArrayNormal addObject:mTempArray];
-            }else if([friendArray[i][@"type"] isEqual:@"1"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArrayStar addObject:mTempArray];
-            }else if([friendArray[i][@"type"] isEqual:@"2"]){
-                NSArray *mTempArray = [[NSArray alloc] initWithObjects:friendArray[i][@"nick"], nil];
-                [friendArraySpouse addObject:mTempArray];
-            }
-        }
+        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list0"];
+        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list1"];
+        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list2"];
     }else{
         NSLog(@"访问服务器失败！");
     }
@@ -132,17 +123,17 @@
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
     }else if(indexPath.section == 1){
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = [friendArraySpouse[spouseNum][0] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][0];
+        cell.mName.text = [friendArraySpouse[spouseNum][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         spouseNum++;
     }else if(indexPath.section == 2){
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = [friendArrayStar[starNum][0] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][0];
+        cell.mName.text = [friendArrayStar[starNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         starNum++;
     }else{
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
-        cell.mName.text = [friendArrayNormal[normalNum][0] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][0];
+        cell.mName.text = [friendArrayNormal[normalNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         normalNum++;
     }
@@ -160,12 +151,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SelectContacterCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([selectContacterArray containsObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]]) {
-        [selectContacterArray removeObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
+    if ([selectContacterArray containsObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]]) {
+        [selectContacterArray removeObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
-        
     }else{
-        [selectContacterArray addObject:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
+        [selectContacterArray addObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateNormal];
     }
 }
@@ -225,6 +215,45 @@
     [tempView addSubview:titleLabel];
     
     return tempView;
+}
+
+-(void)quitView{
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
+    }
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+-(void)btnRightClick:(id)sender{
+     _selectContacterArrayID = [[NSMutableArray alloc] init];
+     _selectContacterArrayName = [[NSMutableArray alloc] init];
+    
+    int mSection;
+    int mIndex;
+    for (int i = 0; i<selectContacterArray.count; i++) {
+        mSection = [selectContacterArray[i] componentsSeparatedByString:@"-"][0].intValue;
+        mIndex = [selectContacterArray[i] componentsSeparatedByString:@"-"][1].intValue;
+        if (mSection == 0) {
+            [_selectContacterArrayID addObject:[self getUserID]];
+            [_selectContacterArrayName addObject:@"自己"];
+        }else if (mSection == 1) {
+            [_selectContacterArrayID addObject:[friendArraySpouse[mIndex][@"fid"] isEqual:[NSNull null]]?@"":friendArraySpouse[mIndex][@"fid"]];
+            [_selectContacterArrayName addObject:[friendArraySpouse[mIndex][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[mIndex][@"nick"]];
+        }else if(mSection == 2){
+            [_selectContacterArrayID addObject:[friendArrayStar[mIndex][@"fid"] isEqual:[NSNull null]]?@"":friendArrayStar[mIndex][@"fid"]];
+            [_selectContacterArrayName addObject:[friendArrayStar[mIndex][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[mIndex][@"nick"]];
+        }else{
+            [_selectContacterArrayID addObject:[friendArrayNormal[mIndex][@"fid"] isEqual:[NSNull null]]?@"":friendArrayNormal[mIndex][@"fid"]];
+            [_selectContacterArrayName addObject:[friendArrayNormal[mIndex][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[mIndex][@"nick"]];
+        }
+    }
+    
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
+    }
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 @end

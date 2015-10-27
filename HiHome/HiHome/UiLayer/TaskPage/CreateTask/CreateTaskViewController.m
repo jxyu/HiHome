@@ -46,6 +46,11 @@
     int uploadImgIndex;
     
     NSMutableArray * img_prm;
+    
+    NSString *taskUserID;
+    
+    
+    SelectContacterViewController *selectContacterVC;
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -138,7 +143,7 @@
     
     
 
-    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
+    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID&&taskUserID) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
 //        DataProvider * dataprovider=[[DataProvider alloc] init];
 //        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
@@ -158,9 +163,6 @@
         [alert addButtonWithTitle:@"确定"];
         [alert show];
     }
-    
-    
-    
 }
 -(void)UpdateAndRequest
 {
@@ -173,7 +175,7 @@
     {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
     }
 }
 
@@ -191,7 +193,7 @@
             [SVProgressHUD dismiss];
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
         }
         
     }
@@ -272,8 +274,15 @@
 -(void)viewDidAppear:(BOOL)animated
 {
    remindStr = _remindViewCtl.remindModeStr;
-
-    
+    for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
+        if (i == 0) {
+            titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
+            taskUserID = selectContacterVC.selectContacterArrayID[i];
+        }else{
+            titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterVC.selectContacterArrayName[i]];
+            taskUserID = [NSString stringWithFormat:@"%@,%@",taskUserID,selectContacterVC.selectContacterArrayID[i]];
+        }
+    }
 }
 
 
@@ -548,7 +557,6 @@
                                                NSString *hour,
                                                NSString *minute,
                                                NSString *weekDay) {
-                                     
                                      endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
                                  }];
         
@@ -566,7 +574,6 @@
                                                NSString *hour,
                                                NSString *minute,
                                                NSString *weekDay) {
-                                     
                                      [_startDateArray removeAllObjects];
                                      [_startDateArray addObject:year];
                                      [_startDateArray addObject:month];
@@ -778,9 +785,10 @@
     switch (sender.tag) {
         case ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG:
         {
-            SelectContacterViewController *selectContacterVC = [[SelectContacterViewController alloc] init];
+            selectContacterVC = [[SelectContacterViewController alloc] init];
             selectContacterVC.navTitle = @"选择执行人";
-            [self presentViewController:selectContacterVC animated:NO completion:nil];
+            //[self presentViewController:selectContacterVC animated:NO completion:nil];
+            [self.navigationController pushViewController:selectContacterVC animated:NO];
         }
             break;
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
@@ -1204,9 +1212,6 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
     
     
 }
-
-
-
 
 
 //-(BOOL)compareDatewittyear:(NSString *)year andmoth:(NSString *)moth andday:(NSString *)day

@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "725"
             endingLineNumber = "725"
-            landmarkName = "-clickBtns:"
+            landmarkName = "-CreatAllDayTaskOrNot:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "651"
             endingLineNumber = "651"
-            landmarkName = "-initData"
+            landmarkName = "-setAnniversaryDatas"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "604"
             endingLineNumber = "604"
-            landmarkName = "-initTaskPage"
+            landmarkName = "-getAnniversaryCallBack:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1183,7 +1183,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "710"
             endingLineNumber = "710"
-            landmarkName = "-clickBtns:"
+            landmarkName = "-CreatAllDayTaskOrNot:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1263,7 +1263,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
             endingLineNumber = "304"
-            landmarkName = "-accessApplyFriend:andStatus:"
+            landmarkName = "-getFriendApplyList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1343,7 +1343,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
             endingLineNumber = "324"
-            landmarkName = "-GetUserInfoWithUid:"
+            landmarkName = "-ChangeTaskState:andState:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1423,7 +1423,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "-GetUserInfoWithUid:"
+            landmarkName = "-ChangeTaskState:andState:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1471,7 +1471,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "333"
             endingLineNumber = "333"
-            landmarkName = "-SaveUserInfo:andNick:andSex:andAge:andSign:"
+            landmarkName = "-ChangeTaskState:andState:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1590,7 +1590,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
@@ -1631,7 +1631,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "335"
             endingLineNumber = "335"
-            landmarkName = "-SaveUserInfo:andNick:andSex:andAge:andSign:"
+            landmarkName = "-GetUserInfoWithUid:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1744,6 +1744,22 @@
             startingLineNumber = "275"
             endingLineNumber = "275"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467597942.684117"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-btnRightClick:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

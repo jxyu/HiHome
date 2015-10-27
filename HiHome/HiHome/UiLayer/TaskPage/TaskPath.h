@@ -98,6 +98,9 @@ typedef enum _taskType
 @property(nonatomic) NSString *content;//纪念日内容
 @property(nonatomic) NSString *date;//日期
 
+@property(nonatomic) NSMutableArray *imgSrc;
+@property(nonatomic) NSString *headImgSrc;
+
 @property(nonatomic) NSDateComponents *startTaskDate;//开始时间
 @property(nonatomic) NSDateComponents *endTaskDate;//结束时间
 

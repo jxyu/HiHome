@@ -162,25 +162,25 @@
 
 #pragma mark - 从服务器获取数据
 
-
--(void) createAnniversaryForTest
-{
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"createAnniversaryCallBack:"];
-    
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSLog(@"dict = [%@]",userInfoWithFile);
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
-    
-    //   NSLog(@"id = [%@]",userID);
-    
-    [dataprovider createAnniversary:userID andImg:@"yuandan" andTitle:@"元旦" andMdate:@"2016-1-1" andContent:@"元旦"];
-    [dataprovider createAnniversary:userID andImg:@"xueren" andTitle:@"中秋" andMdate:@"2015-8-15" andContent:@"中秋节"];
-    
-}
+//
+//-(void) createAnniversaryForTest
+//{
+//    DataProvider * dataprovider=[[DataProvider alloc] init];
+//    [dataprovider setDelegateObject:self setBackFunctionName:@"createAnniversaryCallBack:"];
+//    
+//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+//                                                              NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+//    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+//    NSLog(@"dict = [%@]",userInfoWithFile);
+//    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+//    
+//    //   NSLog(@"id = [%@]",userID);
+//    
+//    [dataprovider createAnniversary:userID andImg:@"yuandan" andTitle:@"元旦" andMdate:@"2016-1-1" andContent:@"元旦" and];
+//    [dataprovider createAnniversary:userID andImg:@"xueren" andTitle:@"中秋" andMdate:@"2015-8-15" andContent:@"中秋节"];
+//    
+//}
 
 
 
@@ -1502,18 +1502,26 @@
     {
         [taskDetailPath.imgSrc removeAllObjects];
     }
-    
-    if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+    if((![[taskDetailDict objectForKey:@"imgsrc1"] isEqual:[NSNull null]]))
     {
-        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+        if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+        {
+            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+        }
     }
-    if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+    if((![[taskDetailDict objectForKey:@"imgsrc2"] isEqual:[NSNull null]]))
     {
-        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+        if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+        {
+            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+        }
     }
-    if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+    if((![[taskDetailDict objectForKey:@"imgsrc3"] isEqual:[NSNull null]]))
     {
-        [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+        if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+        {
+            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+        }
     }
     NSLog(@"img1 = [%@]",[taskDetailDict objectForKey:@"imgsrc1"]);
     NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
@@ -1587,6 +1595,46 @@
     anniversaryDetailPath.title = [taskDetailDict objectForKey:@"title"];
     anniversaryDetailPath.content = [taskDetailDict objectForKey:@"content"];
     anniversaryDetailPath.date =[taskDetailDict objectForKey:@"mdate"];
+    
+    
+    if(anniversaryDetailPath.imgSrc.count > 0)
+    {
+        [anniversaryDetailPath.imgSrc removeAllObjects];
+    }
+    if((![[taskDetailDict objectForKey:@"imgsrc"] isEqual:[NSNull null]]))
+    {
+        if(![[taskDetailDict objectForKey:@"imgsrc"] isEqualToString:@""])//头像
+        {
+            anniversaryDetailPath.headImgSrc = [taskDetailDict objectForKey:@"imgsrc"];
+        }
+    }
+    
+    
+    if((![[taskDetailDict objectForKey:@"imgsrc1"] isEqual:[NSNull null]]))
+    {
+        if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+        {
+            [anniversaryDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+        }
+    }
+    if((![[taskDetailDict objectForKey:@"imgsrc2"] isEqual:[NSNull null]]))
+    {
+        if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+        {
+            [anniversaryDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+        }
+    }
+    if((![[taskDetailDict objectForKey:@"imgsrc3"] isEqual:[NSNull null]]))
+    {
+        if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+        {
+            [anniversaryDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+        }
+    }
+    NSLog(@"img = [%@]",[taskDetailDict objectForKey:@"imgsrc"]);
+    NSLog(@"img1 = [%@]",[taskDetailDict objectForKey:@"imgsrc1"]);
+    NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
+    NSLog(@"img3 = [%@]",[taskDetailDict objectForKey:@"imgsrc3"]);
     
 
     AnniversaryTaskDetailView* _anniversaryTaskDetailCtl = [[AnniversaryTaskDetailView alloc] init];

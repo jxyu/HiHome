@@ -139,6 +139,8 @@
     
     startTime = taskPath.startTaskDateStr;
     endTime   = taskPath.endTaskDateStr;
+    
+    
     if(imgSrc ==nil)
         imgSrc = [NSMutableArray array];
     else
@@ -146,7 +148,6 @@
         if(imgSrc.count!=0)
             [imgSrc removeAllObjects];
     }
-    NSLog(@"taskPath.imgSrc.count = %ld",taskPath.imgSrc.count);
     for (int i = 0; i < taskPath.imgSrc.count; i++) {
         
         NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
@@ -155,7 +156,6 @@
     }
     
     imgCount = imgSrc.count;
-    NSLog(@"imgCount1 = %ld",imgCount);
     
     
     [mTableView reloadData];
@@ -574,9 +574,31 @@
         //    btnRightStr = nil;//设置成nil则btn不显示
             break;
         case State_cancel:
-            btnLeftStr = @"删除任务";
-            stateStr = nil;
-            localTaskStatus  = State_received;
+            
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+            
+            alert.alertType = AlertType_Alert;
+            [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click ok");
+                
+                [self delTask:TaskId];
+                
+                
+            }];
+            
+            //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+            [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                NSLog(@"Click canel");
+                
+            }];
+            [alert show];
+            
+        }
+            return;
+//            btnLeftStr = @"删除任务";
+//            stateStr = nil;
+//            localTaskStatus  = State_received;
 
            // btnRightStr = @"删除任务";
             break;

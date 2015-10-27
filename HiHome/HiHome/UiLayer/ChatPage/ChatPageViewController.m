@@ -22,33 +22,42 @@
     [super viewDidLoad];
 //    [self initViews];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    
+//    
+////    IMChatListViewController *VC3 = [[IMChatListViewController alloc] initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION), @(ConversationType_APPSERVICE), @(ConversationType_PUBLICSERVICE),@(ConversationType_GROUP),@(ConversationType_SYSTEM)] collectionConversationType:@[@(ConversationType_DISCUSSION)]];
+//    
+//    
+//    
+////    RCConversationListViewController * chat=[[RCConversationListViewController alloc]initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
+//    
+////    [self.navigationController pushViewController:chat animated:YES];
+//    // Do any additional setup after loading the view from its nib.
+    ChatlistViewController * chatlistVC=[[ChatlistViewController alloc] initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
+    [self.navigationController pushViewController:chatlistVC animated:YES];
     
-    
-//    RCConversationListViewController * chat=[[RCConversationListViewController alloc]initWithDisplayConversationTypes:@[@(ConversationType_PRIVATE)] collectionConversationType:@[@(ConversationType_GROUP)]];
-//    ChatlistViewController * chatListViewController=[[ChatlistViewController alloc] initWithNibName:@"ChatlistViewController" bundle:[NSBundle mainBundle]];
-//    [self.navigationController pushViewController:chatListViewController animated:YES];
-    // Do any additional setup after loading the view from its nib.
-    [self initViews];
+//    [self initViews];
 }
+
+
 
 
 
 -(void) initViews
 {
-    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
-    _mainTableView.backgroundColor =[UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
-    [_mainTableView setDelegate:self];
-    [_mainTableView setDataSource:self];
+//    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
+//    _mainTableView.backgroundColor =[UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
+//    [_mainTableView setDelegate:self];
+//    [_mainTableView setDataSource:self];
     
 //    _mainTableView.tableHeaderView.contentMode = UIViewContentModeCenter;
 //    _mainTableView.tableHeaderView = [self headerViewForChatPage];
     
     
-    _mainTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
-    //_mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;//UITableViewCellSeparatorStyleSingleLine;
-    _mainTableView.separatorInset = UIEdgeInsetsZero;
-    _mainTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+//    _mainTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
+//    //_mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;//UITableViewCellSeparatorStyleSingleLine;
+//    _mainTableView.separatorInset = UIEdgeInsetsZero;
+//    _mainTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
     
     NSLog(@"WIDTH-----%lf",_mainTableView.frame.size.width);

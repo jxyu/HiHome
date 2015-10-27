@@ -220,6 +220,8 @@
 		B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		B5FA2DBA1BC5159400D5BDB7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B5FA2DBC1BC51C3700D5BDB7 /* goback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */; settings = {ASSET_TAGS = (); }; };
+		B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		B770E6021BDF617E00EF2FFA /* AddFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */; settings = {ASSET_TAGS = (); }; };
 		B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */; settings = {ASSET_TAGS = (); }; };
 		B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F91151BD1F29100DAB43C /* AnniversaryTaskDetailView.m */; settings = {ASSET_TAGS = (); }; };
@@ -596,6 +598,9 @@
 		B5FA2DB61BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpAndFeedbackViewController.xib; path = HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5FA2DB91BC5159400D5BDB7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B5FA2DBB1BC51C3700D5BDB7 /* goback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goback@2x.png"; sourceTree = "<group>"; };
+		B770E5FE1BDF617E00EF2FFA /* AddFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTableViewCell.h; sourceTree = "<group>"; };
+		B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendTableViewCell.m; sourceTree = "<group>"; };
+		B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriendTableViewCell.xib; sourceTree = "<group>"; };
 		B77F910D1BD1DDE900DAB43C /* AnniversaryTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnniversaryTaskCell.h; sourceTree = "<group>"; };
 		B77F910E1BD1DDE900DAB43C /* AnniversaryTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnniversaryTaskCell.m; sourceTree = "<group>"; };
 		B77F910F1BD1DDE900DAB43C /* AnniversaryTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnniversaryTaskCell.xib; sourceTree = "<group>"; };
@@ -1505,6 +1510,9 @@
 				B78E4A401BD9FAA800F23976 /* AddFriendFirstViewController.h */,
 				B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */,
 				B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */,
+				B770E5FE1BDF617E00EF2FFA /* AddFriendTableViewCell.h */,
+				B770E5FF1BDF617E00EF2FFA /* AddFriendTableViewCell.m */,
+				B770E6001BDF617E00EF2FFA /* AddFriendTableViewCell.xib */,
 				B78E4A491BDA0FE800F23976 /* AddFriendSecondViewController.h */,
 				B78E4A4A1BDA0FE800F23976 /* AddFriendSecondViewController.m */,
 				B78E4A4B1BDA0FE800F23976 /* AddFriendSecondViewController.xib */,
@@ -1755,6 +1763,7 @@
 				802306A81BD49BCA006CFFEC /* RegisterViewController.xib in Resources */,
 				B56CFC2D1BCCFD5E0081B645 /* CreateAnniversaryViewController.xib in Resources */,
 				B57F5D8E1BBA8399009AC336 /* qqlogin@2x.png in Resources */,
+				B770E6021BDF617E00EF2FFA /* AddFriendTableViewCell.xib in Resources */,
 				B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */,
 				B7FB16861BDB765D0048551C /* checkbox_normal.png in Resources */,
 				B78E4A4D1BDA0FE800F23976 /* AddFriendSecondViewController.xib in Resources */,
@@ -1923,6 +1932,7 @@
 				80124C051BD885E800DBE369 /* SDWebImageDecoder.m in Sources */,
 				80124C0B1BD885E800DBE369 /* UIImage+GIF.m in Sources */,
 				B5E059A61BB0F93200DBF786 /* Toolkit.m in Sources */,
+				B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */,
 				80124C0A1BD885E800DBE369 /* UIButton+WebCache.m in Sources */,
 				B5033BA41BAFA6D60014935E /* main.m in Sources */,
 				B5741DD11BC2600D00335B1C /* DataProvider.m in Sources */,

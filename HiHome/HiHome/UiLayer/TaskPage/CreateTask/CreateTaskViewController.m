@@ -47,6 +47,7 @@
     
     NSMutableArray * img_prm;
     
+    NSString *taskUserID;
     
     
     SelectContacterViewController *selectContacterVC;
@@ -142,7 +143,7 @@
     
     
 
-    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID) {
+    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID&&taskUserID) {
         [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
 //        DataProvider * dataprovider=[[DataProvider alloc] init];
 //        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
@@ -177,7 +178,7 @@
     {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
     }
 }
 
@@ -195,7 +196,7 @@
             [SVProgressHUD dismiss];
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
         }
         
     }
@@ -279,8 +280,10 @@
     for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
         if (i == 0) {
             titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
+            taskUserID = selectContacterVC.selectContacterArrayID[i];
         }else{
             titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterVC.selectContacterArrayName[i]];
+            taskUserID = [NSString stringWithFormat:@"%@,%@",taskUserID,selectContacterVC.selectContacterArrayID[i]];
         }
     }
 }

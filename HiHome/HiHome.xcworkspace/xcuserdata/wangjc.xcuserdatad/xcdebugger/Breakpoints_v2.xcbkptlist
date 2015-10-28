@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/RegisterViewController.m"
-            timestampString = "467081908.811793"
+            timestampString = "467724766.493468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "-LoginFunC:"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/TaskDetailPageViewController.m"
-            timestampString = "467640094.406364"
+            timestampString = "467715399.377985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "437"
-            endingLineNumber = "437"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467720115.887235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "-btnRightClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467720272.644471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "-btnRightClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467720761.695874"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "-UpdateAndRequest"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,11 +394,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467720761.695874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "-uploadImgBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -394,12 +410,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467721343.95157"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "-uploadImgBackCall:"
+            startingLineNumber = "1638"
+            endingLineNumber = "1638"
+            landmarkName = "-imagePickerController:didSelectAssets:isSource:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -410,28 +426,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467640335.485665"
+            timestampString = "467721343.95157"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1408"
-            endingLineNumber = "1408"
-            landmarkName = "-BuildSliderData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467640335.485665"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1409"
-            endingLineNumber = "1409"
-            landmarkName = "-BuildSliderData"
+            startingLineNumber = "1639"
+            endingLineNumber = "1639"
+            landmarkName = "-imagePickerController:didSelectAssets:isSource:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -474,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467720272.644471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "-UpdateAndRequest"
             landmarkType = "5">
          </BreakpointContent>
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467639103.181692"
+            timestampString = "467707552.624861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "-btnRightClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467640193.28596"
+            timestampString = "467721343.95157"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -522,12 +522,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "467640193.28596"
+            timestampString = "467721343.95157"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
-            landmarkName = "-viewDidAppear:"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
+            landmarkName = "-numberOfSectionsInTableView:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467721343.95157"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1644"
+            endingLineNumber = "1644"
+            landmarkName = "-imagePickerController:didSelectAssets:isSource:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467721343.95157"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1660"
+            endingLineNumber = "1660"
+            landmarkName = "-collectionView:numberOfItemsInSection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/TaskDetailPageViewController.m"
+            timestampString = "467716059.926799"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1287"
+            endingLineNumber = "1287"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
+            timestampString = "467720115.887235"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "-btnRightClick:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

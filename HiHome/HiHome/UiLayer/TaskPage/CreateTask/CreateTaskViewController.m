@@ -19,6 +19,7 @@
 #import "PhotoCell.h"
 #import "SelectContacterViewController.h"
 #import "SVProgressHUD.h"
+#import "UIImageView+WebCache.h"
 
 @interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -52,8 +53,7 @@
     UUDatePicker *startDatePicker;
     
     SelectContacterViewController *selectContacterVC;
-    
-    
+
     
     /*
      *任务参数
@@ -73,6 +73,16 @@
     NSString *btnLeftStr;//左边操作按键
     NSString *btnRightStr;//右边
     
+    
+    NSMutableArray *imgSrc;
+    NSInteger imgCount;
+    BOOL showImgViewState;
+    UIView *showImgView;
+    NSMutableArray *imgBtns;
+    
+    UIButton *delBtn ;
+
+    
 }
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -87,16 +97,19 @@
     uploadImgIndex=0;
     img_uploaded=[[NSMutableArray alloc] init];
     img_prm=[[NSMutableArray alloc] init];
+    imgBtns = [NSMutableArray array];
     isday=NO;
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _keyShow = false;
     
-    
-    repeatID = @"0";
-    repeatStr = @"不重复";
-    tipID = @"1";
-    remindStr = @"正点";
+    if(_createTaskMode != Mode_EditTask)
+    {
+        repeatID = @"0";
+        repeatStr = @"不重复";
+        tipID = @"1";
+        remindStr = @"正点";
+    }
     //_createTaskMode = Mode_CreateTask;
     
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -160,8 +173,11 @@
         [self popoverPresentationController];
     }
     [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    if(_createTaskMode != Mode_EditTask)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    }
 }
 
 -(void)btnRightClick:(id)sender{
@@ -170,20 +186,30 @@
     [_titleField resignFirstResponder];
     [_textView resignFirstResponder];
     
-    
+    if(_createTaskMode == Mode_EditTask)
+        taskUserID = [self getUserID];
 
     if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID&&taskUserID) {
-        [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
-//        DataProvider * dataprovider=[[DataProvider alloc] init];
-//        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-//        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
-//        if (self.assetsArray.count>0) {
-//            DataProvider * dataprovider=[[DataProvider alloc] init];
-//            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-//            dataprovider
-//        }
         
-        [self BuildSliderData];
+        if(_createTaskMode != Mode_EditTask)
+        {
+            [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
+    //        DataProvider * dataprovider=[[DataProvider alloc] init];
+    //        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+    //        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+    //        if (self.assetsArray.count>0) {
+    //            DataProvider * dataprovider=[[DataProvider alloc] init];
+    //            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+    //            dataprovider
+    //        }
+            
+            [self BuildSliderData];
+        }
+        else
+        {
+            [SVProgressHUD showWithStatus:@"正在更新..." maskType:SVProgressHUDMaskTypeBlack];
+            [self BuildSliderData];
+        }
     }
     else
     {
@@ -195,6 +221,7 @@
 }
 -(void)UpdateAndRequest
 {
+    
     if (img_uploaded.count>0) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
@@ -204,8 +231,53 @@
     {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        if(_createTaskMode == Mode_EditTask)
+        {
+            
+            
+            //重新组合新的图片地址
+            for(int i =0;i<imgSrc.count;i++)
+            {
+                 NSLog(@"i = [%d] =[%@]",i,[imgSrc objectAtIndex:i]);
+                
+                if([[imgSrc objectAtIndex:i] isEqualToString:@""])
+                {
+                    continue;
+                }
+                
+                [img_prm addObject:[imgSrc objectAtIndex:i]];
+            }
+            
+            for(int i =0;i<img_prm.count;i++)
+            {
+                NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
+            }
+            
+            
+            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        }
+        else
+        {
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        }
+        
+        
     }
+}
+
+
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile1 =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile1 objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
 }
 
 -(void)uploadImgBackCall:(id)dict
@@ -222,7 +294,37 @@
             [SVProgressHUD dismiss];
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            
+            if(_createTaskMode == Mode_EditTask)
+            {
+                
+                
+                //重新组合新的图片地址
+                for(int i =0;i<imgSrc.count;i++)
+                {
+                    NSLog(@"i = [%d] =[%@]",i,[imgSrc objectAtIndex:i]);
+                    
+                    if([[imgSrc objectAtIndex:i] isEqualToString:@""])
+                    {
+                        continue;
+                    }
+                    
+                    [img_prm addObject:[imgSrc objectAtIndex:i]];
+                }
+                
+                for(int i =0;i<img_prm.count;i++)
+                {
+                    NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
+                }
+                
+                
+                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            }
+            else
+            {
+            
+                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            }
         }
         
     }
@@ -278,6 +380,7 @@
     
     
     _titleField = [[UITextField alloc]init];
+
     
     _textView = [[UITextView alloc] init];
     //   _textView.text = @"发帖内容";
@@ -289,7 +392,7 @@
 //    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
 //    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
 //    [self->_tableHeaderView addSubview:sendBtn];
-    
+    showImgView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT)];
     [self.view addSubview:_mainTableView];
     
 }
@@ -326,23 +429,23 @@
     startTime = loadDefaultPath.startTaskDateStr;
     endTime   = loadDefaultPath.endTaskDateStr;
     
-//    
-//    if(imgSrc ==nil)
-//        imgSrc = [NSMutableArray array];
-//    else
-//    {
-//        if(imgSrc.count!=0)
-//            [imgSrc removeAllObjects];
-//    }
-//    for (int i = 0; i < taskPath.imgSrc.count; i++) {
-//        
-//        NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
-//        
-//        [imgSrc addObject:[taskPath.imgSrc objectAtIndex:i]];
-//    }
     
-//    imgCount = imgSrc.count;
-//
+    if(imgSrc ==nil)
+        imgSrc = [NSMutableArray array];
+    else
+    {
+        if(imgSrc.count!=0)
+            [imgSrc removeAllObjects];
+    }
+    for (int i = 0; i < loadDefaultPath.imgSrc.count; i++) {
+        
+        NSLog(@"i = %d [%@]",i,[loadDefaultPath.imgSrc objectAtIndex:i]);
+        
+        [imgSrc addObject:[loadDefaultPath.imgSrc objectAtIndex:i]];
+    }
+    
+    imgCount = imgSrc.count;
+
     
     [_mainTableView reloadData];
     
@@ -476,8 +579,17 @@
 {
     NSLog(@"tap view---");
     
-
-    [self.view endEditing:YES];
+    
+    if(showImgViewState == true)
+    {
+        showImgViewState = false;
+        self.mBtnRight.hidden = NO;
+        [showImgView removeFromSuperview];
+        [[self.view.subviews objectAtIndex:(self.view.subviews.count-1)] removeFromSuperview];//移除图片展示view
+        [delBtn removeFromSuperview];//移除删除btn
+    }
+    else
+        [self.view endEditing:YES];
     
 //    if(_keyShow == true)
 //    {
@@ -592,12 +704,14 @@
         titleField = [[UITextField alloc]init];
         titleLabel.text = @"   执行人:";
         titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-        titleField.placeholder = @"请输入执行人";
+        
         titleField.delegate = self;
         titleField.leftView = titleLabel;
         titleField.leftViewMode = UITextFieldViewModeAlways;
-//        if(_createTaskMode == Mode_EditTask)
-//            titleField.text =
+        if(_createTaskMode == Mode_EditTask)
+            titleField.text = @"自己";
+        else
+            titleField.placeholder = @"请输入执行人";
         UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
         chooseContactsBtn.tag = ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG;
         [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside
@@ -614,12 +728,14 @@
         
         if(_createTaskMode == Mode_EditTask)
             _textView.text = taskContentStr;
-        
-        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, -15, 200, 60)];
-        _placeHolderLabel.text = @"请输入任务内容";
-        _placeHolderLabel.textColor = [UIColor grayColor];
-        
-        [_textView addSubview:_placeHolderLabel];
+        else
+        {
+            _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, -15, 200, 60)];
+            _placeHolderLabel.text = @"请输入任务内容";
+            _placeHolderLabel.textColor = [UIColor grayColor];
+            
+            [_textView addSubview:_placeHolderLabel];
+        }
         [cell addSubview:_textView];
 
     }else if(indexPath.row == 3){
@@ -634,7 +750,8 @@
             layout.minimumInteritemSpacing = 5.0;
             layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
             
-            _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+           // _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+            _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0,(SCREEN_WIDTH-(2*cell.frame.size.height))/2 + 10, cell.frame.size.height) collectionViewLayout:layout];
             _collectionView.backgroundColor = [UIColor clearColor];
             [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
             _collectionView.delegate = self;
@@ -645,6 +762,38 @@
             [cell addSubview:_collectionView];
             
         }
+        
+        if(_createTaskMode == Mode_EditTask)
+        {
+            for (int i=0; i<imgSrc.count; i++) {
+                
+                if([[imgSrc objectAtIndex:i] isEqualToString:@""])
+                    continue;
+                
+                UIButton *imgBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH -10 - (_cellHeight -1)*(i+1), 1, _cellHeight - 3, _cellHeight - 3)];
+                imgBtn.backgroundColor = [UIColor blueColor];
+                
+                NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[imgSrc objectAtIndex:i]];
+                NSLog(@"img url = [%@]",url);
+                UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight - 3, _cellHeight - 3)];
+                [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+                //            img_avatar.layer.masksToBounds=YES;
+                //            img_avatar.layer.cornerRadius=_cellHeight - 3/2;
+                //            img_avatar.layer.borderWidth=0.5;
+                //            img_avatar.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+                //            [btn_selectImg addSubview:img_avatar];
+                
+                imgBtn.tag = ZY_UIBUTTON_TAG_BASE + i;
+                [imgBtn addTarget:self action:@selector(clickImgBtns:) forControlEvents:UIControlEventTouchUpInside];
+                [imgBtn addSubview:img_avatar];
+                [imgBtns addObject:imgBtn];
+                
+                [cell addSubview:imgBtn];
+                
+            }
+
+        }
+        
         
 //        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
 //        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
@@ -730,14 +879,25 @@
             _hour=&hour;
             _minute=&min;
             
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
-            startTimeField.text =timeStr;
+            if(_createTaskMode == Mode_EditTask)
+            {
+                NSLog(@"endTime1 = %@",endTime);
+                NSLog(@"startTime1 = %@",startTime);
+                startTimeField.text =startTime ;
+                endTimeField.text = endTime;
+            }
+            else
+            {
+                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
+                startTimeField.text =timeStr;
+                
+                
+                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
+                endTimeField.text =timeStr2;
+               
+            }
             startTimeField.font = [UIFont systemFontOfSize:14];
-            
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-            endTimeField.text =timeStr2;
-            endTimeField.font = [UIFont systemFontOfSize:14];
-            
+             endTimeField.font = [UIFont systemFontOfSize:14];
             [_startDateArray addObject:[NSString stringWithFormat:@"%ld",(long)y]];
             [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)m]];
             [_startDateArray addObject:[NSString stringWithFormat:@"%02ld",(long)d]];
@@ -766,11 +926,24 @@
 
                                  }];
         
-    
-        endDatePicker.ScrollToDate = now;
+        if(_createTaskMode == Mode_EditTask)
+        {
+            NSLog(@"endTime = %@",endTime);
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+         //   2015-10-31 09:09:00
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSDate *date = [formatter dateFromString:endTime];
+             NSLog(@"date = %@",date);
+            endDatePicker.ScrollToDate =date ;
+        }
+        else
+        {
+            endDatePicker.ScrollToDate = now;
+        }
         endTimeField.inputView = endDatePicker;
 
-        endDatePicker.minLimitDate = now;//默认限制
+        
         
         startDatePicker
         = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
@@ -801,17 +974,38 @@
                                      [formatter setDateFormat:@"yyyy-MM-dd"];
                                      NSLog(@"[startTimeField.text substringToIndex:10] = %@",[startTimeField.text substringToIndex:10]);
                                      NSDate *date = [formatter dateFromString:[startTimeField.text substringToIndex:10]];
-                                     
-                                     endDatePicker.ScrollToDate = date;
-                                     endDatePicker.minLimitDate = date;
+                                     if(_createTaskMode == Mode_EditTask)
+                                     {
+                                         NSLog(@"endTime = %@",endTime);
+                                         
+                                         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                         [formatter setDateFormat:@"yyyy-MM-dd"];
+                                         NSDate *date2 = [formatter dateFromString:endTime];
+                                         endDatePicker.ScrollToDate =date2 ;
+                                     }
+                                     else
+                                     {
+                                         endDatePicker.ScrollToDate = date;
+                                         endDatePicker.minLimitDate = date;
+                                     }
                                      
                                  }];
         
-        startDatePicker.ScrollToDate = now;
+        if(_createTaskMode == Mode_EditTask)
+        {
+            NSLog(@"startTime = %@",startTime);
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSDate *date = [formatter dateFromString:startTime];
+            startDatePicker.ScrollToDate =date ;
+        }
+        else
+            startDatePicker.ScrollToDate = now;
         startTimeField.inputView = startDatePicker;
         
     
-        
+        endDatePicker.minLimitDate = startDatePicker.ScrollToDate;//默认限制
         
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, 1, 1, _cellHeight - 2)];
@@ -889,6 +1083,79 @@
 }
 
 
+-(void)clickImgBtns:(UIButton *)sender
+{
+    if(showImgViewState == false)
+    {
+        showImgView.alpha = 0.5;
+        showImgView.backgroundColor = [UIColor blackColor];
+        
+        if(sender.tag - ZY_UIBUTTON_TAG_BASE > imgSrc.count-1)
+            return;
+        
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[imgSrc objectAtIndex:(sender.tag - ZY_UIBUTTON_TAG_BASE)]];
+        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(50, ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT -100)];
+        [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+        img_avatar.contentMode =UIViewContentModeScaleAspectFit;
+        img_avatar.backgroundColor = [UIColor whiteColor];
+        if(delBtn == nil)
+            delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        delBtn.frame = CGRectMake(img_avatar.frame.size.width+img_avatar.frame.origin.x, 10+ZY_HEADVIEW_HEIGHT, 44, 30);
+        [delBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [delBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        delBtn.layer.borderWidth = 1.0;
+        delBtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.mBtnRight.hidden = YES;
+        [delBtn addTarget:self action:@selector(delImgAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        delBtn.tag =sender.tag;
+        
+        [self.view addSubview:showImgView];
+        [self.view addSubview:img_avatar];
+        [self.view addSubview:delBtn];
+        [self.view bringSubviewToFront:img_avatar];
+        [self.view insertSubview:delBtn belowSubview:img_avatar];
+        showImgViewState = true;
+    }
+}
+
+
+-(void)delImgAction:(UIButton *)sender
+{
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+    
+    alert.alertType = AlertType_Alert;
+    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+        NSLog(@"Click ok");
+        
+        [imgSrc replaceObjectAtIndex:(sender.tag - ZY_UIBUTTON_TAG_BASE ) withObject:@""];
+        
+        imgCount--;
+    
+        //退出图片浏览
+        showImgViewState = false;
+        self.mBtnRight.hidden = NO;
+        [showImgView removeFromSuperview];
+        [[self.view.subviews objectAtIndex:(self.view.subviews.count-1)] removeFromSuperview];//移除图片展示view
+        [delBtn removeFromSuperview];//移除删除btn
+        
+        [[imgBtns objectAtIndex:(sender.tag - ZY_UIBUTTON_TAG_BASE )] removeFromSuperview];
+        
+     //   imagePickerController.maximumNumberOfSelection = 3-imgCount;
+        //[_collectionView reloadData];
+       // [_mainTableView reloadData];
+        
+    }];
+    
+    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+        NSLog(@"Click canel");
+        
+    }];
+    [alert show];
+}
+
+
 -(void)CreatAllDayTaskOrNot:(UISwitch *)sender
 {
     {
@@ -934,11 +1201,22 @@
         
         
         if (sender.isOn) {
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
-            startTimeField.text =timeStr;
+            if(_createTaskMode == Mode_EditTask)
+            {
+                NSLog(@"endTime1 = %@",endTime);
+                NSLog(@"startTime1 = %@",startTime);
+                startTimeField.text =[startTime substringToIndex:10];
+                endTimeField.text = [endTime substringToIndex:10];
+            }
+            else
+            {
+                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
+                startTimeField.text =timeStr;
+                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
+                endTimeField.text =timeStr2;
+            }
             
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
-            endTimeField.text =timeStr2;
+            
             
             startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDay;
             endDatePicker.datePickerStyle =UUDateStyle_YearMonthDay;
@@ -946,18 +1224,31 @@
         }
         else
         {
-            NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
-            startTimeField.text =timeStr;
-            startTimeField.font = [UIFont systemFontOfSize:14];
+            if(_createTaskMode == Mode_EditTask)
+            {
+                NSLog(@"endTime2 = %@",endTime);
+                NSLog(@"startTime2 = %@",startTime);
+                startTimeField.text =startTime;
+                endTimeField.text = endTime;
+            }
+            else
+            {
             
-            NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-            endTimeField.text =timeStr2;
+                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
+                startTimeField.text =timeStr;
+                startTimeField.font = [UIFont systemFontOfSize:14];
+                
+                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
+                endTimeField.text =timeStr2;
+            }
             endTimeField.font = [UIFont systemFontOfSize:14];
             startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDayHourMinute;
             endDatePicker.datePickerStyle =UUDateStyle_YearMonthDayHourMinute;
             isday=NO;
         }
     }
+    
+    
 }
 
 ////关闭日历
@@ -1010,6 +1301,7 @@
         case ZY_UIBUTTON_TAG_BASE + ZY_PICPICK_BTN_TAG:
 //            [self showLocalAlbum];
             [self composePicAdd];
+            [_collectionView reloadData];
             break;
         case ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG:
             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -1321,14 +1613,18 @@
 
 - (void)composePicAdd
 {
-    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    JKImagePickerController *imagePickerController;
+    UINavigationController *navigationController ;
+    
+    imagePickerController = [[JKImagePickerController alloc] init];
+    
+    navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     imagePickerController.delegate = self;
     imagePickerController.showsCancelButton = YES;
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.minimumNumberOfSelection = 1;
-    imagePickerController.maximumNumberOfSelection = 3;
+    imagePickerController.maximumNumberOfSelection = 3-imgCount;
     imagePickerController.selectedAssetArray = self.assetsArray;
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
 }
 

@@ -204,6 +204,7 @@
     [forgetBtn setTitleColor:[UIColor colorWithRed:191/255.0 green:166/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
     [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
     forgetBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [forgetBtn addTarget:self action:@selector(JumpToForgetVC:) forControlEvents:UIControlEventTouchUpInside];
 //    forgetBtn.titleLabel.textAlignment = NSTextAlignmentRight;
 //    forgetBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     
@@ -430,7 +431,6 @@
     RegisterViewController * registerVC=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
     [self presentViewController:registerVC animated:YES completion:^{}];
 }
-
 -(void)QQLogin:(UIButton *)sender
 {
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
@@ -454,6 +454,13 @@
         }});
 }
 
+-(void)JumpToForgetVC:(UIButton *)sender
+{
+    NSLog(@"跳转");
+    RegisterViewController * registerVC=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+    registerVC.pageMode = MODE_forget;
+    [self presentViewController:registerVC animated:YES completion:^{}];
+}
 /*
 #pragma mark - Navigation
 

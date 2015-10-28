@@ -16,6 +16,7 @@
     if (self) {
         
         _imgSrc = [NSMutableArray array];
+        _taskPerformerDetails = [NSMutableArray array];
     }
     return self;
 }

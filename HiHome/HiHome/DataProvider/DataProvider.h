@@ -80,7 +80,23 @@
  *
  */
 -(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3;
+/**
+ *  创建任务
+ *
+ *  @param taskID       任务 id
+ *  @param title        任务名称
+ *  @param content      任务内容
+ *  @param isDay        是否是全天任务
+ *  @param stime        开始时间
+ *  @param etime        结束时间
+ *  @param tip          任务提醒
+ *  @param repeat       任务重复
+ *  @param tasker       任务执行人数量
+ *
+ *
+ */
 
+-(void) updateTask:(NSString *)taskID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3;
 
 /**
  *  获取任务详情
@@ -165,6 +181,9 @@
  */
 
 -(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state;
+
+//接受或拒绝任务 －－ sid：任务状态ID  state：1、接受 2、拒绝
+-(void)acceptOrReject:(NSString *) sid andState:(NSString *) state;
 
 //根据路径上传图片
 -(void)UploadImgWithImgdata:(NSString *)imagePath;

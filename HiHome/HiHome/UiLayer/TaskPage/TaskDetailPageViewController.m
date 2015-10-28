@@ -17,8 +17,11 @@
 #import "JKAlertDialog.h"
 #import "UIImageView+WebCache.h"
 #import "CreateTask/CreateTaskViewController.h"
+#import "taskerCollectionViewCell.h"
 
-@interface TaskDetailPageViewController (){
+#define _CELL @ "acell"
+@interface TaskDetailPageViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+{
     UITableView *mTableView;
     NSInteger _cellHeight;
     NSMutableArray *_startDateArray;
@@ -54,7 +57,7 @@
     
     NSMutableArray *imgSrc;
     NSInteger imgCount;
-    
+    UICollectionView *PerformersColView;
     UIView *showImgView;
     BOOL showImgViewState;
     
@@ -116,6 +119,23 @@
     btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(10, _cellHeight+5, 100, _cellHeight -10 -5)];
     
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
+ 
+    UICollectionViewFlowLayout *layout=[[ UICollectionViewFlowLayout alloc ] init ];
+    layout.minimumLineSpacing = 5.0;
+    layout.minimumInteritemSpacing = 5.0;
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;//设置collection 水平滑动
+
+    
+    PerformersColView = [[UICollectionView alloc]  initWithFrame:CGRectMake(10+75, 10, SCREEN_WIDTH - 85, _cellHeight*2-20) collectionViewLayout:layout];
+    [PerformersColView registerClass :[ UICollectionViewCell class ] forCellWithReuseIdentifier : _CELL ];
+    
+    PerformersColView.backgroundColor = [UIColor whiteColor];
+    PerformersColView.delegate= self;
+    PerformersColView.dataSource =self;
+    PerformersColView.contentSize = CGSizeMake(SCREEN_WIDTH*2, _cellHeight*2);
+    PerformersColView.showsHorizontalScrollIndicator = YES;
+    PerformersColView.showsVerticalScrollIndicator = NO;
+    
     
     showImgView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT)];
     [self.view addGestureRecognizer:tapGesture];
@@ -140,20 +160,22 @@
     TaskId = taskPath.taskID ;
     {
         
+//        
+//        taskPathLocal = taskPath.taskID;
+//        taskPathLocal.taskName = taskPath.taskName;
+//        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
+//        taskPathLocal.taskPerformers = taskPath.taskPerformers;
+//        taskPathLocal.taskContent =taskPath.taskContent;
+//        taskPathLocal.taskStatus =taskPath.taskStatus;
+//        taskPathLocal.taskType = taskPath.taskType;
+//        taskPathLocal.remindTime = taskPath.remindTime ;
+//        taskPathLocal.repeatMode = taskPath.repeatMode;
+//        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
+//        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
+//        
+        taskPathLocal =taskPath;
         
-        taskPathLocal.taskID = taskPath.taskID;
-        taskPathLocal.taskName = taskPath.taskName;
-        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
-        taskPathLocal.taskPerformers = taskPath.taskPerformers;
-        taskPathLocal.taskContent =taskPath.taskContent;
-        taskPathLocal.taskStatus =taskPath.taskStatus;
-        taskPathLocal.taskType = taskPath.taskType;
-        taskPathLocal.remindTime = taskPath.remindTime ;
-        taskPathLocal.repeatMode = taskPath.repeatMode;
-        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
-        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
-
-NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
+        NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
     }
     localTaskStatus = taskPath.taskStatus;
     [self setBtnStr:taskPath.taskStatus];
@@ -420,19 +442,27 @@ NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
         
         [cell addSubview:taskName];
     }else if(indexPath.row == 3){
-        executor = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
-        executor.textColor = [UIColor grayColor];
-        executor.text = @"自己";
-//        executor.font = [UIFont systemFontOfSize:14];
-        executor.enabled = NO;
+//        executor = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 50)];
+//        executor.textColor = [UIColor grayColor];
+//        executor.text = @"自己";
+////        executor.font = [UIFont systemFontOfSize:14];
+//        executor.enabled = NO;
         //左UILabel
-        UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 50)];
+        UILabel *leftlbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 75, 50)];
         leftlbl.textAlignment = NSTextAlignmentLeft;
         leftlbl.text = @"执行人:";
-        executor.leftView = leftlbl;
-        executor.leftViewMode = UITextFieldViewModeAlways;
+        [cell addSubview:leftlbl];
         
-        [cell addSubview:executor];
+        
+        
+//        PerformersColView.
+//        PerformersColView.
+        [cell addSubview:PerformersColView];
+        
+//        executor.leftView = leftlbl;
+//        executor.leftViewMode = UITextFieldViewModeAlways;
+//        
+//        [cell addSubview:executor];
     }else if(indexPath.row == 4){
         mTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 80)];
         mTextView.textColor = [UIColor grayColor];
@@ -1198,5 +1228,135 @@ NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
 //    [startTimeField resignFirstResponder];
 //    [endTimeField resignFirstResponder];
 }
+
+
+#pragma mark - UICollectionViewDataSource
+
+//定义展示的UICollectionViewCell的个数
+
+-( NSInteger )collectionView:( UICollectionView *)collectionView numberOfItemsInSection:( NSInteger )section
+{
+    return taskPathLocal.taskPerformerDetails.count ;
+}
+
+//定义展示的Section的个数
+
+-( NSInteger )numberOfSectionsInCollectionView:( UICollectionView *)collectionView
+{
+    return 1 ;
+}
+
+//每个UICollectionView展示的内容
+
+-( UICollectionViewCell *)collectionView:( UICollectionView *)collectionView cellForItemAtIndexPath:( NSIndexPath *)indexPath
+{
+
+    
+    
+    NSDictionary *tempDict = [taskPathLocal.taskPerformerDetails objectAtIndex:indexPath.row];
+    taskerCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier : _CELL forIndexPath :indexPath];
+    UIView *tempView = [[UIImageView alloc] init];
+    NSString *strAvatar;
+    
+    
+    @try {
+        
+   
+    
+    UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight-10, _cellHeight-10)];
+        
+    if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]] )
+    {
+        if(![[tempDict objectForKey:@"avatar"] isEqual:@""])
+        {
+            strAvatar = [tempDict objectForKey:@"avatar"];
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
+            [img sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        }
+        else
+        {
+            img.image = [UIImage imageNamed:@"me"];
+        }
+    }
+    else
+    {
+        img.image = [UIImage imageNamed:@"me"];
+    }
+    
+   
+    
+    img.layer.cornerRadius = img.frame.size.width * 0.5;
+    img.layer.borderWidth = 0.1;
+    img.layer.masksToBounds = YES;
+    
+    
+    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight-10, _cellHeight , (_cellHeight-10)/2)];
+    nameLab.text =[tempDict objectForKey:@"nick"];
+    nameLab.font = [UIFont systemFontOfSize:12];
+    
+    UILabel *stateLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight+(_cellHeight)/2-15, _cellHeight, (_cellHeight-10)/2)];
+    stateLab.text = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+    stateLab.font = [UIFont systemFontOfSize:12];
+    stateLab.textColor = ZY_UIBASECOLOR;
+    
+    [tempView addSubview:img];
+    [tempView addSubview:nameLab];
+    [tempView addSubview:stateLab];
+    cell.backgroundView = tempView;
+  //  cell.backgroundColor = [UIColor whiteColor];
+    //  cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        return cell;
+    }
+
+}
+
+#pragma mark - UICollectionViewDelegate
+
+//UICollectionView被选中时调用的方法
+
+-( void )collectionView:( UICollectionView *)collectionView didSelectItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    
+   // taskerCollectionViewCell * cell = ( UICollectionViewCell *)[collectionView cellForItemAtIndexPath :indexPath];
+    //   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_CELL forIndexPath:indexPath];
+    
+    NSLog(@"Select me ^_^!!");
+    
+    //   cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
+    
+}
+
+//返回这个UICollectionViewCell是否可以被选择
+
+-( BOOL )collectionView:( UICollectionView *)collectionView shouldSelectItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    return YES ;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+//定义每个UICollectionView 的大小
+
+- ( CGSize )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    
+    return CGSizeMake ( _cellHeight , _cellHeight*2-20 );
+}
+
+//定义每个UICollectionView 的边距
+
+-( UIEdgeInsets )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:( NSInteger )section
+{
+    //if()
+    return UIEdgeInsetsMake ( 10 , 20 , 10 , 20 );
+}
+
+
+
 
 @end

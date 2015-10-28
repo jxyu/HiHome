@@ -140,18 +140,21 @@
     TaskId = taskPath.taskID ;
     {
         
+//        
+//        taskPathLocal = taskPath.taskID;
+//        taskPathLocal.taskName = taskPath.taskName;
+//        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
+//        taskPathLocal.taskPerformers = taskPath.taskPerformers;
+//        taskPathLocal.taskContent =taskPath.taskContent;
+//        taskPathLocal.taskStatus =taskPath.taskStatus;
+//        taskPathLocal.taskType = taskPath.taskType;
+//        taskPathLocal.remindTime = taskPath.remindTime ;
+//        taskPathLocal.repeatMode = taskPath.repeatMode;
+//        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
+//        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
+//        
+        taskPathLocal =taskPath;
         
-        taskPathLocal.taskID = taskPath.taskID;
-        taskPathLocal.taskName = taskPath.taskName;
-        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
-        taskPathLocal.taskPerformers = taskPath.taskPerformers;
-        taskPathLocal.taskContent =taskPath.taskContent;
-        taskPathLocal.taskStatus =taskPath.taskStatus;
-        taskPathLocal.taskType = taskPath.taskType;
-        taskPathLocal.remindTime = taskPath.remindTime ;
-        taskPathLocal.repeatMode = taskPath.repeatMode;
-        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
-        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
 
 NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
     }
@@ -1198,5 +1201,116 @@ NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
 //    [startTimeField resignFirstResponder];
 //    [endTimeField resignFirstResponder];
 }
+
+
+#pragma mark - UICollectionViewDataSource
+
+//定义展示的UICollectionViewCell的个数
+
+-( NSInteger )collectionView:( UICollectionView *)collectionView numberOfItemsInSection:( NSInteger )section
+{
+    return 8 ;
+}
+
+//定义展示的Section的个数
+
+-( NSInteger )numberOfSectionsInCollectionView:( UICollectionView *)collectionView
+{
+    return 1 ;
+}
+
+//每个UICollectionView展示的内容
+#define _CELL @ "acell"
+-( UICollectionViewCell *)collectionView:( UICollectionView *)collectionView cellForItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    NSLog(@"index = %ld index = %ld ",indexPath.row,indexPath.section);
+    
+    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier : _CELL forIndexPath :indexPath];
+    UIImageView *imgView = [[UIImageView alloc] init];
+    UIImage *img = [[UIImage alloc] init];
+    
+    cell.backgroundView = imgView;
+    //  imgView.contentMode = UIViewContentModeCenter;
+    switch (indexPath.row) {
+        case 0:
+            imgView.image = [UIImage imageNamed:@"nanshi@2x.png"];
+            break;
+        case 1:
+            imgView.image = [UIImage imageNamed:@"nvshi@2x.png"];
+            break;
+        case 2:
+            imgView.image = [UIImage imageNamed:@"muying@2x.png"];
+            break;
+        case 3:
+            imgView.image = [UIImage imageNamed:@"huazhuang@2x.png"];
+            break;
+        case 4:
+            imgView.image = [UIImage imageNamed:@"shouji@2x.png"];
+            break;
+        case 5:
+            imgView.image = [UIImage imageNamed:@"bangong@2x.png"];
+            break;
+        case 6:
+            imgView.image = [UIImage imageNamed:@"shenghuo@2x.png"];
+            break;
+        case 7:
+            imgView.image = [UIImage imageNamed:@"techan@2x.png"];
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    //  cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
+    
+    
+    return cell;
+    
+}
+
+#pragma mark - UICollectionViewDelegate
+
+//UICollectionView被选中时调用的方法
+
+-( void )collectionView:( UICollectionView *)collectionView didSelectItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    
+    UICollectionViewCell * cell = ( UICollectionViewCell *)[collectionView cellForItemAtIndexPath :indexPath];
+    //   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_CELL forIndexPath:indexPath];
+    
+    NSLog(@"Select me ^_^!!");
+    
+    //   cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
+    
+}
+
+//返回这个UICollectionViewCell是否可以被选择
+
+-( BOOL )collectionView:( UICollectionView *)collectionView shouldSelectItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    return YES ;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+//定义每个UICollectionView 的大小
+
+- ( CGSize )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath
+{
+    
+    return CGSizeMake ( 60 , 60 );
+}
+
+//定义每个UICollectionView 的边距
+
+-( UIEdgeInsets )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:( NSInteger )section
+{
+    //if()
+    return UIEdgeInsetsMake ( 10 , 10 , 10 , 10 );
+}
+
+
+
 
 @end

@@ -81,6 +81,7 @@ typedef enum _taskType
 @property(nonatomic) NSString *endTaskDateStr;//结束时间
 
 @property(nonatomic) NSMutableArray *imgSrc;
+@property(nonatomic) BOOL isDay;
 
 @property(nonatomic) ZYTaskStatue taskStatus;//任务状态
 @property(nonatomic) ZYTaskRemind remindTime;//提醒时间

@@ -658,7 +658,8 @@
 -(void) loadTaskCalenderDatas
 {
     NSLog(@"load TaskCalender datas");
-    
+    if(_taskCalenderData.count!=0)
+      [ _taskCalenderData removeAllObjects];
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"getTaskCalenderCallBack:"];
     
@@ -743,25 +744,52 @@
     NSLog(@"start [%s]",__FUNCTION__);
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSMutableArray *dateArr = [NSMutableArray array];
     for (int i = 0; i < _taskCalenderData.count; i++)
     {
         NSDictionary *tempDict;
+        NSArray *tempArr;
         tempDict=[_taskCalenderData objectAtIndex:i];
         
         NSLog(@"[tempDict objectForKey:date] = %@",[tempDict objectForKey:@"date"]);
         
         if([[tempDict objectForKey:@"date"]  isEqual:[NSNull null]])
             return;
-        NSDate *date = [formatter dateFromString:[tempDict objectForKey:@"date"]];
         
+        tempArr = [tempDict objectForKey:@"date"];
+        for(int i = 0;i<tempArr.count;i++)
+        {
+            NSString *tempDateStr = [tempArr objectAtIndex:i];
+            
+            if([self checkDate:tempDateStr andBaseDateArr:dateArr])
+            {
+                [dateArr addObject:tempDateStr];//获取date
+            }
+        }
         
-        [self setCalendarEvent:self.calendar date:date];
-
+       
     }
+    for(int i = 0;i<dateArr.count;i++)
+    {
+        NSDate *date = [formatter dateFromString:[dateArr objectAtIndex:i]];
+        [self setCalendarEvent:self.calendar date:date];//日历打点
+    }
+
     
     [self.calendar reloadData];
 }
 
+-(BOOL)checkDate:(NSString *)date andBaseDateArr:(NSArray *)baseArr
+{
+    for(int i = 0;i<baseArr.count;i++)
+    {
+        if([date isEqualToString:[baseArr objectAtIndex:i]])
+            return NO;
+    }
+    
+    return YES;
+}
 
 #pragma mark -  set task page
 -(void) initTaskPage

@@ -349,8 +349,8 @@
 {
 
     if (taskID&&state) {
-        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=modTaskState",Url];
-        NSDictionary * prm=@{@"id":taskID,@"state":state};
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=applyTask",Url];
+        NSDictionary * prm=@{@"sid":taskID,@"state":state};
        [self PostRequest:url andpram:prm];
        
     }

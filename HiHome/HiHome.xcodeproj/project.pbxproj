@@ -51,7 +51,6 @@
 		800A4DBE1BDF865800A22EA4 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D9F1BDF865800A22EA4 /* libWeChatSDK.a */; };
 		800A4DC01BDF86F800A22EA4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4DBF1BDF86F800A22EA4 /* libiconv.tbd */; };
 		800A4DC21BDF871800A22EA4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4DC11BDF871800A22EA4 /* libsqlite3.tbd */; };
->>>>>>> 76a023d13a8ece0346dd8dc456c3d400137c38ce
 		80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */; };
 		80124BDE1BD882BD00DBE369 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */; };
 		80124C011BD885E800DBE369 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BE11BD885E800DBE369 /* MKAnnotationView+WebCache.m */; };

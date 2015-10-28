@@ -320,7 +320,7 @@
         NSLog(@"date11 =[%@]",date);
     else
         NSLog(@"date  = nil");
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date];
+    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date];
 }
 
 
@@ -399,7 +399,7 @@
         taskPath.taskName = [tempDict objectForKey:@"title"];
         NSLog(@"[%s]taskPath.taskName = %@ ;",__FUNCTION__,taskPath.taskName );
         
-        taskPath.taskOwner = @"张三";//返回的数据好像没有发送者暂时
+        taskPath.taskOwner = [tempDict objectForKey:@"nick"];
         
         NSInteger tasker =[(NSString *)[tempDict objectForKey:@"tasker"] integerValue];
         NSString *performers;

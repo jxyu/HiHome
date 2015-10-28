@@ -170,6 +170,26 @@
 
 }
 
+
+
+-(void) updateTask:(NSString *)taskID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3
+{
+    if (taskID && title && content
+        && isDay &&stime && etime
+        && tip &&repeat && tasker
+        ) {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=editInfo",Url];
+        
+        NSDictionary * prm = @{@"id":taskID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"end":etime,@"tip":tip,@"repeat":repeat,@"tasker":tasker,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3};
+        
+        NSLog(@"updateTask prm = %@",prm);
+        
+        [self PostRequest:url andpram:prm];
+    }
+    
+}
+
 -(void)getTaskInfo:(NSString *)taskID
 {
     if(taskID)

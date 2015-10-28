@@ -38,7 +38,7 @@
     NSLog(@"%@",dict);
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        mTaskNoticeArray = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        mTaskNoticeArray = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"datas"] objectForKey:@"list"]];
         [self initView];
     }else{
         NSLog(@"访问服务器失败！");
@@ -62,6 +62,8 @@
     mTableView.dataSource = self;
     mTableView.delegate = self;
     [self.view addSubview:mTableView];
+    
+    mTableView.tableFooterView = [[UIView alloc] init];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -183,7 +185,7 @@
             [cell.mReceive setTitle:@"接受任务" forState:UIControlStateNormal];
             [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
             
-            [cell.mReject setTitle:@"拒绝任务" forState:UIControlStateNormal];
+            [cell.mReject setTitle:@"删除任务" forState:UIControlStateNormal];
             [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
         }else if([mState isEqual:@"2"]){
             mTaskIFlag= @"3";
@@ -207,6 +209,7 @@
             
             cell.mReject.hidden = YES;
         }else if([mState isEqual:@"5"]){
+            mTaskIFlag= @"5";
             [cell.mReceive setTitle:@"删除任务" forState:UIControlStateNormal];
             [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -353,33 +356,64 @@
 }
 
 -(void)executeTaskEvent:(id)sender{
-    UIView * v=[sender superview];
-    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
-    mIndexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
+    if ([mTaskIFlag isEqual:@"5"]) {
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"delTaskBackCall:"];
+        [dataProvider delTask:[mTaskNoticeArray[selectSectionIndex][@"id"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[selectSectionIndex][@"id"]];
+    }else{
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"executeTaskBackCall:"];
+        [dataProvider ChangeTaskState:[mTaskNoticeArray[selectSectionIndex][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[mIndexPath.section][@"sid"] andState:mTaskIFlag];
+    }
+}
+
+-(void)delTaskBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+        NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:mTaskNoticeArray];
+        [tempArray removeObjectAtIndex:selectSectionIndex];
+        mTaskNoticeArray = [[NSMutableArray alloc] initWithArray:tempArray];
+
+        [mTableView reloadData];
+        
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
     
-    dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"executeTaskBackCall:"];
-    [dataProvider ChangeTaskState:[mTaskNoticeArray[mIndexPath.section][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[mIndexPath.section][@"sid"] andState:mTaskIFlag];
 }
 
 -(void)executeTaskBackCall:(id)dict{
-    NSLog(@"%@",dict);
+    NSLog(@"%@",mTaskNoticeArray);
     NSInteger code = [dict[@"code"] integerValue];
     
     if (code == 200) {
-        SelectTaskNoticeCell *cell = [mTableView cellForRowAtIndexPath:mIndexPath];
         if ([mTaskIFlag isEqual:@"2"]) {
-            //[cell.mReceive setTitle:@"执行任务" forState:UIControlStateNormal];
-            //[cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
-            mTaskNoticeArray[mIndexPath.section][@"state"] = @"3";
-            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:mIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            NSMutableDictionary *tempDict = [[mTaskNoticeArray objectAtIndex:selectSectionIndex] mutableCopy];
+            [tempDict setValue:@"2" forKey:@"state"];
+            NSDictionary * mDict = [[NSDictionary alloc] initWithDictionary:tempDict];
+            [mTaskNoticeArray replaceObjectAtIndex:selectSectionIndex withObject:mDict];
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:selectSectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             
         }else if([mTaskIFlag isEqual:@"3"]){
-            mTaskNoticeArray[mIndexPath.section][@"state"] = @"4";
-            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:mIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            NSMutableDictionary *tempDict = [[mTaskNoticeArray objectAtIndex:selectSectionIndex] mutableCopy];
+            [tempDict setValue:@"3" forKey:@"state"];
+            NSDictionary * mDict = [[NSDictionary alloc] initWithDictionary:tempDict];
+            [mTaskNoticeArray replaceObjectAtIndex:selectSectionIndex withObject:mDict];
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:selectSectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else if ([mTaskIFlag isEqual:@"4"]){
+            NSMutableDictionary *tempDict = [[mTaskNoticeArray objectAtIndex:selectSectionIndex] mutableCopy];
+            [tempDict setValue:@"4" forKey:@"state"];
+            NSDictionary * mDict = [[NSDictionary alloc] initWithDictionary:tempDict];
+            [mTaskNoticeArray replaceObjectAtIndex:selectSectionIndex withObject:mDict];
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:selectSectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }else{
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
     }
 }
 

@@ -65,14 +65,8 @@
     if (code == 200) {
         personDetailArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
     }else{
-        NSLog(@"访问服务器失败！");
+        NSLog(@"%@",dict[@"message"]);
     }
-//    applyFriendArray = [[NSMutableArray alloc] init];
-//    for (int i = 0; i < personDetailDict.count; i++) {
-//        MessageNoticeCell * messageNoticeCell = [[MessageNoticeCell alloc] init];
-//        messageNoticeCell.mName.text = @"1";
-//        [applyFriendArray addObject:messageNoticeCell];
-//    }
     [self initView];
     
 }
@@ -95,7 +89,6 @@
     }
     
     cell.mImageView.image = [UIImage imageNamed:@"me"];
-    NSLog(@"%@",personDetailArray[indexPath.row]);
     
     cell.mName.text = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
     cell.mDetail.text = [personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
@@ -133,13 +126,10 @@
     
     AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
     addFriendSecondVC.navTitle = @"好友申请";
-    NSLog(@"%@",personDetailArray);
     addFriendSecondVC.mContacterID = [[personDetailArray valueForKey:@"id"][0] isEqual:[NSNull null]]?@"":[personDetailArray valueForKey:@"id"][0];
-    NSLog(@"%@",personDetailArray[indexPath.row][@"sex"]);
     addFriendSecondVC.mNameTxt = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
-    addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
+    //addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
     addFriendSecondVC.mIFlag = @"1";
-    NSLog(@"ddddd=%@",addFriendSecondVC.mNameTxt);
     //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
     [self.navigationController pushViewController:addFriendSecondVC animated:NO];
 }
@@ -186,10 +176,10 @@
         
         [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:currentRow.section] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除成功～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
     

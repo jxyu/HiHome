@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BackPageViewController.h"
 
-@interface MarkFriendViewController : UIViewController
+@interface MarkFriendViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

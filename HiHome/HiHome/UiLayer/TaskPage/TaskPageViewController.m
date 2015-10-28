@@ -255,6 +255,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     _cellCountMyTask += [resultAll integerValue];
     
@@ -365,6 +366,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     _cellCountGetTask += [resultAll integerValue];
     
@@ -492,6 +494,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     _cellCountSendTask += [resultAll integerValue];
     
@@ -611,6 +614,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     _cellCountMyTask += [resultAll integerValue];
     
@@ -704,6 +708,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     
     [self setTaskCalenderDatas];
@@ -1528,56 +1533,81 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
+    
+    @try {
+        
+       
+        taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
+        taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+        taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
+        taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
+        taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
+        taskDetailPath.remindTime = (ZYTaskRemind)[(NSString *)[taskDetailDict objectForKey:@"tip"] integerValue];
+        taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
+        taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
+        taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+      //  [self setTaskDetails];
 
-    taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
-    taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
-    taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
-    taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
-    taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
-    taskDetailPath.remindTime = (ZYTaskRemind)[(NSString *)[taskDetailDict objectForKey:@"tip"] integerValue];
-    taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
-    taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
-    taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
-  //  [self setTaskDetails];
-
-    _taskDetailPageCtl.navTitle = taskDetailPath.taskName;
-    
-    if(taskDetailPath.imgSrc.count > 0)
-    {
-        [taskDetailPath.imgSrc removeAllObjects];
-    }
-    if((![[taskDetailDict objectForKey:@"imgsrc1"] isEqual:[NSNull null]]))
-    {
-        if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+        _taskDetailPageCtl.navTitle = taskDetailPath.taskName;
+        
+        if(taskDetailPath.imgSrc.count > 0)
         {
-            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+            [taskDetailPath.imgSrc removeAllObjects];
         }
-    }
-    if((![[taskDetailDict objectForKey:@"imgsrc2"] isEqual:[NSNull null]]))
-    {
-        if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+        if((![[taskDetailDict objectForKey:@"imgsrc1"] isEqual:[NSNull null]]))
         {
-            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+            if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+            }
         }
-    }
-    if((![[taskDetailDict objectForKey:@"imgsrc3"] isEqual:[NSNull null]]))
-    {
-        if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+        if((![[taskDetailDict objectForKey:@"imgsrc2"] isEqual:[NSNull null]]))
         {
-            [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+            if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+            }
         }
+        if((![[taskDetailDict objectForKey:@"imgsrc3"] isEqual:[NSNull null]]))
+        {
+            if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+            }
+        }
+        NSLog(@"img1 = [%@]",[taskDetailDict objectForKey:@"imgsrc1"]);
+        NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
+        NSLog(@"img3 = [%@]",[taskDetailDict objectForKey:@"imgsrc3"]);
+        
+        NSLog(@"taskDetailPath.imgSrc count = %ld",taskDetailPath.imgSrc.count);
+        
+        
+        if(![[taskDetailDict objectForKey:@"tasker"] isEqual:[NSNull null]])
+        {
+            taskDetailPath.taskPerformerDetails = [taskDetailDict objectForKey:@"tasker"];
+        }
+        else
+        {
+            NSLog(@"tasker = NULL");
+           // return;
+        }
+        
+       // taskDetailPath.taskPerformerDetails =[taskDetailDict objectForKey:@"id"];
+        
+        
+        
+        [_taskDetailPageCtl setDatas:taskDetailPath];
+        _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
     }
-    NSLog(@"img1 = [%@]",[taskDetailDict objectForKey:@"imgsrc1"]);
-    NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
-    NSLog(@"img3 = [%@]",[taskDetailDict objectForKey:@"imgsrc3"]);
-    
-    NSLog(@"taskDetailPath.imgSrc count = %ld",taskDetailPath.imgSrc.count);
-    
-    [_taskDetailPageCtl setDatas:taskDetailPath];
-    _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
-    
+    @catch (NSException *exception) {
+        [SVProgressHUD dismiss];
+    }
+    @finally {
+        
+    }
     [SVProgressHUD dismiss];
 
 }
@@ -1631,6 +1661,7 @@
     else
     {
         NSLog(@"datas = NULL");
+        return;
     }
     
     

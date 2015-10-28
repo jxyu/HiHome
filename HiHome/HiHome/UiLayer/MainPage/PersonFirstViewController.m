@@ -239,7 +239,7 @@
     NSLog(@"%@",dict);
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"成功发送请求～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         [self.navigationController popToRootViewControllerAnimated:NO];
         

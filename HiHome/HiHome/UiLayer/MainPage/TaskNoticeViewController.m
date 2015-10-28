@@ -14,6 +14,9 @@
     NSInteger selectSectionIndex;
     DataProvider *dataProvider;
     NSMutableArray *mTaskNoticeArray;
+    
+    NSString *mTaskIFlag;
+    NSIndexPath *mIndexPath;
 }
 
 @end
@@ -157,35 +160,57 @@
         }
         
         NSString *mState = [mTaskNoticeArray[indexPath.section][@"state"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"state"];
+        
+        //接受任务
+        cell.mReceive.layer.masksToBounds = YES;
+        cell.mReceive.layer.borderWidth = 1;
+        cell.mReceive.layer.borderColor = [UIColor colorWithRed:0.01 green:0.81 blue:0.59 alpha:1].CGColor;
+        cell.mReceive.layer.cornerRadius = 10;
+        cell.mReceive.backgroundColor = [UIColor colorWithRed:0.01 green:0.81 blue:0.59 alpha:1];
+        [cell.mReceive setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        
+        //拒绝任务
+        cell.mReject.layer.masksToBounds = YES;
+        cell.mReject.layer.borderWidth = 1;
+        cell.mReject.layer.borderColor = [UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1].CGColor;
+        cell.mReject.layer.cornerRadius = 10;
+        [cell.mReject setTitleColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1] forState:UIControlStateNormal];
+        
+        
         if ([mState isEqual:@"0"]) {
-            //接受任务
-            cell.mReceive.layer.masksToBounds = YES;
-            cell.mReceive.layer.borderWidth = 1;
-            cell.mReceive.layer.borderColor = [UIColor colorWithRed:0.01 green:0.81 blue:0.59 alpha:1].CGColor;
-            cell.mReceive.layer.cornerRadius = 10;
-            cell.mReceive.backgroundColor = [UIColor colorWithRed:0.01 green:0.81 blue:0.59 alpha:1];
-            [cell.mReceive setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            mTaskIFlag = @"2";
             [cell.mReceive setTitle:@"接受任务" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(receiveEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
             
-            //拒绝任务
-            cell.mReject.layer.masksToBounds = YES;
-            cell.mReject.layer.borderWidth = 1;
-            cell.mReject.layer.borderColor = [UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1].CGColor;
-            cell.mReject.layer.cornerRadius = 10;
-            [cell.mReject setTitleColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1] forState:UIControlStateNormal];
             [cell.mReject setTitle:@"拒绝任务" forState:UIControlStateNormal];
-            [cell.mReject addTarget:self action:@selector(rejectEvent:) forControlEvents:UIControlEventTouchUpInside];
-            
-        }else if([mState isEqual:@"1"]){
-
+            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
         }else if([mState isEqual:@"2"]){
+            mTaskIFlag= @"3";
+            [cell.mReceive setTitle:@"执行任务" forState:UIControlStateNormal];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
+            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
 
         }else if([mState isEqual:@"3"]){
-
+            mTaskIFlag= @"4";
+            [cell.mReceive setTitle:@"标记完成" forState:UIControlStateNormal];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
+            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
         }else if([mState isEqual:@"4"]){
-
+            mTaskIFlag= @"5";
+            [cell.mReceive setTitle:@"删除任务" forState:UIControlStateNormal];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.mReject.hidden = YES;
         }else if([mState isEqual:@"5"]){
+            [cell.mReceive setTitle:@"删除任务" forState:UIControlStateNormal];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.mReject.hidden = YES;
         }
        
         
@@ -204,9 +229,7 @@
         NSString *mState = [mTaskNoticeArray[indexPath.section][@"state"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"state"];
         if ([mState isEqual:@"0"]) {
             cell.mStatus.text = @"未接受";
-        }else if([mState isEqual:@"1"]){
-            cell.mStatus.text = @"已接受";
-        }else if([mState isEqual:@"2"]){
+        }else if([mState isEqual:@"1"] || [mState isEqual:@"2"]){
             cell.mStatus.text = @"待执行";
         }else if([mState isEqual:@"3"]){
             cell.mStatus.text = @"执行中";
@@ -329,8 +352,35 @@
     }
 }
 
-//拒绝任务
--(void)rejectEvent:(id)sender{
+-(void)executeTaskEvent:(id)sender{
+    UIView * v=[sender superview];
+    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
+    mIndexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
     
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"executeTaskBackCall:"];
+    [dataProvider ChangeTaskState:[mTaskNoticeArray[mIndexPath.section][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[mIndexPath.section][@"sid"] andState:mTaskIFlag];
 }
+
+-(void)executeTaskBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    NSInteger code = [dict[@"code"] integerValue];
+    
+    if (code == 200) {
+        SelectTaskNoticeCell *cell = [mTableView cellForRowAtIndexPath:mIndexPath];
+        if ([mTaskIFlag isEqual:@"2"]) {
+            //[cell.mReceive setTitle:@"执行任务" forState:UIControlStateNormal];
+            //[cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
+            mTaskNoticeArray[mIndexPath.section][@"state"] = @"3";
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:mIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+        }else if([mTaskIFlag isEqual:@"3"]){
+            mTaskNoticeArray[mIndexPath.section][@"state"] = @"4";
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:mIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }else{
+        
+    }
+}
+
 @end

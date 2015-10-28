@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <RongIMKit/RongIMKit.h>
+#import <RongCloudIMKit/RongIMLib/RongIMLib.h>
+
 
 @interface ChatPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {

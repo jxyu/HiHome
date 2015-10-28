@@ -109,6 +109,7 @@
     _taskCalenderData=[[NSMutableArray alloc] init];
     
     _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
+    _taskDetailPageCtl.delegate = self;
     
     //    for (int i = 0; i < 40; i++) {
     //        TaskPath * taskPath = [[TaskPath alloc] init];
@@ -144,7 +145,22 @@
     _cellCountSendTask = 1;//最后一个元素作废，当站位作用，作为最后的横线
 }
 
-
+#pragma mark - 任务详情代理－>编辑模式
+-(void)setEdit//任务详情跳转创建任务至编辑模式
+{
+    
+    NSLog(@"run here -- [%d]",__LINE__);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    
+    NSString *str = @"创建任务";
+    CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
+    _createTaskViewCtl.navTitle = str;
+    _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:_createTaskViewCtl animated:NO];
+    
+    
+}
 
 
 #pragma mark -callbacks
@@ -161,6 +177,7 @@
 }
 
 #pragma mark - 从服务器获取数据
+
 
 //
 //-(void) createAnniversaryForTest

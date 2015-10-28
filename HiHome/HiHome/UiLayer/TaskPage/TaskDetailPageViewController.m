@@ -16,7 +16,7 @@
 #import "SVProgressHUD.h"
 #import "JKAlertDialog.h"
 #import "UIImageView+WebCache.h"
-
+#import "CreateTask/CreateTaskViewController.h"
 
 @interface TaskDetailPageViewController (){
     UITableView *mTableView;
@@ -50,6 +50,8 @@
     NSString *btnLeftStr;//左边操作按键
     NSString *btnRightStr;//右边
     
+    NSString *avatar;
+    
     NSMutableArray *imgSrc;
     NSInteger imgCount;
     
@@ -64,13 +66,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    taskPathLocal = [[TaskPath alloc] init];
    // self.taskDetailMode = TaskDetail_ReceiveMode;
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _startDateArray = [[NSMutableArray alloc] init];
     rightBtnStr = @"编辑";
     showImgViewState = false;
+    
+    senderNameStr = [self getNick];
+    avatar = [self getAvatar];
+    NSLog(@"senderNameStr xx = [%@]",senderNameStr);
+    NSLog(@"avatar xx = [%@]",avatar);
+    
     [self initView];
 }
 
@@ -116,16 +122,39 @@
 }
 
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    
+}
 
 -(void)setDatas:(TaskPath *)taskPath
 {
     if(taskPath == nil)
         return;
     
+    if(taskPathLocal == nil)
+        taskPathLocal = [[TaskPath alloc] init];
+    
     TaskId = taskPath.taskID ;
-    
-    taskPathLocal = taskPath;
-    
+    {
+        
+        
+        taskPathLocal.taskID = taskPath.taskID;
+        taskPathLocal.taskName = taskPath.taskName;
+        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
+        taskPathLocal.taskPerformers = taskPath.taskPerformers;
+        taskPathLocal.taskContent =taskPath.taskContent;
+        taskPathLocal.taskStatus =taskPath.taskStatus;
+        taskPathLocal.taskType = taskPath.taskType;
+        taskPathLocal.remindTime = taskPath.remindTime ;
+        taskPathLocal.repeatMode = taskPath.repeatMode;
+        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
+        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
+
+NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
+    }
     localTaskStatus = taskPath.taskStatus;
     [self setBtnStr:taskPath.taskStatus];
     
@@ -133,7 +162,7 @@
     remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
     stateStr = [self modeValueToStr:Mode_state andValue:taskPath.taskStatus];
     
-    senderNameStr = taskPath.taskOwner;
+   // senderNameStr = taskPath.taskOwner;
     taskTitleStr = taskPath.taskName;
     taskContentStr = taskPath.taskContent;
     
@@ -270,6 +299,34 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 8;
+}
+
+
+-(NSString *)getAvatar
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *tempAvatar = [userInfoWithFile objectForKey:@"avatar"];//获取userID
+    
+    
+    return  tempAvatar;
+}
+
+
+-(NSString *)getNick
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *nick = [userInfoWithFile objectForKey:@"nick"];//获取userID
+    
+    
+    return  nick;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -858,6 +915,22 @@
 }
 
 
+-(void)setEditMode//任务详情跳转创建任务至编辑模式
+{
+    NSString *str = @"编辑任务";
+    CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
+    _createTaskViewCtl.navTitle = str;
+    _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
+    [_createTaskViewCtl setCreateTaskMode:Mode_EditTask];
+    if(taskPathLocal!=nil)
+    {
+        NSLog(@"taskPathLocal.taskName = [%@]",taskPathLocal.taskName);
+        
+        [_createTaskViewCtl setLoadDefaultPath:taskPathLocal];
+    }
+    [self.navigationController pushViewController:_createTaskViewCtl animated:NO];
+}
+
 //重写返回按钮
 -(void)quitView{
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
@@ -871,27 +944,42 @@
 
 -(void)btnRightClick:(id)sender
 {
-    NSLog(@"编辑 TaskDetail_MyMode = %d",self.taskDetailMode);
-    if(self.taskDetailMode == TaskDetail_MyMode)
-    {
-        if([rightBtnStr isEqualToString:@"编辑"])
-        {
-            mTextView.editable = YES;
-            taskName.enabled = YES;
-            rightBtnStr = @"完成";
-            [taskName becomeFirstResponder];
-            
-        }
-        else if([rightBtnStr isEqualToString:@"完成"])
-        {
-            mTextView.editable = NO;
-            taskName.enabled = NO;
-            rightBtnStr = @"编辑";
-        }
-        
-        [self.mBtnRight setTitle:rightBtnStr forState:UIControlStateNormal];
-    }
-        
+    
+    
+//    NSLog(@"编辑 TaskDetail_MyMode = %d",self.taskDetailMode);
+//    if(self.taskDetailMode == TaskDetail_MyMode)
+//    {
+//        if([rightBtnStr isEqualToString:@"编辑"])
+//        {
+//            mTextView.editable = YES;
+//            taskName.enabled = YES;
+//            rightBtnStr = @"完成";
+//            [taskName becomeFirstResponder];
+//            
+//        }
+//        else if([rightBtnStr isEqualToString:@"完成"])
+//        {
+//            mTextView.editable = NO;
+//            taskName.enabled = NO;
+//            rightBtnStr = @"编辑";
+//        }
+//        
+//        [self.mBtnRight setTitle:rightBtnStr forState:UIControlStateNormal];
+//    }
+
+    
+//    [self quitView];
+//     NSLog(@"run here -- [%d]",__LINE__);
+//    if([self.delegate respondsToSelector:@selector(setEdit)])
+//    {
+//        NSLog(@"run here -- [%d]",__LINE__);
+//       [self.delegate setEdit];
+//    }
+    
+
+    
+    [self setEditMode];
+    
 }
 
 -(void)setTaskDetailMode:(TaskDetailMode)taskDetailMode

@@ -93,6 +93,14 @@
     return mutableArray;
 }
 
+-(void)setDatePickerStyle:(DateStyle)datePickerStyle
+{
+    _datePickerStyle = datePickerStyle;
+    
+    [myPickerView reloadAllComponents];
+}
+
+
 //进行初始化
 - (void)drawRect:(CGRect)rect
 {

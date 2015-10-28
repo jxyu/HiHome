@@ -74,6 +74,9 @@ typedef enum _taskType
 @property(nonatomic) NSString *taskContent;//任务内容
 @property(nonatomic) NSString *taskOwner;//发布者
 @property(nonatomic) NSString *taskPerformers;//执行者
+
+@property(nonatomic) NSMutableArray *taskPerformerDetails;//执行者信息
+
 @property(nonatomic) NSDateComponents *startTaskDate;//开始时间
 @property(nonatomic) NSDateComponents *endTaskDate;//结束时间
 

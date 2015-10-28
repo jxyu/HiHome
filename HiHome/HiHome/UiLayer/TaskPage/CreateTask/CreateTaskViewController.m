@@ -186,20 +186,30 @@
     [_titleField resignFirstResponder];
     [_textView resignFirstResponder];
     
-    
+    if(_createTaskMode == Mode_EditTask)
+        taskUserID = [self getUserID];
 
     if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID&&taskUserID) {
-        [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
-//        DataProvider * dataprovider=[[DataProvider alloc] init];
-//        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-//        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
-//        if (self.assetsArray.count>0) {
-//            DataProvider * dataprovider=[[DataProvider alloc] init];
-//            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-//            dataprovider
-//        }
         
-        [self BuildSliderData];
+        if(_createTaskMode != Mode_EditTask)
+        {
+            [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
+    //        DataProvider * dataprovider=[[DataProvider alloc] init];
+    //        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+    //        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
+    //        if (self.assetsArray.count>0) {
+    //            DataProvider * dataprovider=[[DataProvider alloc] init];
+    //            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+    //            dataprovider
+    //        }
+            
+            [self BuildSliderData];
+        }
+        else
+        {
+            [SVProgressHUD showWithStatus:@"正在更新..." maskType:SVProgressHUDMaskTypeBlack];
+            [self BuildSliderData];
+        }
     }
     else
     {
@@ -211,6 +221,7 @@
 }
 -(void)UpdateAndRequest
 {
+    
     if (img_uploaded.count>0) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
@@ -220,8 +231,53 @@
     {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        if(_createTaskMode == Mode_EditTask)
+        {
+            
+            
+            //重新组合新的图片地址
+            for(int i =0;i<imgSrc.count;i++)
+            {
+                 NSLog(@"i = [%d] =[%@]",i,[imgSrc objectAtIndex:i]);
+                
+                if([[imgSrc objectAtIndex:i] isEqualToString:@""])
+                {
+                    continue;
+                }
+                
+                [img_prm addObject:[imgSrc objectAtIndex:i]];
+            }
+            
+            for(int i =0;i<img_prm.count;i++)
+            {
+                NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
+            }
+            
+            
+            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        }
+        else
+        {
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+        }
+        
+        
     }
+}
+
+
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile1 =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile1 objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
 }
 
 -(void)uploadImgBackCall:(id)dict
@@ -238,7 +294,37 @@
             [SVProgressHUD dismiss];
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            
+            if(_createTaskMode == Mode_EditTask)
+            {
+                
+                
+                //重新组合新的图片地址
+                for(int i =0;i<imgSrc.count;i++)
+                {
+                    NSLog(@"i = [%d] =[%@]",i,[imgSrc objectAtIndex:i]);
+                    
+                    if([[imgSrc objectAtIndex:i] isEqualToString:@""])
+                    {
+                        continue;
+                    }
+                    
+                    [img_prm addObject:[imgSrc objectAtIndex:i]];
+                }
+                
+                for(int i =0;i<img_prm.count;i++)
+                {
+                    NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
+                }
+                
+                
+                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            }
+            else
+            {
+            
+                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@""];
+            }
         }
         
     }
@@ -618,12 +704,14 @@
         titleField = [[UITextField alloc]init];
         titleLabel.text = @"   执行人:";
         titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-        titleField.placeholder = @"请输入执行人";
+        
         titleField.delegate = self;
         titleField.leftView = titleLabel;
         titleField.leftViewMode = UITextFieldViewModeAlways;
-//        if(_createTaskMode == Mode_EditTask)
-//            titleField.text =
+        if(_createTaskMode == Mode_EditTask)
+            titleField.text = @"自己";
+        else
+            titleField.placeholder = @"请输入执行人";
         UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
         chooseContactsBtn.tag = ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG;
         [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside

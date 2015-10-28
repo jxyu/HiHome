@@ -132,6 +132,7 @@
 		B50FA11F1BD878BE003E80CD /* jinianri_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11C1BD878BE003E80CD /* jinianri_img@2x.png */; };
 		B50FA1201BD878BE003E80CD /* xueren@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11D1BD878BE003E80CD /* xueren@2x.png */; };
 		B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B50FA11E1BD878BE003E80CD /* yuandan@2x.png */; };
+		B52102C21BE0AC2400C981B4 /* taskerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52102C11BE0AC2400C981B4 /* taskerCollectionViewCell.m */; };
 		B53563011BB244A0002D5F8D /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563001BB244A0002D5F8D /* ChatTableViewCell.m */; };
 		B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563A61BB28FDD002D5F8D /* CalendarViewController.m */; };
 		B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */; };
@@ -513,6 +514,8 @@
 		B50FA11C1BD878BE003E80CD /* jinianri_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jinianri_img@2x.png"; sourceTree = "<group>"; };
 		B50FA11D1BD878BE003E80CD /* xueren@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xueren@2x.png"; sourceTree = "<group>"; };
 		B50FA11E1BD878BE003E80CD /* yuandan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuandan@2x.png"; sourceTree = "<group>"; };
+		B52102C01BE0AC2400C981B4 /* taskerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = taskerCollectionViewCell.h; sourceTree = "<group>"; };
+		B52102C11BE0AC2400C981B4 /* taskerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = taskerCollectionViewCell.m; sourceTree = "<group>"; };
 		B53562FF1BB244A0002D5F8D /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		B53563001BB244A0002D5F8D /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		B53563A51BB28FDD002D5F8D /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
@@ -1793,6 +1796,8 @@
 				B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */,
 				B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */,
 				B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */,
+				B52102C01BE0AC2400C981B4 /* taskerCollectionViewCell.h */,
+				B52102C11BE0AC2400C981B4 /* taskerCollectionViewCell.m */,
 			);
 			name = TaskDetailPage;
 			sourceTree = "<group>";
@@ -1945,7 +1950,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 6NC56CVL43;
+						DevelopmentTeam = M7YC435M3S;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -2207,6 +2212,7 @@
 				B587FF171BC8B4D500E9F119 /* AlbumTableViewCell.m in Sources */,
 				B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */,
 				B5E059E01BB146E100DBF786 /* WMOtherViewController.m in Sources */,
+				B52102C21BE0AC2400C981B4 /* taskerCollectionViewCell.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
 				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,
@@ -2471,7 +2477,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
@@ -2507,7 +2513,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};

@@ -191,6 +191,14 @@
     }
 }
 
+-(void)acceptOrReject:(NSString *) sid andState:(NSString *) state{
+    if (sid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=applyTask",Url];
+        NSDictionary *prm = @{@"sid":sid,@"state":state};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)delTask:(NSString *)taskID
 {
     if(taskID)

@@ -42,7 +42,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -58,18 +58,20 @@
         [cell addSubview:mHeadImage];
         
         UILabel *mUserLbl = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImage.frame.size.width + 10, 15 + 35 - 10, 120, 21)];
-        mUserLbl.text = [NSString stringWithFormat:@"%@   %@",_mNameTxt,_mSexTxt];//@"唐嫣   女";
+        mUserLbl.text = [NSString stringWithFormat:@"%@",_mNameTxt];//@"唐嫣   女";
         [cell addSubview:mUserLbl];
-    }else if(indexPath.section == 1){
-        UITextField *mRemark = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 20, 40)];
-        mRemark.delegate = self;
-        mRemark.placeholder = @"请输入备注信息";
-        UILabel *mLeftLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, cell.frame.size.height)];
-        mLeftLbl.text = @"备注信息:";
-        mRemark.leftView = mLeftLbl;
-        mRemark.leftViewMode = UITextFieldViewModeAlways;
-        [cell addSubview:mRemark];
-    }else{
+    }
+//    else if(indexPath.section == 1){
+//        UITextField *mRemark = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 20, 40)];
+//        mRemark.delegate = self;
+//        mRemark.placeholder = @"请输入备注信息";
+//        UILabel *mLeftLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, cell.frame.size.height)];
+//        mLeftLbl.text = @"备注信息:";
+//        mRemark.leftView = mLeftLbl;
+//        mRemark.leftViewMode = UITextFieldViewModeAlways;
+//        [cell addSubview:mRemark];
+//    }
+    else{
         cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1];
         if ([_mIFlag isEqual:@"1"]) {
             UIButton *mRejectBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
@@ -109,9 +111,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return 100;
-    }else if(indexPath.section == 1){
-        return 50;
     }
+//    else if(indexPath.section == 1){
+//        return 50;
+//    }
     return SCREEN_HEIGHT - 64 -3 * 10 - 100 - 50;
 }
 

@@ -166,6 +166,9 @@
 
 -(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state;
 
+//接受或拒绝任务 －－ sid：任务状态ID  state：1、接受 2、拒绝
+-(void)acceptOrReject:(NSString *) sid andState:(NSString *) state;
+
 //根据路径上传图片
 -(void)UploadImgWithImgdata:(NSString *)imagePath;
 

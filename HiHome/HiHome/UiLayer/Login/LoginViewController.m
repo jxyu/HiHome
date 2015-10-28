@@ -15,6 +15,7 @@
 #import "DataDefine.h"
 #import "RegisterViewController.h"
 #import "SVProgressHUD.h"
+#import "UMSocial.h"
 
 @interface LoginViewController ()
 
@@ -217,6 +218,7 @@
     QQLoginBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*25, ZY_UIPART_SCREEN_HEIGHT * 90, 40, 40);
     QQLoginBtn.contentMode = UIViewContentModeCenter;
     [QQLoginBtn setImage:[UIImage imageNamed:@"qqlogin"] forState:UIControlStateNormal];
+    [QQLoginBtn addTarget:self action:@selector(QQLogin:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:QQLoginBtn];
     
     
@@ -427,6 +429,29 @@
     NSLog(@"跳转");
     RegisterViewController * registerVC=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
     [self presentViewController:registerVC animated:YES completion:^{}];
+}
+
+-(void)QQLogin:(UIButton *)sender
+{
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取微博用户名、uid、token等
+        [[UMSocialDataService defaultDataService] requestSnsInformation:UMShareToQQ  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"SnsInformation is %@",response.data);
+        }];
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            //获取accestoken以及QQ用户信息，得到的数据在回调Block对象形参respone的data属性
+            
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
+            
+            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+//            DataProvider * dataprovider=[[DataProvider alloc] init];
+//            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+//            [dataprovider LoginForQQWithopenid:snsAccount.usid andusername:snsAccount.userName];
+        }});
 }
 
 /*

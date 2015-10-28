@@ -30,6 +30,9 @@
 
 #import "OptionTextViewController.h"
 #import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaHandler.h"
 
 #define SMSappKey @"b5174972a9ac"
 #define SMSappSecret @"8536890596fff208c04a3e52c88a2060"
@@ -58,8 +61,35 @@
     
     
     
-    //友盟
-    [UMSocialData setAppKey:@"55ee2fcc67e58e2d20005b57"];
+    /***************************************分享开始**********************************************/
+    
+    [UMSocialData setAppKey:@"55ee2fcc67e58e2d20005b57"];//设置友盟appkey
+    //设置微信AppId，设置分享url，默认使用友盟的网址
+    
+    //设置支持没有客户端情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    
+    //打开调试log的开关
+    [UMSocialData openLog:YES];
+    
+    //如果你要支持不同的屏幕方向，需要这样设置，否则在iPhone只支持一个竖屏方向
+    [UMSocialConfig setSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
+    
+    //设置微信AppId，设置分享url，默认使用友盟的网址
+    [UMSocialWechatHandler setWXAppId:@"wxb49d124a778b0381" appSecret:@"03133af7c57f6a16a6e4b59d299e8e6f" url:@"http://www.pgyer.com/ItEJ"];
+    //    //设置支持没有客户端情况下使用SSO授权
+    
+    //    //设置分享到QQ空间的应用Id，和分享url 链接
+    [UMSocialQQHandler setQQWithAppId:@"1104931910" appKey:@"Lle8IoqegSm0Rnvd" url:@"http://www.pgyer.com/ItEJ"];
+    
+    //    //设置支持没有客户端情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    
+    //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil ,需要 #import "UMSocialSinaHandler.h"
+    [UMSocialSinaHandler openSSOWithRedirectURL:nil];
+    
+    
+    /***************************************分享结束**********************************************/
     
     
     

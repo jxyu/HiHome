@@ -267,6 +267,7 @@
 		B7983E6C1BE1B00800CE6143 /* right_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B7983E6B1BE1B00800CE6143 /* right_img.png */; };
 		B7983E701BE1FD5000CE6143 /* AddressMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7983E6E1BE1FD5000CE6143 /* AddressMapViewController.m */; };
 		B7983E711BE1FD5000CE6143 /* AddressMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7983E6F1BE1FD5000CE6143 /* AddressMapViewController.xib */; };
+		B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B798401D1BE2152000CE6143 /* CCLocationManager.m */; };
 		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; };
 		B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */; };
 		B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */; };
@@ -1082,6 +1083,8 @@
 		B79840111BE1FF2200CE6143 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B79840151BE205C600CE6143 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = HiHome/AMap.bundle; sourceTree = "<group>"; };
 		B79840191BE2082C00CE6143 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B798401C1BE2152000CE6143 /* CCLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocationManager.h; sourceTree = "<group>"; };
+		B798401D1BE2152000CE6143 /* CCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLocationManager.m; sourceTree = "<group>"; };
 		B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeCell.h; path = HiHome/UiLayer/MainPage/MessageNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeCell.m; path = HiHome/UiLayer/MainPage/MessageNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeCell.xib; path = HiHome/UiLayer/MainPage/MessageNoticeCell.xib; sourceTree = SOURCE_ROOT; };
@@ -1502,6 +1505,7 @@
 		8048CC471BD21C2E00B76C59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B798401B1BE2152000CE6143 /* Location */,
 				800A4D591BDF865800A22EA4 /* UMeng */,
 				8018387C1BDDCB0B0046B814 /* JPush */,
 				80076A9C1BDA155000DEFD35 /* ImagePicker */,
@@ -2920,6 +2924,15 @@
 			path = UUDatePicker_Block;
 			sourceTree = "<group>";
 		};
+		B798401B1BE2152000CE6143 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				B798401C1BE2152000CE6143 /* CCLocationManager.h */,
+				B798401D1BE2152000CE6143 /* CCLocationManager.m */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		B7CC5AE11BD4B8D200A1078F /* ThreeSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -3318,6 +3331,7 @@
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
+				B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				80124C0C1BD885E800DBE369 /* UIImage+MultiFormat.m in Sources */,

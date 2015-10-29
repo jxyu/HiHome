@@ -1584,13 +1584,13 @@
         NSLog(@"taskDetailPath.imgSrc count = %ld",taskDetailPath.imgSrc.count);
         
         
-        if(![[taskDetailDict objectForKey:@"tasker"] isEqual:[NSNull null]])
+        if(![[taskDetailDict objectForKey:@"taskerlist"] isEqual:[NSNull null]])
         {
-            taskDetailPath.taskPerformerDetails = [taskDetailDict objectForKey:@"tasker"];
+            taskDetailPath.taskPerformerDetails = [taskDetailDict objectForKey:@"taskerlist"];
         }
         else
         {
-            NSLog(@"tasker = NULL");
+            NSLog(@"taskerlist = NULL");
            // return;
         }
         

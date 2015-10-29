@@ -215,6 +215,9 @@
 //删除好友 －－ FID：好友ID   userID：自己的ID
 -(void)delFriend:(NSString *)FID andUserID:(NSString *) userID;
 
+//匹配通讯录好友
+-(void)matchAddress:(NSString *)userID andMob:(NSString *) mob;
+
 //获取用户资料
 -(void)GetUserInfoWithUid:(NSString *)uid;
 

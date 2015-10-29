@@ -95,8 +95,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
             endingLineNumber = "100"
-            landmarkName = "-searchBarCancelButtonClicked:"
-            landmarkType = "5">
+            landmarkName = "@implementation ChatPageViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/RegisterViewController.m"
-            timestampString = "467724766.493468"
+            timestampString = "467778924.42207"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "-LoginFunC:"
             landmarkType = "5">
          </BreakpointContent>
@@ -442,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "467604340.993009"
+            timestampString = "467789878.113513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "-createTask:andTitle:andContent:andIsDay:andStartTime:andEndTime:andTip:andRepeat:andTasker:andimgsrc1:andimgsrc2:andimgsrc3:"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "467605059.259571"
+            timestampString = "467789878.113513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "-createTask:andTitle:andContent:andIsDay:andStartTime:andEndTime:andTip:andRepeat:andTasker:andimgsrc1:andimgsrc2:andimgsrc3:"
             landmarkType = "5">
          </BreakpointContent>
@@ -592,6 +592,54 @@
             startingLineNumber = "192"
             endingLineNumber = "192"
             landmarkName = "-btnRightClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/DataProvider/DataProvider.m"
+            timestampString = "467789878.113513"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "-ChangeTaskState:andState:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/DataProvider/DataProvider.m"
+            timestampString = "467789878.113513"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
+            landmarkName = "-ChangeTaskState:andState:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Album/AlbumMainViewController.m"
+            timestampString = "467799831.666051"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
+            landmarkName = "-getAlbumListCallBack:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

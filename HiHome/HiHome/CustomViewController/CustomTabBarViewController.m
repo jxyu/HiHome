@@ -57,6 +57,11 @@
     _tabBarBG.backgroundColor = [UIColor colorWithRed:0.99 green:0.99 blue:0.99 alpha:1];
     
     
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+    lineView.backgroundColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+    [_tabBarBG addSubview:lineView];
+    
+    
     
     {
         UIImageView *original = [[UIImageView alloc] init];

@@ -15,6 +15,8 @@
 //#define Url @"http://115.28.21.137/mobile/"
 #define Url @"http://hihome.zhongyangjituan.com/"
 
+#define DEBUG       1
+
 @implementation DataProvider
 
 #pragma mark 赋值回调
@@ -26,7 +28,7 @@
 /**
  *  注册
  *
- *  @param prm <#prm description#>
+ *  @param prm
  */
 -(void)RegisterUserInfo:(id)prm
 {
@@ -35,6 +37,20 @@
         [self GetRequest:url andpram:prm];
     }
 }
+
+/**
+ *  忘记密码
+ *
+ *  @param prm
+ */
+-(void)ForgetPassWord:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=resetPassword",Url];
+        [self GetRequest:url andpram:prm];
+    }
+}
+
 -(void)Login:(NSString *)mobel andpwd:(NSString *)pwd andreferrer:(NSString *)referrer
 {
     if (mobel&&pwd) {
@@ -409,7 +425,151 @@
 
 
 
+#pragma mark - album api
 
+-(void)CreateAlbum:(NSString *)uid andTitle:(NSString *)title andPm:(NSString *)pm andIntro:(NSString *)intro
+{
+    if(title&&uid&&pm &&intro)
+    {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=album&a=addInfo",Url];
+        NSDictionary *prm = @{@"uid":uid,@"title":title,@"pm":pm,@"intro":intro};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)DelAlbum:(NSString *)Albumid
+{
+    if(Albumid)
+    {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=album&a=delInfo",Url];
+        NSDictionary *prm = @{@"id":Albumid};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetAlbumList:(NSString *)fid andUid:(NSString *)uid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage
+{
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    
+    if(fid&&uid)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=album&a=getList",Url];
+
+            
+        [prm setObject:uid forKey:@"uid"];
+        [prm setObject:fid forKey:@"fid"];
+        
+        if(nowpage!=nil)
+            [prm setObject:nowpage forKey:@"nowpage"];
+        if(perPage)
+            [prm setObject:perPage forKey:@"perpage"];
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+    
+}
+
+-(void) GetAlbumInfo:(NSString *)Albumid
+{
+    if(Albumid)
+    {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=album&a=getInfo",Url];
+        NSDictionary *prm = @{@"id":Albumid};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)UploadPicture:(NSString *)uid andAlbumID:(NSString *)aId andImgSrc:(NSString *)imgSrc andIntro:(NSString *)intro
+{
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    
+    if(uid&&aId&&imgSrc&&intro)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=photo&a=addInfo",Url];
+        
+        
+        [prm setObject:uid forKey:@"uid"];
+        [prm setObject:aId forKey:@"aid"];
+        
+        [prm setObject:imgSrc forKey:@"imgsrc"];
+        [prm setObject:intro forKey:@"intro"];
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+
+}
+
+-(void)DelPicture:(NSString *)Picid
+{
+    if(Picid)
+    {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=photo&a=delInfo",Url];
+        NSDictionary *prm = @{@"id":Picid};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetPictureList:(NSString *)uid andAid:(NSString *)aid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage
+{
+     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    if(aid&&uid)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=photo&a=getList",Url];
+        
+        
+        [prm setObject:uid forKey:@"uid"];
+        [prm setObject:aid forKey:@"aid"];
+        
+        if(nowpage!=nil)
+            [prm setObject:nowpage forKey:@"nowpage"];
+        if(perPage)
+            [prm setObject:perPage forKey:@"perpage"];
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+
+
+-(void) GetPictureInfo:(NSString *)Picid
+{
+    if(Picid)
+    {
+        
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=photo&a=getInfo",Url];
+        NSDictionary *prm = @{@"id":Picid};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
 
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram

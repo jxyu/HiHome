@@ -9,10 +9,19 @@
 #import "UploadPicViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
+#import "JKImagePickerController.h"
 #import "PullDownButtonsTab.h"
+#import "PhotoCell.h"
+#import "TempCustomButton.h"
 
-@interface UploadPicViewController ()
 
+@interface UploadPicViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    
+    UITextField *albumField ;
+}
+@property (nonatomic, strong) NSMutableArray   *assetsArray;
+@property (nonatomic, retain) UICollectionView *collectionView;
 @end
 
 @implementation UploadPicViewController
@@ -74,6 +83,8 @@
 }
 
 
+
+
 -(void) initViews
 {
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
@@ -110,7 +121,7 @@
     
     
     _titleField = [[UITextField alloc]init];
-    
+    albumField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, _cellHeight)];
     _textView = [[UITextView alloc] init];
     //   _textView.text = @"发帖内容";
     
@@ -136,14 +147,7 @@
 {
     NSLog(@"tap view---");
     
-    if(_keyShow == true)
-    {
-        _keyShow = false;
-        [_textView resignFirstResponder];//关闭textview的键盘
-        [_titleField resignFirstResponder];//关闭titleField的键盘
-//        [self setViewMove];
-        
-    }
+    [self.view endEditing:YES];
 }
 
 //指定每个分区中有多少行，默认为1
@@ -212,7 +216,7 @@
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 50)];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.section) {
         case 1:
         {
@@ -223,21 +227,31 @@
 //            [cell addSubview:_titleField];
             
             
+            TempCustomButton *setAlbumBtn = [[TempCustomButton alloc] initWithFrame:CGRectMake(0, 0, 100 , _cellHeight)];
+            
+            [setAlbumBtn setTitle:@"相册名字" forState:UIControlStateNormal];
+            [setAlbumBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [setAlbumBtn setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
+            setAlbumBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            setAlbumBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [setAlbumBtn addTarget:self action:@selector(btnChooseAlbums:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
             UILabel *_textLabel= [[UILabel alloc] init];
-            _textLabel.text = @"上传到:";
+            _textLabel.text = @"   上传到:";
             _textLabel.frame = CGRectMake(10, 0, 80 , _cellHeight);
-            [cell addSubview:_textLabel];
+            _textLabel.font = [UIFont systemFontOfSize:14];
             
-            UILabel *_albumNameLabel= [[UILabel alloc] init];
-            _albumNameLabel.text = @"相册名字";
-            _albumNameLabel.frame = CGRectMake(self.view.frame.size.width-20-100, 0, 100 , _cellHeight);
-            [cell addSubview:_albumNameLabel];
             
-            UIImageView *nextIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"set"]];
-            nextIcon.frame = CGRectMake(self.view.frame.size.width-20,0,15,_cellHeight );
-            nextIcon.contentMode = UIViewContentModeCenter;
-            [cell addSubview:nextIcon];
+            albumField.rightView = setAlbumBtn;
+            albumField.rightViewMode = UITextFieldViewModeAlways;
             
+            albumField.leftView = _textLabel;
+            albumField.leftViewMode = UITextFieldViewModeAlways;
+
+           
+            
+            [cell addSubview:albumField];
         }
             break;
         case 0:
@@ -256,9 +270,31 @@
             UIButton *pickPicBtns = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, _cellHeight*2 - 20,  _cellHeight*2-20)];
             [pickPicBtns setImage:[UIImage imageNamed:@"pickPicBtn"] forState:UIControlStateNormal];
             
-            [pickPicBtns addTarget:self action:@selector(showLocalAlbum) forControlEvents:UIControlEventTouchUpInside];
+            [pickPicBtns addTarget:self action:@selector(btnPickPicture:) forControlEvents:UIControlEventTouchUpInside];
             
             [cell addSubview:pickPicBtns];
+            
+            
+            if (!_collectionView) {
+                UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+                layout.minimumLineSpacing = 5.0;
+                layout.minimumInteritemSpacing = 5.0;
+                layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                
+                // _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+                _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(pickPicBtns.frame.size.width+pickPicBtns.frame.origin.x+5, 10,(SCREEN_WIDTH-(pickPicBtns.frame.size.width + pickPicBtns.frame.origin.x)),_cellHeight*2-20) collectionViewLayout:layout];
+                _collectionView.backgroundColor = [UIColor clearColor];
+                [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
+                _collectionView.delegate = self;
+                _collectionView.dataSource = self;
+                _collectionView.showsHorizontalScrollIndicator = NO;
+                _collectionView.showsVerticalScrollIndicator = NO;
+                
+                [cell addSubview:_collectionView];
+                
+            }
+
+            
 
         }
             break;
@@ -273,27 +309,22 @@
     return cell;
     
 }
-//打开相册
--(void)showLocalAlbum
+
+
+-(void)btnChooseAlbums:(UIButton *)sender
 {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    ChooseAlbumViewController *chooseViewCtl = [[ChooseAlbumViewController alloc] init];
+    chooseViewCtl.navTitle =@"选择相册";
+    chooseViewCtl.delegate = self;
+    [self presentViewController:chooseViewCtl animated:YES completion:^{}];
     
-    imagePickerController.delegate = self;
-    
-    imagePickerController.allowsEditing = YES;
-    
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    [self presentViewController:imagePickerController animated:YES completion:^{}];
 }
-
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+#pragma mark - delegate or choose view
+-(void)pickedAlbum:(NSDictionary *)dict
 {
-    
-    [self dismissViewControllerAnimated:YES completion:^{}];
-    
+    NSLog(@"dict1 = %@",dict);
+    if(dict != nil)
+        albumField.text = [dict objectForKey:@"title"];
 }
 
 
@@ -432,6 +463,88 @@
     return 1;
     
 }
+
+#pragma mark - 照片选择
+
+-(void)btnPickPicture:(UIButton *)sender
+{
+    [self composePicAdd];
+    [_collectionView reloadData];
+}
+
+- (void)composePicAdd
+{
+    JKImagePickerController *imagePickerController;
+    UINavigationController *navigationController ;
+    
+    imagePickerController = [[JKImagePickerController alloc] init];
+    
+    navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 10;
+    imagePickerController.selectedAssetArray = self.assetsArray;
+    [self presentViewController:navigationController animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
+{
+    self.assetsArray = [NSMutableArray arrayWithArray:assets];
+    
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.assetsArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCellIdentifier forIndexPath:indexPath];
+    
+    cell.tag=indexPath.row;
+    
+    cell.asset = [self.assetsArray objectAtIndex:[indexPath row]];
+    
+    return cell;
+    
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(_cellHeight*2-20, _cellHeight*2-20);
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld",(long)[indexPath row]);
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

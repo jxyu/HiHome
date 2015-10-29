@@ -11,8 +11,9 @@
 #import "PullDownButtonsTab.h"
 
 #import "UploadPicViewController.h"
+#import "CreateAlbumViewController.h"
 
-@interface AlbumMainViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate,PullDownButtonsTabDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface AlbumMainViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate,PullDownButtonsTabDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UploadPicViewControllerDelegate>
 {
 @private
     NSInteger _cellCount;
@@ -24,17 +25,18 @@
     
     NSMutableArray *_tableViews;
     
-    UITableView *_getTaskView;
-    UITableView *_myTaskView;
+    UITableView *_albumView;
+    UITableView *_recentPicView;
     
-    NSInteger _cellCountMyTask;
-    NSInteger _cellCountGetTask;
+    NSInteger _cellCountRecentPic;
+    NSInteger _cellCountAlbum;
     
     BOOL _pullDownBtnsTabFlag;
     PullDownButtonsTab *_pullDownBtnTab;
     
     /*上传照片*/
     UploadPicViewController *_uploadPicViewCtl;
+    CreateAlbumViewController *_createAlbum;
     
 }
 @end

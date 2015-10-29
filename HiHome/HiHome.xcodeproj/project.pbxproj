@@ -212,6 +212,11 @@
 		B59688251BCE0929001F2715 /* RepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59688231BCE0929001F2715 /* RepeatViewController.xib */; };
 		B59688281BCE4508001F2715 /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59688271BCE4508001F2715 /* RepeatViewController.m */; };
 		B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = B596BF911BBBCB8F00349B1E /* JKAlertDialog.m */; };
+		B599FEB51BE1F25B0045E117 /* CreateAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B599FEB31BE1F25B0045E117 /* CreateAlbumViewController.m */; };
+		B599FEB61BE1F25B0045E117 /* CreateAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B599FEB41BE1F25B0045E117 /* CreateAlbumViewController.xib */; };
+		B599FEB91BE1FD550045E117 /* TempCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B599FEB81BE1FD550045E117 /* TempCustomButton.m */; };
+		B599FEBD1BE21FAB0045E117 /* ChooseAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B599FEBB1BE21FAB0045E117 /* ChooseAlbumViewController.m */; };
+		B599FEBE1BE21FAB0045E117 /* ChooseAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B599FEBC1BE21FAB0045E117 /* ChooseAlbumViewController.xib */; };
 		B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A77AB01BB4D9220014DD67 /* textImg@2x.png */; };
 		B5A77AB71BB4E9780014DD67 /* gettask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A77AB51BB4E9780014DD67 /* gettask_gray@2x.png */; };
 		B5A77AB81BB4E9780014DD67 /* gettask_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A77AB61BB4E9780014DD67 /* gettask_red@2x.png */; };
@@ -628,6 +633,14 @@
 		B59688271BCE4508001F2715 /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		B596BF901BBBCB8F00349B1E /* JKAlertDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAlertDialog.h; sourceTree = "<group>"; };
 		B596BF911BBBCB8F00349B1E /* JKAlertDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAlertDialog.m; sourceTree = "<group>"; };
+		B599FEB21BE1F25B0045E117 /* CreateAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAlbumViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.h; sourceTree = SOURCE_ROOT; };
+		B599FEB31BE1F25B0045E117 /* CreateAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateAlbumViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.m; sourceTree = SOURCE_ROOT; };
+		B599FEB41BE1F25B0045E117 /* CreateAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAlbumViewController.xib; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.xib; sourceTree = SOURCE_ROOT; };
+		B599FEB71BE1FD550045E117 /* TempCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempCustomButton.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/TempCustomButton.h; sourceTree = SOURCE_ROOT; };
+		B599FEB81BE1FD550045E117 /* TempCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TempCustomButton.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/TempCustomButton.m; sourceTree = SOURCE_ROOT; };
+		B599FEBA1BE21FAB0045E117 /* ChooseAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChooseAlbumViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.h; sourceTree = SOURCE_ROOT; };
+		B599FEBB1BE21FAB0045E117 /* ChooseAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChooseAlbumViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.m; sourceTree = SOURCE_ROOT; };
+		B599FEBC1BE21FAB0045E117 /* ChooseAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseAlbumViewController.xib; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5A77AB01BB4D9220014DD67 /* textImg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textImg@2x.png"; sourceTree = "<group>"; };
 		B5A77AB51BB4E9780014DD67 /* gettask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gettask_gray@2x.png"; sourceTree = "<group>"; };
 		B5A77AB61BB4E9780014DD67 /* gettask_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gettask_red@2x.png"; sourceTree = "<group>"; };
@@ -1295,11 +1308,11 @@
 		B5033BD51BAFB1BE0014935E /* UiLayer */ = {
 			isa = PBXGroup;
 			children = (
+				B57F5D7F1BBA77E1009AC336 /* Login */,
 				B5A77AB91BB4EBAF0014DD67 /* UIDefine.h */,
 				B7942B9F1BD88134007D6F17 /* PersonPage */,
 				B583B1A31BC39B2B000572CA /* BaseUnits */,
 				B596BF491BBBB75C00349B1E /* AlertView */,
-				B57F5D7F1BBA77E1009AC336 /* Login */,
 				B5033BDC1BAFB3B90014935E /* AddressPage */,
 				B5033BDB1BAFB3920014935E /* ChatPage */,
 				B5033BDA1BAFB35A0014935E /* TaskPage */,
@@ -1545,6 +1558,14 @@
 				B581960A1BCB906400D69A1E /* UploadPicViewController.h */,
 				B581960B1BCB906400D69A1E /* UploadPicViewController.m */,
 				B581960C1BCB906400D69A1E /* UploadPicViewController.xib */,
+				B599FEB21BE1F25B0045E117 /* CreateAlbumViewController.h */,
+				B599FEB31BE1F25B0045E117 /* CreateAlbumViewController.m */,
+				B599FEB41BE1F25B0045E117 /* CreateAlbumViewController.xib */,
+				B599FEB71BE1FD550045E117 /* TempCustomButton.h */,
+				B599FEB81BE1FD550045E117 /* TempCustomButton.m */,
+				B599FEBA1BE21FAB0045E117 /* ChooseAlbumViewController.h */,
+				B599FEBB1BE21FAB0045E117 /* ChooseAlbumViewController.m */,
+				B599FEBC1BE21FAB0045E117 /* ChooseAlbumViewController.xib */,
 			);
 			path = UploadForAlbum;
 			sourceTree = "<group>";
@@ -2013,6 +2034,7 @@
 				B56CFC1E1BCCF1D80081B645 /* place@2x.png in Resources */,
 				B5A77AB71BB4E9780014DD67 /* gettask_gray@2x.png in Resources */,
 				B57F5D8F1BBA8399009AC336 /* wechatlogin@2x.png in Resources */,
+				B599FEB61BE1F25B0045E117 /* CreateAlbumViewController.xib in Resources */,
 				B7942BA41BD882CA007D6F17 /* PersonFirstViewController.xib in Resources */,
 				80124C131BD8B4F900DBE369 /* select_Radio_icon@2x.png in Resources */,
 				800A4DAD1BDF865800A22EA4 /* UMSnsAccountViewController.xib in Resources */,
@@ -2032,6 +2054,7 @@
 				B77F91241BD22B3300DAB43C /* TaskDetailPageViewController.xib in Resources */,
 				B78E4A441BD9FAA800F23976 /* AddFriendFirstViewController.xib in Resources */,
 				B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */,
+				B599FEBE1BE21FAB0045E117 /* ChooseAlbumViewController.xib in Resources */,
 				B57F5D8D1BBA8399009AC336 /* password@2x.png in Resources */,
 				B58DD96A1BB687A90040A084 /* addtask@2x.png in Resources */,
 				B5033BE61BAFB41F0014935E /* ChatPageViewController.xib in Resources */,
@@ -2217,6 +2240,7 @@
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
 				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,
 				B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */,
+				B599FEB91BE1FD550045E117 /* TempCustomButton.m in Sources */,
 				B5E059DE1BB146E100DBF786 /* WMNavigationController.m in Sources */,
 				8048CC451BD21AD500B76C59 /* AddressLocalViewController.m in Sources */,
 				80124C041BD885E800DBE369 /* SDWebImageCompat.m in Sources */,
@@ -2227,6 +2251,7 @@
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
+				B599FEB51BE1F25B0045E117 /* CreateAlbumViewController.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				80124C0C1BD885E800DBE369 /* UIImage+MultiFormat.m in Sources */,
@@ -2282,6 +2307,7 @@
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
 				80076AC71BDA155000DEFD35 /* JKImagePickerController.m in Sources */,
 				80124C061BD885E800DBE369 /* SDWebImageDownloader.m in Sources */,
+				B599FEBD1BE21FAB0045E117 /* ChooseAlbumViewController.m in Sources */,
 				8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */,
 				B77F91171BD1F29100DAB43C /* AnniversaryTaskDetailView.m in Sources */,
 				B56C2EEA1BC4BF330030FB83 /* OptionsViewController.m in Sources */,

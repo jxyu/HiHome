@@ -8,7 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import <RongIMKit/RongIMKit.h>
+#import "Toolkit.h"
 
 @interface ChatlistViewController : RCConversationListViewController
+{
+    UIView *_topView;//导航背景图
+    UILabel *_lblTitle;//导航标题
+    UIButton *_btnLeft;
+    UIButton *_btnRight;
+    UIImageView *_imgLeft;
+    UIImageView *_imgRight;
+    UILabel *_lblLeft;
+    UILabel *_lblRight;
+    
+    NSInteger _orginY;
+}
 
 @end

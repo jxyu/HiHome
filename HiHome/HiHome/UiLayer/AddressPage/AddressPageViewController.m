@@ -14,6 +14,7 @@
 #import "AddFriendFirstViewController.h"
 #import "DataProvider.h"
 #import "JKAlertDialog.h"
+#import "PersonFirstViewController.h"
 
 
 @interface AddressPageViewController (){
@@ -29,6 +30,8 @@
     
     NSInteger currentSection;
     NSIndexPath *currentRow;
+    
+    PersonFirstViewController *personFirstVC;
 }
 
 @end
@@ -336,6 +339,48 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    }else if(indexPath.section == 1){
+        personFirstVC = [[PersonFirstViewController alloc] init];
+        personFirstVC.navTitle = @"好友资料";
+        personFirstVC.mIFlag = @"2";
+        personFirstVC.mFriendID = [friendArraySpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"fid"];
+        personFirstVC.mName = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        personFirstVC.mSex = [friendArraySpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"sex"];
+        personFirstVC.mAge = [friendArraySpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"age"];
+        personFirstVC.mSign = [friendArraySpouse[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"sign"];
+        personFirstVC.mType = [friendArraySpouse[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"type"];
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    }else if (indexPath.section == 2){
+        personFirstVC = [[PersonFirstViewController alloc] init];
+        personFirstVC.navTitle = @"好友资料";
+        personFirstVC.mIFlag = @"2";
+        personFirstVC.mFriendID = [friendArrayStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"fid"];
+        personFirstVC.mName = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        personFirstVC.mSex = [friendArrayStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"sex"];
+        personFirstVC.mAge = [friendArrayStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"age"];
+        personFirstVC.mSign = [friendArrayStar[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"sign"];
+        personFirstVC.mType = [friendArrayStar[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"type"];
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    }else{
+        personFirstVC = [[PersonFirstViewController alloc] init];
+        personFirstVC.navTitle = @"好友资料";
+        personFirstVC.mIFlag = @"2";
+        personFirstVC.mFriendID = [friendArrayNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"fid"];
+        personFirstVC.mName = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
+        personFirstVC.mSex = [friendArrayNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"sex"];
+        personFirstVC.mAge = [friendArrayNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"age"];
+        personFirstVC.mSign = [friendArrayNormal[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"sign"];
+        personFirstVC.mType = [friendArrayNormal[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"type"];
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
     
 }
@@ -437,17 +482,6 @@
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return  @"删除";
-}
-
-//设置选中的行所执行的动作
-
--(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    NSUInteger row = [indexPath row];
-    
-    return indexPath;
-    
 }
 
 #pragma mark - setting for section

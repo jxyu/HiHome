@@ -11,8 +11,13 @@
 #import "AppDelegate.h"
 #import "CommenDef.h"
 #import "UserInfoViewController.h"
+#import "DataProvider.h"
 
-@interface AddressLocalViewController ()
+@interface AddressLocalViewController (){
+    DataProvider *dataProvider;
+    NSString *phoneStr;
+    NSArray *machAddressArray;
+}
 
 @end
 
@@ -21,8 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tableView.dataSource=self;
-    _tableView.delegate=self;
     
     //去除多余的横线
     _tableView.tableFooterView = [[UIView alloc] init];
@@ -200,7 +203,40 @@
     {
         [userSource addObject:dic1];
     }
+    NSLog(@"%@",phoneStr);
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"matchAddressBackCall:"];
+    [dataProvider matchAddress:[self getUserID] andMob:phoneStr];
+    
 }
+
+-(void)matchAddressBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        machAddressArray = dict[@"datas"][@"list"];
+        NSLog(@"%@",machAddressArray);
+        NSString *mState = [machAddressArray[1] valueForKey:@"mob"];
+        NSLog(@"%@",mState);
+    }else{
+        
+    }
+    _tableView.dataSource=self;
+    _tableView.delegate=self;
+    [_tableView reloadData];
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
 #pragma mark - 获取通讯录里联系人姓名和手机号
 - (void)address
 {
@@ -274,6 +310,11 @@
                 switch (j) {
                     case 0: {// Phone number
                         addressBook.tel = (__bridge NSString*)value;
+                        if (phoneStr) {
+                            phoneStr = [NSString stringWithFormat:@"%@,%@",phoneStr,addressBook.tel];
+                        }else{
+                            phoneStr = addressBook.tel;
+                        }
                         NSLog(@"%@",addressBook.tel);
                         break;
                     }
@@ -293,7 +334,7 @@
         if (abLastName) CFRelease(abLastName);
         if (abFullName) CFRelease(abFullName);
     }
-    [_tableView reloadData];
+    //[_tableView reloadData];
 }
 #pragma mark - 索引
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -370,6 +411,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CardTableViewCell *cell = [[CardTableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dic = [userSource objectAtIndex:indexPath.section];
     NSArray *arr = [[dic allValues] lastObject];
     NSArray *array = [arr objectAtIndex:indexPath.row];
@@ -397,7 +439,24 @@
     cell.nameLabel.textColor = [UIColor grayColor];
     UIButton * btn_tianjia=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, (cell.frame.size.height-40)/2, 70, 40)];
     btn_tianjia.backgroundColor=RGB(26, 200, 133);
-    [btn_tianjia setTitle:@"添加" forState:UIControlStateNormal];
+    switch ([[machAddressArray[indexPath.row] valueForKey:@"state"] intValue]) {
+        case 1:
+            [btn_tianjia setTitle:@"已同意" forState:UIControlStateNormal];
+            [btn_tianjia setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
+            [btn_tianjia setBackgroundColor:[UIColor clearColor]];
+            break;
+        case 2:
+            [btn_tianjia setTitle:@"添加" forState:UIControlStateNormal];
+            [btn_tianjia addTarget:self action:@selector(applyAddFriend:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case 3:
+            [btn_tianjia setTitle:@"邀请" forState:UIControlStateNormal];
+            [btn_tianjia setBackgroundColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1]];
+            break;
+            
+        default:
+            break;
+    }
     [cell addSubview:btn_tianjia];
     
     //分割线设置
@@ -429,6 +488,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] hiddenTabBar];
+}
+
+-(void)applyAddFriend:(id)sender{
+    
 }
 
 

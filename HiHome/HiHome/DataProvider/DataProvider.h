@@ -293,8 +293,14 @@
 //获取好友列表--  userID：用户ID
 -(void)getFriendList:(NSString *)userID;
 
+//改变好友的关系
+-(void)changeFriendType:(NSString *)friendID andUserID:(NSString *) userID andType:(NSString *) type;
+
 //删除好友 －－ FID：好友ID   userID：自己的ID
 -(void)delFriend:(NSString *)FID andUserID:(NSString *) userID;
+
+//匹配通讯录好友
+-(void)matchAddress:(NSString *)userID andMob:(NSString *) mob;
 
 //获取用户资料
 -(void)GetUserInfoWithUid:(NSString *)uid;

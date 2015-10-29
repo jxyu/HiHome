@@ -1,44 +1,26 @@
 //
-//  ChatlistViewController.m
+//  ChatContentViewController.m
 //  HiHome
 //
-//  Created by 于金祥 on 15/10/21.
+//  Created by 于金祥 on 15/10/29.
 //  Copyright © 2015年 zykj. All rights reserved.
 //
 
-#import "ChatlistViewController.h"
+#import "ChatContentViewController.h"
 #import <RongIMKit/RongIMKit.h>
 #import "UIImage+NSBundle.h"
-#import "ChatContentViewController.h"
 
 #define DefaultLeftImageWidth 44
 
-@interface ChatlistViewController ()
+@interface ChatContentViewController ()
 
 @end
 
-@implementation ChatlistViewController
-
-//重载函数，onSelectedTableRow 是选择会话列表之后的事件，该接口开放是为了便于您自定义跳转事件。在快速集成过程中，您只需要复制这段代码。
--(void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath
-{
-    ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
-    conversationVC.conversationType =model.conversationType;
-    conversationVC.targetId = model.targetId;
-    conversationVC.userName =model.conversationTitle;
-    conversationVC.title = model.conversationTitle;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [self.navigationController pushViewController:conversationVC animated:YES];
-}
-
+@implementation ChatContentViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
-    
-    [self.emptyConversationView removeFromSuperview];
-    
+    // Do any additional setup after loading the view.
     if ([Toolkit isSystemIOS7]||[Toolkit isSystemIOS8])
         _orginY = 20;
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NavigationBar_HEIGHT + _orginY)];
@@ -109,15 +91,12 @@
     [self.view addSubview:_btnRight];
     
     
-    [self addLeftButton:@"goback"];
+    [self addLeftButton:@"goback@2x.png"];
     [self addRightbuttontitle:@"单聊"];
     
     
     
-    [self.emptyConversationView removeFromSuperview];
-    
-    self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
-    self.conversationListTableView.tableFooterView = [UIView new];
+    self.conversationMessageCollectionView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
     
 }
 
@@ -167,53 +146,17 @@
     _lblRight.text=strName;
 }
 
-
-- (void)showEmptyConversationView
-{
-    UIView * emptyView=[[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-104)];
-    self.emptyConversationView=emptyView;
-}
-
-/**
- *  退出登录
- *
- *  @param sender <#sender description#>
- */
-- (void)leftBarButtonItemPressed:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
-    [alertView show];
-}
-
-
 - (void)clickLeftButton:(UIButton *)sender
 {
-//    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
-    [alertView show];
-
+    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
 - (void)clickRightButton:(UIButton *)sender
 {
     NSLog(@"right button click");
-    ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
-    conversationVC.conversationType =ConversationType_PRIVATE;
-    conversationVC.targetId = @"4"; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
-    conversationVC.userName = @"测试1";
-    conversationVC.title = @"自问自答";
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [self.navigationController pushViewController:conversationVC animated:YES];
-
+    
 }
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[RCIM sharedRCIM]disconnect];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
 
 @end

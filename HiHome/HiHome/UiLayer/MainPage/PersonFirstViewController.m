@@ -27,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if ([_mIFlag isEqual:@"1"]) {
+    if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
         [self initView];
     }else{
         [self initData];
@@ -98,7 +98,7 @@
         
         UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];
         mDetail.textColor = [UIColor whiteColor];
-        if ([_mIFlag isEqual:@"1"]) {
+        if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
             mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",_mName,_mSex,_mAge];//@"唐嫣  女  21岁";
         }else{
             mDetail.text = [NSString stringWithFormat:@"%@   %@   %@岁",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]];//@"唐嫣  女  21岁";
@@ -119,7 +119,7 @@
     }else if(indexPath.row == 2){
         gxqm = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
         gxqm.enabled = NO;
-        if ([_mIFlag isEqual:@"1"]) {
+        if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
             gxqm.text = _mSign;
         }else{
             gxqm.text = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
@@ -171,6 +171,8 @@
             mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
             [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:mHiBtn];
+        }else if([_mIFlag isEqual:@"2"]){
+            
         }else{
             UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
             [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -185,9 +187,9 @@
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-        [cell setPreservesSuperviewLayoutMargins:false];
+        //[cell setSeparatorInset:UIEdgeInsetsZero];
+        //[cell setLayoutMargins:UIEdgeInsetsZero];
+        //[cell setPreservesSuperviewLayoutMargins:false];
     }
     
     return cell;

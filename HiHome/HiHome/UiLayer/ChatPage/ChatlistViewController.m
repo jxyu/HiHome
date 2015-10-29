@@ -8,6 +8,9 @@
 
 #import "ChatlistViewController.h"
 #import <RongIMKit/RongIMKit.h>
+#import "UIImage+NSBundle.h"
+
+#define DefaultLeftImageWidth 44
 
 @interface ChatlistViewController ()
 
@@ -23,42 +26,230 @@
     conversationVC.targetId = model.targetId;
     conversationVC.userName =model.conversationTitle;
     conversationVC.title = model.conversationTitle;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [self.navigationController pushViewController:conversationVC animated:YES];
 }
-
-
-
-// 快速集成第四步，发起单聊会话。
--(void)rightBarButtonItemPressed:(id)sender
-{
-    // 您需要根据自己的 App 选择场景触发聊天。这里的例子是一个 Button 点击事件。
-    RCConversationViewController *conversationVC = [[RCConversationViewController alloc]init];
-    conversationVC.conversationType =ConversationType_PRIVATE; //会话类型，这里设置为 PRIVATE 即发起单聊会话。
-    conversationVC.targetId = @"1"; // 接收者的 targetId，这里为举例。
-    conversationVC.userName = @"name_xxx"; // 接受者的 username，这里为举例。
-    conversationVC.title = @"name_xxx"; // 会话的 title。
-    
-    // 把单聊视图控制器添加到导航栈。
-    [self.navigationController pushViewController:conversationVC animated:YES];
-    
-}
-
-
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
     
-    //设置tableView样式
-    self.conversationListTableView.separatorColor = ZY_UIBASE_BACKGROUND_COLOR;
+    [self.emptyConversationView removeFromSuperview];
+    //自定义导航左右按钮
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"单聊" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemPressed:)];
+    [rightButton setTintColor:[UIColor whiteColor]];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 6, 67, 23);
+    UIImageView *backImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navigator_btn_back"]];
+    backImg.frame = CGRectMake(-10, 0, 22, 22);
+    [backBtn addSubview:backImg];
+    UILabel *backText = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, 65, 22)];
+    backText.text = @"退出";
+    backText.font = [UIFont systemFontOfSize:15];
+    [backText setBackgroundColor:[UIColor clearColor]];
+    [backText setTextColor:[UIColor whiteColor]];
+    [backBtn addSubview:backText];
+    [backBtn addTarget:self action:@selector(leftBarButtonItemPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    [self.navigationItem setLeftBarButtonItem:leftButton];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    self.view.backgroundColor = [UIColor whiteColor];
+//    if ([Toolkit isSystemIOS7]||[Toolkit isSystemIOS8])
+//        _orginY = 20;
+//    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NavigationBar_HEIGHT + _orginY)];
+//    //_topView.backgroundColor = [UIColor colorWithRed:238 / 255.0f green:225 / 255.0f blue:208 / 255.0f alpha:1.0f];
+//    
+//    _topView.userInteractionEnabled = YES;
+//    //   _topView.backgroundColor = [UIColor colorWithRed:237/255.0 green:109/255.0 blue:3/255.0 alpha:1];
+//    
+//    _topView.backgroundColor = ZY_UIBASECOLOR;
+//    [self.view addSubview:_topView];
+//    //    UIImageView *imageline1=[[UIImageView alloc]initWithFrame:CGRectMake(0,NavigationBar_HEIGHT + _orginY-0.3, SCREEN_WIDTH, 0.3)];
+//    //    imageline1.backgroundColor=[UIColor colorWithRed:0.88 green:0.89 blue:0.89 alpha:1];
+//    //    [self.view addSubview:imageline1];
+//    
+//    
+//    _lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(DefaultLeftImageWidth, _orginY  + 0, SCREEN_WIDTH - 2 * DefaultLeftImageWidth, NavigationBar_HEIGHT)];
+//    _lblTitle.backgroundColor = [UIColor clearColor];
+//    _lblTitle.adjustsFontSizeToFitWidth = YES;
+//    //[_lblTitle setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+//    //_lblTitle.font = [UIFont boldSystemFontOfSize:20];
+//    _lblTitle.textColor = [UIColor whiteColor];
+//    _lblTitle.font=[UIFont boldSystemFontOfSize:18];
+//    _lblTitle.textAlignment = NSTextAlignmentCenter;
+//    _lblTitle.lineBreakMode = NSLineBreakByTruncatingTail;
+//    _lblTitle.numberOfLines = 0;
+//    _lblTitle.center = CGPointMake(_topView.center.x, _lblTitle.center.y);
+//    _lblTitle.text=@"会话";
+//    [self.view addSubview:_lblTitle];
+//    
+//    _imgLeft = [[UIImageView alloc] initWithFrame:CGRectMake(0, _orginY, 60, NavigationBar_HEIGHT)];
+//    _imgLeft.backgroundColor = [UIColor clearColor];
+//    _imgLeft.center = CGPointMake(_imgLeft.center.x, _lblTitle.center.y);
+//    [self.view addSubview:_imgLeft];
+//    
+//    _lblLeft = [[UILabel alloc] initWithFrame:CGRectMake(0,_orginY ,60,40)];
+//    
+//    _lblLeft.numberOfLines = 0;
+//    _lblLeft.textAlignment=NSTextAlignmentCenter;
+//    _lblLeft.font = [UIFont systemFontOfSize:15];
+//    _lblLeft.textColor = [UIColor whiteColor];
+//    _lblLeft.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:_lblLeft];
+//    
+//    
+//    
+//    _btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, _orginY, 60, NavigationBar_HEIGHT)];
+//    [_btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+//    _btnLeft.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:_btnLeft];
+//    
+//    _imgRight = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60 , _orginY, 60, NavigationBar_HEIGHT)];
+//    _imgRight.backgroundColor = [UIColor clearColor];
+//    _imgRight.center = CGPointMake(_imgRight.center.x, _imgLeft.center.y);
+//    [self.view addSubview:_imgRight];
+//    
+//    _lblRight = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60-10 ,_orginY ,60,40)];
+//    
+//    _lblRight.numberOfLines = 0;
+//    _lblRight.textAlignment=NSTextAlignmentCenter;
+//    _lblRight.font = [UIFont systemFontOfSize:15];
+//    _lblRight.textColor = [UIColor whiteColor];
+//    _lblRight.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:_lblRight];
+//    
+//    _btnRight = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, _orginY, 60, NavigationBar_HEIGHT)];
+//    _btnRight.backgroundColor = [UIColor clearColor];
+//    [_btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:_btnRight];
+//    
+//    
+//    [self addLeftButton:@"goback"];
+//    [self addRightbuttontitle:@"单聊"];
+//    
+//    
+    
+    [self.emptyConversationView removeFromSuperview];
+    
+    self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
     self.conversationListTableView.tableFooterView = [UIView new];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setBarTitle:(NSString *)strTitle
+{
+    _lblTitle.text = strTitle;
+    _lblTitle.center = CGPointMake(_topView.center.x, _lblTitle.center.y);
+}
+
+- (void)setBarTitleColor:(UIColor *)color
+{
+    _lblTitle.textColor = color;
+}
+
+- (void)addLeftButton:(NSString *)strImage
+{
+    UIImage *imgBtn = [UIImage imageWithBundleName:strImage];
+    _imgLeft.image = imgBtn;
+    [_imgLeft setFrame:CGRectMake(_btnLeft.frame.origin.x + 10, _btnLeft.frame.origin.y, imgBtn.size.width , imgBtn.size.height )];
+    _imgLeft.center = CGPointMake(_imgLeft.center.x, _lblTitle.center.y);
+}
+
+- (void)addRightButton:(NSString *)strImage
+{
+    UIImage *imgBtn = [UIImage imageWithBundleName:strImage];
+    _imgRight.image = imgBtn;
+    [_imgRight setFrame:CGRectMake(_btnRight.frame.origin.x + 25, _btnRight.frame.origin.y,imgBtn.size.width , imgBtn.size.height )];
+    _imgRight.center = CGPointMake(_imgRight.center.x, _imgLeft.center.y);
+    
+    
+    //    UIImage *imgBtn = [UIImage imageWithBundleName:strImage];
+    //    _imgRight.image = imgBtn;
+    //    [_imgRight setFrame:CGRectMake(_btnRight.frame.origin.x + 10, _btnRight.frame.origin.y, imgBtn.size.width, imgBtn.size.height)];
+    //    _imgRight.center = CGPointMake(_imgRight.center.x, _imgLeft.center.y);
+}
+- (void)addLeftbuttontitle:(NSString *)strName
+{
+    _lblLeft.text=strName;
+}
+- (void)addRightbuttontitle:(NSString *)strName
+{
+    _lblRight.text=strName;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.navigationItem.title = @"会话";
+}
+
+- (void)showEmptyConversationView
+{
+    UIView * emptyView=[[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-104)];
+    self.emptyConversationView=emptyView;
+}
+
+/**
+ *  退出登录
+ *
+ *  @param sender <#sender description#>
+ */
+- (void)leftBarButtonItemPressed:(id)sender {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
+    [alertView show];
+}
+
+
+- (void)clickLeftButton:(UIButton *)sender
+{
+//    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
+    [alertView show];
+
+}
+
+- (void)clickRightButton:(UIButton *)sender
+{
+    NSLog(@"right button click");
+    RCConversationViewController *conversationVC = [[RCConversationViewController alloc]init];
+    conversationVC.conversationType =ConversationType_PRIVATE;
+    conversationVC.targetId = @"4"; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
+    conversationVC.userName = @"测试1";
+    conversationVC.title = @"自问自答";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [self.navigationController pushViewController:conversationVC animated:YES];
+
+}
+
+
+
+/**
+ *  重载右边导航按钮的事件
+ *
+ *  @param sender <#sender description#>
+ */
+-(void)rightBarButtonItemPressed:(id)sender
+{
+    RCConversationViewController *conversationVC = [[RCConversationViewController alloc]init];
+    conversationVC.conversationType =ConversationType_PRIVATE;
+    conversationVC.targetId = @"1"; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
+    conversationVC.userName = @"测试1";
+    conversationVC.title = @"自问自答";
+    [self.navigationController pushViewController:conversationVC animated:YES];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[RCIM sharedRCIM]disconnect];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 /*

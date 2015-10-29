@@ -100,6 +100,7 @@
 		8048CC4E1BD21C5200B76C59 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 8048CC4B1BD21C5200B76C59 /* pinyin.c */; };
 		8093B3D21BD8C21F00DE7A49 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093B3D11BD8C21F00DE7A49 /* ZHPickView.m */; };
 		8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093B3D51BD8D36A00DE7A49 /* VPImageCropperViewController.m */; };
+		80B5723C1BE2126B006A58AD /* ChatContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B5723B1BE2126B006A58AD /* ChatContentViewController.m */; };
 		80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */; };
 		80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */; };
 		80BC02EC1BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */; };
@@ -474,6 +475,8 @@
 		8093B3D11BD8C21F00DE7A49 /* ZHPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHPickView.m; sourceTree = "<group>"; };
 		8093B3D41BD8D36A00DE7A49 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
 		8093B3D51BD8D36A00DE7A49 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
+		80B5723A1BE2126B006A58AD /* ChatContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContentViewController.h; sourceTree = "<group>"; };
+		80B5723B1BE2126B006A58AD /* ChatContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContentViewController.m; sourceTree = "<group>"; };
 		80BC02E21BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gods_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E31BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
 		80BC02E41BB0EDAA0002A267 /* fridnes_tab_gray_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fridnes_tab_gray_icon@2x.png"; sourceTree = "<group>"; };
@@ -1733,6 +1736,8 @@
 				803A30351BD7903600C28F8B /* ChatlistViewController.h */,
 				803A30361BD7903600C28F8B /* ChatlistViewController.m */,
 				803A30371BD7903600C28F8B /* ChatlistViewController.xib */,
+				80B5723A1BE2126B006A58AD /* ChatContentViewController.h */,
+				80B5723B1BE2126B006A58AD /* ChatContentViewController.m */,
 			);
 			path = ChatPage;
 			sourceTree = "<group>";
@@ -3051,7 +3056,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 6NC56CVL43;
+						DevelopmentTeam = M7YC435M3S;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -3307,6 +3312,7 @@
 				B583B1A61BC39B2B000572CA /* BackPageViewController.m in Sources */,
 				B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */,
 				80076AC21BDA155000DEFD35 /* JKAssetsCollectionFooterView.m in Sources */,
+				80B5723C1BE2126B006A58AD /* ChatContentViewController.m in Sources */,
 				B78E4A4C1BDA0FE800F23976 /* AddFriendSecondViewController.m in Sources */,
 				80124C101BD885E800DBE369 /* UIView+WebCacheOperation.m in Sources */,
 				B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */,
@@ -3626,7 +3632,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
@@ -3663,7 +3669,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};

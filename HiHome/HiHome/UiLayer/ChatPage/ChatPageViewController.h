@@ -11,7 +11,7 @@
 #import <RongCloudIMKit/RongIMLib/RongIMLib.h>
 
 
-@interface ChatPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@interface ChatPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,RCIMUserInfoDataSource>
 {
     @private
     NSInteger _cellCount;
@@ -19,6 +19,7 @@
     UISearchBar *_searchBar;
     UISearchDisplayController *_searchDisplayController;
 }
+- (IBAction)login_WithToken:(UIButton *)sender;
 -(void) initViews;
 @property(strong,nonatomic) UITableView *mainTableView;
 @end

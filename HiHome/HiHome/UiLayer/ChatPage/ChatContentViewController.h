@@ -1,8 +1,8 @@
 //
-//  ChatlistViewController.h
+//  ChatContentViewController.h
 //  HiHome
 //
-//  Created by 于金祥 on 15/10/21.
+//  Created by 于金祥 on 15/10/29.
 //  Copyright © 2015年 zykj. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "Toolkit.h"
 
-@interface ChatlistViewController : RCConversationListViewController
+@interface ChatContentViewController : RCConversationViewController
 {
     UIView *_topView;//导航背景图
     UILabel *_lblTitle;//导航标题

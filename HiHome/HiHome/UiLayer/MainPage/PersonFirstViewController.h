@@ -17,5 +17,6 @@
 @property(strong,nonatomic) NSString *mSex;
 @property(strong,nonatomic) NSString *mAge;
 @property(strong,nonatomic) NSString *mSign;
+@property(strong,nonatomic) NSString *mType;
 
 @end

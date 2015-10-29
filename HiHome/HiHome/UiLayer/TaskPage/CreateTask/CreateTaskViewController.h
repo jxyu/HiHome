@@ -9,6 +9,7 @@
 #import "BackPageViewController.h"
 #import "RemindViewController.h"
 #import "RepeatViewController.h"
+#import "AddressMapViewController.h"
 #import "DataProvider.h"
 #define ZY_PICPICK_BTN_TAG      1
 #define ZY_TAKEPIC_BTN_TAG      2
@@ -44,6 +45,7 @@ typedef enum _createTaskMode
     
     RemindViewController *_remindViewCtl;
     RepeatViewController *_repeatViewCtl;
+    AddressMapViewController *_addressVC;
 }
 
 @property(nonatomic)CreateTaskMode createTaskMode;

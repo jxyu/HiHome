@@ -11,4 +11,7 @@
 
 @interface MarkFriendViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property(strong,nonatomic) NSString *mType;
+@property(strong,nonatomic) NSString *mFriendID;
+
 @end

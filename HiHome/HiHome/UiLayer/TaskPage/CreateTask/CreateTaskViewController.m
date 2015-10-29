@@ -1343,6 +1343,12 @@
         }
             
             break;
+        case ZY_UIBUTTON_TAG_BASE +ZY_PLACE_BTN_TAG:{
+            _addressVC = [[AddressMapViewController alloc] init];
+            _addressVC.navTitle = @"选择位置";
+            [self.navigationController pushViewController:_addressVC animated:NO];
+        }
+            break;
         default:
             break;
     }

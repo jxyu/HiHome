@@ -267,6 +267,7 @@
 		B7942BA31BD882CA007D6F17 /* PersonFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */; };
 		B7942BA41BD882CA007D6F17 /* PersonFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */; };
 		B7942BA61BD8B5C5007D6F17 /* person_top_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */; };
+		B7983E6C1BE1B00800CE6143 /* right_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B7983E6B1BE1B00800CE6143 /* right_img.png */; };
 		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; };
 		B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */; };
 		B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */; };
@@ -701,9 +702,9 @@
 		B77F91201BD22B3300DAB43C /* TaskDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailPageViewController.h; sourceTree = "<group>"; };
 		B77F91211BD22B3300DAB43C /* TaskDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailPageViewController.m; sourceTree = "<group>"; };
 		B77F91221BD22B3300DAB43C /* TaskDetailPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPageViewController.xib; sourceTree = "<group>"; };
-		B783D0111BE0D05D00052792 /* MarkFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkFriendViewController.h; sourceTree = "<group>"; };
-		B783D0121BE0D05D00052792 /* MarkFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkFriendViewController.m; sourceTree = "<group>"; };
-		B783D0131BE0D05D00052792 /* MarkFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkFriendViewController.xib; sourceTree = "<group>"; };
+		B783D0111BE0D05D00052792 /* MarkFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFriendViewController.h; path = ../AddressPage/MarkFriendViewController.h; sourceTree = "<group>"; };
+		B783D0121BE0D05D00052792 /* MarkFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkFriendViewController.m; path = ../AddressPage/MarkFriendViewController.m; sourceTree = "<group>"; };
+		B783D0131BE0D05D00052792 /* MarkFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MarkFriendViewController.xib; path = ../AddressPage/MarkFriendViewController.xib; sourceTree = "<group>"; };
 		B78E4A401BD9FAA800F23976 /* AddFriendFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendFirstViewController.h; sourceTree = "<group>"; };
 		B78E4A411BD9FAA800F23976 /* AddFriendFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendFirstViewController.m; sourceTree = "<group>"; };
 		B78E4A421BD9FAA800F23976 /* AddFriendFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriendFirstViewController.xib; sourceTree = "<group>"; };
@@ -715,6 +716,7 @@
 		B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonFirstViewController.m; path = HiHome/UiLayer/MainPage/PersonFirstViewController.m; sourceTree = SOURCE_ROOT; };
 		B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonFirstViewController.xib; path = HiHome/UiLayer/MainPage/PersonFirstViewController.xib; sourceTree = SOURCE_ROOT; };
 		B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person_top_bg.png; sourceTree = "<group>"; };
+		B7983E6B1BE1B00800CE6143 /* right_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_img.png; sourceTree = "<group>"; };
 		B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeCell.h; path = HiHome/UiLayer/MainPage/MessageNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeCell.m; path = HiHome/UiLayer/MainPage/MessageNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeCell.xib; path = HiHome/UiLayer/MainPage/MessageNoticeCell.xib; sourceTree = SOURCE_ROOT; };
@@ -1377,9 +1379,6 @@
 				8048CC421BD21AD500B76C59 /* AddressLocalViewController.h */,
 				8048CC431BD21AD500B76C59 /* AddressLocalViewController.m */,
 				8048CC441BD21AD500B76C59 /* AddressLocalViewController.xib */,
-				B783D0111BE0D05D00052792 /* MarkFriendViewController.h */,
-				B783D0121BE0D05D00052792 /* MarkFriendViewController.m */,
-				B783D0131BE0D05D00052792 /* MarkFriendViewController.xib */,
 			);
 			path = AddressPage;
 			sourceTree = "<group>";
@@ -1632,6 +1631,7 @@
 		B58DD9601BB67BC20040A084 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				B7983E6B1BE1B00800CE6143 /* right_img.png */,
 				B78E4A471BDA0AB600F23976 /* search_img.png */,
 				B58DD9631BB67CF50040A084 /* addressBook@2x.png */,
 				B58DD9611BB67C550040A084 /* headImg@2x.png */,
@@ -1827,6 +1827,9 @@
 				80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */,
 				80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */,
 				80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */,
+				B783D0111BE0D05D00052792 /* MarkFriendViewController.h */,
+				B783D0121BE0D05D00052792 /* MarkFriendViewController.m */,
+				B783D0131BE0D05D00052792 /* MarkFriendViewController.xib */,
 			);
 			name = PersonPage;
 			path = mainPage;
@@ -1950,7 +1953,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = M7YC435M3S;
+						DevelopmentTeam = 6NC56CVL43;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -2001,6 +2004,7 @@
 				803A30391BD7903600C28F8B /* ChatlistViewController.xib in Resources */,
 				B56C2EF01BC4BF7A0030FB83 /* TaskLimitViewController.xib in Resources */,
 				80124C141BD8B4F900DBE369 /* unselect_Radio_icon@2x.png in Resources */,
+				B7983E6C1BE1B00800CE6143 /* right_img.png in Resources */,
 				803534C31BD62DD30008C191 /* UserInfo.plist in Resources */,
 				B56CFC1B1BCCD4BD0081B645 /* chooseContacts@2x.png in Resources */,
 				8048CC461BD21AD500B76C59 /* AddressLocalViewController.xib in Resources */,
@@ -2477,7 +2481,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
@@ -2513,7 +2517,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};

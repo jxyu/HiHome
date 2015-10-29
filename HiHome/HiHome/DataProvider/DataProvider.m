@@ -357,6 +357,14 @@
     }
 }
 
+-(void)changeFriendType:(NSString *)friendID andUserID:(NSString *) userID andType:(NSString *) type{
+    if (friendID && userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=groupFriend",Url];
+        NSDictionary *prm = @{@"fid":friendID,@"uid":userID,@"type":type};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)delFriend:(NSString *)FID andUserID:(NSString *) userID{
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delInfo",Url];

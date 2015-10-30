@@ -33,7 +33,12 @@
  */
 -(void)ResetPwd:(id)prm;
 
-
+/**
+ *  忘记密码
+ *
+ *  @param prm
+ */
+-(void)ForgetPassWord:(id)prm;
 
 
 //获取天气信息
@@ -181,6 +186,85 @@
  */
 
 -(void)ChangeTaskState:(NSString *)taskID andState:(NSString *)state;
+
+#pragma mark - 相册
+
+/**
+ *  创建相册
+ *
+ *  @param uid       用户id
+ *  @param title     相册名
+ *  @param pm        权限
+ *  @param intro       描述
+ *
+ */
+
+-(void)CreateAlbum:(NSString *)uid andTitle:(NSString *)title andPm:(NSString *)pm andIntro:(NSString *)intro;
+
+/**
+ *  删除相册
+ *
+ *  @param Albumid       相册id
+ *
+ */
+
+-(void)DelAlbum:(NSString *)Albumid;
+
+/**
+ *  获取相册列表
+ *
+ *  @param fid       好友id
+ *  @param uid       用户id
+ *  @param nowpage   当前页码
+ *  @param perPage   每页显示数量
+ *
+ */
+
+-(void)GetAlbumList:(NSString *)fid andUid:(NSString *)uid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage;
+
+
+/**
+ *  获取相册信息
+ *
+ *  @param Albumid       相册id
+ *
+ */
+-(void) GetAlbumInfo:(NSString *)Albumid;
+/**
+ *  上传图片
+ *
+ *  @param aId       相册id
+ *  @param uid       用户id
+ *  @param imgSrc        图片地址
+ *  @param intro       描述
+ *
+ */
+-(void)UploadPicture:(NSString *)uid andAlbumID:(NSString *)aId andImgSrc:(NSString *)imgSrc andIntro:(NSString *)intro;
+/**
+ *  删除图片
+ *
+ *  @param Picid       图片id
+ *
+ */
+-(void)DelPicture:(NSString *)Picid;
+/**
+ *  获取图片列表
+ *
+ *  @param aid       相册id
+ *  @param uid       用户id
+ *  @param nowpage   当前页码
+ *  @param perPage   每页显示数量
+ *
+ */
+
+-(void)GetPictureList:(NSString *)uid andAid:(NSString *)aid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage;
+/**
+ *  获取图片详情
+ *
+ *  @param Picid       图片id
+ *
+ */
+-(void) GetPictureInfo:(NSString *)Picid;
 
 //接受或拒绝任务 －－ sid：任务状态ID  state：1、接受 2、拒绝
 -(void)acceptOrReject:(NSString *) sid andState:(NSString *) state;

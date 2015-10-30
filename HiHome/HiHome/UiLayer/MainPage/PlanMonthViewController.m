@@ -236,7 +236,7 @@
         taskPath.taskName = @"去超市买黄瓜";
         taskPath.taskOwner = @"自己";
         NSArray *performers = @[@"自己"];
-        taskPath.taskPerformers = performers;
+    //    taskPath.taskPerformers = performers;
         taskPath.taskContent =@"去超市买根黄瓜";
         taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
         

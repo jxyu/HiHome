@@ -25,5 +25,7 @@
 @property(nonatomic)NSString *albumName;
 @property(nonatomic)NSInteger picNum;
 @property(nonatomic)NSDateComponents *albumChangeDate;
+@property(nonatomic)NSString *albumChangeDateStr;
+
 @property(nonatomic)NSMutableArray *albumPhotos;//PicPath 数组
 @end

@@ -15,12 +15,16 @@
 #import "AlbumPath.h"
 #import "PullDownButtonsTab.h"
 #import "JKAlertDialog.h"
-
+#import "DataProvider.h"
+#import "CreateAlbumViewController.h"
+#import "SVProgressHUD.h"
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
 
 
 @interface AlbumMainViewController ()
-
+{
+    NSMutableArray *albumArray;
+}
 @end
 
 @implementation AlbumMainViewController
@@ -43,6 +47,9 @@
     _cellHeight = self.view.frame.size.height/8;
     _reCentCellHeight = self.view.frame.size.height/4;
     _pullDownBtnsTabFlag  = false;
+    
+    albumArray = [NSMutableArray array];
+    
     [self initViews];
     [self initTaskPage];
     
@@ -77,7 +84,7 @@
     _pullDownBtnTab.delegate = self;
     /*上传照片各view*/
     _uploadPicViewCtl = [[UploadPicViewController alloc] init];
-    
+    _createAlbum = [[CreateAlbumViewController alloc] init];
    
 }
 /*响应三个相片上传相关的按键*/
@@ -103,6 +110,12 @@
 
             }
             
+            break;
+        case ZY_UIBUTTON_TAG_BASE+3:
+        {
+            _createAlbum.navTitle = @"新建相册";
+            [self presentViewController:_createAlbum animated:YES completion:^{}];
+        }
             break;
         default:
             break;
@@ -158,31 +171,31 @@
     [_taskPageSeg setItemTitle:title];
     
     
-    _cellCount = 3;
-    _cellCountMyTask = 5;
-    _cellCountGetTask = 6;
+    _cellCount = 1;
+    _cellCountRecentPic = 1;
+    _cellCountAlbum = 0;
     
-    _myTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + 60, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height -60-ZY_HEADVIEW_HEIGHT)];
-    [self setPageIndexPath:_myTaskView indexPage:0];
+    _recentPicView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + 60, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height -60-ZY_HEADVIEW_HEIGHT)];
+    [self setPageIndexPath:_recentPicView indexPage:0];
     
-    _getTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + 60, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height -60-ZY_HEADVIEW_HEIGHT)];
-    [self setPageIndexPath:_getTaskView indexPage:1];
+    _albumView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + 60, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height -60-ZY_HEADVIEW_HEIGHT)];
+    [self setPageIndexPath:_albumView indexPage:1];
     
     
-    _myTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountMyTask*50);
-    _getTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountGetTask*50);
+    _recentPicView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountRecentPic*50);
+    _albumView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountAlbum*50);
     
     _tableViews = [NSMutableArray array];
-    [_tableViews addObject:_myTaskView];
-    [_tableViews addObject:_getTaskView];
+    [_tableViews addObject:_recentPicView];
+    [_tableViews addObject:_albumView];
     
     
     
     [_taskPageSeg setItemTitle:title];
     
     [self.view  addSubview:_taskPageSeg];
-    [self.view  addSubview:_myTaskView];
-    [self.view  addSubview:_getTaskView];
+    [self.view  addSubview:_recentPicView];
+    [self.view  addSubview:_albumView];
     
     
     [_taskPageSeg setCurrentPage:0];//页面都设置完成后再调用
@@ -223,8 +236,112 @@
     NSLog(@"Page = %ld",(long)page);
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
+    
+    
+    switch (page) {
+        case 1:
+            NSLog(@"get Album list");
+            _cellCountAlbum = 0;
+            [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+            [self getAlbumList:[self getUserID] andNowPage:nil andPerPage:nil];
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
+#pragma mark - 与服务器数据交互
+
+
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
+-(void)getAlbumList:(NSString *)fid andNowPage:(NSString *)nowPage andPerPage:(NSString *)perPage
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getAlbumListCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider GetAlbumList:fid andUid:userID andNowPage:nowPage andPerPage:perPage];
+}
+
+
+-(void)getAlbumListCallBack:(id)dict
+{
+
+    NSInteger code;
+    NSMutableDictionary *albumDict;
+    [SVProgressHUD dismiss];
+#if DEBUG
+    NSLog(@"[%s] prm = %@",__FUNCTION__,dict);
+#endif
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"相册获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        return;
+    }
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        albumDict = [dict objectForKey:@"datas"];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    @try {
+        albumArray = [albumDict objectForKey:@"list"];
+        
+        if(albumArray.count !=0)
+            _cellCountAlbum = albumArray.count;
+        
+        [_albumView reloadData];
+        
+    }
+    @catch (NSException *exception) {
+        
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"数据解析错误"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+
+    
+        return;
+    }
+    @finally {
+        
+    }
+    
+
+    
+}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -240,10 +357,10 @@
     
     switch (tableView.tag) {
         case 0:
-            return _cellCountMyTask;
+            return _cellCountRecentPic;
             break;
         case 1:
-            return _cellCountGetTask;
+            return _cellCountAlbum;
             break;
         default:
             break;
@@ -293,29 +410,47 @@
         cell = [[AlbumTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _cellHeight)];
         cell.cellType = CellTypeDefault;
         AlbumPath *albumPath = [[AlbumPath alloc] init];
+        NSDictionary *tempDict;
         
-        NSDate* now = [NSDate date];
-        NSCalendar *cal = [NSCalendar currentCalendar];
-
-        unsigned int unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal;
-        
-        NSDateComponents *changeAlbumDate;
-        @try {
-            changeAlbumDate= [cal components:unitFlags fromDate:now];
-        }
-        
-        @catch (NSException *exception) {
+        if(indexPath.row > albumArray.count-1)
+        {
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
             return cell;
         }
+        tempDict = [albumArray objectAtIndex:indexPath.row];
+        
+        @try {
+            albumPath.albumChangeDateStr = [[tempDict objectForKey:@"addtime"] substringToIndex:10];
+            albumPath.fristPicName =@"fristPic";
+            albumPath.albumName = [tempDict objectForKey:@"title"];
+            albumPath.picNum = 100;
+            cell.albumPath = albumPath;
+        }
+        @catch (NSException *exception) {
+            
+        }
         @finally {
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            return cell;
         }
         
-        albumPath.albumChangeDate =changeAlbumDate;
-        albumPath.fristPicName =@"fristPic";
-        albumPath.albumName = @"我的相册";
-        albumPath.picNum = 100;
         
-        cell.albumPath = albumPath;
+        
+       
         
         
         //return cell;

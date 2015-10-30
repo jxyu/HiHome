@@ -7,7 +7,15 @@
 //
 
 #import "BackPageViewController.h"
-@interface UploadPicViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "ChooseAlbumViewController.h"
+
+@protocol UploadPicViewControllerDelegate <NSObject>
+
+-(void)selectUploadAlbum;
+
+@end
+
+@interface UploadPicViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ChooseAlbumViewControllerDelegate>
 
 {
 @private
@@ -22,4 +30,7 @@
 
     CGFloat _keyHeight;
 }
+
+@property(nonatomic) id<UploadPicViewControllerDelegate> delegate;
+
 @end

@@ -215,6 +215,11 @@
 		B5A77AB81BB4E9780014DD67 /* gettask_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A77AB61BB4E9780014DD67 /* gettask_red@2x.png */; };
 		B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A77ABB1BB4FA5F0014DD67 /* TaskTableViewCell.m */; };
 		B5A77ABF1BB4FBA10014DD67 /* TaskPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A77ABE1BB4FBA10014DD67 /* TaskPath.m */; };
+		B5C60C2D1BE303C2005DE72A /* ChooseAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60C261BE303C2005DE72A /* ChooseAlbumViewController.m */; };
+		B5C60C2E1BE303C2005DE72A /* ChooseAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60C271BE303C2005DE72A /* ChooseAlbumViewController.xib */; };
+		B5C60C2F1BE303C2005DE72A /* CreateAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60C291BE303C2005DE72A /* CreateAlbumViewController.m */; };
+		B5C60C301BE303C2005DE72A /* CreateAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60C2A1BE303C2005DE72A /* CreateAlbumViewController.xib */; };
+		B5C60C311BE303C2005DE72A /* TempCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60C2C1BE303C2005DE72A /* TempCustomButton.m */; };
 		B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E059961BB0F92900DBF786 /* BaseNavigationController.m */; };
 		B5E0599D1BB0F92900DBF786 /* CustomTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E059981BB0F92900DBF786 /* CustomTabBarViewController.m */; };
 		B5E0599E1BB0F92900DBF786 /* FirstScrollController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0599A1BB0F92900DBF786 /* FirstScrollController.m */; };
@@ -268,6 +273,7 @@
 		B7983E6C1BE1B00800CE6143 /* right_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B7983E6B1BE1B00800CE6143 /* right_img.png */; };
 		B7983E701BE1FD5000CE6143 /* AddressMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7983E6E1BE1FD5000CE6143 /* AddressMapViewController.m */; };
 		B7983E711BE1FD5000CE6143 /* AddressMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7983E6F1BE1FD5000CE6143 /* AddressMapViewController.xib */; };
+		B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B798401D1BE2152000CE6143 /* CCLocationManager.m */; };
 		B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */; };
 		B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */; };
 		B7A9D8B01BD7864900C37DB5 /* MessageNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A9D8AE1BD7864900C37DB5 /* MessageNotice.m */; };
@@ -639,6 +645,14 @@
 		B5A77ABB1BB4FA5F0014DD67 /* TaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTableViewCell.m; sourceTree = "<group>"; };
 		B5A77ABD1BB4FBA10014DD67 /* TaskPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskPath.h; sourceTree = "<group>"; };
 		B5A77ABE1BB4FBA10014DD67 /* TaskPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskPath.m; sourceTree = "<group>"; };
+		B5C60C251BE303C2005DE72A /* ChooseAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChooseAlbumViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.h; sourceTree = SOURCE_ROOT; };
+		B5C60C261BE303C2005DE72A /* ChooseAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChooseAlbumViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.m; sourceTree = SOURCE_ROOT; };
+		B5C60C271BE303C2005DE72A /* ChooseAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseAlbumViewController.xib; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.xib; sourceTree = SOURCE_ROOT; };
+		B5C60C281BE303C2005DE72A /* CreateAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAlbumViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.h; sourceTree = SOURCE_ROOT; };
+		B5C60C291BE303C2005DE72A /* CreateAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateAlbumViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.m; sourceTree = SOURCE_ROOT; };
+		B5C60C2A1BE303C2005DE72A /* CreateAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAlbumViewController.xib; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/CreateAlbumViewController.xib; sourceTree = SOURCE_ROOT; };
+		B5C60C2B1BE303C2005DE72A /* TempCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempCustomButton.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/TempCustomButton.h; sourceTree = SOURCE_ROOT; };
+		B5C60C2C1BE303C2005DE72A /* TempCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TempCustomButton.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/TempCustomButton.m; sourceTree = SOURCE_ROOT; };
 		B5E059951BB0F92900DBF786 /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
 		B5E059961BB0F92900DBF786 /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		B5E059971BB0F92900DBF786 /* CustomTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabBarViewController.h; sourceTree = "<group>"; };
@@ -1085,6 +1099,8 @@
 		B79840111BE1FF2200CE6143 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B79840151BE205C600CE6143 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = HiHome/AMap.bundle; sourceTree = "<group>"; };
 		B79840191BE2082C00CE6143 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B798401C1BE2152000CE6143 /* CCLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocationManager.h; sourceTree = "<group>"; };
+		B798401D1BE2152000CE6143 /* CCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLocationManager.m; sourceTree = "<group>"; };
 		B7A9D8A81BD780A700C37DB5 /* MessageNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeCell.h; path = HiHome/UiLayer/MainPage/MessageNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7A9D8A91BD780A700C37DB5 /* MessageNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeCell.m; path = HiHome/UiLayer/MainPage/MessageNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7A9D8AA1BD780A700C37DB5 /* MessageNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeCell.xib; path = HiHome/UiLayer/MainPage/MessageNoticeCell.xib; sourceTree = SOURCE_ROOT; };
@@ -1505,6 +1521,7 @@
 		8048CC471BD21C2E00B76C59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B798401B1BE2152000CE6143 /* Location */,
 				800A4D591BDF865800A22EA4 /* UMeng */,
 				8018387C1BDDCB0B0046B814 /* JPush */,
 				80076A9C1BDA155000DEFD35 /* ImagePicker */,
@@ -1915,6 +1932,14 @@
 		B58196091BCB904900D69A1E /* UploadForAlbum */ = {
 			isa = PBXGroup;
 			children = (
+				B5C60C251BE303C2005DE72A /* ChooseAlbumViewController.h */,
+				B5C60C261BE303C2005DE72A /* ChooseAlbumViewController.m */,
+				B5C60C271BE303C2005DE72A /* ChooseAlbumViewController.xib */,
+				B5C60C281BE303C2005DE72A /* CreateAlbumViewController.h */,
+				B5C60C291BE303C2005DE72A /* CreateAlbumViewController.m */,
+				B5C60C2A1BE303C2005DE72A /* CreateAlbumViewController.xib */,
+				B5C60C2B1BE303C2005DE72A /* TempCustomButton.h */,
+				B5C60C2C1BE303C2005DE72A /* TempCustomButton.m */,
 				B581960A1BCB906400D69A1E /* UploadPicViewController.h */,
 				B581960B1BCB906400D69A1E /* UploadPicViewController.m */,
 				B581960C1BCB906400D69A1E /* UploadPicViewController.xib */,
@@ -2925,6 +2950,15 @@
 			path = UUDatePicker_Block;
 			sourceTree = "<group>";
 		};
+		B798401B1BE2152000CE6143 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				B798401C1BE2152000CE6143 /* CCLocationManager.h */,
+				B798401D1BE2152000CE6143 /* CCLocationManager.m */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		B7CC5AE11BD4B8D200A1078F /* ThreeSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -3115,6 +3149,7 @@
 				B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */,
 				B78E4A481BDA0AB600F23976 /* search_img.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
+				B5C60C301BE303C2005DE72A /* CreateAlbumViewController.xib in Resources */,
 				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
 				B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */,
@@ -3133,6 +3168,7 @@
 				80BC02F81BB0F07A0002A267 /* index_3.png in Resources */,
 				B55D08B41BB400FD00C10932 /* sendtask_red@2x.png in Resources */,
 				B5FA2DA91BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib in Resources */,
+				B5C60C2E1BE303C2005DE72A /* ChooseAlbumViewController.xib in Resources */,
 				B58D923D1BC6497D00219E76 /* photo@2x.png in Resources */,
 				80124BDE1BD882BD00DBE369 /* UserInfoViewController.xib in Resources */,
 				80BC02F11BB0EDAA0002A267 /* metion_tab_gray_icon@2x.png in Resources */,
@@ -3322,8 +3358,11 @@
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
+				B5C60C311BE303C2005DE72A /* TempCustomButton.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
+				B5C60C2D1BE303C2005DE72A /* ChooseAlbumViewController.m in Sources */,
+				B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				80124C0C1BD885E800DBE369 /* UIImage+MultiFormat.m in Sources */,
@@ -3354,6 +3393,7 @@
 				803A30381BD7903600C28F8B /* ChatlistViewController.m in Sources */,
 				80076AC91BDA155000DEFD35 /* JKPhotoBrowserCell.m in Sources */,
 				B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */,
+				B5C60C2F1BE303C2005DE72A /* CreateAlbumViewController.m in Sources */,
 				80124C0F1BD885E800DBE369 /* UIImageView+WebCache.m in Sources */,
 				B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */,
 				B5E0599D1BB0F92900DBF786 /* CustomTabBarViewController.m in Sources */,

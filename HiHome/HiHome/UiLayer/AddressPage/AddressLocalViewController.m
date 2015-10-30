@@ -12,12 +12,14 @@
 #import "CommenDef.h"
 #import "UserInfoViewController.h"
 #import "DataProvider.h"
+#import "SVProgressHUD.h"
 
 @interface AddressLocalViewController (){
     DataProvider *dataProvider;
     NSString *phoneStr;
     NSArray *machAddressArray;
     NSMutableDictionary *mDictInfo;
+    NSString *currentFriendID;
 }
 
 @end
@@ -35,10 +37,11 @@
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"matchAddressBackCall:"];
     [dataProvider matchAddress:[self getUserID] andMob:phoneStr];
-    
+    [SVProgressHUD showWithStatus:@"正在加载..." maskType:SVProgressHUDMaskTypeBlack];
 }
 
 -(void)matchAddressBackCall:(id)dict{
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     int code = [dict[@"code"] intValue];
     if (code == 200) {
@@ -57,7 +60,7 @@
         }
         [self setUserSource];
     }else{
-        
+
     }
 }
 
@@ -522,8 +525,22 @@
 }
 
 -(void)applyAddFriend:(id)sender{
-    
+    UIView *view = [sender superview];
+    UITableViewCell *cell = (UITableViewCell *)[view superview];
+    NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
+    NSLog(@"%ld",(long)mIndexPath.row);
+    NSLog(@"%@",userSource);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提示信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.delegate = self;
+    [alertView show];
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
+        //[dataProvider addFriend:_mFriendID andUserID:[self getUserID] andRemark:gxqm.text];
+    }
+}
 
 @end

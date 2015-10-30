@@ -26,7 +26,7 @@
                 <constraint firstItem="hq6-aj-jds" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Jws-M7-mLt"/>
                 <constraint firstAttribute="bottom" secondItem="hq6-aj-jds" secondAttribute="bottom" constant="44" id="NOo-KZ-kpr"/>
                 <constraint firstAttribute="trailing" secondItem="hq6-aj-jds" secondAttribute="trailing" id="izI-0h-prs"/>
-                <constraint firstItem="hq6-aj-jds" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="jeM-YR-miT"/>
+                <constraint firstItem="hq6-aj-jds" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="88" id="jeM-YR-miT"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">

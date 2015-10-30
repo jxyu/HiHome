@@ -12,8 +12,10 @@
 #import "LoginViewController.h"
 
 #import "OptionTextViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate>
 {
     CustomTabBarViewController *_tabBarViewCol;
     FirstScrollController *firstCol;

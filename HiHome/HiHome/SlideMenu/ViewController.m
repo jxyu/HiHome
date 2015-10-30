@@ -234,7 +234,8 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     if ([NSStringFromClass([touch.view class]) isEqualToString:@"JTCalendarMonthWeekDaysView"]
         ||[NSStringFromClass([touch.view class]) isEqualToString:@"JTCalendarMonthWeekDaysView"]
         ||[NSStringFromClass([touch.view class]) isEqualToString:@"UITextView"]
-        
+        || [NSStringFromClass([touch.view class]) isEqualToString:@"MAMapScrollView"]
+        || [NSStringFromClass([touch.view class]) isEqualToString:@"MAPinAnnotationView"]
         ) {
         
         //     NSLog(@"return no");

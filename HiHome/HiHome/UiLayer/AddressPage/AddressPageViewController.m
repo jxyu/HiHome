@@ -24,10 +24,6 @@
     NSArray *friendArraySpouse;
     NSArray *friendArrayStar;
     
-    int normalNum;
-    int spouseNum;
-    int starNum;
-    
     NSInteger currentSection;
     NSIndexPath *currentRow;
     
@@ -45,10 +41,6 @@
     
 }
 -(void)initData{
-    
-    normalNum = 0;
-    spouseNum = 0;
-    starNum = 0;
     
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
@@ -86,6 +78,7 @@
 
 -(void) initViews
 {
+    
     _mytableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mytableView setDelegate:self];
     [_mytableView setDataSource:self];
@@ -258,19 +251,16 @@
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 1){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArraySpouse[spouseNum][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"nick"];
+        cell.nameLabel.text = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
-        spouseNum++;
     }else if(indexPath.section == 2){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayStar[starNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][@"nick"];
+        cell.nameLabel.text = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
-        starNum++;
     }else if(indexPath.section == 3){
         cell.iconView.image = [UIImage imageNamed:@"headImg"];
-        cell.nameLabel.text = [friendArrayNormal[normalNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][@"nick"];
+        cell.nameLabel.text = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
-        normalNum++;
     }
     //分割线设置
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )

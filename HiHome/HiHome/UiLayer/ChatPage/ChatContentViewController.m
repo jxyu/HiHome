@@ -24,16 +24,10 @@
     if ([Toolkit isSystemIOS7]||[Toolkit isSystemIOS8])
         _orginY = 20;
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NavigationBar_HEIGHT + _orginY)];
-    //_topView.backgroundColor = [UIColor colorWithRed:238 / 255.0f green:225 / 255.0f blue:208 / 255.0f alpha:1.0f];
     
     _topView.userInteractionEnabled = YES;
-    //   _topView.backgroundColor = [UIColor colorWithRed:237/255.0 green:109/255.0 blue:3/255.0 alpha:1];
-    
     _topView.backgroundColor = ZY_UIBASECOLOR;
     [self.view addSubview:_topView];
-    //    UIImageView *imageline1=[[UIImageView alloc]initWithFrame:CGRectMake(0,NavigationBar_HEIGHT + _orginY-0.3, SCREEN_WIDTH, 0.3)];
-    //    imageline1.backgroundColor=[UIColor colorWithRed:0.88 green:0.89 blue:0.89 alpha:1];
-    //    [self.view addSubview:imageline1];
     
     
     _lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(DefaultLeftImageWidth, _orginY  + 0, SCREEN_WIDTH - 2 * DefaultLeftImageWidth, NavigationBar_HEIGHT)];

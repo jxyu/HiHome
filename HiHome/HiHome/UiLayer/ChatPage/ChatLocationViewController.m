@@ -150,10 +150,6 @@
 - (void)clickRightButton:(UIButton *)sender
 {
     [self rightBarButtonItemPressed:sender];
-//    [self.delegate locationPicker:self
-//                didSelectLocation:[self currentLocationCoordinate2D]
-//                     locationName:[self currentLocationName]
-//                    mapScreenShot:[self mapViewScreenShot]];
     [self QuitVC];
     
 }

@@ -24,7 +24,7 @@ typedef enum _taskStatue
     State_onGoing,
     State_finish,
     State_cancel,
-    
+    State_morepeople,
     
     ZY_TASkSTATUE_RESERVE = 0xFFFF,
 }ZYTaskStatue;
@@ -90,6 +90,8 @@ typedef enum _taskType
 @property(nonatomic) ZYTaskRemind remindTime;//提醒时间
 @property(nonatomic) ZYTaskRepeat repeatMode;//任务重复日期
 @property(nonatomic) ZYTaskType   taskType;//任务类型
+
+-(void)resetDatas;
 @end
 
 

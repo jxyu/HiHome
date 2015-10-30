@@ -8,7 +8,9 @@
 
 #import "BackPageViewController.h"
 #import "ChooseAlbumViewController.h"
-
+#import "DataProvider.h"
+#import "SVProgressHUD.h"
+#import "JKAlertDialog.h"
 @protocol UploadPicViewControllerDelegate <NSObject>
 
 -(void)selectUploadAlbum;

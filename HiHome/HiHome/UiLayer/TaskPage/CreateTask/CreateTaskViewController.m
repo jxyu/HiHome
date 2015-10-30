@@ -338,6 +338,8 @@
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
     alert.alertType = AlertType_Hint;
+    
+    taskUserID = [self getUserID];
     [alert addButtonWithTitle:@"确定"];
     [alert show];
 }
@@ -708,10 +710,10 @@
         titleField.delegate = self;
         titleField.leftView = titleLabel;
         titleField.leftViewMode = UITextFieldViewModeAlways;
-        if(_createTaskMode == Mode_EditTask)
+       // if(_createTaskMode == Mode_EditTask)
             titleField.text = @"自己";
-        else
-            titleField.placeholder = @"请输入执行人";
+       // else
+         //   titleField.placeholder = @"请输入执行人";
         UIButton *chooseContactsBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, _cellHeight)];
         chooseContactsBtn.tag = ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG;
         [chooseContactsBtn setImage:[UIImage imageNamed:@"chooseContacts"] forState:UIControlStateNormal];//UIControlEventTouchUpInside

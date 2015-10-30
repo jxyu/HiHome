@@ -227,6 +227,14 @@
         cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
         cell.mName.text = [tempDict objectForKey:@"title"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        if(_defaultAlbumName != nil && ![_defaultAlbumName isEqualToString:@""])
+        {
+            if([_defaultAlbumName isEqualToString:[tempDict objectForKey:@"title"]])
+            {
+                cell.mSelectCheckBoxBtn.selected = YES;
+            }
+        }
+        
         spouseNum++;
     }
     @catch (NSException *exception) {

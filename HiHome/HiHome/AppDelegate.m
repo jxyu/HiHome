@@ -19,7 +19,7 @@
 
 #import "CommenDef.h"
 #import <SMS_SDK/SMSSDK.h>
-#import <RongIMKit/RongIMKit.h>
+
 
 #import "APService.h"
 

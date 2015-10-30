@@ -51,4 +51,8 @@ typedef enum _createTaskMode
 @property(nonatomic)CreateTaskMode createTaskMode;
 @property(nonatomic)TaskPath *loadDefaultPath;
 
+@property (strong,nonatomic) NSString *mLag;
+@property (strong,nonatomic) NSString *mLong;
+@property (strong,nonatomic) NSString *mAddress;
+
 @end

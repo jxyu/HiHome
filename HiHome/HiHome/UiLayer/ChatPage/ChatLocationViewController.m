@@ -1,33 +1,40 @@
 //
-//  ChatContentViewController.m
+//  ChatLocationViewController.m
 //  HiHome
 //
-//  Created by 于金祥 on 15/10/29.
+//  Created by 于金祥 on 15/10/30.
 //  Copyright © 2015年 zykj. All rights reserved.
 //
 
-#import "ChatContentViewController.h"
-#import "UIImage+NSBundle.h"
 #import "ChatLocationViewController.h"
+#import "UIImage+NSBundle.h"
 
 #define DefaultLeftImageWidth 44
 
-@interface ChatContentViewController ()<RCLocationPickerViewControllerDelegate>
+
+@interface ChatLocationViewController ()
 
 @end
 
-@implementation ChatContentViewController
+@implementation ChatLocationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     if ([Toolkit isSystemIOS7]||[Toolkit isSystemIOS8])
         _orginY = 20;
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NavigationBar_HEIGHT + _orginY)];
+    //_topView.backgroundColor = [UIColor colorWithRed:238 / 255.0f green:225 / 255.0f blue:208 / 255.0f alpha:1.0f];
     
     _topView.userInteractionEnabled = YES;
+    //   _topView.backgroundColor = [UIColor colorWithRed:237/255.0 green:109/255.0 blue:3/255.0 alpha:1];
+    
     _topView.backgroundColor = ZY_UIBASECOLOR;
     [self.view addSubview:_topView];
+    //    UIImageView *imageline1=[[UIImageView alloc]initWithFrame:CGRectMake(0,NavigationBar_HEIGHT + _orginY-0.3, SCREEN_WIDTH, 0.3)];
+    //    imageline1.backgroundColor=[UIColor colorWithRed:0.88 green:0.89 blue:0.89 alpha:1];
+    //    [self.view addSubview:imageline1];
     
     
     _lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(DefaultLeftImageWidth, _orginY  + 0, SCREEN_WIDTH - 2 * DefaultLeftImageWidth, NavigationBar_HEIGHT)];
@@ -85,18 +92,13 @@
     [self.view addSubview:_btnRight];
     
     
+    
     [self addLeftButton:@"goback@2x.png"];
-    [self addRightbuttontitle:@"单聊"];
+    [self addRightbuttontitle:@"完成"];
     
     
-    
-    self.conversationMessageCollectionView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
-    
-}
+    self.mapViewContainer.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setBarTitle:(NSString *)strTitle
@@ -142,47 +144,28 @@
 
 - (void)clickLeftButton:(UIButton *)sender
 {
-    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [self QuitVC];
 }
 
 - (void)clickRightButton:(UIButton *)sender
 {
-    NSLog(@"right button click");
+    [self rightBarButtonItemPressed:sender];
+    [self QuitVC];
     
 }
-
-
-- (void)pluginBoardView:(RCPluginBoardView *)pluginBoardView clickedItemWithTag:(NSInteger)tag{
-    switch (tag) {
-        case  PLUGIN_BOARD_ITEM_LOCATION_TAG : {
-            {
-                ChatLocationViewController * chatlocationVC=[[ChatLocationViewController alloc] init];
-                chatlocationVC.delegate=self;
-                [self presentModalViewController:chatlocationVC animated:YES];
-
-            }
-            break;
-        default:
-            [super pluginBoardView:pluginBoardView clickedItemWithTag:tag];
-            break;
-        }
-    }
+-(void)QuitVC
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
-- (void)locationPicker:(ChatLocationViewController *)locationPicker
-     didSelectLocation:(CLLocationCoordinate2D)location
-          locationName:(NSString *)locationName
-         mapScreenShot:(UIImage *)mapScreenShot {
-    RCLocationMessage *locationMessage =
-    [RCLocationMessage messageWithLocationImage:mapScreenShot
-                                       location:location
-                                   locationName:locationName];
-    [self sendMessage:locationMessage pushContent:nil];
-//    [self.navigationController popViewControllerAnimated:YES];
-    
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
+
 
 @end

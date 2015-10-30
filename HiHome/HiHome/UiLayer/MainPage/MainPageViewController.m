@@ -19,6 +19,8 @@
     UILabel *temp;
     UILabel *lhTempt;
     UILabel *outNote;
+    
+    NSUserDefaults *mCoorDefault;
 }
 
 @end
@@ -40,6 +42,8 @@
 
 -(void) initViews
 {
+    mCoorDefault = [NSUserDefaults standardUserDefaults];
+    
     dataProvider = [[DataProvider alloc] init];
     
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
@@ -63,6 +67,8 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.latitude] forKey:@"lat"];
+    [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.longitude] forKey:@"long"];
     //获取当前所在地的城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     //根据经纬度反向地理编译出地址信息

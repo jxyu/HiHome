@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8003CC991BE319E20057B229 /* ChatLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8003CC981BE319E20057B229 /* ChatLocationViewController.m */; };
 		80076ABF1BDA155000DEFD35 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80076A9E1BDA155000DEFD35 /* JKImagePickerController.strings */; };
 		80076AC01BDA155000DEFD35 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80076AA01BDA155000DEFD35 /* ImagesPicker.xcassets */; };
 		80076AC11BDA155000DEFD35 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 80076AA41BDA155000DEFD35 /* JKAssets.m */; };
@@ -318,6 +319,8 @@
 
 /* Begin PBXFileReference section */
 		4A5067773248DD015B75248D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8003CC971BE319E20057B229 /* ChatLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatLocationViewController.h; sourceTree = "<group>"; };
+		8003CC981BE319E20057B229 /* ChatLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatLocationViewController.m; sourceTree = "<group>"; };
 		80076A9F1BDA155000DEFD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JKImagePickerController.strings; sourceTree = "<group>"; };
 		80076AA01BDA155000DEFD35 /* ImagesPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPicker.xcassets; sourceTree = "<group>"; };
 		80076AA11BDA155000DEFD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/JKImagePickerController.strings"; sourceTree = "<group>"; };
@@ -1765,6 +1768,8 @@
 				803A30371BD7903600C28F8B /* ChatlistViewController.xib */,
 				80B5723A1BE2126B006A58AD /* ChatContentViewController.h */,
 				80B5723B1BE2126B006A58AD /* ChatContentViewController.m */,
+				8003CC971BE319E20057B229 /* ChatLocationViewController.h */,
+				8003CC981BE319E20057B229 /* ChatLocationViewController.m */,
 			);
 			path = ChatPage;
 			sourceTree = "<group>";
@@ -3106,7 +3111,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = M7YC435M3S;
+						DevelopmentTeam = 6NC56CVL43;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -3342,6 +3347,7 @@
 				B5E059D91BB146E100DBF786 /* WMHomeViewController.m in Sources */,
 				B5879D771BC7A0C4003AACFA /* PlanMonthViewController.m in Sources */,
 				B58196021BCB862900D69A1E /* PullDownButtonsTab.m in Sources */,
+				8003CC991BE319E20057B229 /* ChatLocationViewController.m in Sources */,
 				B783D0141BE0D05D00052792 /* MarkFriendViewController.m in Sources */,
 				B5E059D81BB146E100DBF786 /* WMCommon.m in Sources */,
 				B5879D7F1BC7A755003AACFA /* SegmentedPageView.m in Sources */,
@@ -3692,7 +3698,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
@@ -3729,7 +3735,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};

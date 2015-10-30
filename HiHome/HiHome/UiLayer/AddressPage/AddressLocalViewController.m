@@ -12,11 +12,14 @@
 #import "CommenDef.h"
 #import "UserInfoViewController.h"
 #import "DataProvider.h"
+#import "SVProgressHUD.h"
 
 @interface AddressLocalViewController (){
     DataProvider *dataProvider;
     NSString *phoneStr;
     NSArray *machAddressArray;
+    NSMutableDictionary *mDictInfo;
+    NSString *currentFriendID;
 }
 
 @end
@@ -26,191 +29,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     //去除多余的横线
     _tableView.tableFooterView = [[UIView alloc] init];
     
-    
     [self address];
-    
-    userSource = [[NSMutableArray alloc] init];
-    for (char i = 'A'; i<='Z'; i++)
-    {
-        NSMutableArray *numarr = [[NSMutableArray alloc] init];
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        for (int j=0; j<dataSource.count; j++)
-        {
-            Model *model = [dataSource objectAtIndex:j];
-            //获取姓名首位
-            NSString *string = [model.name substringWithRange:NSMakeRange(0, 1)];
-            //将姓名首位转换成NSData类型
-            NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-            //data的长度大于等于3说明姓名首位是汉字
-            if (data.length >=3)
-            {
-                //将汉字首字母拿出
-                char a = pinyinFirstLetter([model.name characterAtIndex:0]);
-                
-                //将小写字母转成大写字母
-                char b = a-32;
-                if (b == i)
-                {
-                    NSMutableArray *array = [[NSMutableArray alloc] init];
-                    [array addObject:model.name];
-                    if (model.tel != nil)
-                    {
-                        [array addObject:model.tel];
-                    }
-                    
-                    [numarr addObject:array];
-                    [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
-                }
-                
-            }
-            else
-            {
-                //data的长度等于1说明姓名首位是字母或者数字
-                if (data.length == 1)
-                {
-                    //判断姓名首位是否位小写字母
-                    NSString * regex = @"^[a-z]$";
-                    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-                    BOOL isMatch = [pred evaluateWithObject:string];
-                    if (isMatch == YES)
-                    {
-                        //NSLog(@"这是小写字母");
-                        
-                        //把大写字母转换成小写字母
-                        char j = i+32;
-                        //数据封装成NSNumber类型
-                        NSNumber *num = [NSNumber numberWithChar:j];
-                        //给a开空间，并且强转成char类型
-                        char *a = (char *)malloc(2);
-                        //将num里面的数据取出放进a里面
-                        sprintf(a, "%c", [num charValue]);
-                        //把c的字符串转换成oc字符串类型
-                        NSString *str = [[NSString alloc]initWithUTF8String:a];
-                        if ([string isEqualToString:str])
-                        {
-                            NSMutableArray *array = [[NSMutableArray alloc] init];
-                            [array addObject:model.name];
-                            if (model.tel != nil)
-                            {
-                                [array addObject:model.tel];
-                            }
-                            
-                            [numarr addObject:array];
-                            [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
-                        }
-                        
-                    }
-                    else
-                    {
-                        //判断姓名首位是否为大写字母
-                        NSString * regexA = @"^[A-Z]$";
-                        NSPredicate *predA = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexA];
-                        BOOL isMatchA = [predA evaluateWithObject:string];
-                        if (isMatchA == YES)
-                        {
-                            //NSLog(@"这是大写字母");
-                            //
-                            NSNumber *num = [NSNumber numberWithChar:i];
-                            //给a开空间，并且强转成char类型
-                            char *a = (char *)malloc(2);
-                            //将num里面的数据取出放进a里面
-                            sprintf(a, "%c", [num charValue]);
-                            //把c的字符串转换成oc字符串类型
-                            NSString *str = [[NSString alloc]initWithUTF8String:a];
-                            if ([string isEqualToString:str])
-                            {
-                                
-                                NSMutableArray *array = [[NSMutableArray alloc] init];
-                                [array addObject:model.name];
-                                if (model.tel != nil)
-                                {
-                                    [array addObject:model.tel];
-                                }
-                                
-                                [numarr addObject:array];
-                                [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (dic.count != 0)
-        {
-            [userSource addObject:dic];
-        }
-    }
-    
-    char n = '#';
-    int cont = 0;
-    for (int j=0; j<dataSource.count; j++)
-    {
-        Model *model = [dataSource objectAtIndex:j];
-        //获取姓名的首位
-        NSString *string = [model.name substringWithRange:NSMakeRange(0, 1)];
-        //将姓名首位转化成NSData类型
-        NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-        //判断data的长度是否小于3
-        if (data.length < 3)
-        {
-            if (cont == 0)
-            {
-                dic1 = [[NSMutableDictionary alloc] init];
-                numarr1 = [[NSMutableArray alloc] init];
-                cont++;
-            }
-            if (data.length == 1)
-            {
-                //判断首位是否为数字
-                NSString * regexs = @"^[0-9]$";
-                NSPredicate *preds = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexs];
-                BOOL isMatch = [preds evaluateWithObject:string];
-                if (isMatch == YES)
-                {
-                    //如果姓名为数字
-                    NSMutableArray *array = [[NSMutableArray alloc] init];
-                    [array addObject:model.name];
-                    if (model.tel != nil)
-                    {
-                        [array addObject:model.tel];
-                    }
-                    
-                    [numarr1 addObject:array];
-                    [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
-                }
-            }
-            else
-            {
-                //如果姓名为空
-                NSMutableArray *array = [[NSMutableArray alloc] init];
-                model.name = @"无";
-                [array addObject:model.name];
-                if (model.tel != nil)
-                {
-                    [array addObject:model.tel];
-                    [numarr1 addObject:array];
-                    [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
-                }
-            }
-        }
-    }
-    
-    if (dic1.count != 0)
-    {
-        [userSource addObject:dic1];
-    }
     NSLog(@"%@",phoneStr);
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"matchAddressBackCall:"];
     [dataProvider matchAddress:[self getUserID] andMob:phoneStr];
-    
+    [SVProgressHUD showWithStatus:@"正在加载..." maskType:SVProgressHUDMaskTypeBlack];
 }
 
 -(void)matchAddressBackCall:(id)dict{
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     int code = [dict[@"code"] intValue];
     if (code == 200) {
@@ -218,12 +49,19 @@
         NSLog(@"%@",machAddressArray);
         NSString *mState = [machAddressArray[1] valueForKey:@"mob"];
         NSLog(@"%@",mState);
+        dataSource = [[NSMutableArray alloc] init];
+        for (int i = 0; i < machAddressArray.count; i++) {
+            NSString *tempPhone = [machAddressArray[i] valueForKey:@"mob"];
+            Model *model = [[Model alloc] init];
+            model.name = mDictInfo[tempPhone];
+            model.tel = tempPhone;
+            model.recordID = [[machAddressArray[i] valueForKey:@"state"] intValue];
+            [dataSource addObject:model];
+        }
+        [self setUserSource];
     }else{
-        
+
     }
-    _tableView.dataSource=self;
-    _tableView.delegate=self;
-    [_tableView reloadData];
 }
 
 -(NSString *)getUserID
@@ -240,7 +78,7 @@
 #pragma mark - 获取通讯录里联系人姓名和手机号
 - (void)address
 {
-    dataSource = [[NSMutableArray alloc] init];
+    mDictInfo = [[NSMutableDictionary alloc] init];
     
     //    NSMutableArray *contactsdata= [[NSMutableArray alloc] init];
     //新建一个通讯录类
@@ -293,6 +131,7 @@
             kABPersonPhoneProperty,
             kABPersonEmailProperty
         };
+        NSString *temtPhone;
         NSInteger multiPropertiesTotal = sizeof(multiProperties) / sizeof(ABPropertyID);
         for (NSInteger j = 0; j < multiPropertiesTotal; j++) {
             ABPropertyID property = multiProperties[j];
@@ -310,10 +149,18 @@
                 switch (j) {
                     case 0: {// Phone number
                         addressBook.tel = (__bridge NSString*)value;
+                        temtPhone = addressBook.tel;
+                        if ([temtPhone componentsSeparatedByString:@"-"].count > 1) {
+                            temtPhone = [temtPhone stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                        }
+                        if ([temtPhone componentsSeparatedByString:@"+86"].count > 1) {
+                            temtPhone = [temtPhone stringByReplacingOccurrencesOfString:@"+86" withString:@""];
+                        }
+                        
                         if (phoneStr) {
-                            phoneStr = [NSString stringWithFormat:@"%@,%@",phoneStr,addressBook.tel];
+                            phoneStr = [NSString stringWithFormat:@"%@,%@",phoneStr,temtPhone];
                         }else{
-                            phoneStr = addressBook.tel;
+                            phoneStr = temtPhone;
                         }
                         NSLog(@"%@",addressBook.tel);
                         break;
@@ -328,11 +175,13 @@
             CFRelease(valuesRef);
         }
         //将个人信息添加到数组中，循环完成后addressBookTemp中包含所有联系人的信息
-        [dataSource addObject:addressBook];
+        //[dataSource addObject:addressBook];
         
         if (abName) CFRelease(abName);
         if (abLastName) CFRelease(abLastName);
         if (abFullName) CFRelease(abFullName);
+        
+        [mDictInfo setValue:addressBook.name forKey:temtPhone];
     }
     //[_tableView reloadData];
 }
@@ -417,29 +266,33 @@
     NSArray *array = [arr objectAtIndex:indexPath.row];
     NSString *name = nil;
     NSString *tel = nil;
+    int state = -1;
     if (array.count != 1)
     {
         if ([[array objectAtIndex:0] isEqualToString:@"无"]) {
             tel = [array objectAtIndex:1];
+            state = [[array objectAtIndex:2] intValue];
         }
         else
         {
             name = [array objectAtIndex:0];
             tel = [array objectAtIndex:1];
+            state = [[array objectAtIndex:2] intValue];
         }
     }
     else
     {
         name = [array lastObject];
+        state = [[array objectAtIndex:2] intValue];
     }
-    
+    NSLog(@"%@",userSource);
     // cell.iconView.image = [UIImage imageNamed:@"headImg"];
     cell.iconView.image = [UIImage imageNamed:@"headImg"];
     cell.nameLabel.text = name;
     cell.nameLabel.textColor = [UIColor grayColor];
     UIButton * btn_tianjia=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, (cell.frame.size.height-40)/2, 70, 40)];
     btn_tianjia.backgroundColor=RGB(26, 200, 133);
-    switch ([[machAddressArray[indexPath.row] valueForKey:@"state"] intValue]) {
+    switch (state) {
         case 1:
             [btn_tianjia setTitle:@"已同意" forState:UIControlStateNormal];
             [btn_tianjia setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
@@ -481,6 +334,187 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
 
+-(void)setUserSource{
+    userSource = [[NSMutableArray alloc] init];
+    for (char i = 'A'; i<='Z'; i++)
+    {
+        NSMutableArray *numarr = [[NSMutableArray alloc] init];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        for (int j=0; j<dataSource.count; j++)
+        {
+            Model *model = [dataSource objectAtIndex:j];
+            if ([model.tel isEqual:@"15265121181"]) {
+                NSLog(@"%@",model);
+            }
+            //获取姓名首位
+            NSString *string = [model.name substringWithRange:NSMakeRange(0, 1)];
+            //将姓名首位转换成NSData类型
+            NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+            //data的长度大于等于3说明姓名首位是汉字
+            if (data.length >=3)
+            {
+                //将汉字首字母拿出
+                char a = pinyinFirstLetter([model.name characterAtIndex:0]);
+                
+                //将小写字母转成大写字母
+                char b = a-32;
+                if (b == i)
+                {
+                    NSMutableArray *array = [[NSMutableArray alloc] init];
+                    [array addObject:model.name];
+                    if (model.tel != nil)
+                    {
+                        [array addObject:model.tel];
+                    }
+                    [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [numarr addObject:array];
+                    [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
+                }
+                
+            }
+            else
+            {
+                //data的长度等于1说明姓名首位是字母或者数字
+                if (data.length == 1)
+                {
+                    //判断姓名首位是否位小写字母
+                    NSString * regex = @"^[a-z]$";
+                    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+                    BOOL isMatch = [pred evaluateWithObject:string];
+                    if (isMatch == YES)
+                    {
+                        //NSLog(@"这是小写字母");
+                        
+                        //把大写字母转换成小写字母
+                        char j = i+32;
+                        //数据封装成NSNumber类型
+                        NSNumber *num = [NSNumber numberWithChar:j];
+                        //给a开空间，并且强转成char类型
+                        char *a = (char *)malloc(2);
+                        //将num里面的数据取出放进a里面
+                        sprintf(a, "%c", [num charValue]);
+                        //把c的字符串转换成oc字符串类型
+                        NSString *str = [[NSString alloc]initWithUTF8String:a];
+                        if ([string isEqualToString:str])
+                        {
+                            NSMutableArray *array = [[NSMutableArray alloc] init];
+                            [array addObject:model.name];
+                            if (model.tel != nil)
+                            {
+                                [array addObject:model.tel];
+                            }
+                            [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                            [numarr addObject:array];
+                            [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
+                        }
+                        
+                    }
+                    else
+                    {
+                        //判断姓名首位是否为大写字母
+                        NSString * regexA = @"^[A-Z]$";
+                        NSPredicate *predA = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexA];
+                        BOOL isMatchA = [predA evaluateWithObject:string];
+                        if (isMatchA == YES)
+                        {
+                            //NSLog(@"这是大写字母");
+                            //
+                            NSNumber *num = [NSNumber numberWithChar:i];
+                            //给a开空间，并且强转成char类型
+                            char *a = (char *)malloc(2);
+                            //将num里面的数据取出放进a里面
+                            sprintf(a, "%c", [num charValue]);
+                            //把c的字符串转换成oc字符串类型
+                            NSString *str = [[NSString alloc]initWithUTF8String:a];
+                            if ([string isEqualToString:str])
+                            {
+                                
+                                NSMutableArray *array = [[NSMutableArray alloc] init];
+                                [array addObject:model.name];
+                                if (model.tel != nil)
+                                {
+                                    [array addObject:model.tel];
+                                }
+                                [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                                [numarr addObject:array];
+                                [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (dic.count != 0)
+        {
+            [userSource addObject:dic];
+        }
+    }
+    
+    char n = '#';
+    int cont = 0;
+    for (int j=0; j<dataSource.count; j++)
+    {
+        Model *model = [dataSource objectAtIndex:j];
+        //获取姓名的首位
+        NSString *string = [model.name substringWithRange:NSMakeRange(0, 1)];
+        //将姓名首位转化成NSData类型
+        NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+        //判断data的长度是否小于3
+        if (data.length < 3)
+        {
+            if (cont == 0)
+            {
+                dic1 = [[NSMutableDictionary alloc] init];
+                numarr1 = [[NSMutableArray alloc] init];
+                cont++;
+            }
+            if (data.length == 1)
+            {
+                //判断首位是否为数字
+                NSString * regexs = @"^[0-9]$";
+                NSPredicate *preds = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexs];
+                BOOL isMatch = [preds evaluateWithObject:string];
+                if (isMatch == YES)
+                {
+                    //如果姓名为数字
+                    NSMutableArray *array = [[NSMutableArray alloc] init];
+                    [array addObject:model.name];
+                    if (model.tel != nil)
+                    {
+                        [array addObject:model.tel];
+                    }
+                    [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [numarr1 addObject:array];
+                    [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
+                }
+            }
+            else
+            {
+                //如果姓名为空
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                model.name = @"无";
+                [array addObject:model.name];
+                if (model.tel != nil)
+                {
+                    [array addObject:model.tel];
+                    [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [numarr1 addObject:array];
+                    [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
+                }
+            }
+        }
+    }
+    
+    if (dic1.count != 0)
+    {
+        [userSource addObject:dic1];
+    }
+    
+    _tableView.dataSource=self;
+    _tableView.delegate=self;
+    [_tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -491,8 +525,22 @@
 }
 
 -(void)applyAddFriend:(id)sender{
-    
+    UIView *view = [sender superview];
+    UITableViewCell *cell = (UITableViewCell *)[view superview];
+    NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
+    NSLog(@"%ld",(long)mIndexPath.row);
+    NSLog(@"%@",userSource);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提示信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.delegate = self;
+    [alertView show];
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
+        //[dataProvider addFriend:_mFriendID andUserID:[self getUserID] andRemark:gxqm.text];
+    }
+}
 
 @end

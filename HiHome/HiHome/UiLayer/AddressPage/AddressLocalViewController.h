@@ -13,7 +13,7 @@
 #import "pinyin.h"
 #import "BackPageViewController.h"
 
-@interface AddressLocalViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
+@interface AddressLocalViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSMutableArray *dataSource;
     NSMutableArray *userSource;

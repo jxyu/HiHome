@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AlbumPath.h"
-
+#import "UIImageView+WebCache.h"
 typedef enum _CellType
 {
     CellTypeDefault = 0,

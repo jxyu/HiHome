@@ -19,6 +19,13 @@
 {
     
     UITextField *albumField ;
+    NSDictionary *albumDict;
+    NSMutableArray *picSrc;
+    
+    //图片上传
+    NSMutableArray * img_uploaded;
+    int uploadImgIndex;
+    NSMutableArray * img_prm;
 }
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
 @property (nonatomic, retain) UICollectionView *collectionView;
@@ -31,6 +38,10 @@
     
     _cellHeight = self.view.frame.size.height/11;
     _keyShow = false;
+    uploadImgIndex=0;
+    img_uploaded=[[NSMutableArray alloc] init];
+    img_prm=[[NSMutableArray alloc] init];
+    
     [self initViews];
     
     //添加键盘的监听事件
@@ -125,12 +136,13 @@
     _textView = [[UITextView alloc] init];
     //   _textView.text = @"发帖内容";
     
-    
-    UIButton *sendBtn = [[UIButton alloc] init];
-    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
-    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [self->_tableHeaderView addSubview:sendBtn];
+    [self.mBtnRight setTitle:@"上传" forState:UIControlStateNormal];
+    self.mBtnRight.hidden = NO;
+//    UIButton *sendBtn = [[UIButton alloc] init];
+//    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+//    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
+//    sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+//    [self->_tableHeaderView addSubview:sendBtn];
     
     [self.view addSubview:_mainTableView];
     
@@ -142,6 +154,25 @@
     
 }
 
+-(void)btnRightClick:(id)sender
+{
+    [self.view endEditing:NO];
+    
+    if (albumField.text.length>0&&_textView.text.length>0&&albumDict) {
+
+        [SVProgressHUD showWithStatus:@"正在更新..." maskType:SVProgressHUDMaskTypeBlack];
+        [self BuildSliderData];
+    }
+    else
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请完善信息"];
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+    }
+
+    //if(albumDict && _textView.text &&)
+}
 
 -(void)tapViewAction:(id)sender
 {
@@ -249,7 +280,7 @@
             albumField.leftView = _textLabel;
             albumField.leftViewMode = UITextFieldViewModeAlways;
 
-           
+            albumField.font = [UIFont systemFontOfSize:14];
             
             [cell addSubview:albumField];
         }
@@ -282,7 +313,7 @@
                 layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
                 
                 // _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
-                _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(pickPicBtns.frame.size.width+pickPicBtns.frame.origin.x+5, 10,(SCREEN_WIDTH-(pickPicBtns.frame.size.width + pickPicBtns.frame.origin.x)),_cellHeight*2-20) collectionViewLayout:layout];
+                _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(pickPicBtns.frame.size.width+pickPicBtns.frame.origin.x+5, 20,(SCREEN_WIDTH-(pickPicBtns.frame.size.width + pickPicBtns.frame.origin.x)),_cellHeight*2-40) collectionViewLayout:layout];
                 _collectionView.backgroundColor = [UIColor clearColor];
                 [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
                 _collectionView.delegate = self;
@@ -316,6 +347,7 @@
     ChooseAlbumViewController *chooseViewCtl = [[ChooseAlbumViewController alloc] init];
     chooseViewCtl.navTitle =@"选择相册";
     chooseViewCtl.delegate = self;
+    chooseViewCtl.defaultAlbumName = albumField.text;
     [self presentViewController:chooseViewCtl animated:YES completion:^{}];
     
 }
@@ -324,7 +356,10 @@
 {
     NSLog(@"dict1 = %@",dict);
     if(dict != nil)
+    {
+        albumDict = dict;
         albumField.text = [dict objectForKey:@"title"];
+    }
 }
 
 
@@ -409,8 +444,6 @@
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSUInteger row = [indexPath row];
-    
     return indexPath;
     
 }
@@ -489,6 +522,28 @@
     [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
+-(void)BuildSliderData
+{
+    [SVProgressHUD showWithStatus:@"正在保存数据" maskType:SVProgressHUDMaskTypeBlack];
+    @try {
+        NSUserDefaults * userdefaults=[NSUserDefaults standardUserDefaults];
+        for (int i=0; i<self.assetsArray.count; i++) {
+            [img_uploaded addObject:[userdefaults objectForKey:[NSString stringWithFormat:@"%d",i]]];
+        }
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"构造轮播图数据出错");
+    }
+    @finally {
+        [self UpdateAndRequest];
+    }
+    
+    
+    
+    
+}
+
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
 {
     [imagePicker dismissViewControllerAnimated:YES completion:^{
@@ -535,7 +590,7 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(_cellHeight*2-20, _cellHeight*2-20);
+    return CGSizeMake(_cellHeight*2-40, _cellHeight*2-40);
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -544,6 +599,125 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
     NSLog(@"%ld",(long)[indexPath row]);
     
 }
+
+#pragma mark - 服务器交互
+
+-(void)UpdateAndRequest
+{
+    
+    if (img_uploaded.count>0) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
+        [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
+    }
+    else
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+        
+        
+    }
+}
+
+
+-(void)uploadImgBackCall:(id)dict
+{
+    if ([dict[@"code"] intValue]==200) {
+        NSLog(@"%@",dict);
+        ++uploadImgIndex;
+        [img_prm addObject:[dict[@"datas"][@"imgsrc"][@"imgsrc"] isEqual:[NSNull null]]?@"":dict[@"datas"][@"imgsrc"][@"imgsrc"]];
+        if (uploadImgIndex<img_uploaded.count) {
+            [self UpdateAndRequest];
+        }
+        else
+        {
+            [SVProgressHUD dismiss];
+//            DataProvider * dataprovider=[[DataProvider alloc] init];
+//            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
+            
+            for (int i = 0; i < img_prm.count; i++) {
+                NSDictionary *tempDict;
+                
+                tempDict = [img_prm objectAtIndex:i];
+                NSLog(@"img dict  = %@",tempDict);
+            }
+            
+            
+            [self uploadImgToAlbum];
+            
+        }
+    }
+}
+
+
+-(void)uploadImgToAlbum
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"uploadAlbumCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+//    -(void)UploadPicture:(NSString *)uid andAlbumID:(NSString *)aId andImgSrc:(NSString *)imgSrc andIntro:(NSString *)intro
+
+    for(int i =0;i<img_prm.count;i++)
+    {
+        [dataprovider UploadPicture:[self getUserID] andAlbumID:[albumDict objectForKey:@"id"] andImgSrc:[img_prm objectAtIndex:i] andIntro:_textView.text];
+    }
+
+}
+
+
+
+-(void)uploadAlbumCallBack:(id)dict
+{
+    
+    NSInteger code;
+    
+    DLog(@" dict = %@",dict);
+    
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        
+        return;
+    }
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"成功" message:[NSString stringWithFormat:@"上传成功"]];
+    
+    alert.alertType = AlertType_Hint;
+ //   [alert addButtonWithTitle:@"确定" ];
+    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item)
+     {
+         [self quitView];
+    }];
+    [alert show];
+    
+    
+}
+
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
 
 
 - (void)didReceiveMemoryWarning {

@@ -27,7 +27,7 @@
     NSDictionary *_AnniversaryDict;
     NSDictionary *_taskCalenderDict;
     
-    TaskPath *taskDetailPath;
+    
     anniversaryPath *anniversaryDetailPath;
     
 }
@@ -101,7 +101,7 @@
 
 -(void) initData{
     _myAnniversaryData = [[NSMutableArray alloc] init];
-    taskDetailPath = [[TaskPath alloc] init];
+    
     anniversaryDetailPath = [[anniversaryPath alloc] init];
     _myTaskData = [[NSMutableArray alloc] init];
     _getTaskData = [[NSMutableArray alloc] init];
@@ -1516,11 +1516,15 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
-        
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
+        if(code != 400)
+        {
+
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
         return;
     }
     
@@ -1537,10 +1541,19 @@
     }
     
     @try {
-        
-       
+        NSArray *tempArr =[taskDetailDict objectForKey:@"taskerlist"];
+       TaskPath * taskDetailPath = [[TaskPath alloc] init];
         taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
-        taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+  //      taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+        if(tempArr.count > 1)
+            taskDetailPath.taskStatus = State_morepeople;
+        else
+        {
+            NSDictionary *tempDict = [tempArr objectAtIndex:0];
+            
+            taskDetailPath.taskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
+        }
+        
         taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
         taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
         taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
@@ -1597,7 +1610,7 @@
        // taskDetailPath.taskPerformerDetails =[taskDetailDict objectForKey:@"id"];
         
         
-        
+        [_taskDetailPageCtl setDictData:taskDetailDict];
         [_taskDetailPageCtl setDatas:taskDetailPath];
         _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
@@ -1644,11 +1657,15 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
-        
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
+        if(code != 400)
+        {
+
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
         return;
     }
     

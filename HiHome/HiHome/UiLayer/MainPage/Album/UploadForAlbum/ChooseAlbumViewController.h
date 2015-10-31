@@ -20,4 +20,5 @@
 @property(strong,nonatomic) NSMutableArray *selectContacterArrayID;//已选择的联系人数组
 @property(strong,nonatomic) NSMutableArray *selectContacterArrayName;//已选择的联系人数组
 @property(nonatomic,readonly)NSMutableDictionary  *selectAlbumDict;
+@property(nonatomic) NSString *defaultAlbumName;
 @end

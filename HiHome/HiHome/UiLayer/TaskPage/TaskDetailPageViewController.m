@@ -61,6 +61,8 @@
     UIView *showImgView;
     BOOL showImgViewState;
     
+    NSMutableArray *Performerslist;
+    
 }
 
 @end
@@ -74,7 +76,7 @@
     _startDateArray = [[NSMutableArray alloc] init];
     rightBtnStr = @"编辑";
     showImgViewState = false;
-    
+    Performerslist= [[NSMutableArray alloc] init];
     senderNameStr = [self getNick];
     avatar = [self getAvatar];
     NSLog(@"senderNameStr xx = [%@]",senderNameStr);
@@ -148,15 +150,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
 }
+-(void)setDictData:(NSDictionary *)dictData
+{
+    _dictData = dictData;
+    Performerslist = [_dictData objectForKey:@"taskerlist"];
+    [mTableView reloadData];
+    NSLog(@"Performerslist cout = %ld",Performerslist.count);
+}
 
 -(void)setDatas:(TaskPath *)taskPath
 {
     if(taskPath == nil)
         return;
     
-    if(taskPathLocal == nil)
-        taskPathLocal = [[TaskPath alloc] init];
+//    if(taskPathLocal == nil)
+//        taskPathLocal = [[TaskPath alloc] init];
     
+ //   [taskPathLocal resetDatas];
     TaskId = taskPath.taskID ;
     {
         
@@ -296,6 +306,9 @@
                     break;
                 case State_cancel:
                     str = @"已取消";
+                    break;
+                case State_morepeople:
+                    str = @"多人任务";
                     break;
                 case ZY_TASkREPEAT_RESERVE:
                     str = @"未接受";
@@ -795,7 +808,7 @@
 -(void)setTaskStateCallBack:(id)dict
 {
     NSInteger code;
-
+    [SVProgressHUD dismiss];
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
     
     NSLog(@" update state callBack");
@@ -804,11 +817,15 @@
     
     if(code!=200)
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"状态提交失败:%ld",(long)code]];
-        
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
-        [alert show];
+        if(code != 400)
+        {
+
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"状态提交失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
         return;
     }
     
@@ -1236,7 +1253,8 @@
 
 -( NSInteger )collectionView:( UICollectionView *)collectionView numberOfItemsInSection:( NSInteger )section
 {
-    return taskPathLocal.taskPerformerDetails.count ;
+    //return taskPathLocal.taskPerformerDetails.count ;
+    return Performerslist.count;
 }
 
 //定义展示的Section的个数
@@ -1251,24 +1269,30 @@
 -( UICollectionViewCell *)collectionView:( UICollectionView *)collectionView cellForItemAtIndexPath:( NSIndexPath *)indexPath
 {
 
-    
-    
-    NSDictionary *tempDict = [taskPathLocal.taskPerformerDetails objectAtIndex:indexPath.row];
     taskerCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier : _CELL forIndexPath :indexPath];
+      NSLog(@"line  =[%d]",__LINE__);
+    //if(indexPath.row > taskPathLocal.taskPerformerDetails.count - 1)Performerslist
+    if(indexPath.row > Performerslist.count - 1)
+        return cell;
+    
+    NSDictionary *tempDict = [Performerslist objectAtIndex:indexPath.row];
+    
     UIView *tempView = [[UIImageView alloc] init];
     NSString *strAvatar;
     
     
     @try {
         
-   
+        NSLog(@"line  =[%d]",__LINE__);
     
     UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight-10, _cellHeight-10)];
         
     if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]] )
     {
+        NSLog(@"line  =[%d]",__LINE__);
         if(![[tempDict objectForKey:@"avatar"] isEqual:@""])
         {
+            NSLog(@"line  =[%d]",__LINE__);
             strAvatar = [tempDict objectForKey:@"avatar"];
             NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
             [img sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
@@ -1280,10 +1304,11 @@
     }
     else
     {
+        NSLog(@"line  =[%d]",__LINE__);
         img.image = [UIImage imageNamed:@"me"];
     }
     
-   
+   NSLog(@"line  =[%d]",__LINE__);
     
     img.layer.cornerRadius = img.frame.size.width * 0.5;
     img.layer.borderWidth = 0.1;

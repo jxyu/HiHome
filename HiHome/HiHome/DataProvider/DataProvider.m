@@ -405,6 +405,10 @@
     if (taskID&&state) {
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=applyTask",Url];
         NSDictionary * prm=@{@"sid":taskID,@"state":state};
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        
        [self PostRequest:url andpram:prm];
        
     }

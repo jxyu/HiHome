@@ -12,7 +12,7 @@
 
 #import "UploadPicViewController.h"
 #import "CreateAlbumViewController.h"
-
+#import "AlbumShowViewController.h"
 @interface AlbumMainViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate,PullDownButtonsTabDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UploadPicViewControllerDelegate>
 {
 @private
@@ -35,7 +35,7 @@
     PullDownButtonsTab *_pullDownBtnTab;
     
     /*上传照片*/
-    UploadPicViewController *_uploadPicViewCtl;
+   // UploadPicViewController *_uploadPicViewCtl;
     CreateAlbumViewController *_createAlbum;
     
 }

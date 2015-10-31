@@ -84,8 +84,10 @@
         _albumNameLabel.text = [NSString stringWithFormat:@"%@(%ld)",albumPath.albumName,(long)albumPath.picNum];//[taskPath.endTaskDate month]
         //_albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[albumPath.albumChangeDate year],(long)[albumPath.albumChangeDate month],(long)[albumPath.albumChangeDate day]];
         _albumDateLabel.text = albumPath.albumChangeDateStr;
-        _picView.image = [UIImage imageNamed:albumPath.fristPicName];
-        
+       // _picView.image = [UIImage imageNamed:albumPath.fristPicName];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,albumPath.fristPicName];
+        NSLog(@"img url = [%@]",url);
+        [_picView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
         _picView.contentMode = UIViewContentModeScaleAspectFit;
     }
     else if (_cellType == CellTypePicRecent)

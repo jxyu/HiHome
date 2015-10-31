@@ -24,6 +24,10 @@
 @interface AlbumMainViewController ()
 {
     NSMutableArray *albumArray;
+    NSMutableArray *picListArr;
+    NSString *albumStr;
+    NSInteger picPage;
+    NSString *selectAlbumID;
 }
 @end
 
@@ -47,9 +51,9 @@
     _cellHeight = self.view.frame.size.height/8;
     _reCentCellHeight = self.view.frame.size.height/4;
     _pullDownBtnsTabFlag  = false;
-    
+    picPage = 1;
     albumArray = [NSMutableArray array];
-    
+    picListArr = [NSMutableArray array];
     [self initViews];
     [self initTaskPage];
     
@@ -83,7 +87,7 @@
     _pullDownBtnTab = [[PullDownButtonsTab alloc] init];
     _pullDownBtnTab.delegate = self;
     /*上传照片各view*/
-    _uploadPicViewCtl = [[UploadPicViewController alloc] init];
+    
     _createAlbum = [[CreateAlbumViewController alloc] init];
    
 }
@@ -92,8 +96,11 @@
 {
     switch (btnIndex) {
         case ZY_UIBUTTON_TAG_BASE+1:
+        {
+            UploadPicViewController *_uploadPicViewCtl = [[UploadPicViewController alloc] init];
             _uploadPicViewCtl.navTitle = @"上传照片";
             [self presentViewController:_uploadPicViewCtl animated:YES completion:^{}];
+        }
             break;
         case ZY_UIBUTTON_TAG_BASE+2:
             
@@ -266,7 +273,7 @@
     
     return  userID;
 }
-
+#pragma  mark - 获取相册列表
 -(void)getAlbumList:(NSString *)fid andNowPage:(NSString *)nowPage andPerPage:(NSString *)perPage
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
@@ -338,8 +345,101 @@
     @finally {
         
     }
-    
 
+}
+#pragma  mark - 获取图片列表
+
+
+-(void)getAlbumPicList:(NSString *)aid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perpage
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getAlbumPicListCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider GetPictureList:[self getUserID] andAid:aid andNowPage:nowpage andPerPage:perpage];
+}
+
+
+-(void)getAlbumPicListCallBack:(id)dict
+{
+    
+    NSInteger code;
+    NSMutableDictionary *albumDict;
+    NSInteger resultAll;
+    [SVProgressHUD dismiss];
+
+    DLog(@"[%s] prm = %@",__FUNCTION__,dict);
+
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"相册获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        return;
+    }
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        albumDict = [dict objectForKey:@"datas"];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    
+    resultAll = [[albumDict objectForKey:@"resultAll"] integerValue];
+    NSLog(@"resultAll = %ld",resultAll);
+    
+    @try {
+        
+ 
+        NSArray *tempArr = [albumDict objectForKey:@"list"];
+        for (int i =0; i< tempArr.count; i++) {
+            [picListArr addObject:[tempArr objectAtIndex:i]];
+        }
+
+        if(resultAll > picListArr.count)
+        {
+            picPage++;
+            [self getAlbumPicList:selectAlbumID andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
+            
+            return;
+        }
+        DLog(@"picListArr count = %ld",picListArr.count);
+        AlbumShowViewController *albumViewCtl  = [AlbumShowViewController alloc];
+        albumViewCtl.navTitle = albumStr;
+        if(picListArr != nil)
+            albumViewCtl.picArr = picListArr;
+        [self presentViewController:albumViewCtl animated:YES completion:^{}];
+        
+    }
+    @catch (NSException *exception) {
+        
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"数据解析错误"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        
+        
+        return;
+    }
+    @finally {
+        
+    }
     
 }
 
@@ -425,9 +525,9 @@
         
         @try {
             albumPath.albumChangeDateStr = [[tempDict objectForKey:@"addtime"] substringToIndex:10];
-            albumPath.fristPicName =@"fristPic";
+            albumPath.fristPicName =[tempDict objectForKey:@"imgsrc"];//@"fristPic";
             albumPath.albumName = [tempDict objectForKey:@"title"];
-            albumPath.picNum = 100;
+            albumPath.picNum = [[tempDict objectForKey:@"photos"] integerValue];
             cell.albumPath = albumPath;
         }
         @catch (NSException *exception) {
@@ -518,7 +618,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
+    
+    if(tableView.tag == 1)
+    {
+        NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
+        NSDictionary *tempDict;
+        tempDict = [albumArray objectAtIndex:indexPath.row];
+        albumStr = [tempDict objectForKey:@"title"];
+        selectAlbumID =[tempDict objectForKey:@"id"];
+        
+        [self getAlbumPicList:selectAlbumID andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
+    
+    }
     
 }
 

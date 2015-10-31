@@ -35,6 +35,7 @@ typedef enum _taskDetailMode
 @interface TaskDetailPageViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (nonatomic)TaskDetailMode taskDetailMode;
 @property (nonatomic)id<TaskDetailDelegate> delegate;
+@property (nonatomic)NSDictionary *dictData;
 -(void)setDatas:(TaskPath *)taskPath;
 
 

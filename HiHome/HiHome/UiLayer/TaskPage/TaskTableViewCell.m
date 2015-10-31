@@ -249,6 +249,9 @@
         case State_cancel:
             self.labelForStatus.text = @"已取消";
             break;
+        case State_morepeople:
+            self.labelForStatus.text = @"多人任务";
+            break;
         case ZY_TASkREPEAT_RESERVE:
             self.labelForStatus.text = @"未接受";
             break;

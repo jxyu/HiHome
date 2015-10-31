@@ -134,6 +134,8 @@
 		B52102C21BE0AC2400C981B4 /* taskerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52102C11BE0AC2400C981B4 /* taskerCollectionViewCell.m */; };
 		B53563011BB244A0002D5F8D /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563001BB244A0002D5F8D /* ChatTableViewCell.m */; };
 		B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563A61BB28FDD002D5F8D /* CalendarViewController.m */; };
+		B553A05A1BE35FF70033F9A7 /* MyCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */; };
+		B553A05B1BE35FF70033F9A7 /* MYCollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A0591BE35FF70033F9A7 /* MYCollectionHeadView.m */; };
 		B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */; };
 		B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */; };
 		B55D08B31BB400FD00C10932 /* sendtask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08AF1BB400FD00C10932 /* sendtask_gray@2x.png */; };
@@ -243,6 +245,9 @@
 		B5E059E11BB146E100DBF786 /* WMOtherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E059CC1BB146E100DBF786 /* WMOtherViewController.xib */; };
 		B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E059CE1BB146E100DBF786 /* WMPopAnimation.m */; };
 		B5E059ED1BB14DC800DBF786 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E059EC1BB14DC800DBF786 /* Foundation.framework */; };
+		B5E0CE7B1BE338DC00DF8EB1 /* AlbumShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0CE791BE338DC00DF8EB1 /* AlbumShowViewController.m */; };
+		B5E0CE7C1BE338DC00DF8EB1 /* AlbumShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */; };
+		B5E0CE7F1BE3457300DF8EB1 /* albumbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */; };
 		B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */; };
 		B5FA2DA91BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */; };
 		B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DAB1BC4F00200D5BDB7 /* SoundSetViewController.m */; };
@@ -532,6 +537,10 @@
 		B53563001BB244A0002D5F8D /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		B53563A51BB28FDD002D5F8D /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		B53563A61BB28FDD002D5F8D /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		B553A0561BE35FF70033F9A7 /* MyCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionFooterView.h; sourceTree = "<group>"; };
+		B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionFooterView.m; sourceTree = "<group>"; };
+		B553A0581BE35FF70033F9A7 /* MYCollectionHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYCollectionHeadView.h; sourceTree = "<group>"; };
+		B553A0591BE35FF70033F9A7 /* MYCollectionHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYCollectionHeadView.m; sourceTree = "<group>"; };
 		B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mytask_gray@2x.png"; sourceTree = "<group>"; };
 		B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mytask_red@2x.png"; sourceTree = "<group>"; };
 		B55D08AF1BB400FD00C10932 /* sendtask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendtask_gray@2x.png"; sourceTree = "<group>"; };
@@ -695,6 +704,10 @@
 		B5E059CD1BB146E100DBF786 /* WMPopAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPopAnimation.h; sourceTree = "<group>"; };
 		B5E059CE1BB146E100DBF786 /* WMPopAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPopAnimation.m; sourceTree = "<group>"; };
 		B5E059EC1BB14DC800DBF786 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B5E0CE781BE338DC00DF8EB1 /* AlbumShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumShowViewController.h; path = HiHome/UiLayer/MainPage/Album/AlbumShowViewController.h; sourceTree = SOURCE_ROOT; };
+		B5E0CE791BE338DC00DF8EB1 /* AlbumShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumShowViewController.m; path = HiHome/UiLayer/MainPage/Album/AlbumShowViewController.m; sourceTree = SOURCE_ROOT; };
+		B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AlbumShowViewController.xib; path = HiHome/UiLayer/MainPage/Album/AlbumShowViewController.xib; sourceTree = SOURCE_ROOT; };
+		B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "albumbackground@2x.png"; sourceTree = "<group>"; };
 		B5FA2DA51BC4E9DB00D5BDB7 /* MessageNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeViewController.h; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.h; sourceTree = SOURCE_ROOT; };
 		B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeViewController.m; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.m; sourceTree = SOURCE_ROOT; };
 		B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeViewController.xib; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1568,6 +1581,7 @@
 		80BC02E01BB0ED890002A267 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5E0CE7D1BE3457300DF8EB1 /* album */,
 				B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */,
 				80124C111BD8B4F900DBE369 /* select_Radio_icon@2x.png */,
 				80124C121BD8B4F900DBE369 /* unselect_Radio_icon@2x.png */,
@@ -1955,6 +1969,10 @@
 		B583B1A31BC39B2B000572CA /* BaseUnits */ = {
 			isa = PBXGroup;
 			children = (
+				B553A0561BE35FF70033F9A7 /* MyCollectionFooterView.h */,
+				B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */,
+				B553A0581BE35FF70033F9A7 /* MYCollectionHeadView.h */,
+				B553A0591BE35FF70033F9A7 /* MYCollectionHeadView.m */,
 				B5879D791BC7A755003AACFA /* SegmentedPage */,
 				B583B1A41BC39B2B000572CA /* BackPageViewController.h */,
 				B583B1A51BC39B2B000572CA /* BackPageViewController.m */,
@@ -1988,6 +2006,9 @@
 				B587FF131BC8B07700E9F119 /* AlbumPath.m */,
 				B587FF151BC8B4D500E9F119 /* AlbumTableViewCell.h */,
 				B587FF161BC8B4D500E9F119 /* AlbumTableViewCell.m */,
+				B5E0CE781BE338DC00DF8EB1 /* AlbumShowViewController.h */,
+				B5E0CE791BE338DC00DF8EB1 /* AlbumShowViewController.m */,
+				B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -2189,6 +2210,14 @@
 				B5E059C91BB146E100DBF786 /* WMNavigationInteractiveTransition.m */,
 			);
 			name = NavigationAnimation;
+			sourceTree = "<group>";
+		};
+		B5E0CE7D1BE3457300DF8EB1 /* album */ = {
+			isa = PBXGroup;
+			children = (
+				B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */,
+			);
+			path = album;
 			sourceTree = "<group>";
 		};
 		B77F911F1BD22AF800DAB43C /* TaskDetailPage */ = {
@@ -3126,6 +3155,7 @@
 				B5E0599F1BB0F92900DBF786 /* FirstScrollController.xib in Resources */,
 				800A4DAB1BDF865800A22EA4 /* UMShareEditViewControlleriPad.xib in Resources */,
 				B5E059DD1BB146E100DBF786 /* WMMenuViewController.xib in Resources */,
+				B5E0CE7F1BE3457300DF8EB1 /* albumbackground@2x.png in Resources */,
 				B5E059D01BB146E100DBF786 /* Images.xcassets in Resources */,
 				80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */,
 				B58DD9571BB638AD0040A084 /* headwoman.png in Resources */,
@@ -3154,6 +3184,7 @@
 				B50FA1211BD878BE003E80CD /* yuandan@2x.png in Resources */,
 				B78E4A481BDA0AB600F23976 /* search_img.png in Resources */,
 				80BC02F61BB0F07A0002A267 /* index_1.png in Resources */,
+				B5E0CE7C1BE338DC00DF8EB1 /* AlbumShowViewController.xib in Resources */,
 				B5C60C301BE303C2005DE72A /* CreateAlbumViewController.xib in Resources */,
 				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
@@ -3342,6 +3373,7 @@
 				B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */,
 				80076AC21BDA155000DEFD35 /* JKAssetsCollectionFooterView.m in Sources */,
 				80B5723C1BE2126B006A58AD /* ChatContentViewController.m in Sources */,
+				B553A05B1BE35FF70033F9A7 /* MYCollectionHeadView.m in Sources */,
 				B78E4A4C1BDA0FE800F23976 /* AddFriendSecondViewController.m in Sources */,
 				80124C101BD885E800DBE369 /* UIView+WebCacheOperation.m in Sources */,
 				B5E059E21BB146E100DBF786 /* WMPopAnimation.m in Sources */,
@@ -3371,6 +3403,7 @@
 				B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
+				B5E0CE7B1BE338DC00DF8EB1 /* AlbumShowViewController.m in Sources */,
 				80124C0C1BD885E800DBE369 /* UIImage+MultiFormat.m in Sources */,
 				80076ACC1BDA155000DEFD35 /* PhotoAlbumManager.m in Sources */,
 				B7CC5AEF1BD4C7CB00A1078F /* TaskNoticeTableViewCell.m in Sources */,
@@ -3418,6 +3451,7 @@
 				80076AC51BDA155000DEFD35 /* JKAssetsThumbnailView.m in Sources */,
 				80124C0E1BD885E800DBE369 /* UIImageView+HighlightedWebCache.m in Sources */,
 				B5A77ABF1BB4FBA10014DD67 /* TaskPath.m in Sources */,
+				B553A05A1BE35FF70033F9A7 /* MyCollectionFooterView.m in Sources */,
 				80124C021BD885E800DBE369 /* NSData+ImageContentType.m in Sources */,
 				80124C031BD885E800DBE369 /* SDImageCache.m in Sources */,
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,

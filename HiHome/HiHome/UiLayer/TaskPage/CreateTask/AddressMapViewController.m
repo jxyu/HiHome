@@ -53,9 +53,11 @@
     [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
         
     } withAddress:^(NSString *addressString) {
-        address=addressString;
+        address=[addressString stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     }];
     
+    _lat = [[mUserDefault valueForKey:@"lat"] floatValue];
+    _long = [[mUserDefault valueForKey:@"long"] floatValue];
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation

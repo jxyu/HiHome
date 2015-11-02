@@ -26,4 +26,7 @@
  *  昵称
  */
 @property (strong,nonatomic) UILabel *nameLabel;
+
+@property (strong,nonatomic) UIButton * btn_tianjia;
+
 @end

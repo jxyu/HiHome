@@ -18,6 +18,7 @@
 #import "UIImage+NSBundle.h"
 
 #import "CalendarViewController.h"
+#import "ChatlistViewController.h"
 
 #define tabBarButtonNum 4
 
@@ -169,14 +170,22 @@
     HomeView.hidesBottomBarWhenPushed = YES;
     homeviewnav.navigationBar.hidden=YES;
     
-    ChatPageViewController *typeView=[[ChatPageViewController alloc]init];
-    typeView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-//    [typeView initViews];
-    UINavigationController *typeViewnav = [[UINavigationController alloc] initWithRootViewController:typeView];
-    typeView.automaticallyAdjustsScrollViewInsets = NO;
-//    typeView.view.h
-    typeView.hidesBottomBarWhenPushed=YES;
-    typeViewnav.navigationBar.hidden=YES;
+//    ChatPageViewController *typeView=[[ChatPageViewController alloc]init];
+//    typeView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+////    [typeView initViews];
+//    UINavigationController *typeViewnav = [[UINavigationController alloc] initWithRootViewController:typeView];
+//    typeView.automaticallyAdjustsScrollViewInsets = NO;
+////    typeView.view.h
+//    typeView.hidesBottomBarWhenPushed=YES;
+//    typeViewnav.navigationBar.hidden=YES;
+    
+    ChatlistViewController *chatListViewController = [[ChatlistViewController alloc]init];
+    chatListViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    UINavigationController *chatListVCNav = [[UINavigationController alloc] initWithRootViewController:chatListViewController];
+    chatListViewController.automaticallyAdjustsScrollViewInsets = NO;
+    chatListViewController.hidesBottomBarWhenPushed = YES;
+    chatListVCNav.navigationBar.hidden = YES;
+    //[self.navigationController pushViewController:chatListViewController animated:YES];
 
 //
     TaskPageViewController *shoplistView=[[TaskPageViewController alloc]init];
@@ -199,7 +208,7 @@
     
     //加入到真正的tabbar
     //fix me 商铺选项卡暂时隐藏
-    self.viewControllers=[NSArray arrayWithObjects:homeviewnav,typeViewnav,shoplistViewnav,ShoppingCartnav,nil];
+    self.viewControllers=[NSArray arrayWithObjects:homeviewnav,chatListVCNav,shoplistViewnav,ShoppingCartnav,nil];
     
     UIButton *btnSender = (UIButton *)[self.view viewWithTag:0 + 1000];
     [self onTabButtonPressed:btnSender];

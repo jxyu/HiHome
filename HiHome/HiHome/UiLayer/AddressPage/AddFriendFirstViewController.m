@@ -39,7 +39,7 @@
     mUserNumber = [[UITextField alloc] initWithFrame:CGRectMake(8, 74, SCREEN_WIDTH - 16 - 70, 40)];
     mUserNumber.delegate = self;
     mUserNumber.borderStyle = UITextBorderStyleRoundedRect;
-    //mUserNumber.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
+    mUserNumber.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
     mUserNumber.placeholder = @"请输入用户手机号";
     UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     UIImageView *search_img = [[UIImageView alloc] initWithFrame:CGRectMake(5, 2.5, 25, 25)];
@@ -176,6 +176,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     personFirstVC = [[PersonFirstViewController alloc] init];
     personFirstVC.mIFlag = @"1";
+    personFirstVC.navTitle = @"好友资料";
     personFirstVC.mFriendID = [searchFriendArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"id"];
     personFirstVC.mName = [searchFriendArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"nick"];
     personFirstVC.mSex = [searchFriendArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"sex"];

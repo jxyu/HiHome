@@ -223,6 +223,13 @@
         else
         {
             self.window.rootViewController =_tempViewcontroller;
+            
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
+            [dataprovider GetToken:userinfoWithFile[@"id"]];
+            
+            
+            
         }
 //        self.window.rootViewController =_tempViewcontroller;
     }
@@ -272,14 +279,8 @@
     
     if([viewName isEqualToString:@"mainpage"])
     {
-        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                                  NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-        NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
         self.window.rootViewController=_tempViewcontroller;
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
-        [dataprovider GetToken:userinfoWithFile[@"id"]];
+        
         return;
     }
     
@@ -306,6 +307,13 @@
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
             // Connect 成功
             NSLog(@"Connect 成功");
+            //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+            [[RCIM sharedRCIM] setUserInfoDataSource:self];
+            NSLog(@"Login successfully with userId: %@.", userId);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //ChatlistViewController *chatListViewController = [[ChatlistViewController alloc]init];
+                //[self.navigationController pushViewController:chatListViewController animated:YES];
+            });
         }
                                       error:^(RCConnectErrorCode status) {
                                           // Connect 失败
@@ -359,7 +367,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
      stringByReplacingOccurrencesOfString:@" "
      withString:@""];
     
-//    [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+    [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+    
     [APService registerDeviceToken:deviceToken];
 }
 

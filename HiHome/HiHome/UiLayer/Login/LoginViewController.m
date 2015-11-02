@@ -17,7 +17,7 @@
 #import "SVProgressHUD.h"
 #import "UMSocial.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UMSocialUIDelegate>
 
 @end
 
@@ -227,6 +227,7 @@
     WechatBtn.frame = CGRectMake(ZY_UIPART_SCREEN_WIDTH*75-40, ZY_UIPART_SCREEN_HEIGHT * 90, 40, 40);
     WechatBtn.contentMode = UIViewContentModeCenter;
     [WechatBtn setImage:[UIImage imageNamed:@"wechatlogin"] forState:UIControlStateNormal];
+    [WechatBtn addTarget:self action:@selector(weChatLogin:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:WechatBtn];
     
 }
@@ -452,6 +453,30 @@
 //            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
 //            [dataprovider LoginForQQWithopenid:snsAccount.usid andusername:snsAccount.userName];
         }});
+}
+
+-(void)weChatLogin:(UIButton *)sender
+{
+    @try {
+        [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+        snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
+                NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+//                DataProvider * dataprovider=[[DataProvider alloc] init];
+//                [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+//                [dataprovider LoginForWXWithopenid:snsAccount.usid andusername:snsAccount.userName];
+            }
+        });
+    }
+    @catch (NSException *exception) {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂时不能使用" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
+    @finally {
+        
+    }
 }
 
 -(void)JumpToForgetVC:(UIButton *)sender

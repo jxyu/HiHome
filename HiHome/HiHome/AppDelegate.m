@@ -76,7 +76,7 @@
     [UMSocialConfig setSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
     
     //设置微信AppId，设置分享url，默认使用友盟的网址
-    [UMSocialWechatHandler setWXAppId:@"wxb49d124a778b0381" appSecret:@"03133af7c57f6a16a6e4b59d299e8e6f" url:@"http://www.pgyer.com/ItEJ"];
+    [UMSocialWechatHandler setWXAppId:@"wx367d784d1cf53eb3" appSecret:@"d4624c36b6795d1d99dcf0547af5443d" url:@"http://www.pgyer.com/ItEJ"];
     //    //设置支持没有客户端情况下使用SSO授权
     
     //    //设置分享到QQ空间的应用Id，和分享url 链接

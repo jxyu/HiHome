@@ -71,6 +71,7 @@ typedef enum _taskType
 }
 @property(nonatomic) NSString *taskName;//任务名称
 @property(nonatomic) NSString *taskID;//任务ID
+@property(nonatomic) NSString *sId;//执行人对于任务的ID
 @property(nonatomic) NSString *taskContent;//任务内容
 @property(nonatomic) NSString *taskOwner;//发布者
 @property(nonatomic) NSString *taskPerformers;//执行者

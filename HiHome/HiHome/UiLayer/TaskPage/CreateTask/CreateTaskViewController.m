@@ -102,7 +102,7 @@
     _startDateArray = [NSMutableArray array];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     _keyShow = false;
-    
+    taskUserID = [self getUserID];
     if(_createTaskMode != Mode_EditTask)
     {
         repeatID = @"0";
@@ -189,7 +189,7 @@
     if(_createTaskMode == Mode_EditTask)
         taskUserID = [self getUserID];
 
-    if (_titleField.text.length>0&&_textView.text.length>0&&tipID&&repeatID&&taskUserID) {
+    if (_titleField.text.length>0&&_textView.text.length>0&&taskUserID) {
         
         if(_createTaskMode != Mode_EditTask)
         {
@@ -254,12 +254,12 @@
             }
             
             
-            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress:_mAddress andLng:_mLong andLat:_mLag];
+            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             
         }
         else
         {
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress:_mAddress andLng:_mLong andLat:_mLag];
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
         }
         
         
@@ -319,12 +319,12 @@
                 }
                 
                 
-                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress:_mAddress andLng:_mLong andLat:_mLag];
+                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             }
             else
             {
             
-                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress:_mAddress andLng:_mLong andLat:_mLag];
+                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             }
         }
         

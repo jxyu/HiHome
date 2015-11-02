@@ -60,7 +60,7 @@
     UICollectionView *PerformersColView;
     UIView *showImgView;
     BOOL showImgViewState;
-    
+    NSString *_sID;
     NSMutableArray *Performerslist;
     
 }
@@ -73,10 +73,12 @@
     [super viewDidLoad];
    // self.taskDetailMode = TaskDetail_ReceiveMode;
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
-    _startDateArray = [[NSMutableArray alloc] init];
+    if(_startDateArray == nil)
+        _startDateArray = [[NSMutableArray alloc] init];
     rightBtnStr = @"编辑";
     showImgViewState = false;
-    Performerslist= [[NSMutableArray alloc] init];
+    if(Performerslist == nil)
+        Performerslist= [[NSMutableArray alloc] init];
     senderNameStr = [self getNick];
     avatar = [self getAvatar];
     NSLog(@"senderNameStr xx = [%@]",senderNameStr);
@@ -122,11 +124,13 @@
     
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
  
+  
+
+    
     UICollectionViewFlowLayout *layout=[[ UICollectionViewFlowLayout alloc ] init ];
     layout.minimumLineSpacing = 5.0;
     layout.minimumInteritemSpacing = 5.0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;//设置collection 水平滑动
-
     
     PerformersColView = [[UICollectionView alloc]  initWithFrame:CGRectMake(10+75, 10, SCREEN_WIDTH - 85, _cellHeight*2-20) collectionViewLayout:layout];
     [PerformersColView registerClass :[ UICollectionViewCell class ] forCellWithReuseIdentifier : _CELL ];
@@ -137,6 +141,8 @@
     PerformersColView.contentSize = CGSizeMake(SCREEN_WIDTH*2, _cellHeight*2);
     PerformersColView.showsHorizontalScrollIndicator = YES;
     PerformersColView.showsVerticalScrollIndicator = NO;
+
+   
     
     
     showImgView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT)];
@@ -150,76 +156,125 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
 }
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
+}
+
+
 -(void)setDictData:(NSDictionary *)dictData
 {
-    _dictData = dictData;
-    Performerslist = [_dictData objectForKey:@"taskerlist"];
-    [mTableView reloadData];
-    NSLog(@"Performerslist cout = %ld",Performerslist.count);
+    @try {
+        _dictData = dictData;
+        Performerslist = [_dictData objectForKey:@"taskerlist"];
+        NSLog(@"Performerslist cout = %ld",Performerslist.count);
+        
+        
+        if([[_dictData objectForKey:@"tasker"] integerValue] > 1)
+        {
+            stateStr = [self modeValueToStr:Mode_state andValue:State_morepeople];
+            for(int i = 0; i<Performerslist.count ;i++)
+            {
+                NSDictionary *tempDict = [Performerslist objectAtIndex:i];
+                if([[tempDict objectForKey:@"tasker_uid"] isEqualToString:[self getUserID]])
+                {
+                    [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+                    break;
+                }
+            }
+            //
+        }
+        else{
+            NSDictionary *tempDict;
+            
+            tempDict = [[_dictData objectForKey:@"taskerlist"] objectAtIndex:0];
+            
+            stateStr = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+            
+            localTaskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
+            
+            [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];//更改两个按键的显示
+        }
+
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+        [mTableView reloadData];
+    }
+    
+    
+    
+    
 }
 
 -(void)setDatas:(TaskPath *)taskPath
 {
     if(taskPath == nil)
         return;
-    
-//    if(taskPathLocal == nil)
-//        taskPathLocal = [[TaskPath alloc] init];
-    
- //   [taskPathLocal resetDatas];
-    TaskId = taskPath.taskID ;
-    {
+    @try {
         
-//        
-//        taskPathLocal = taskPath.taskID;
-//        taskPathLocal.taskName = taskPath.taskName;
-//        taskPathLocal.taskOwner =taskPath.taskOwner;//[tempDict objectForKey:@"uid"];
-//        taskPathLocal.taskPerformers = taskPath.taskPerformers;
-//        taskPathLocal.taskContent =taskPath.taskContent;
-//        taskPathLocal.taskStatus =taskPath.taskStatus;
-//        taskPathLocal.taskType = taskPath.taskType;
-//        taskPathLocal.remindTime = taskPath.remindTime ;
-//        taskPathLocal.repeatMode = taskPath.repeatMode;
-//        taskPathLocal.startTaskDateStr =  taskPath.startTaskDateStr;
-//        taskPathLocal.endTaskDateStr = taskPath.endTaskDateStr;
-//        
-        taskPathLocal =taskPath;
         
-        NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
+        TaskId = taskPath.taskID ;
+        {
+            
+            taskPathLocal =taskPath;
+            
+            NSLog(@"taskPathLocal.taskName1 = [%@]",taskPathLocal.taskName);
+        }
+
+        
+        
+        
+        repeatStr = [self modeValueToStr:Mode_Repeat andValue:taskPath.repeatMode];
+        remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
+        
+        
+        // senderNameStr = taskPath.taskOwner;
+        taskTitleStr = taskPath.taskName;
+        taskContentStr = taskPath.taskContent;
+        
+        startTime = taskPath.startTaskDateStr;
+        endTime   = taskPath.endTaskDateStr;
+        if(taskPath.sId!=nil&&![taskPath.sId isEqualToString:@""])
+            _sID =  taskPath.sId;
+        
+        if(imgSrc ==nil)
+            imgSrc = [NSMutableArray array];
+        else
+        {
+            if(imgSrc.count!=0)
+                [imgSrc removeAllObjects];
+        }
+        for (int i = 0; i < taskPath.imgSrc.count; i++) {
+            
+            NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
+            
+            [imgSrc addObject:[taskPath.imgSrc objectAtIndex:i]];
+        }
+        
+        imgCount = imgSrc.count;
+
     }
-    localTaskStatus = taskPath.taskStatus;
-    [self setBtnStr:taskPath.taskStatus];
-    
-    repeatStr = [self modeValueToStr:Mode_Repeat andValue:taskPath.repeatMode];
-    remindStr = [self modeValueToStr:Mode_Remind andValue:taskPath.remindTime];
-    stateStr = [self modeValueToStr:Mode_state andValue:taskPath.taskStatus];
-    
-   // senderNameStr = taskPath.taskOwner;
-    taskTitleStr = taskPath.taskName;
-    taskContentStr = taskPath.taskContent;
-    
-    startTime = taskPath.startTaskDateStr;
-    endTime   = taskPath.endTaskDateStr;
-    
-    
-    if(imgSrc ==nil)
-        imgSrc = [NSMutableArray array];
-    else
-    {
-        if(imgSrc.count!=0)
-            [imgSrc removeAllObjects];
+    @catch (NSException *exception) {
+        
     }
-    for (int i = 0; i < taskPath.imgSrc.count; i++) {
-        
-        NSLog(@"i = %d [%@]",i,[taskPath.imgSrc objectAtIndex:i]);
-        
-        [imgSrc addObject:[taskPath.imgSrc objectAtIndex:i]];
+    @finally {
+        [mTableView reloadData];
     }
     
-    imgCount = imgSrc.count;
-    
-    
-    [mTableView reloadData];
+  //  [PerformersColView reloadData];
+   // [mTableView reloadData];
     
 }
 
@@ -387,36 +442,39 @@
         taskStatusShow.text= stateStr;
         [cell addSubview:taskStatusShow];
         
-        //UIButon
-        if(btnLeftStr != nil)
+        if(_taskDetailMode != TaskDetail_SendMode)
         {
+            //UIButon
+            if(btnLeftStr != nil)
+            {
 
-           
-            btnLeft.layer.masksToBounds = YES;
-            btnLeft.layer.borderWidth = 1;
-            btnLeft.layer.borderColor = [ZY_UIBASECOLOR CGColor];
-            btnLeft.layer.cornerRadius = 8;
-            
-            [btnLeft setTitle:btnLeftStr forState:UIControlStateNormal];
-            [btnLeft setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
-            
-            [btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
-            
-            [cell addSubview:btnLeft];
-        }
-        if(btnRightStr != nil)
-        {
-            
-            btnRight.layer.masksToBounds = YES;
-            btnRight.layer.borderWidth = 1;
-            btnRight.layer.borderColor = [ZY_UIBASECOLOR CGColor];
-            btnRight.layer.cornerRadius = 8;
-            [btnRight setTitle:btnRightStr forState:UIControlStateNormal];
-            [btnRight setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
-            
-            [btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
-            
-            [cell addSubview:btnRight];
+               
+                btnLeft.layer.masksToBounds = YES;
+                btnLeft.layer.borderWidth = 1;
+                btnLeft.layer.borderColor = [ZY_UIBASECOLOR CGColor];
+                btnLeft.layer.cornerRadius = 8;
+                
+                [btnLeft setTitle:btnLeftStr forState:UIControlStateNormal];
+                [btnLeft setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
+                
+                [btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [cell addSubview:btnLeft];
+            }
+            if(btnRightStr != nil)
+            {
+                
+                btnRight.layer.masksToBounds = YES;
+                btnRight.layer.borderWidth = 1;
+                btnRight.layer.borderColor = [ZY_UIBASECOLOR CGColor];
+                btnRight.layer.cornerRadius = 8;
+                [btnRight setTitle:btnRightStr forState:UIControlStateNormal];
+                [btnRight setTitleColor:ZY_UIBASECOLOR forState:UIControlStateNormal];
+                
+                [btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [cell addSubview:btnRight];
+            }
         }
     }
     else if(indexPath.row == 1){
@@ -468,10 +526,11 @@
         
         
         
-//        PerformersColView.
-//        PerformersColView.
-        [cell addSubview:PerformersColView];
+
         
+        
+        [cell addSubview:PerformersColView];
+        [PerformersColView reloadData];
 //        executor.leftView = leftlbl;
 //        executor.leftViewMode = UITextFieldViewModeAlways;
 //        
@@ -800,8 +859,14 @@
    [SVProgressHUD showWithStatus:@"更新数据" maskType:SVProgressHUDMaskTypeBlack];
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"setTaskStateCallBack:"];
-    NSLog(@"Task id  =%@",TaskId);
-    [dataprovider ChangeTaskState:TaskId andState:state];
+    NSLog(@"Task id  =%@",_sID);
+    if(_sID == nil)
+    {
+        [SVProgressHUD dismiss];
+        return;
+    }
+    
+    [dataprovider ChangeTaskState:_sID andState:state];
 }
 
 
@@ -825,7 +890,9 @@
             alert.alertType = AlertType_Hint;
             [alert addButtonWithTitle:@"确定"];
             [alert show];
+            
         }
+        [self loadTaskDetails:TaskId];
         return;
     }
     
@@ -877,7 +944,7 @@
     }
     
     taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
-    taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+    //taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
     taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
     taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
     taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
@@ -903,13 +970,22 @@
     {
         [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
     }
-
-    //  [self setTaskDetails];
     
+    if(![[taskDetailDict objectForKey:@"taskerlist"] isEqual:[NSNull null]])
+    {
+        taskDetailPath.taskPerformerDetails = [taskDetailDict objectForKey:@"taskerlist"];
+    }
+    else
+    {
+        NSLog(@"taskerlist = NULL");
+        // return;
+    }
+    //  [self setTaskDetails];
+    [self setDictData:taskDetailDict];
     [self setDatas:taskDetailPath];
     
     [SVProgressHUD dismiss];
-    [mTableView reloadData];
+//    [mTableView reloadData];
     
 }
 
@@ -1316,7 +1392,17 @@
     
     
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight-10, _cellHeight , (_cellHeight-10)/2)];
-    nameLab.text =[tempDict objectForKey:@"nick"];
+    if(![[tempDict objectForKey:@"nick"] isEqual:[NSNull null]] )
+    {
+
+        nameLab.text =[tempDict objectForKey:@"nick"];
+    }
+    else
+    {
+        nameLab.text =@"";
+    }
+
+   
     nameLab.font = [UIFont systemFontOfSize:12];
     
     UILabel *stateLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight+(_cellHeight)/2-15, _cellHeight, (_cellHeight-10)/2)];

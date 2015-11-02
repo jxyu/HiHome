@@ -8,6 +8,7 @@
 
 #import "BackPageViewController.h"
 #import "SegmentedPageView.h"
+#import "SVProgressHUD.h"
 
 @interface PlanMonthViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate>
 {
@@ -15,7 +16,6 @@
     NSInteger _cellCount;
     NSInteger _cellHeight;
     UITableView *_mainTableView;
-    NSMutableArray *_cellInfo;
     SegmentedPageView *_taskPageSeg;
     
     NSMutableArray *_tableViews;

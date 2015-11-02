@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
+typedef enum _pageDisApperMode
+{
+    
+    Mode_dis =0,
+    Mode_nav
+    
+}PageDisApperMode;
 
 @interface BackPageViewController : BaseNavigationController<UIGestureRecognizerDelegate>
 {
@@ -19,6 +26,8 @@
 @property (strong,nonatomic)UIButton *mBtnRight;
 @property (nonatomic) NSString *navTitle;
 @property ( nonatomic) BOOL POP;
+@property ( nonatomic) PageDisApperMode pageChangeMode;
+
 @property(strong,nonatomic) NSMutableArray *contentHeadView;
 -(void)quitView;
 -(void)btnRightClick:(id)sender;

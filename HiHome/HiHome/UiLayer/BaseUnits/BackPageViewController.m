@@ -103,14 +103,21 @@
 
 }
 
+-(void)quitViewNav
+{
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 -(void)backMainPage:(id)sender
 {
-//    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
-//    {
-//        [self popoverPresentationController];
-//    }
-//    [self.navigationController popViewControllerAnimated:YES];
+    
     [self quitView];
+
 }
 
 -(void)btnRightClick:(id)sender{

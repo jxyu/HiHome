@@ -61,7 +61,7 @@
     
     
     
-    mainCollectionView = [[UICollectionView alloc]  initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH , SCREEN_HEIGHT) collectionViewLayout:layout];
+    mainCollectionView = [[UICollectionView alloc]  initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH , SCREEN_HEIGHT-ZY_HEADVIEW_HEIGHT) collectionViewLayout:layout];
     
     [layout setHeaderReferenceSize:CGSizeMake(mainCollectionView.frame.size.width, 0)];//暂不现实时间
     
@@ -69,7 +69,7 @@
 
     mainCollectionView.delegate= self;
     mainCollectionView.dataSource =self;
-    mainCollectionView.contentSize = CGSizeMake(SCREEN_WIDTH*2, _cellwidth*2);
+    mainCollectionView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*2);
     mainCollectionView.showsHorizontalScrollIndicator = YES;
     mainCollectionView.showsVerticalScrollIndicator = NO;
     mainCollectionView.backgroundColor = [UIColor whiteColor];
@@ -174,7 +174,7 @@
             return 1;
             break;
         case 2:
-            return _picArr.count;
+            return _picArr.count/*加四个cell 站位让最后一行的显示完整*/;
             break;
         default:
             return  1;

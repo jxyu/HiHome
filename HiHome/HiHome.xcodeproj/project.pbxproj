@@ -207,6 +207,7 @@
 		B58DD96A1BB687A90040A084 /* addtask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD9681BB687A90040A084 /* addtask@2x.png */; };
 		B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96C1BB6888E0040A084 /* editTask@2x.png */; };
 		B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96E1BB693180040A084 /* threepoint@2x.png */; };
+		B590E9611BE6F66800759207 /* CreateTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56CFC151BCC90940081B645 /* CreateTaskViewController.m */; };
 		B596881F1BCDEFB1001F2715 /* UUDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881C1BCDEFB1001F2715 /* UUDatePicker.m */; };
 		B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881E1BCDEFB1001F2715 /* UUDatePicker_DateModel.m */; };
 		B59688241BCE0929001F2715 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59688221BCE0929001F2715 /* RemindViewController.m */; };
@@ -3471,6 +3472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5033BBD1BAFA6D70014935E /* HiHomeTests.m in Sources */,
+				B590E9611BE6F66800759207 /* CreateTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddressLocalViewController.h"
 
-@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 {
 @private
     NSInteger _mateCellCount;
@@ -20,8 +20,7 @@
     UISearchDisplayController *_searchDisplayController;
     AddressLocalViewController *addresslocalVC;
 }
--(void) initViews;
-@property (weak, nonatomic) IBOutlet UITableView *mytableView;
 
+@property (weak, nonatomic) IBOutlet UITableView *mytableView;
 
 @end

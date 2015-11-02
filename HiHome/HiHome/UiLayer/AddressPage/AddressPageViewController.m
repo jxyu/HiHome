@@ -24,7 +24,6 @@
     NSArray *friendArraySpouse;
     NSArray *friendArrayStar;
     
-    NSInteger currentSection;
     NSIndexPath *currentRow;
     
     PersonFirstViewController *personFirstVC;
@@ -39,6 +38,7 @@
     // Do any additional setup after loading the view from its nib.
     [self initData];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetFriendInfoClick) name:@"getFriendInfo" object:nil];
 }
 -(void)initData{
     
@@ -61,8 +61,9 @@
     }else{
         NSLog(@"访问服务器失败！");
     }
+
     [self initViews];
-    NSLog(@"%lu-%lu-%lu",(unsigned long)friendArrayNormal.count,(unsigned long)friendArrayStar.count,(unsigned long)friendArraySpouse.count);
+    [_mytableView reloadData];
 }
 
 -(NSString *)getUserID
@@ -391,7 +392,11 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return YES;
+    if (indexPath.section == 0) {
+        return NO;
+    }else{
+        return YES;
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView: (UITableView *)tableView editingStyleForRowAtIndexPath: (NSIndexPath *)indexPath
@@ -411,29 +416,24 @@
     
     NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
-    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定删除?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
     
-    alert.alertType = AlertType_Alert;
-    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+    currentRow = indexPath;
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
         dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"delFriendBackCall:"];
-        if (indexPath.section == 1) {
-            [dataProvider delFriend:friendArraySpouse[indexPath.row][@"fid"] andUserID:[self getUserID]];
-        }else if(indexPath.section == 2){
-            [dataProvider delFriend:friendArrayStar[indexPath.row][@"fid"] andUserID:[self getUserID]];
-        }else if(indexPath.section == 3){
-            [dataProvider delFriend:friendArrayNormal[indexPath.row][@"fid"] andUserID:[self getUserID]];
+        if (currentRow.section == 1) {
+            [dataProvider delFriend:friendArraySpouse[currentRow.row][@"fid"] andUserID:[self getUserID]];
+        }else if(currentRow.section == 2){
+            [dataProvider delFriend:friendArrayStar[currentRow.row][@"fid"] andUserID:[self getUserID]];
+        }else if(currentRow.section == 3){
+            [dataProvider delFriend:friendArrayNormal[currentRow.row][@"fid"] andUserID:[self getUserID]];
         }
-        currentSection = indexPath.section;
-        currentRow = indexPath;
-    }];
-    
-    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
-    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
-        NSLog(@"Click canel");
-        
-    }];
-    [alert show];
+    }
 }
 
 -(void)delFriendBackCall:(id)dict{
@@ -441,15 +441,15 @@
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
         NSMutableArray *tempArray;
-        if (currentSection == 1) {
+        if (currentRow.section == 1) {
             tempArray = [[NSMutableArray alloc] initWithArray:friendArraySpouse];
             [tempArray removeObjectAtIndex:currentRow.row];
             friendArraySpouse = [[NSArray alloc] initWithArray:tempArray];
-        }else if(currentSection == 2){
+        }else if(currentRow.section == 2){
             tempArray = [[NSMutableArray alloc] initWithArray:friendArrayStar];
             [tempArray removeObjectAtIndex:currentRow.row];
             friendArrayStar = [[NSArray alloc] initWithArray:tempArray];
-        }else if(currentSection == 3){
+        }else if(currentRow.section == 3){
             tempArray = [[NSMutableArray alloc] initWithArray:friendArrayNormal];
             [tempArray removeObjectAtIndex:currentRow.row];
             friendArrayNormal = [[NSArray alloc] initWithArray:tempArray];
@@ -558,12 +558,16 @@
 }
 //设置section footer的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
-    
     return 0;
-    
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self initData];
+}
+
+-(void)didGetFriendInfoClick{
+    [self initData];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

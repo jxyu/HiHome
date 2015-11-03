@@ -101,7 +101,15 @@
 {
     if(picPath==nil)
         return;
-    _picView.image = [UIImage imageNamed:picPath.picName];
+ //   _picView.image = [UIImage imageNamed:picPath.picName];
+    
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,picPath.picName];
+    NSLog(@"img url = [%@]",url);
+    [_picView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+    _picView.contentMode = UIViewContentModeScaleAspectFit;
+
+   
+    
     _picView.contentMode = UIViewContentModeScaleAspectFit;
     
     _albumDateLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -112,7 +120,8 @@
     
     _picDescribeLabel.text = picPath.picDescribe;
     _picDescribeLabel.numberOfLines = 0;
-    _albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[picPath.picDate year],(long)[picPath.picDate  month],(long)[picPath.picDate  day]];
+    //_albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[picPath.picDate year],(long)[picPath.picDate  month],(long)[picPath.picDate  day]];
+    _albumDateLabel.text = picPath.picDateStr;
     
 }
 

@@ -31,7 +31,7 @@
 -(void)initData{
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"getTaskNoticeBackCall:"];
-    [dataProvider getReceiveTask:[self getUserID] andState:nil andMyOrNot:nil andPage:nil andPerPage:nil andDate:nil];
+    [dataProvider getReceiveTask:[self getUserID] andState:nil andMyOrNot:nil andPage:nil andPerPage:nil andDate:nil andStartDate:nil andEndDate:nil];
 }
 
 -(void)getTaskNoticeBackCall:(id)dict{

@@ -1,19 +1,18 @@
 //
-//  PlanMonthViewController.m
+//  PlanWeekViewController.m
 //  HiHome
 //
-//  Created by 王建成 on 15/10/9.
+//  Created by 王建成 on 15/11/3.
 //  Copyright © 2015年 zykj. All rights reserved.
 //
 
-#import "PlanMonthViewController.h"
+#import "PlanWeekViewController.h"
 #import "BaseTableViewCell.h"
 #import "UIDefine.h"
 #import "TaskTableViewCell.h"
 #import "JKAlertDialog.h"
 #import "DataProvider.h"
-
-@interface PlanMonthViewController ()
+@interface PlanWeekViewController ()
 {
     NSDictionary *_taskDict;
     NSDictionary *_receiveTaskDict;
@@ -36,7 +35,7 @@
 }
 @end
 
-@implementation PlanMonthViewController
+@implementation PlanWeekViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -452,7 +451,7 @@
         [_taskDetailPageCtl setDictData:taskDetailDict];
         [_taskDetailPageCtl setDatas:taskDetailPath];
         _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
-      //  [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
+        //  [self.navigationController pushViewController:_taskDetailPageCtl animated:NO];
         _taskDetailPageCtl.pageChangeMode = Mode_dis;
         [self presentViewController:_taskDetailPageCtl animated:YES completion:^{}];
     }
@@ -488,10 +487,10 @@
 
 -(void) initViews
 {
-//    _mainTableView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,60+ [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height))];
-//    _mainTableView.backgroundColor = ZY_UIBASECOLOR;
-//    
-//    [self.view addSubview:_mainTableView];
+    //    _mainTableView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,60+ [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height))];
+    //    _mainTableView.backgroundColor = ZY_UIBASECOLOR;
+    //
+    //    [self.view addSubview:_mainTableView];
 }
 
 
@@ -509,7 +508,7 @@
     NSArray *title = @[@"自己的任务",@"接受的任务"];
     _taskPageSeg.delegate = self;
     [_taskPageSeg setItemTitle:title];
-   
+    
     
     _cellCount = 1;
     _cellCountMyTask = 0;
@@ -536,8 +535,8 @@
     [self.view  addSubview:_taskPageSeg];
     [self.view  addSubview:_myTaskView];
     [self.view  addSubview:_getTaskView];
-
-
+    
+    
     [_taskPageSeg setCurrentPage:0];//页面都设置完成后再调用
     
     
@@ -587,35 +586,52 @@
         _month = [dd month];
         _year = [dd year];
         _day = [dd day];
-    
+        
         monthTime = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
         
     }
     @catch (NSException *exception) {
-       
+        
     }
     @finally {
-         return monthTime;
+        return monthTime;
     }
-
-
+    
+    
 }
+
+-(NSString *)timeIntervalToDate:(NSTimeInterval)sec
+{
+    NSString *str;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:sec];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyyMMddHHmm"];
+    NSString *dateString = [formatter stringFromDate:date];
+    
+  //  str = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",[dateString substringWithRange:NSMakeRange(0, 4)]/*年*/,[dateString substringWithRange:NSMakeRange(4, 2)]/*月*/,[dateString substringWithRange:NSMakeRange(6, 2)]/*日*/,[dateString substringWithRange:NSMakeRange(8, 2)]/*时*/,[dateString substringWithRange:NSMakeRange(10, 2)]/*分*/];
+    
+    str = [NSString stringWithFormat:@"%@-%@-%@",[dateString substringWithRange:NSMakeRange(0, 4)]/*年*/,[dateString substringWithRange:NSMakeRange(4, 2)]/*月*/,[dateString substringWithRange:NSMakeRange(6, 2)]/*日*/];
+    
+    return str;
+}
+
 
 -(void)setPageIndex:(NSInteger)page
 {
     [self getMonthTime];
+    NSDate *tempDate = [NSDate date];
+    NSTimeInterval temp;
+    
+    
+    temp = [tempDate timeIntervalSince1970];
+    
+    
+    
     _startTime = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+    _endTime = [self timeIntervalToDate:(temp+7*24*60*60)];
     
-    if(_month != 12)
-    {
-        _endTime =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month+1,_day];
-    }
-    else
-    {
-        _endTime = [NSString stringWithFormat:@"%ld-%02d-%02ld",_year+1,1,_day];
-    }
-    
-    NSLog(@"Page = %ld",(long)page);
+    NSLog(@"_endTime = %ld",(long)_endTime);
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
     
@@ -623,7 +639,7 @@
     
     if(page == 0)
     {
-       // [self resetDatas];
+        // [self resetDatas];
         myTaskPage = 1;
         _cellCountMyTask = 0;
         [_myTaskData removeAllObjects];
@@ -636,9 +652,9 @@
         [_getTaskData removeAllObjects];
         
         [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:nil andStartDate:_startTime andEndDate:_endTime];
-
+        
     }
-
+    
 }
 
 
@@ -683,7 +699,7 @@
         {
             return cell;
         }
- 
+        
         @try {
             TaskPath *taskValue = [_getTaskData objectAtIndex:(indexPath.row)];
             
@@ -697,7 +713,7 @@
             
         }
         @finally {
-           
+            
             if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
             {
                 [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -804,13 +820,13 @@
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     
     if (tableView.tag == 0) {
-
+        
         TaskPath *tempPath;
         tempPath = [_myTaskData objectAtIndex:indexPath.row];
         _sID = tempPath.sId;
         _taskDetailMode = TaskDetail_MyMode;
         [self loadTaskDetails:tempPath.taskID];
-            
+        
         
     }else if(tableView.tag == 1){
         TaskPath *tempPath;

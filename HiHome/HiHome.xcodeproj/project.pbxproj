@@ -249,6 +249,7 @@
 		B5E0CE7B1BE338DC00DF8EB1 /* AlbumShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0CE791BE338DC00DF8EB1 /* AlbumShowViewController.m */; };
 		B5E0CE7C1BE338DC00DF8EB1 /* AlbumShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */; };
 		B5E0CE7F1BE3457300DF8EB1 /* albumbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */; };
+		B5E924531BE8648F00B15B55 /* PlanWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E924521BE8648F00B15B55 /* PlanWeekViewController.m */; };
 		B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */; };
 		B5FA2DA91BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */; };
 		B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DAB1BC4F00200D5BDB7 /* SoundSetViewController.m */; };
@@ -711,6 +712,8 @@
 		B5E0CE791BE338DC00DF8EB1 /* AlbumShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumShowViewController.m; path = HiHome/UiLayer/MainPage/Album/AlbumShowViewController.m; sourceTree = SOURCE_ROOT; };
 		B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AlbumShowViewController.xib; path = HiHome/UiLayer/MainPage/Album/AlbumShowViewController.xib; sourceTree = SOURCE_ROOT; };
 		B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "albumbackground@2x.png"; sourceTree = "<group>"; };
+		B5E924511BE8648F00B15B55 /* PlanWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanWeekViewController.h; path = HiHome/UiLayer/MainPage/PlanWeekViewController.h; sourceTree = SOURCE_ROOT; };
+		B5E924521BE8648F00B15B55 /* PlanWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlanWeekViewController.m; path = HiHome/UiLayer/MainPage/PlanWeekViewController.m; sourceTree = SOURCE_ROOT; };
 		B5FA2DA51BC4E9DB00D5BDB7 /* MessageNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeViewController.h; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.h; sourceTree = SOURCE_ROOT; };
 		B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeViewController.m; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.m; sourceTree = SOURCE_ROOT; };
 		B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeViewController.xib; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1737,6 +1740,8 @@
 				B5879D741BC7A0C4003AACFA /* PlanMonthViewController.h */,
 				B5879D751BC7A0C4003AACFA /* PlanMonthViewController.m */,
 				B5879D761BC7A0C4003AACFA /* PlanMonthViewController.xib */,
+				B5E924511BE8648F00B15B55 /* PlanWeekViewController.h */,
+				B5E924521BE8648F00B15B55 /* PlanWeekViewController.m */,
 			);
 			name = MainPage;
 			path = mainPage;
@@ -3120,7 +3125,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 6NC56CVL43;
+						DevelopmentTeam = M7YC435M3S;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -3356,6 +3361,7 @@
 				80076AC11BDA155000DEFD35 /* JKAssets.m in Sources */,
 				B5E059D91BB146E100DBF786 /* WMHomeViewController.m in Sources */,
 				B5879D771BC7A0C4003AACFA /* PlanMonthViewController.m in Sources */,
+				B5E924531BE8648F00B15B55 /* PlanWeekViewController.m in Sources */,
 				B58196021BCB862900D69A1E /* PullDownButtonsTab.m in Sources */,
 				8003CC991BE319E20057B229 /* ChatLocationViewController.m in Sources */,
 				B783D0141BE0D05D00052792 /* MarkFriendViewController.m in Sources */,
@@ -3685,6 +3691,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3710,8 +3717,9 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
 			name = Debug;
@@ -3722,6 +3730,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3747,8 +3756,9 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
 			};
 			name = Release;

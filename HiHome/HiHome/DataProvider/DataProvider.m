@@ -105,7 +105,7 @@
 }
 
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -132,6 +132,10 @@
             [prm setObject:perpage forKey:@"perpage"];
         if(date!=nil)
             [prm setObject:date forKey:@"addtime"];
+        if(startDate!=nil)
+            [prm setObject:startDate forKey:@"sdate"];
+        if(endDate!=nil)
+            [prm setObject:endDate forKey:@"edate"];
         NSLog(@"send prm = [%@]",prm);
         
         [self PostRequest:url andpram:prm];
@@ -594,6 +598,28 @@
     }
 }
 
+
+-(void)GetResentPic:(NSString *)uid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage
+{
+    NSMutableDictionary * prm = [NSMutableDictionary dictionary];
+    if(uid)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=photo&a=getLatelyList",Url];
+        
+        
+        [prm setObject:uid forKey:@"uid"];
+        
+        if(nowpage!=nil)
+            [prm setObject:nowpage forKey:@"nowpage"];
+        if(perPage)
+            [prm setObject:perPage forKey:@"perpage"];
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
+        [self PostRequest:url andpram:prm];
+    }
+}
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {

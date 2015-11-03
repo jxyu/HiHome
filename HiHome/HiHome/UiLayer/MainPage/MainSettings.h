@@ -14,5 +14,5 @@
 #import "CoupleViewController.h"
 #import "PlanMonthViewController.h"
 #import "AlbumMainViewController.h"
-
+#import "PlanWeekViewController.h"
 #endif /* MainSettings_h */

@@ -56,7 +56,7 @@
  *  @param perpage          每页显示数量  default  10
  */
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date;
+-(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate;
 /**
  *  获取发布的任务
  *
@@ -258,6 +258,17 @@
  */
 
 -(void)GetPictureList:(NSString *)uid andAid:(NSString *)aid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage;
+
+/**
+ *  获取最近s图片列表
+ *
+ *
+ *  @param uid       用户id
+ *  @param nowpage   当前页码
+ *  @param perPage   每页显示数量
+ *
+ */
+-(void)GetResentPic:(NSString *)uid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perPage;
 /**
  *  获取图片详情
  *

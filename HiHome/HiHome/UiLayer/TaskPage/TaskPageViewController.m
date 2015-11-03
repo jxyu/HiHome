@@ -16,6 +16,7 @@
 #import "DataProvider.h"
 #import "DataDefine.h"
 #import "JKAlertDialog.h"
+#import "UIImageView+WebCache.h"
 
 @interface TaskPageViewController ()
 {
@@ -219,7 +220,7 @@
     
     NSLog(@"id = [%@]",userID);
     
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date];
+    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil];
 }
 
 
@@ -339,7 +340,7 @@
         NSLog(@"date11 =[%@]",date);
     else
         NSLog(@"date  = nil");
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date];
+    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil];
 }
 
 
@@ -714,7 +715,13 @@
             anniversary.title = [tempDict objectForKey:@"title"];
             anniversary.date = [tempDict objectForKey:@"mdate"];
             anniversary.anniversaryID =[tempDict objectForKey:@"id"];
+            if((![[tempDict objectForKey:@"imgsrc"] isEqual:[NSNull null]]))
+            {
+                anniversary.headImgSrc = [tempDict objectForKey:@"imgsrc"];
+            }
+
             [_myAnniversaryData addObject:anniversary];
+            
         }
         
         if(resultAll > _myAnniversaryData.count)
@@ -1437,7 +1444,10 @@
             
            
             cell.mDate.text = anniversaryValue.date;
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,anniversaryValue.headImgSrc];
+            NSLog(@"img url = [%@]",url);
             
+            [cell.mImage  sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
             if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
             {
                 [cell setSeparatorInset:UIEdgeInsetsZero];

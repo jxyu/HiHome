@@ -10,9 +10,9 @@
 #import "BaseNavigationController.h"
 typedef enum _pageDisApperMode
 {
+    Mode_nav = 0,
+    Mode_dis
     
-    Mode_dis =0,
-    Mode_nav
     
 }PageDisApperMode;
 

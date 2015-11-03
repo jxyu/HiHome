@@ -14,6 +14,7 @@
 }
 @property(nonatomic)NSString *picName;
 @property(nonatomic)NSDateComponents *picDate;
+@property(nonatomic)NSString *picDateStr;
 @property(nonatomic)NSString *picDescribe;
 @end
 

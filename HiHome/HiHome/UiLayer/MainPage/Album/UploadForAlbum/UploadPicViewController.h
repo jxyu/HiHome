@@ -34,5 +34,7 @@
 }
 
 @property(nonatomic) id<UploadPicViewControllerDelegate> delegate;
-
+@property(nonatomic)BOOL ChoosPicByCamera;
+@property(nonatomic)NSString  *albumName;
+@property(nonatomic)NSString  *aid;
 @end

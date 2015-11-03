@@ -168,11 +168,19 @@
 //重写退出页面方法
 -(void)quitView
 {
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    if(self.pageChangeMode == Mode_nav)
     {
-        [self popoverPresentationController];
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+    
     if(_createTaskMode != Mode_EditTask)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];

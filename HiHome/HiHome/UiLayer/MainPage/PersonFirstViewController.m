@@ -39,6 +39,7 @@
 }
 
 -(void)initView{
+    
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     mTableView.dataSource = self;
     mTableView.delegate = self;
@@ -356,8 +357,9 @@
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
     conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
-    conversationVC.userName = @"测试1";
-    conversationVC.title = @"自问自答";
+//    conversationVC.userName = @"测试1";
+//    conversationVC.title = @"自问自答";
+    conversationVC.mIFlag = @"2";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [self.navigationController pushViewController:conversationVC animated:YES];

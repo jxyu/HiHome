@@ -25,8 +25,12 @@
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =model.conversationType;
     conversationVC.targetId = model.targetId;
-    conversationVC.userName =model.conversationTitle;
+    conversationVC.userName = model.conversationTitle;
     conversationVC.title = model.conversationTitle;
+    conversationVC.displayUserNameInCell = NO;
+    
+    conversationVC.mIFlag = @"1";
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [self.navigationController pushViewController:conversationVC animated:YES];
@@ -109,8 +113,8 @@
     [self.view addSubview:_btnRight];
     
     
-    [self addLeftButton:@"goback"];
-    [self addRightbuttontitle:@"聊天"];
+    //[self addLeftButton:@"goback"];
+    //[self addRightbuttontitle:@"聊天"];
     
     
     
@@ -193,20 +197,6 @@
 
 }
 
-- (void)clickRightButton:(UIButton *)sender
-{
-    NSLog(@"right button click");
-    ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
-    conversationVC.conversationType =ConversationType_PRIVATE;
-    conversationVC.targetId = @"5"; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
-    conversationVC.userName = @"测试1";
-    conversationVC.title = @"自问自答";
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [self.navigationController pushViewController:conversationVC animated:YES];
-
-}
-
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
@@ -214,6 +204,5 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
 
 @end

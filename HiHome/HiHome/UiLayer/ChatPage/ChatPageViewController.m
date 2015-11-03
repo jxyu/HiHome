@@ -96,6 +96,8 @@
     }
 }
 
+
+
 -(void) initViews
 {
 //    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];

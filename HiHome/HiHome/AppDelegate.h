@@ -15,7 +15,7 @@
 #import <RongIMKit/RongIMKit.h>
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource>
 {
     CustomTabBarViewController *_tabBarViewCol;
     FirstScrollController *firstCol;
@@ -25,6 +25,8 @@
     
     UIViewController *tempViewCtl2;
     OptionTextViewController *tempViewCtl;
+    
+    NSUserDefaults *mChatFriendList;
 }
 
 - (void)showTabBar;

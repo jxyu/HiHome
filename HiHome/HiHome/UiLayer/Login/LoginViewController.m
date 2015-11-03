@@ -399,6 +399,9 @@
             //重新获取好友信息
             [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendInfo" object:nil];
             
+            //获取聊天Token
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getTokenInfo" object:nil];
+            
             
             //[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
 //            [self.navigationController popToRootViewControllerAnimated:YES];

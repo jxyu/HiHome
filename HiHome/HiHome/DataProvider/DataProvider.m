@@ -374,6 +374,14 @@
     }
 }
 
+-(void)getFriendInfo:(NSString *)userID{
+    if (userID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getList",Url];
+        NSDictionary *prm = @{@"uid":userID,@"nowpage":@"1",@"perpage":@"9999"};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)matchAddress:(NSString *)userID andMob:(NSString *) mob{
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=mobFriend",Url];

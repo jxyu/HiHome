@@ -79,6 +79,7 @@
 
 -(void) initViews
 {
+    _mytableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64+44, SCREEN_WIDTH, SCREEN_HEIGHT - 108)];
     
     _mytableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mytableView setDelegate:self];

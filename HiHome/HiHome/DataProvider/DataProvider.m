@@ -34,7 +34,7 @@
 {
     if (prm) {
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=reg",Url];
-        [self GetRequest:url andpram:prm];
+        [self PostRequest:url andpram:prm];
     }
 }
 

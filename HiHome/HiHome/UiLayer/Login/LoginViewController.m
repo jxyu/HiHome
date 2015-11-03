@@ -472,6 +472,11 @@
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
             
             NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+            
+            //调用注册接口
+            [self registerInterface:snsAccount.userName andPwdTxt:snsAccount.usid];
+            
+            
 //            DataProvider * dataprovider=[[DataProvider alloc] init];
 //            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
 //            [dataprovider LoginForQQWithopenid:snsAccount.usid andusername:snsAccount.userName];
@@ -487,6 +492,10 @@
             if (response.responseCode == UMSResponseCodeSuccess) {
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+                
+                //调用注册接口
+                [self registerInterface:snsAccount.userName andPwdTxt:snsAccount.usid];
+                
 //                DataProvider * dataprovider=[[DataProvider alloc] init];
 //                [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
 //                [dataprovider LoginForWXWithopenid:snsAccount.usid andusername:snsAccount.userName];
@@ -499,6 +508,39 @@
     }
     @finally {
         
+    }
+}
+
+-(void)registerInterface:(NSString *)accountTxt andPwdTxt:(NSString *)pwdTxt{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"registerInterfaceBackCall:"];
+    NSDictionary * prm=@{@"mob":[NSString stringWithFormat:@"'%@'",accountTxt],@"pass":pwdTxt};
+    [dataProvider RegisterUserInfo:prm];
+}
+
+-(void)registerInterfaceBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSArray * itemdict=[[NSArray alloc] initWithArray:dict[@"datas"]];
+        [itemdict[0] writeToFile:plistPath atomically:YES];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
+        
+        //设置默认值
+        [self setLoginValue];
+        
+        //设置通知
+        [self setNotificate];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
     }
 }
 

@@ -21,6 +21,7 @@
     AddressLocalViewController *addresslocalVC;
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *mytableView;
+//@property (weak, nonatomic) IBOutlet UITableView *mytableView;
+@property (strong,nonatomic) UITableView *mytableView;
 
 @end

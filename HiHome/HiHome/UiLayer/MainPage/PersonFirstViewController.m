@@ -20,6 +20,7 @@
     DataProvider *dataProvider;
     UITextField *gxqm;
     MarkFriendViewController *markFriendVC;
+    NSUserDefaults *mUserDefault;
 }
 
 @end
@@ -39,6 +40,9 @@
 }
 
 -(void)initView{
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     mTableView.dataSource = self;
     mTableView.delegate = self;
@@ -116,7 +120,7 @@
         [cell addSubview:mDetail];
     }else if(indexPath.row == 1){
         UITextField *accountInfo = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
-        accountInfo.text = @"123456789";
+        accountInfo.text = [mUserDefault valueForKey:@"mAccountID"];
         accountInfo.enabled = NO;
         accountInfo.textColor = [UIColor colorWithRed:0.53 green:0.53 blue:0.54 alpha:1];
         UILabel *accountInfoLeftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 21)];
@@ -324,6 +328,7 @@
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
     userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
+    userInfoVC.mAge = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];
     userInfoVC.mSign = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
     [self presentViewController:userInfoVC animated:NO completion:^{}];
 }
@@ -356,8 +361,9 @@
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
     conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
-    conversationVC.userName = @"测试1";
-    conversationVC.title = @"自问自答";
+//    conversationVC.userName = @"测试1";
+//    conversationVC.title = @"自问自答";
+    conversationVC.mIFlag = @"2";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [self.navigationController pushViewController:conversationVC animated:YES];

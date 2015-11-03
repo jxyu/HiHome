@@ -38,7 +38,9 @@
 #define SMSappSecret @"8536890596fff208c04a3e52c88a2060"
 
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    NSArray *mFriendArray;
+}
 
 @end
 
@@ -47,8 +49,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    
     
     
     
@@ -77,6 +77,7 @@
     
     //设置微信AppId，设置分享url，默认使用友盟的网址
     [UMSocialWechatHandler setWXAppId:@"wx367d784d1cf53eb3" appSecret:@"d4624c36b6795d1d99dcf0547af5443d" url:@"http://www.pgyer.com/ItEJ"];
+    
     //    //设置支持没有客户端情况下使用SSO授权
     
     //    //设置分享到QQ空间的应用Id，和分享url 链接
@@ -212,6 +213,8 @@
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
     NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]) {
         
 //        if(!_loginFlag)
@@ -223,12 +226,9 @@
         else
         {
             self.window.rootViewController =_tempViewcontroller;
+            [self getTokenEvent];
             
-            DataProvider * dataprovider=[[DataProvider alloc] init];
-            [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
-            [dataprovider GetToken:userinfoWithFile[@"id"]];
-            
-            
+            [APService setAlias:[NSString stringWithFormat:@"%@",userinfoWithFile[@"id"]] callbackSelector:nil object:nil];
             
         }
 //        self.window.rootViewController =_tempViewcontroller;
@@ -264,6 +264,12 @@
     
 #endif
     return YES;
+}
+
+-(void)getTokenEvent{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
+    [dataprovider GetToken:[self getUserID]];
 }
 
 -(void) ClickBtn
@@ -307,8 +313,11 @@
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
             // Connect 成功
             NSLog(@"Connect 成功");
-            //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
-            [[RCIM sharedRCIM] setUserInfoDataSource:self];
+            //获取好友列表
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendInfoByUserID:"];
+            [dataProvider getFriendInfo:[self getUserID]];
+            
             NSLog(@"Login successfully with userId: %@.", userId);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //ChatlistViewController *chatListViewController = [[ChatlistViewController alloc]init];
@@ -324,6 +333,45 @@
                              }];
     }
 }
+
+-(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
+    NSLog(@"%@",mFriendArray);
+    RCUserInfo *user = [[RCUserInfo alloc]init];
+    user.userId = userId;
+    user.name = @"匿名";
+    user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    for (int i = 0; i < mFriendArray.count; i++) {
+        if ([[mFriendArray[i] objectForKey:@"fid"] isEqual:userId]) {
+            user.name = [[mFriendArray[i] objectForKey:@"nick"] isEqual:[NSNull null]]?@"匿名":[mFriendArray[i] objectForKey:@"nick"];
+            user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+            break;
+        }
+    }
+    return completion(user);
+}
+
+-(void)getFriendInfoByUserID:(id)dict{
+    NSLog(@"%@",dict);
+    int code = [dict[@"code"] intValue];
+    if(code == 200){
+        mFriendArray = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list"];
+        [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    }
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile1 =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile1 objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
+}
+
 - (void)showTabBar
 {
     [_tabBarViewCol showTabBar];
@@ -385,6 +433,20 @@ fetchCompletionHandler:(void
     // IOS 7 Support Required
     [APService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return  [UMSocialSnsService handleOpenURL:url];
 }
 
 

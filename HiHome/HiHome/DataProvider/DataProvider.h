@@ -301,8 +301,11 @@
 //通过/拒绝好友申请
 -(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status;
 
-//获取好友列表--  userID：用户ID
+//获取好友列表--  userID：用户ID －－带分组
 -(void)getFriendList:(NSString *)userID;
+
+//获取好友列表－－不带分组
+-(void)getFriendInfo:(NSString *)userID;
 
 //改变好友的关系
 -(void)changeFriendType:(NSString *)friendID andUserID:(NSString *) userID andType:(NSString *) type;

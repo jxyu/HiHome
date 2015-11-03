@@ -24,4 +24,6 @@
     NSInteger _orginY;
 }
 
+@property(strong,nonatomic) NSString *mIFlag;
+
 @end

@@ -86,7 +86,7 @@
     
     
     [self addLeftButton:@"goback@2x.png"];
-    [self addRightbuttontitle:@"单聊"];
+    //[self addRightbuttontitle:@"单聊"];
     
     
     
@@ -142,9 +142,14 @@
 
 - (void)clickLeftButton:(UIButton *)sender
 {
-    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [self.navigationController popViewControllerAnimated:YES];
+    if ([_mIFlag isEqual:@"1"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    }else{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    }
 }
 
 - (void)clickRightButton:(UIButton *)sender

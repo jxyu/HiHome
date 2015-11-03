@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "651"
             endingLineNumber = "651"
-            landmarkName = "-setAnniversaryDatas"
+            landmarkName = "-getAnniversaryCallBack:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "604"
             endingLineNumber = "604"
-            landmarkName = "-getAnniversaryCallBack:"
+            landmarkName = "-setSendTaskDatas"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3934,6 +3934,22 @@
             startingLineNumber = "303"
             endingLineNumber = "303"
             landmarkName = "-GetTokenBackCall:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/PersonFirstViewController.m"
+            timestampString = "468204223.323109"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "-mHiEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

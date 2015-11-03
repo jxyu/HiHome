@@ -355,7 +355,7 @@
 -(void)mHiEvent:(id)sender{
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
-    conversationVC.targetId = @"8"; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
+    conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
     conversationVC.userName = @"测试1";
     conversationVC.title = @"自问自答";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];

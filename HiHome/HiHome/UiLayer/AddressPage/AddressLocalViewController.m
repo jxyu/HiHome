@@ -190,7 +190,9 @@
         if (abLastName) CFRelease(abLastName);
         if (abFullName) CFRelease(abFullName);
         
-        [mDictInfo setValue:addressBook.name forKey:temtPhone];
+        if (temtPhone != nil) {
+            [mDictInfo setValue:addressBook.name forKey:temtPhone];
+        }
     }
     //[_tableView reloadData];
 }

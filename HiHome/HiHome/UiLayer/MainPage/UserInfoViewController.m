@@ -23,18 +23,21 @@
     UIButton * btn_nan;
     UIButton * btn_nv;
     UITextField * txt_signe;
-    NSString * birthDay;
-    UILabel * lbl_birtiday;
+    UITextField *txt_age;
     BOOL isMan;
     
     NSMutableDictionary *userInfoWithFile;
     
     NSArray *userInfoArray;
+    
+    NSUserDefaults *mUserDefault;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    
     _lblTitle.text = @"个人资料";
     [self addLeftButton:@"goback@2x.png"];
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -82,7 +85,7 @@
 #pragma mark PickViewDelegate
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString
 {
-    lbl_birtiday.text=resultString;
+    //lbl_birtiday.text=resultString;
 }
 
 
@@ -132,7 +135,7 @@
             {
                 cell.textLabel.text=@"序列号";
                 UILabel * lbl_birtiday1=[[UILabel alloc] initWithFrame:CGRectMake(80, 15, cell.frame.size.width-100, 30)];
-                lbl_birtiday1.text=birthDay?birthDay:@"123456789";
+                lbl_birtiday1.text=[mUserDefault valueForKey:@"mAccountID"];
                 lbl_birtiday1.textColor=ZY_UIBASE_FONT_COLOR;
                 [cell addSubview:lbl_birtiday1];
             }
@@ -160,11 +163,16 @@
                 break;
             case 3:
             {
-                cell.textLabel.text=@"生日";
-                lbl_birtiday=[[UILabel alloc] initWithFrame:CGRectMake(80, 10, cell.frame.size.width-100, 40)];
-                lbl_birtiday.text=birthDay?birthDay:@"年  月  日";
-                lbl_birtiday.textAlignment=NSTextAlignmentCenter;
-                [cell addSubview:lbl_birtiday];
+                cell.textLabel.text=@"年龄";
+                txt_age = [[UITextField alloc] initWithFrame:CGRectMake(80, 10, SCREEN_WIDTH - 100, 40)];
+                txt_age.delegate = self;
+                txt_age.text = _mAge;
+                txt_age.textAlignment = NSTextAlignmentCenter;
+                [cell addSubview:txt_age];
+//                lbl_birtiday=[[UILabel alloc] initWithFrame:CGRectMake(80, 10, cell.frame.size.width-100, 40)];
+//                lbl_birtiday.text=birthDay?birthDay:@"年  月  日";
+//                lbl_birtiday.textAlignment=NSTextAlignmentCenter;
+//                [cell addSubview:lbl_birtiday];
                 
             }
                 break;
@@ -258,29 +266,29 @@
 //保存资料
 -(void)btn_sureEvent:(id)sender{
     
-    if (txt_name.text.length > 0 && lbl_birtiday.text.length > 0 && txt_signe.text.length > 0) {
+    if (txt_name.text.length > 0 && txt_age.text.length > 0 && txt_signe.text.length > 0) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SaveUserInfoBackCall:"];
         
         
-        [dataprovider SaveUserInfo:userInfoWithFile[@"id"] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:[self getAgeByBirthday] andSign:txt_signe.text];
+        [dataprovider SaveUserInfo:userInfoWithFile[@"id"] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:txt_age.text andSign:txt_signe.text];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
 
--(NSString *)getAgeByBirthday{
-    int mYear = [[lbl_birtiday.text substringToIndex:4] intValue];
-    NSDate *now = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
-    
-    NSInteger currentYear = [dateComponent year];
-    
-    return [NSString stringWithFormat:@"%ld",currentYear - mYear];
-}
+//-(NSString *)getAgeByBirthday{
+//    int mYear = [[lbl_birtiday.text substringToIndex:4] intValue];
+//    NSDate *now = [NSDate date];
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+//    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+//    
+//    NSInteger currentYear = [dateComponent year];
+//    
+//    return [NSString stringWithFormat:@"%ld",currentYear - mYear];
+//}
 
 -(void)SaveUserInfoBackCall:(id)dict{
     NSLog(@"%@",dict);
@@ -293,7 +301,7 @@
             [self dismissViewControllerAnimated:NO completion:nil];
         }
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -317,6 +325,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [txt_name resignFirstResponder];
+    [txt_age resignFirstResponder];
     [txt_signe resignFirstResponder];
     return true;
 }

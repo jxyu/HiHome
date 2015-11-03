@@ -17,7 +17,9 @@
 #import "SVProgressHUD.h"
 #import "UMSocial.h"
 
-@interface LoginViewController ()<UMSocialUIDelegate>
+@interface LoginViewController ()<UMSocialUIDelegate>{
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -47,6 +49,8 @@
 }
 -(void) initViews
 {
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    
     [self initImgViews];
     [self initTexts];
     [self initBtns];
@@ -396,11 +400,11 @@
         if (result) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
             
-            //重新获取好友信息
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendInfo" object:nil];
+            //设置默认值
+            [self setLoginValue];
             
-            //获取聊天Token
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getTokenInfo" object:nil];
+            //设置通知
+            [self setNotificate];
             
             
             //[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
@@ -416,6 +420,17 @@
     printf("[%s] end\r\n",__FUNCTION__);
 }
 
+-(void)setLoginValue{
+    [mUserDefault setValue:userText.text forKey:@"mAccountID"];
+}
+
+-(void)setNotificate{
+    //重新获取好友信息
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendInfo" object:nil];
+    
+    //获取聊天Token
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getTokenInfo" object:nil];
+}
 
 -(void)tempClick:(id)sender
 {

@@ -22,6 +22,8 @@
     NSDictionary *albumDict;
     NSMutableArray *picSrc;
     
+    NSString *fullPath;
+    
     //图片上传
     NSMutableArray * img_uploaded;
     int uploadImgIndex;
@@ -41,6 +43,8 @@
     uploadImgIndex=0;
     img_uploaded=[[NSMutableArray alloc] init];
     img_prm=[[NSMutableArray alloc] init];
+    
+    fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
     
     [self initViews];
     
@@ -158,9 +162,9 @@
 {
     [self.view endEditing:NO];
     
-    if (albumField.text.length>0&&_textView.text.length>0&&albumDict) {
+    if (albumField.text.length>0&&_textView.text.length>0&&(albumDict||_aid)) {
 
-        [SVProgressHUD showWithStatus:@"正在更新..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"正在上传..." maskType:SVProgressHUDMaskTypeBlack];
         [self BuildSliderData];
     }
     else
@@ -281,7 +285,8 @@
             albumField.leftViewMode = UITextFieldViewModeAlways;
 
             albumField.font = [UIFont systemFontOfSize:14];
-            
+            if(_albumName)
+                albumField.text = _albumName;
             [cell addSubview:albumField];
         }
             break;
@@ -299,12 +304,19 @@
         case 2:
         {
             UIButton *pickPicBtns = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, _cellHeight*2 - 20,  _cellHeight*2-20)];
-            [pickPicBtns setImage:[UIImage imageNamed:@"pickPicBtn"] forState:UIControlStateNormal];
-            
-            [pickPicBtns addTarget:self action:@selector(btnPickPicture:) forControlEvents:UIControlEventTouchUpInside];
-            
-            [cell addSubview:pickPicBtns];
-            
+            if(self.ChoosPicByCamera == YES)
+            {
+                pickPicBtns.frame = CGRectMake(10, 10, 0,  0);
+               
+            }
+            else
+            {
+                [pickPicBtns setImage:[UIImage imageNamed:@"pickPicBtn"] forState:UIControlStateNormal];
+                
+                [pickPicBtns addTarget:self action:@selector(btnPickPicture:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [cell addSubview:pickPicBtns];
+            }
             
             if (!_collectionView) {
                 UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -341,6 +353,12 @@
     
 }
 
+-(void)setAlbumName:(NSString *)albumName
+{
+    _albumName = albumName;
+    
+    albumField.text = albumName;
+}
 
 -(void)btnChooseAlbums:(UIButton *)sender
 {
@@ -359,6 +377,7 @@
     {
         albumDict = dict;
         albumField.text = [dict objectForKey:@"title"];
+        self.aid = [dict objectForKey:@"id"];
     }
 }
 
@@ -572,17 +591,40 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    if(self.ChoosPicByCamera == YES)
+        return  1;
     return [self.assetsArray count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCellIdentifier forIndexPath:indexPath];
+ 
+    if(self.ChoosPicByCamera == YES)
+    {
+        @try {
+            
+            UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+            UIImageView *tempImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0  , cell.frame.size.width,  cell.frame.size.height)];
+            
+            [tempImgView setImage:savedImage];
+            [cell addSubview:tempImgView];
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            return cell;
+        }
+      
+
+    }
+    else
+    {
+        cell.tag=indexPath.row;
     
-    cell.tag=indexPath.row;
-    
-    cell.asset = [self.assetsArray objectAtIndex:[indexPath row]];
-    
+        cell.asset = [self.assetsArray objectAtIndex:[indexPath row]];
+    }
     return cell;
     
 }
@@ -604,18 +646,21 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
 
 -(void)UpdateAndRequest
 {
-    
-    if (img_uploaded.count>0) {
+    if(self.ChoosPicByCamera == YES)
+    {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
-        [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
+        [dataprovider UploadImgWithImgdata:fullPath];
+        
     }
     else
     {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-        
-        
+    
+        if (img_uploaded.count>0) {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"uploadImgBackCall:"];
+            [dataprovider UploadImgWithImgdataSlider:img_uploaded[uploadImgIndex]];
+        }
     }
 }
 
@@ -659,10 +704,15 @@ static NSString *kPhotoCellIdentifier = @"kPhotoCellIdentifier";
     
     NSLog(@"id = [%@]",userID);
 //    -(void)UploadPicture:(NSString *)uid andAlbumID:(NSString *)aId andImgSrc:(NSString *)imgSrc andIntro:(NSString *)intro
-
+    NSString *albumId;
+    if(_aid)
+        albumId = _aid;
+    else
+        albumId = [albumDict objectForKey:@"id"];
+        
     for(int i =0;i<img_prm.count;i++)
     {
-        [dataprovider UploadPicture:[self getUserID] andAlbumID:[albumDict objectForKey:@"id"] andImgSrc:[img_prm objectAtIndex:i] andIntro:_textView.text];
+        [dataprovider UploadPicture:[self getUserID] andAlbumID:albumId andImgSrc:[img_prm objectAtIndex:i] andIntro:_textView.text];
     }
 
 }

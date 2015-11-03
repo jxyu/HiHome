@@ -20,6 +20,7 @@
     AnniversaryViewController *_anniversaryPage;
     CoupleViewController *_CoupleSetPage;
     PlanMonthViewController *_planMonthPage;
+    PlanWeekViewController *_planWeekPage;
     AlbumMainViewController *_AlbumPage;
     PersonFirstViewController *_personFirstVC;
 }

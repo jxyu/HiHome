@@ -142,7 +142,14 @@
     PerformersColView.showsHorizontalScrollIndicator = YES;
     PerformersColView.showsVerticalScrollIndicator = NO;
 
-   
+    if(_taskDetailMode != TaskDetail_MyMode)
+    {
+        self.mBtnRight.hidden = YES;
+    }
+    else
+    {
+        self.mBtnRight.hidden = NO;
+    }
     
     
     showImgView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT)];
@@ -1051,16 +1058,30 @@
         
         [_createTaskViewCtl setLoadDefaultPath:taskPathLocal];
     }
-    [self.navigationController pushViewController:_createTaskViewCtl animated:NO];
+    if(self.pageChangeMode == Mode_nav)
+        [self.navigationController pushViewController:_createTaskViewCtl animated:NO];
+    else
+    {
+        _createTaskViewCtl.pageChangeMode = Mode_dis;
+        [self presentViewController:_createTaskViewCtl animated:YES completion:^{}];
+    }
 }
 
 //重写返回按钮
 -(void)quitView{
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    if(self.pageChangeMode == Mode_nav)
     {
-        [self popoverPresentationController];
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }
@@ -1107,6 +1128,7 @@
 
 -(void)setTaskDetailMode:(TaskDetailMode)taskDetailMode
 {
+    NSLog(@"taskDetailMode = %d",taskDetailMode);
     _taskDetailMode = taskDetailMode;
     if(_taskDetailMode != TaskDetail_MyMode)
     {

@@ -18,7 +18,7 @@
 @interface AnniversaryViewController ()
 {
     NSDictionary *_AnniversaryDict;
-    
+    NSInteger anniversaryPage;
     NSMutableArray *_myAnniversaryData;
    
 }
@@ -41,6 +41,13 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     DLog(@" anniversary apper");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    
+
+    [_myAnniversaryData removeAllObjects];
+    anniversaryPage = 1;
+    _cellCount = 0;
     [self loadAnniversaryDatas:nil andPerPage:nil];
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
 }
@@ -56,7 +63,6 @@
     return  userID;
 }
 
-#pragma mark - 纪念日
 -(void) loadAnniversaryDatas:(NSString *)nowPage andPerPage:(NSString *)perPage
 {
     NSLog(@"load anniversary datas");
@@ -68,6 +74,7 @@
     
     NSLog(@"id = [%@]",userID);
     
+    //[dataprovider getMyTask:userID andPage:nowPage andPerPage:perPage];
     [dataprovider getAnniversaryList:userID andNowPage:nowPage andPerPage:perPage];
 }
 
@@ -91,8 +98,7 @@
             [alert addButtonWithTitle:@"确定"];
             [alert show];
         }
-        
-        [_mainTableView reloadData];//重新载入数据
+        [_mainTableView reloadData];
         return;
     }
     
@@ -111,13 +117,13 @@
         NSLog(@"datas = NULL");
         return;
     }
-    _cellCount = [resultAll integerValue];
+    _cellCount += ((NSArray *)[_AnniversaryDict objectForKey:@"list"]).count;
     
-    DLog(@"_cellCountMyTask = %ld",(long)_cellCount);
+    NSLog(@"_cellCount = %ld",(long)_cellCount);
     
     [self setAnniversaryDatas];
-
-    [_mainTableView reloadData];//重新载入数据
+    
+    
     
     
 }
@@ -128,28 +134,50 @@
     if(_AnniversaryDict == nil)
         return;
     
-    
-    NSArray *anniversaryList = [_AnniversaryDict objectForKey:@"list"];
-    NSString *resultAll = [_AnniversaryDict objectForKey:@"resultAll"];
-    
-    for (int i = 0; i < [resultAll integerValue]; i++) {
+    @try {
+        NSArray *anniversaryList = [_AnniversaryDict objectForKey:@"list"];
+        NSInteger resultAll = [[_AnniversaryDict objectForKey:@"resultAll"] integerValue];
         
-        NSDictionary *tempDict = [anniversaryList objectAtIndex:i];
+        for (int i = 0; i < anniversaryList.count; i++) {
+            
+            NSDictionary *tempDict = [anniversaryList objectAtIndex:i];
+            
+            anniversaryPath *anniversary = [[anniversaryPath alloc] init];
+            
+            
+            NSLog(@"title = %@",[tempDict objectForKey:@"title"]);
+            anniversary.title = [tempDict objectForKey:@"title"];
+            anniversary.date = [tempDict objectForKey:@"mdate"];
+            anniversary.anniversaryID =[tempDict objectForKey:@"id"];
+            if((![[tempDict objectForKey:@"imgsrc"] isEqual:[NSNull null]]))
+            {
+                
+                anniversary.headImgSrc = [tempDict objectForKey:@"imgsrc"];
+            
+            }
+            [_myAnniversaryData addObject:anniversary];
+        }
         
-        anniversaryPath *anniversary = [[anniversaryPath alloc] init];
+        if(resultAll > _myAnniversaryData.count)
+        {
+            anniversaryPage ++ ;
+            [self loadAnniversaryDatas:[NSString stringWithFormat:@"%ld",anniversaryPage] andPerPage:nil];
+        }
+        else{
+            [_mainTableView reloadData];
+        }
         
+    }
+    @catch (NSException *exception) {
         
-        NSLog(@"title = %@",[tempDict objectForKey:@"title"]);
-        anniversary.title = [tempDict objectForKey:@"title"];
-        anniversary.date = [tempDict objectForKey:@"mdate"];
-        anniversary.anniversaryID =[tempDict objectForKey:@"id"];
-        [_myAnniversaryData addObject:anniversary];
+    }
+    @finally {
+        
     }
     
-    DLog(@"++++++++++++_myAnniversaryData count  = [%ld]",(unsigned long)_myAnniversaryData.count);
+    NSLog(@"++++++++++++_myAnniversaryData count  = [%ld]",(unsigned long)_myAnniversaryData.count);
     
 }
-
 
 #pragma mark - 获取纪念日详情
 
@@ -254,6 +282,7 @@
     [_anniversaryTaskDetailCtl setDatas:anniversaryDetailPath];
     _anniversaryTaskDetailCtl.navTitle = @"纪念日详情";
     _anniversaryTaskDetailCtl.hidesBottomBarWhenPushed = YES;
+    _anniversaryTaskDetailCtl.pageChangeMode = Mode_dis;
 //    [self.navigationController pushViewController:_anniversaryTaskDetailCtl animated:NO];
     [self presentViewController:_anniversaryTaskDetailCtl animated:YES completion:^{}];
 }
@@ -335,18 +364,10 @@
         // cell.mImage = anniversaryValue.mImage;
         NSLog(@"name = [%@]",anniversaryValue.title);
         NSString *imgSrcStr;
-        NSDictionary *tempDict ;
-        NSArray *anniversaryList = [_AnniversaryDict objectForKey:@"list"];
-        tempDict = [anniversaryList objectAtIndex:indexPath.row];
+
         
-        if(![[tempDict objectForKey:@"imgsrc"] isEqual:[NSNull null]])
-        {
-            imgSrcStr = [tempDict objectForKey:@"imgsrc"];
-        }
-        else
-        {
-            imgSrcStr = @"";
-        }
+        imgSrcStr = anniversaryValue.headImgSrc;
+ 
         
         [self setAnniversaryCell:cell andBtnImg:imgSrcStr andTitleLabels:anniversaryValue.title andDateLabel:anniversaryValue.date];
     }
@@ -370,14 +391,6 @@
 }
 
 //重写 退出方法
-//-(void)quiView
-//{
-//    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
-//    {
-//        [self popoverPresentationController];
-//    }
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
 
 
 -(void)setAnniversaryCell:(BaseTableViewCell *)cell andBtnImg:(NSString *)imgName andTitleLabels:(NSString *)title andDateLabel:(NSString *)date
@@ -431,7 +444,7 @@
     {
         cell.contentLabels = Labels;
         cell.contentImgs = Imgs;
-        cell.contentBtns = Btns;
+     //   cell.contentBtns = Btns;
     }
 }
 

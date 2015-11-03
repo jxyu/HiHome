@@ -1,8 +1,8 @@
 //
-//  PlanMonthViewController.h
+//  PlanWeekViewController.h
 //  HiHome
 //
-//  Created by 王建成 on 15/10/9.
+//  Created by 王建成 on 15/11/3.
 //  Copyright © 2015年 zykj. All rights reserved.
 //
 
@@ -10,10 +10,9 @@
 #import "SegmentedPageView.h"
 #import "SVProgressHUD.h"
 #import "TaskDetailPageViewController.h"
-
-@interface PlanMonthViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate>
+@interface PlanWeekViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate>
 {
-    @private
+@private
     NSInteger _cellCount;
     NSInteger _cellHeight;
     SegmentedPageView *_taskPageSeg;
@@ -26,4 +25,5 @@
     NSInteger _cellCountMyTask;
     NSInteger _cellCountGetTask;
 }
+
 @end

@@ -16,8 +16,6 @@
     CGFloat _cellwidth;
     NSInteger _sectionCount;
     NSMutableDictionary *_picDateDict;
-    
-    
 //    {
 //    date = (
 //        {
@@ -26,7 +24,8 @@
 //    )
 //    
 //    }
-    
+    NSInteger picPage;
+    NSMutableArray *picListArr;
     UIView *showImgView;
     BOOL showImgViewState;
     
@@ -41,13 +40,15 @@
     [self initViews];
     showImgViewState = false;
     _sectionCount = 2+1;
+    picPage = 1;
+    picListArr = [NSMutableArray array];
     // Do any additional setup after loading the view from its nib.
 }
 
 -(void)initViews
 {
     
-    
+  
     UICollectionViewFlowLayout *layout=[[ UICollectionViewFlowLayout alloc ] init ];
     layout.minimumLineSpacing = 5.0;
     layout.minimumInteritemSpacing = 5.0;
@@ -223,10 +224,18 @@
     
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier : _CELL forIndexPath :indexPath];
     
-    
+  // UICollectionViewCell * cell = [[UICollectionViewCell alloc] init];
     switch (indexPath.section) {
         case 0:
         {
+            
+            if(cell != nil)
+            {
+                for (int i =0 ; i<cell.subviews.count; i++) {
+                    [ [cell.subviews objectAtIndex:i] removeFromSuperview];//清空一下原来cell上面的view'防止cell的重用影响到后面section的显示
+                }
+                
+            }
           //  UIImageView *backGroundImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, (SCREEN_HEIGHT/2 -ZY_HEADVIEW_HEIGHT)/4 * 3)];
             UIImageView *backGroundImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, cell.frame.size.height)];
             // backGroundImgView.backgroundColor = [UIColor yellowColor];
@@ -238,11 +247,19 @@
             break;
         case 1:
         {
+            if(cell != nil)
+            {
+                for (int i =0 ; i<cell.subviews.count; i++) {
+                    [ [cell.subviews objectAtIndex:i] removeFromSuperview];//
+                }
+                
+            }
          //   UIButton *uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3,  ZY_HEADVIEW_HEIGHT +backGroundImgView.frame.size.height+20, SCREEN_WIDTH/3, (SCREEN_HEIGHT/2 -ZY_HEADVIEW_HEIGHT)/4 - 40)];
             UIButton *uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
             
             uploadBtn .backgroundColor = ZY_UIBASECOLOR;
             [uploadBtn setTitle:@"上传照片" forState:UIControlStateNormal];
+            [uploadBtn addTarget:self action:@selector(btnUploadPic:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:uploadBtn];
             
         }
@@ -250,6 +267,14 @@
             
         case 2:
         {
+            
+            if(cell != nil)
+            {
+                for (int i =0 ; i<cell.subviews.count; i++) {
+                    [ [cell.subviews objectAtIndex:i] removeFromSuperview];
+                }
+               
+            }
             NSDictionary *tempDict;
             
             if(indexPath.row > _picArr.count -1 )
@@ -288,7 +313,19 @@
     
 }
 
+-(void)btnUploadPic:(UIButton *)sender
+{
 
+        
+    UploadPicViewController *_uploadPicViewCtl = [[UploadPicViewController alloc] init];
+    _uploadPicViewCtl.navTitle = @"上传照片";
+    
+    _uploadPicViewCtl.aid = self.aid;
+    _uploadPicViewCtl.albumName = self.navTitle;
+    [self presentViewController:_uploadPicViewCtl animated:YES completion:^{}];
+   
+
+}
 -(void)clickImgBtns:(UIButton *)sender
 {
  
@@ -313,6 +350,119 @@
     }
 
 }
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
+#pragma  mark - 获取图片列表
+
+
+-(void)getAlbumPicList:(NSString *)aid andNowPage:(NSString *)nowpage andPerPage:(NSString *)perpage
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getAlbumPicListCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider GetPictureList:[self getUserID] andAid:aid andNowPage:nowpage andPerPage:perpage];
+}
+
+
+-(void)getAlbumPicListCallBack:(id)dict
+{
+    
+    NSInteger code;
+    NSMutableDictionary *albumDict;
+    NSInteger resultAll;
+    [SVProgressHUD dismiss];
+    
+    DLog(@"[%s] prm = %@",__FUNCTION__,dict);
+    
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"相册获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        return;
+    }
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        albumDict = [dict objectForKey:@"datas"];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    
+    resultAll = [[albumDict objectForKey:@"resultAll"] integerValue];
+    NSLog(@"resultAll = %ld",resultAll);
+    
+    @try {
+        
+        
+        NSArray *tempArr = [albumDict objectForKey:@"list"];
+        for (int i =0; i< tempArr.count; i++) {
+            [picListArr addObject:[tempArr objectAtIndex:i]];
+        }
+        
+        if(resultAll > picListArr.count)
+        {
+            picPage++;
+            [self getAlbumPicList:_aid andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
+            
+            return;
+        }
+        DLog(@"picListArr count = %ld",picListArr.count);
+        self.picArr = picListArr;
+        
+        
+    }
+    @catch (NSException *exception) {
+        
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"数据解析错误"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        
+        
+        return;
+    }
+    @finally {
+        
+    }
+    
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    picPage = 1;
+    if(picListArr !=nil)
+       [picListArr removeAllObjects];
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [self getAlbumPicList:_aid andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
+}
+
 #pragma mark - UICollectionViewDelegate
 
 //UICollectionView被选中时调用的方法

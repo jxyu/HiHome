@@ -8,8 +8,10 @@
 
 #import "BackPageViewController.h"
 #import "UIImageView+WebCache.h"
+#import "UploadPicViewController.h"
+#import "SVProgressHUD.h"
 @interface AlbumShowViewController : BackPageViewController
 
 @property (nonatomic) NSArray *picArr;
-
+@property (nonatomic)NSString *aid;
 @end

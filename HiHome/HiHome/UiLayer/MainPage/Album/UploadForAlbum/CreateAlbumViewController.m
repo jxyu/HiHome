@@ -9,6 +9,7 @@
 #import "CreateAlbumViewController.h"
 #import "DataProvider.h"
 #import "JKAlertDialog.h"
+#import "SelectLimitViewController.h"
 @interface CreateAlbumViewController ()
 {
     CGFloat _rowHeight;
@@ -70,10 +71,11 @@
     [rightBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
     rightBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+    [rightBtn addTarget:self action:@selector(selectLimit:) forControlEvents:UIControlEventTouchUpInside];
+  //  [limitField addSubview:rightBtn];
     limitField.rightView = rightBtn;
     limitField.rightViewMode = UITextFieldViewModeAlways ;
-    limitField.enabled = NO;
+   // limitField.enabled = NO;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
     [self.view addGestureRecognizer:tapGesture];
@@ -81,6 +83,13 @@
     [self.view addSubview:nameField];
     [self.view addSubview:introField];
     [self.view addSubview:limitField];
+}
+-(void)selectLimit:(UIButton *)sender
+{
+    SelectLimitViewController *seclectLimitViewCtl = [[SelectLimitViewController alloc] init];
+    
+    [self presentViewController:seclectLimitViewCtl animated:YES completion:^{}];
+    DLog(@"Click limit btn");
 }
 
 -(void)tapViewAction:(id)sender

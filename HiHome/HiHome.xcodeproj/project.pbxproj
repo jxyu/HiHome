@@ -250,6 +250,7 @@
 		B5E0CE7C1BE338DC00DF8EB1 /* AlbumShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7A1BE338DC00DF8EB1 /* AlbumShowViewController.xib */; };
 		B5E0CE7F1BE3457300DF8EB1 /* albumbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */; };
 		B5E924531BE8648F00B15B55 /* PlanWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E924521BE8648F00B15B55 /* PlanWeekViewController.m */; };
+		B5E924561BE8BB6300B15B55 /* SelectLimitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E924551BE8BB6300B15B55 /* SelectLimitViewController.m */; };
 		B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */; };
 		B5FA2DA91BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */; };
 		B5FA2DAD1BC4F00200D5BDB7 /* SoundSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FA2DAB1BC4F00200D5BDB7 /* SoundSetViewController.m */; };
@@ -714,6 +715,8 @@
 		B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "albumbackground@2x.png"; sourceTree = "<group>"; };
 		B5E924511BE8648F00B15B55 /* PlanWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanWeekViewController.h; path = HiHome/UiLayer/MainPage/PlanWeekViewController.h; sourceTree = SOURCE_ROOT; };
 		B5E924521BE8648F00B15B55 /* PlanWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlanWeekViewController.m; path = HiHome/UiLayer/MainPage/PlanWeekViewController.m; sourceTree = SOURCE_ROOT; };
+		B5E924541BE8BB6300B15B55 /* SelectLimitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectLimitViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/SelectLimitViewController.h; sourceTree = SOURCE_ROOT; };
+		B5E924551BE8BB6300B15B55 /* SelectLimitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectLimitViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/SelectLimitViewController.m; sourceTree = SOURCE_ROOT; };
 		B5FA2DA51BC4E9DB00D5BDB7 /* MessageNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNoticeViewController.h; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.h; sourceTree = SOURCE_ROOT; };
 		B5FA2DA61BC4E9DB00D5BDB7 /* MessageNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNoticeViewController.m; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.m; sourceTree = SOURCE_ROOT; };
 		B5FA2DA71BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageNoticeViewController.xib; path = HiHome/UiLayer/MainPage/Options/MessageNoticeViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1615,6 +1618,8 @@
 				B581960A1BCB906400D69A1E /* UploadPicViewController.h */,
 				B581960B1BCB906400D69A1E /* UploadPicViewController.m */,
 				B581960C1BCB906400D69A1E /* UploadPicViewController.xib */,
+				B5E924541BE8BB6300B15B55 /* SelectLimitViewController.h */,
+				B5E924551BE8BB6300B15B55 /* SelectLimitViewController.m */,
 			);
 			path = UploadForAlbum;
 			sourceTree = "<group>";
@@ -2374,6 +2379,7 @@
 				B77F91101BD1DDE900DAB43C /* AnniversaryTaskCell.m in Sources */,
 				B5C60C2F1BE303C2005DE72A /* CreateAlbumViewController.m in Sources */,
 				80124C0F1BD885E800DBE369 /* UIImageView+WebCache.m in Sources */,
+				B5E924561BE8BB6300B15B55 /* SelectLimitViewController.m in Sources */,
 				B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */,
 				B5E0599D1BB0F92900DBF786 /* CustomTabBarViewController.m in Sources */,
 				B5E059D71BB146E100DBF786 /* WMBaseViewController.m in Sources */,

@@ -368,8 +368,9 @@
 
 -(void)getFriendList:(NSString *)userID{
     if (userID) {
-        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getListGroup&uid=%@",Url,userID];
-        [self GetRequest:url andpram:nil];
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getListGroup",Url];
+        NSDictionary *prm = @{@"uid":userID,@"nowpage":@"1",@"perpage":@"9999"};
+        [self PostRequest:url andpram:prm];
     }
 }
 

@@ -11,6 +11,7 @@
 #import "UserInfoViewController.h"
 #import "DataProvider.h"
 #import "MarkFriendViewController.h"
+#import "ChatContentViewController.h"
 
 @interface PersonFirstViewController (){
     UITableView *mTableView;
@@ -41,7 +42,7 @@
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     mTableView.dataSource = self;
     mTableView.delegate = self;
-    if (![_mIFlag isEqual:@"2"]) {
+    if ([_mIFlag isEqual:@"1"]) {
         mTableView.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
     }
     [self.view addSubview:mTableView];
@@ -85,7 +86,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    if([_mIFlag isEqual:@"2"]){
+        return 7;
+    }else{
+        return 6;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,7 +173,7 @@
                 jrrw.leftView = jrrwLeftlabel;
                 jrrw.leftViewMode = UITextFieldViewModeAlways;
                 [cell addSubview:jrrw];
-            }else{
+            }else if(indexPath.row == 5){
                 UILabel *xcdt = [[UILabel alloc] initWithFrame:CGRectMake(10, cellHeight - 10, 80, 21)];
                 xcdt.text = @"相册动态:";
                 xcdt.textColor = [UIColor colorWithRed:0.62 green:0.41 blue:0.24 alpha:1];
@@ -181,6 +186,15 @@
                 UIImageView *mImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(10 + xcdt.frame.size.width + 10 + mImageView1.frame.size.width + 10, 5, cellHeight * 2 - 10, cellHeight * 2 - 10)];
                 mImageView2.image = [UIImage imageNamed:@"recentPic"];
                 [cell addSubview:mImageView2];
+            }else{
+                UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
+                [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
+                mHiBtn.layer.borderWidth = 1;
+                mHiBtn.layer.borderColor = [UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1].CGColor;
+                [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
+                [mHiBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1] forState:UIControlStateNormal];
+                [cell addSubview:mHiBtn];
+
             }
         }else{
             if(indexPath.row == 3){
@@ -251,6 +265,8 @@
         if (indexPath.row == 0) {
             return cellHeight * 3;
         }else if(indexPath.row == 5){
+            return cellHeight * 2;
+        }else if(indexPath.row == 6){
             return cellHeight * 2;
         }
     }else{
@@ -337,6 +353,14 @@
 
 //打招呼
 -(void)mHiEvent:(id)sender{
+    ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
+    conversationVC.conversationType =ConversationType_PRIVATE;
+    conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
+    conversationVC.userName = @"测试1";
+    conversationVC.title = @"自问自答";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [self.navigationController pushViewController:conversationVC animated:YES];
 }
 
 @end

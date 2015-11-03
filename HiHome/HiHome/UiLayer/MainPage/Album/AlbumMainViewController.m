@@ -626,7 +626,9 @@
         tempDict = [albumArray objectAtIndex:indexPath.row];
         albumStr = [tempDict objectForKey:@"title"];
         selectAlbumID =[tempDict objectForKey:@"id"];
-        
+        picPage = 1;
+        if(picListArr!=nil&&picListArr.count>0)
+           [picListArr removeAllObjects];
         [self getAlbumPicList:selectAlbumID andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
     
     }

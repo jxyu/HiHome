@@ -12,14 +12,14 @@
 #import "Model.h"
 #import "pinyin.h"
 #import "BackPageViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface AddressLocalViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface AddressLocalViewController : BackPageViewController<UITableViewDataSource,UITableViewDelegate,MFMessageComposeViewControllerDelegate>
 {
     NSMutableArray *dataSource;
     NSMutableArray *userSource;
     NSMutableArray *numarr1;
     NSMutableDictionary *dic1;
 }
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -12,4 +12,5 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *tel;
 @property (nonatomic, assign) int recordID;
+@property (nonatomic,retain) NSString *friendID;
 @end

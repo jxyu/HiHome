@@ -395,6 +395,11 @@
         BOOL result= [itemdict[0] writeToFile:plistPath atomically:YES];
         if (result) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
+            
+            //重新获取好友信息
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendInfo" object:nil];
+            
+            
             //[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
 //            [self.navigationController popToRootViewControllerAnimated:YES];
         }

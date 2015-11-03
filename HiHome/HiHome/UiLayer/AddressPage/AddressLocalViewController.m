@@ -7,12 +7,14 @@
 //
 
 #import "AddressLocalViewController.h"
-#import "CardTableViewCell.h"
+#import "AddressLocalCell.h"
 #import "AppDelegate.h"
 #import "CommenDef.h"
 #import "UserInfoViewController.h"
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
+#import "UMSocial.h"
+#import "UMSocialSnsService.h"
 
 @interface AddressLocalViewController (){
     DataProvider *dataProvider;
@@ -20,6 +22,7 @@
     NSArray *machAddressArray;
     NSMutableDictionary *mDictInfo;
     NSString *currentFriendID;
+    UITableView *_tableView;
 }
 
 @end
@@ -28,6 +31,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
     
     //去除多余的横线
     _tableView.tableFooterView = [[UIView alloc] init];
@@ -56,6 +64,7 @@
             model.name = mDictInfo[tempPhone];
             model.tel = tempPhone;
             model.recordID = [[machAddressArray[i] valueForKey:@"state"] intValue];
+            model.friendID = [machAddressArray[i] valueForKey:@"id"];
             [dataSource addObject:model];
         }
         [self setUserSource];
@@ -259,8 +268,14 @@
 #pragma mark - 显示每行内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CardTableViewCell *cell = [[CardTableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSString *CellIdentifier = @"AddressLocalCellIdentifier";
+    AddressLocalCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AddressLocalCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+
     NSDictionary *dic = [userSource objectAtIndex:indexPath.section];
     NSArray *arr = [[dic allValues] lastObject];
     NSArray *array = [arr objectAtIndex:indexPath.row];
@@ -287,30 +302,29 @@
     }
     NSLog(@"%@",userSource);
     // cell.iconView.image = [UIImage imageNamed:@"headImg"];
-    cell.iconView.image = [UIImage imageNamed:@"headImg"];
-    cell.nameLabel.text = name;
-    cell.nameLabel.textColor = [UIColor grayColor];
-    UIButton * btn_tianjia=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, (cell.frame.size.height-40)/2, 70, 40)];
-    btn_tianjia.backgroundColor=RGB(26, 200, 133);
+    cell.mImage.image = [UIImage imageNamed:@"headImg"];
+    cell.mName.text = name;
+    cell.mName.textColor = [UIColor grayColor];
+    cell.mHandle.backgroundColor=RGB(26, 200, 133);
     switch (state) {
         case 1:
-            [btn_tianjia setTitle:@"已同意" forState:UIControlStateNormal];
-            [btn_tianjia setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
-            [btn_tianjia setBackgroundColor:[UIColor clearColor]];
+            [cell.mHandle setTitle:@"已同意" forState:UIControlStateNormal];
+            [cell.mHandle setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
+            [cell.mHandle setBackgroundColor:[UIColor clearColor]];
             break;
         case 2:
-            [btn_tianjia setTitle:@"添加" forState:UIControlStateNormal];
-            [btn_tianjia addTarget:self action:@selector(applyAddFriend:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mHandle setTitle:@"添加" forState:UIControlStateNormal];
+            [cell.mHandle addTarget:self action:@selector(applyAddFriend:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case 3:
-            [btn_tianjia setTitle:@"邀请" forState:UIControlStateNormal];
-            [btn_tianjia setBackgroundColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1]];
+            [cell.mHandle setTitle:@"邀请" forState:UIControlStateNormal];
+            [cell.mHandle setBackgroundColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1]];
+            [cell.mHandle addTarget:self action:@selector(inviteEvent:) forControlEvents:UIControlEventTouchUpInside];
             break;
             
         default:
             break;
     }
-    [cell addSubview:btn_tianjia];
     
     //分割线设置
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
@@ -343,9 +357,6 @@
         for (int j=0; j<dataSource.count; j++)
         {
             Model *model = [dataSource objectAtIndex:j];
-            if ([model.tel isEqual:@"15265121181"]) {
-                NSLog(@"%@",model);
-            }
             //获取姓名首位
             NSString *string = [model.name substringWithRange:NSMakeRange(0, 1)];
             //将姓名首位转换成NSData类型
@@ -367,6 +378,7 @@
                         [array addObject:model.tel];
                     }
                     [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [array addObject:model.friendID];
                     [numarr addObject:array];
                     [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
                 }
@@ -404,6 +416,7 @@
                                 [array addObject:model.tel];
                             }
                             [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                            [array addObject:model.friendID];
                             [numarr addObject:array];
                             [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
                         }
@@ -436,6 +449,7 @@
                                     [array addObject:model.tel];
                                 }
                                 [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                                [array addObject:model.friendID];
                                 [numarr addObject:array];
                                 [dic setObject:numarr forKey:[NSNumber numberWithChar:i]];
                             }
@@ -484,6 +498,7 @@
                         [array addObject:model.tel];
                     }
                     [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [array addObject:model.friendID];
                     [numarr1 addObject:array];
                     [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
                 }
@@ -498,6 +513,7 @@
                 {
                     [array addObject:model.tel];
                     [array addObject:[NSString stringWithFormat:@"%d",model.recordID]];
+                    [array addObject:model.friendID];
                     [numarr1 addObject:array];
                     [dic1 setObject:numarr1 forKey:[NSNumber numberWithChar:n]];
                 }
@@ -525,22 +541,85 @@
 }
 
 -(void)applyAddFriend:(id)sender{
-    UIView *view = [sender superview];
-    UITableViewCell *cell = (UITableViewCell *)[view superview];
+    UIView *v = [sender superview];
+    UITableViewCell *cell = (UITableViewCell *)[v superview];
     NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
-    NSLog(@"%ld",(long)mIndexPath.row);
-    NSLog(@"%@",userSource);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提示信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.delegate = self;
-    [alertView show];
+    NSString *firstKey = [userSource[mIndexPath.section] allKeys][0];
+    NSString *selectFriendID = [userSource[mIndexPath.section] objectForKey:firstKey][mIndexPath.row][3];
+    
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
+    [dataProvider addFriend:selectFriendID andUserID:[self getUserID] andRemark:@""];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        dataProvider = [[DataProvider alloc] init];
-        [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendBackCall:"];
-        //[dataProvider addFriend:_mFriendID andUserID:[self getUserID] andRemark:gxqm.text];
+-(void)inviteEvent:(id)sender{
+    UIView *v = [sender superview];
+    UITableViewCell *cell = (UITableViewCell *)[v superview];
+    NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
+    NSString *firstKey = [userSource[mIndexPath.section] allKeys][0];
+    NSLog(@"%@",userSource[mIndexPath.section]);
+    NSString *selectPhone = [userSource[mIndexPath.section] objectForKey:firstKey][mIndexPath.row][1];
+    
+    
+    [self showMessageView:selectPhone];
+}
+
+- (void)showMessageView:(NSString *)phoneTxt
+{
+    
+    if( [MFMessageComposeViewController canSendText] ){
+        
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+        
+        controller.recipients = [NSArray arrayWithObject:phoneTxt];
+        controller.body = @"欢迎加入小家";
+        controller.messageComposeDelegate = self;
+        
+        [self presentViewController:controller animated:YES completion:nil];
+        
+        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"测试短信"];//修改短信界面标题
+    }else{
+        
+        [self alertWithTitle:@"提示信息" msg:@"设备没有短信功能"];
     }
 }
+
+
+//MFMessageComposeViewControllerDelegate
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    
+    [controller dismissViewControllerAnimated:NO completion:nil];
+    
+//    switch ( result ) {
+//            
+//        case MessageComposeResultCancelled:
+//            
+//            [self alertWithTitle:@"提示信息" msg:@"发送取消"];
+//            break;
+//        case MessageComposeResultFailed:// send failed
+//            [self alertWithTitle:@"提示信息" msg:@"发送失败"];
+//            break;
+//        case MessageComposeResultSent:
+//            [self alertWithTitle:@"提示信息" msg:@"发送成功"];
+//            break;
+//        default:
+//            break;
+//    }
+}
+
+
+- (void) alertWithTitle:(NSString *)title msg:(NSString *)msg {
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:msg
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"确定", nil];
+    
+    [alert show];
+    
+}
+
 
 @end

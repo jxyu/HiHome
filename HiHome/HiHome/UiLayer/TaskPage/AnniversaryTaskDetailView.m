@@ -173,11 +173,18 @@
 }
 
 -(void)quitView{
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    if(self.pageChangeMode == Mode_nav)
     {
-        [self popoverPresentationController];
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 }

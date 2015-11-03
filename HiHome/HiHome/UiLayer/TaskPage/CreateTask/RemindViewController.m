@@ -342,6 +342,9 @@
                 case State_cancel:
                     str = @"已取消";
                     break;
+                case State_morepeople:
+                    str = @"多人任务";
+                    break;
                 case ZY_TASkREPEAT_RESERVE:
                     str = @"未接受";
                     break;

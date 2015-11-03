@@ -57,7 +57,7 @@
     //纪念日详情页面
  //   AnniversaryTaskDetailView *_anniversaryTaskDetailCtl;
     //任务详情
-    TaskDetailPageViewController *_taskDetailPageCtl;
+ //   TaskDetailPageViewController *_taskDetailPageCtl;
 }
 
 -(void) initViews;

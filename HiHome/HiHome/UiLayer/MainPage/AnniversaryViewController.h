@@ -7,6 +7,8 @@
 //
 
 #import "BackPageViewController.h"
+#import "UIImageView+WebCache.h"
+#import "AnniversaryTaskDetailView.h"
 
 #define CELL_HEIGHT     50
 

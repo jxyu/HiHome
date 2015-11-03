@@ -10,11 +10,17 @@
 #import "BaseTableViewCell.h"
 #import "UIDefine.h"
 #import "TaskTableViewCell.h"
-
-#define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
+#import "JKAlertDialog.h"
+#import "DataProvider.h"
 
 @interface PlanMonthViewController ()
-
+{
+    NSDictionary *_taskDict;
+    NSDictionary *_receiveTaskDict;
+    NSMutableArray *_myTaskData;
+    //接受的任务
+    NSMutableArray *_getTaskData;
+}
 @end
 
 @implementation PlanMonthViewController
@@ -22,22 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
-                                                             /*最右侧图标，标题，内容*/
-                                                             @[@"只对家庭圈"],
-                                                             @[@"对所有人"],
-                                                             @[@"对好友"],
-                                                             @[@"你好"],
-                                                             @[@"对好友"],
-                                                             @[@"对好友"],
-                                                             ],
-                                                         
-                                                         ]];
-    
     _cellHeight = self.view.frame.size.height/11;
-    
-    
-    
+    _myTaskData = [[NSMutableArray alloc] init];
+    _getTaskData = [[NSMutableArray alloc] init];
     [self initViews];
     [self initTaskPage];
     
@@ -45,8 +38,261 @@
     // self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     // Do any additional setup after loading the view from its nib.
 }
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
 
 
+#pragma  mark - 我的任务
+-(void) loadMyTaskDatas:(NSString *)nowPage andPerPage:(NSString *)perPage andState:(NSString*)state andDate:(NSString *)date
+{
+    
+    NSLog(@"load task datas");
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getTaskCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date];
+}
+
+
+
+
+-(void)getTaskCallBack:(id)dict
+{
+    NSString *resultAll;
+    NSInteger code;
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        UITableView *tempTableView;
+        tempTableView = [_tableViews objectAtIndex:0];
+        [tempTableView reloadData];//重新载入数据
+        return;
+    }
+    
+    NSLog(@"task dict = [%@]",dict);
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        _taskDict = [dict objectForKey:@"datas"];
+        resultAll = [_taskDict objectForKey:@"resultAll"];//获取的任务数
+        
+        NSLog(@"result all = %@",resultAll);
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    _cellCountMyTask += [resultAll integerValue];
+    
+    NSLog(@"_cellCountMyTask = %ld",(long)_cellCountMyTask);
+    
+    [self setTaskDatas];
+    
+    UITableView *tempTableView;
+    tempTableView = [_tableViews objectAtIndex:0];
+    [tempTableView reloadData];//重新载入数据
+    
+}
+
+
+-(void) setTaskDatas
+{
+    if(_taskDict == nil)
+        return;
+    
+    NSArray *taskList = [_taskDict objectForKey:@"list"];
+    NSString *resultAll = [_taskDict objectForKey:@"resultAll"];
+    
+    @try {
+        for (int i = 0; i < [resultAll integerValue]; i++) {
+            TaskPath * taskPath = [[TaskPath alloc] init];
+            
+            NSDictionary *tempDict = [taskList objectAtIndex:i];
+            
+            
+            taskPath.taskName = [tempDict objectForKey:@"title"];
+            taskPath.taskOwner = @"自己";//[tempDict objectForKey:@"uid"];
+            //    NSString *performers = @"自己";
+            taskPath.taskPerformers = [tempDict objectForKey:@"tasker"];
+            taskPath.taskContent =[tempDict objectForKey:@"content"];
+            taskPath.taskStatus =(ZYTaskStatue)[(NSString *)[tempDict objectForKey:@"state"] integerValue];
+            taskPath.taskType = ZY_TASKTYPE_MINE;
+            taskPath.remindTime = (ZYTaskRemind)[(NSString *)[tempDict objectForKey:@"tip"] integerValue];
+            taskPath.repeatMode = (ZYTaskRepeat)[(NSString *)[tempDict objectForKey:@"repeat"] integerValue];
+            taskPath.startTaskDateStr = [tempDict objectForKey:@"start"];
+            taskPath.endTaskDateStr = [tempDict objectForKey:@"end"];
+            taskPath.taskID = [tempDict objectForKey:@"id"];
+            taskPath.sId = [tempDict objectForKey:@"sid"];
+            
+            [_myTaskData addObject:taskPath];
+        }
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+}
+
+
+#pragma mark - 接受的任务
+
+
+-(void) loadReceiveTaskDatas:(NSString *)nowPage andPerPage:(NSString *)perPage andState:(NSString *)state andDate:(NSString *)date
+{
+    
+    NSLog(@"load Receive task datas");
+    
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"receiveTaskCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    if(date!=nil)
+        NSLog(@"date11 =[%@]",date);
+    else
+        NSLog(@"date  = nil");
+    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date];
+}
+
+
+
+
+-(void)receiveTaskCallBack:(id)dict
+{
+    NSString *resultAll;
+    NSInteger code;
+    
+    [SVProgressHUD dismiss];
+    NSLog(@"task dict = [%@]",dict);
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        if(code!=400)
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        
+        
+        UITableView *tempTableView;
+        tempTableView = [_tableViews objectAtIndex:1];
+        [tempTableView reloadData];//重新载入接收的任务页数据
+        
+        return;
+    }
+    
+    
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        _receiveTaskDict = [dict objectForKey:@"datas"];
+        resultAll = [_receiveTaskDict objectForKey:@"resultAll"];//获取的任务数
+        
+        NSLog(@"result all = %@",resultAll);
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    _cellCountGetTask += [resultAll integerValue];
+    
+    NSLog(@"_cellCountGetTask = %ld",(long)_cellCountGetTask);
+    
+    [self setReceiveTaskDatas];
+    
+    UITableView *tempTableView;
+    tempTableView = [_tableViews objectAtIndex:1];
+    [tempTableView reloadData];//重新载入接收的任务页数据
+    
+}
+
+
+-(void) setReceiveTaskDatas
+{
+    if(_receiveTaskDict == nil)
+        return;
+    
+    NSArray *taskList = [_receiveTaskDict objectForKey:@"list"];
+    NSString *resultAll = [_receiveTaskDict objectForKey:@"resultAll"];
+    
+    
+    for (int i = 0; i < [resultAll integerValue]; i++) {
+        TaskPath * taskPath = [[TaskPath alloc] init];
+        
+        NSDictionary *tempDict = [taskList objectAtIndex:i];
+        
+        
+        taskPath.taskName = [tempDict objectForKey:@"title"];
+        NSLog(@"[%s]taskPath.taskName = %@ ;",__FUNCTION__,taskPath.taskName );
+        
+        taskPath.taskOwner = [tempDict objectForKey:@"nick"];
+        
+        NSInteger tasker =[(NSString *)[tempDict objectForKey:@"tasker"] integerValue];
+        NSString *performers;
+        if(tasker > 1 )
+        {
+            performers = [NSString stringWithFormat:@"%ld人",(long)tasker];
+        }
+        else
+            performers = @"仅自己";
+        
+        taskPath.taskPerformers = performers;
+        taskPath.taskContent =[tempDict objectForKey:@"content"];
+        taskPath.taskStatus = (ZYTaskStatue)[(NSString *)[tempDict objectForKey:@"state"] integerValue];
+        taskPath.taskType = ZY_TASKTYPE_GET;
+        taskPath.remindTime = (ZYTaskRemind)[(NSString *)[tempDict objectForKey:@"tip"] integerValue];
+        
+        NSLog(@"taskPath.remindTime = %d",taskPath.remindTime);
+        
+        taskPath.repeatMode = (ZYTaskRepeat)[(NSString *)[tempDict objectForKey:@"repeat"] integerValue];
+        taskPath.startTaskDateStr = [tempDict objectForKey:@"start"];
+        taskPath.endTaskDateStr = [tempDict objectForKey:@"end"];
+        taskPath.taskID = [tempDict objectForKey:@"id"];
+        
+        
+        [_getTaskData addObject:taskPath];
+    }
+}
+
+
+-(void) resetDatas
+{
+    
+}
 
 -(void)handleGesture:(id)sender
 {
@@ -145,6 +391,28 @@
     NSLog(@"Page = %ld",(long)page);
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
+    
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    
+    if(page == 0)
+    {
+        
+        
+        [self resetDatas];
+    
+//        for(int ,)
+//        [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:dateStr];
+        
+    }
+    if(page == 1)
+    {
+        _cellCountGetTask = 1;
+        [_getTaskData removeAllObjects];
+
+//        [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:dateStr];
+       
+    }
+
 }
 
 
@@ -190,7 +458,7 @@
         taskPath.taskName = @"去超市买油条";
         taskPath.taskOwner = @"铁蛋";
         NSArray *performers = @[@"自己"];
-        taskPath.taskPerformers = performers;
+       // taskPath.taskPerformers = performers;
         taskPath.taskContent =@"去超市买根油条";
         taskPath.taskStatus = ZY_TASkSTATUE_RESERVE;
         
@@ -402,8 +670,6 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
     
     return indexPath;
     

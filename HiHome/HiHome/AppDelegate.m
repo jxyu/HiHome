@@ -227,6 +227,9 @@
         {
             self.window.rootViewController =_tempViewcontroller;
             [self getTokenEvent];
+            
+            [APService setAlias:[NSString stringWithFormat:@"%@",userinfoWithFile[@"id"]] callbackSelector:nil object:nil];
+            
         }
 //        self.window.rootViewController =_tempViewcontroller;
     }
@@ -430,6 +433,20 @@ fetchCompletionHandler:(void
     // IOS 7 Support Required
     [APService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return  [UMSocialSnsService handleOpenURL:url];
 }
 
 

@@ -356,6 +356,8 @@
 }
 
 
+
+
 //设置划动cell是否出现del按钮，可供删除数据里进行处理
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -394,7 +396,15 @@
 }
 
 
+//重写返回按钮
+-(void)quitView{
 
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+}
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {

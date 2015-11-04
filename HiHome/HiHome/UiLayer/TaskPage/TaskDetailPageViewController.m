@@ -63,6 +63,8 @@
     NSString *_sID;
     NSMutableArray *Performerslist;
     
+    BOOL sendModeHaveMe;
+    
 }
 
 @end
@@ -193,10 +195,13 @@
                 NSDictionary *tempDict = [Performerslist objectAtIndex:i];
                 if([[tempDict objectForKey:@"tasker_uid"] isEqualToString:[self getUserID]])
                 {
+                    stateStr = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
                     [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+                     sendModeHaveMe = YES;//发布de任务重如包含自己那么 显示任务状态修改的btns
                     break;
                 }
             }
+            
             //
         }
         else{
@@ -209,7 +214,8 @@
             localTaskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
             
             [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];//更改两个按键的显示
-        }
+            
+            }
 
     }
     @catch (NSException *exception) {
@@ -449,7 +455,7 @@
         taskStatusShow.text= stateStr;
         [cell addSubview:taskStatusShow];
         
-        if(_taskDetailMode != TaskDetail_SendMode)
+        if(_taskDetailMode != TaskDetail_SendMode || sendModeHaveMe == YES)
         {
             //UIButon
             if(btnLeftStr != nil)

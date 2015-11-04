@@ -74,6 +74,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+     [_pullDownBtnTab dismiss];
     if(pickPicOK == YES)
     {
         pickPicOK = NO;
@@ -364,13 +365,21 @@
 
 -(NSString *)getUserID
 {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
     
-    return  userID;
+    if(_albumUserId == nil)
+    {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+        NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+        
+        return  userID;
+    }
+    else
+    {
+        return  _albumUserId;
+    }
 }
 #pragma mark - 获取最近相片
 -(void)getResentPic:(NSString *)nowPage andPerPage:(NSString *)perPage
@@ -384,6 +393,19 @@
     
     [dataprovider GetResentPic:userID andNowPage:nowPage andPerPage:perPage];
 }
+
+
+////重写返回按钮
+//-(void)quitView{
+//
+//    
+//    [self dismissViewControllerAnimated:YES completion:^{}];
+//    
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//}
+//
 
 -(void)getResentListCallBack:(id)dict
 {
@@ -840,6 +862,7 @@
         AlbumShowViewController *albumViewCtl  = [AlbumShowViewController alloc];
         albumViewCtl.navTitle = albumStr;
         albumViewCtl.aid = selectAlbumID;
+        albumViewCtl.albumUserId = [self getUserID];
         [self presentViewController:albumViewCtl animated:YES completion:^{}];
         
     

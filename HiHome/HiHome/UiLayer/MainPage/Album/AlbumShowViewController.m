@@ -353,13 +353,20 @@
 
 -(NSString *)getUserID
 {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    if(_albumUserId == nil)
+    {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+        NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+            return  userID;
+    }
+    else
+    {
+        return _albumUserId;
+    }
     
-    return  userID;
 }
 
 #pragma  mark - 获取图片列表

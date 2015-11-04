@@ -72,6 +72,17 @@
     [alert show];
 }
 
+//重写返回按钮
+-(void)quitView{
+
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+}
+
+
 -(void)tapViewAction:(id)sender
 {
     [_phoneNumField resignFirstResponder];//关闭titleField的键盘

@@ -14,4 +14,5 @@
 
 @property (nonatomic) NSArray *picArr;
 @property (nonatomic)NSString *aid;
+@property (nonatomic)NSString *albumUserId;
 @end

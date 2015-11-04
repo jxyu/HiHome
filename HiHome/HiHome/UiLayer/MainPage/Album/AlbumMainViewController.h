@@ -39,4 +39,5 @@
     
     
 }
+@property(nonatomic)NSString *albumUserId;
 @end

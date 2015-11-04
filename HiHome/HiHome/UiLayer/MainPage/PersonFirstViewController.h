@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
-
+#import "UIImageView+WebCache.h"
+#import "AlbumMainViewController.h"
 @interface PersonFirstViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property(strong,nonatomic) NSString *mIFlag;

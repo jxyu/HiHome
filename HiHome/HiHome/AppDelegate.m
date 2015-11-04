@@ -240,7 +240,7 @@
     [self.window makeKeyAndVisible];
     
     
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setSelectTableBarIndex:) name:@"setSelectTableBarIndex" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootView:) name:@"changeRootView" object:nil];
 #else
     if(self.window == nil)
@@ -303,6 +303,12 @@
         return;
     }
     
+}
+-(void)setSelectTableBarIndex:(id)sender
+{
+    NSInteger index = [[[sender userInfo]objectForKey:@"index"] integerValue];
+    NSLog(@"index = %ld",index);
+    [self selectTableBarIndex:index];
 }
 
 -(void)GetTokenBackCall:(id)dict

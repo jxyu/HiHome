@@ -36,7 +36,7 @@
     
     /*上传照片*/
    // UploadPicViewController *_uploadPicViewCtl;
-    CreateAlbumViewController *_createAlbum;
+    
     
 }
 @end

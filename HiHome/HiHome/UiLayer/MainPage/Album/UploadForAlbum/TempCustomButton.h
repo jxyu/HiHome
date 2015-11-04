@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TempCustomButton : UIButton
+@property(nonatomic)NSInteger   btnWidthScale;
 
+@property(nonatomic)NSInteger   titleXScale;
+@property(nonatomic)NSInteger   titleWidthScale;
+
+@property(nonatomic)NSInteger   imgXScale;
+@property(nonatomic)NSInteger   imgWidthScale;
 @end

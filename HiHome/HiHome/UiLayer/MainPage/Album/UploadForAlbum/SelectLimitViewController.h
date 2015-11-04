@@ -7,7 +7,21 @@
 //
 
 #import "BackPageViewController.h"
+#import "SelectContacterViewController.h"
 
-@interface SelectLimitViewController : BackPageViewController
+typedef enum _permissionMode
+{
+    Mode_all = 0,
+    Mode_mine,
+    Mode_friends
+}PermissionMode;
 
+@protocol SelectLimitViewControllerDelegate <NSObject>
+
+-(void)setLimitDict:(NSDictionary *)dict;
+
+@end
+
+@interface SelectLimitViewController : BackPageViewController<SelectContacterViewControllerDelegate>
+@property (nonatomic) id<SelectLimitViewControllerDelegate> delegate;
 @end

@@ -136,6 +136,7 @@
 		B53563A71BB28FDD002D5F8D /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53563A61BB28FDD002D5F8D /* CalendarViewController.m */; };
 		B553A05A1BE35FF70033F9A7 /* MyCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */; };
 		B553A05B1BE35FF70033F9A7 /* MYCollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = B553A0591BE35FF70033F9A7 /* MYCollectionHeadView.m */; };
+		B55CF0B31BE9A0E90007A725 /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55CF0B21BE9A0E90007A725 /* selected@2x.png */; };
 		B55D08AB1BB3D55600C10932 /* mytask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */; };
 		B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */; };
 		B55D08B31BB400FD00C10932 /* sendtask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B55D08AF1BB400FD00C10932 /* sendtask_gray@2x.png */; };
@@ -546,6 +547,7 @@
 		B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionFooterView.m; sourceTree = "<group>"; };
 		B553A0581BE35FF70033F9A7 /* MYCollectionHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYCollectionHeadView.h; sourceTree = "<group>"; };
 		B553A0591BE35FF70033F9A7 /* MYCollectionHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYCollectionHeadView.m; sourceTree = "<group>"; };
+		B55CF0B21BE9A0E90007A725 /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected@2x.png"; sourceTree = "<group>"; };
 		B55D08A91BB3D55600C10932 /* mytask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mytask_gray@2x.png"; sourceTree = "<group>"; };
 		B55D08AA1BB3D55600C10932 /* mytask_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mytask_red@2x.png"; sourceTree = "<group>"; };
 		B55D08AF1BB400FD00C10932 /* sendtask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendtask_gray@2x.png"; sourceTree = "<group>"; };
@@ -1873,6 +1875,7 @@
 		B5E0CE7D1BE3457300DF8EB1 /* album */ = {
 			isa = PBXGroup;
 			children = (
+				B55CF0B21BE9A0E90007A725 /* selected@2x.png */,
 				B5E0CE7E1BE3457300DF8EB1 /* albumbackground@2x.png */,
 			);
 			path = album;
@@ -2160,6 +2163,7 @@
 				B5A77AB81BB4E9780014DD67 /* gettask_red@2x.png in Resources */,
 				B58D923F1BC64B5F00219E76 /* picture@2x.png in Resources */,
 				B587FF1C1BC8BDA600E9F119 /* recentPic@2x.png in Resources */,
+				B55CF0B31BE9A0E90007A725 /* selected@2x.png in Resources */,
 				B5033BEB1BAFB4320014935E /* AddressPageViewController.xib in Resources */,
 				B7A9D8AC1BD780A700C37DB5 /* MessageNoticeCell.xib in Resources */,
 				802306AC1BD4DAFB006CFFEC /* regster_select_icon@2x.png in Resources */,

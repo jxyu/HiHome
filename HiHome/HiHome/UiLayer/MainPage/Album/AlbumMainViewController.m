@@ -31,7 +31,7 @@
     NSInteger picPage;
     NSInteger albumPage;
     NSInteger resentPage;
-    
+    NSInteger _currentPage;
     NSString *selectAlbumID;
     
     BOOL pickPicOK;
@@ -54,7 +54,7 @@
                                                              ],
                                                          
                                                          ]];
-    
+    _currentPage = 0;
     _cellHeight = self.view.frame.size.height/8;
     _reCentCellHeight = self.view.frame.size.height/4;
     _pullDownBtnsTabFlag  = false;
@@ -82,6 +82,8 @@
         _uploadPicViewCtl.ChoosPicByCamera = YES;
         [self presentViewController:_uploadPicViewCtl animated:YES completion:^{}];
     }
+    
+    [_taskPageSeg setCurrentPage:_taskPageSeg.currentPage];
 }
 
 -(void)handleGesture:(id)sender
@@ -108,7 +110,7 @@
     _pullDownBtnTab.delegate = self;
     /*上传照片各view*/
     
-    _createAlbum = [[CreateAlbumViewController alloc] init];
+    
    
 }
 /*响应三个相片上传相关的按键*/
@@ -140,6 +142,8 @@
             break;
         case ZY_UIBUTTON_TAG_BASE+3:
         {
+            CreateAlbumViewController *_createAlbum;
+            _createAlbum = [[CreateAlbumViewController alloc] init];
             _createAlbum.navTitle = @"新建相册";
             [self presentViewController:_createAlbum animated:YES completion:^{}];
         }
@@ -316,10 +320,11 @@
 -(void)setPageIndex:(NSInteger)page
 {
     NSLog(@"Page = %ld",(long)page);
+    _currentPage = page;
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
     
-    
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     switch (page) {
         case 0:
             NSLog(@"get resent list");
@@ -340,11 +345,14 @@
             {
                 [albumArray removeAllObjects];
             }
-            [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+            
             [self getAlbumList:[self getUserID] andNowPage:nil andPerPage:nil];
             break;
             
         default:
+        {
+            [SVProgressHUD dismiss];
+        }
             break;
     }
     

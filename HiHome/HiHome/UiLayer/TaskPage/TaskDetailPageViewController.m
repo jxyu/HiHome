@@ -259,6 +259,7 @@
         
         startTime = taskPath.startTaskDateStr;
         endTime   = taskPath.endTaskDateStr;
+        
         if(taskPath.sId!=nil&&![taskPath.sId isEqualToString:@""])
             _sID =  taskPath.sId;
         
@@ -698,6 +699,86 @@
     }
 }
 
+#pragma mark - 提醒
+-(NSDate *)getNoticeDate
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [formatter dateFromString:startTime];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: date];
+    
+    date = [date  dateByAddingTimeInterval: interval];
+    
+    NSInteger tempMode;
+    NSTimeInterval tempTime;
+    NSInteger timeadd = 0;
+    tempMode = [[_dictData objectForKey:@"tip"] integerValue];
+    
+    tempTime = [date timeIntervalSince1970];
+    switch (tempMode)
+    {
+
+    case Remind_zhengdian:
+            //return date;
+        break;
+    case Remind_5min:
+        timeadd  =5*60;
+        break;
+    case Remind_10min:
+        timeadd  =10*60;
+        break;
+    case Remind_1hour:
+        timeadd  =60*60;
+        break;
+    case Remind_1day:
+        timeadd  =24*60*60;
+        break;
+    case Remind_3day:
+        timeadd  =3*24*60*60;
+        break;
+    case Remind_never:
+        return nil;
+        break;
+
+    }
+    
+    tempTime-=timeadd;
+    
+    date = [NSDate  dateWithTimeIntervalSince1970:tempTime];
+
+    return date;
+}
+
+//Repeat_never        =0,
+//Repeat_day,
+//Repeat_week,
+//Repeat_month,
+//Repeat_year,
+-(NSCalendarUnit)getRepeatMode:(ZYTaskRepeat)repeatMode
+{
+    switch (repeatMode) {
+        case Repeat_never:
+            return 0;
+            
+        case Repeat_day:
+            
+            return NSCalendarUnitDay;
+        case Repeat_week:
+            
+            return NSCalendarUnitWeekday;
+        case Repeat_month:
+            
+            return NSCalendarUnitMonth;
+        case Repeat_year:
+            
+            return NSCalendarUnitYear;
+            
+        default:
+            return 0;
+    }
+    return 0;
+}
 
 -(void)clickLeftButton:(UIButton *)sender
 {
@@ -707,9 +788,19 @@
     
     switch (localTaskStatus) {
         case State_unreceive:
-        case State_received://不现实已完成 直接显示待执行
+        case State_received://不显示已完成 直接显示待执行
+        {
+            
+            NSDate *remindDate;
+            
+            remindDate = [self getNoticeDate];
+            if(remindDate!=nil)
+            {
+                [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]]];
+            }
             stateStr = @"待执行";
             localTaskStatus = State_needDo;
+        }
             break;
         case State_needDo:
             stateStr = @"执行中";
@@ -1469,6 +1560,33 @@
     //   cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
     
 }
+
+#pragma mark - 设置提醒
+-(void)setNotice:(NSDate *)noticeDate andNoticeStr:(NSString *)noticeStr andRepeat:(NSCalendarUnit) repeatMode
+{
+    NSLog(@"noticeDate = [%@]",noticeDate);
+    UILocalNotification *notification=[[UILocalNotification alloc] init];
+    if (notification!=nil) {
+      //  NSDate *now=[NSDate date];
+        notification.fireDate=noticeDate;
+        notification.repeatInterval=repeatMode;//循环次数，
+        notification.timeZone=[NSTimeZone defaultTimeZone];
+        notification.applicationIconBadgeNumber=1; //应用的红色数字
+        notification.soundName= UILocalNotificationDefaultSoundName;//声音，可以换成alarm.soundName = @"myMusic.caf"
+        //去掉下面2行就不会弹出提示框
+        
+        notification.alertBody=[NSString stringWithFormat:@"您有任务（%@）待执行",noticeStr];//[NSString stringWithFormat:@"%@设置的小家提醒您",noticeDate];//@"通知内容";//提示信息 弹出提示框
+        notification.alertAction = @"打开";  //提示框按钮
+        //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+        //NSDictionary*infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
+        //notification.userInfo = infoDict; //添加额外的信息
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    }
+}
+
+
 
 //返回这个UICollectionViewCell是否可以被选择
 

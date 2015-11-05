@@ -31,7 +31,7 @@
     NSInteger picPage;
     NSInteger albumPage;
     NSInteger resentPage;
-    
+    NSInteger _currentPage;
     NSString *selectAlbumID;
     
     BOOL pickPicOK;
@@ -54,7 +54,7 @@
                                                              ],
                                                          
                                                          ]];
-    
+    _currentPage = 0;
     _cellHeight = self.view.frame.size.height/8;
     _reCentCellHeight = self.view.frame.size.height/4;
     _pullDownBtnsTabFlag  = false;
@@ -74,6 +74,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+     [_pullDownBtnTab dismiss];
     if(pickPicOK == YES)
     {
         pickPicOK = NO;
@@ -82,6 +83,8 @@
         _uploadPicViewCtl.ChoosPicByCamera = YES;
         [self presentViewController:_uploadPicViewCtl animated:YES completion:^{}];
     }
+    
+    [_taskPageSeg setCurrentPage:_taskPageSeg.currentPage];
 }
 
 -(void)handleGesture:(id)sender
@@ -108,7 +111,7 @@
     _pullDownBtnTab.delegate = self;
     /*上传照片各view*/
     
-    _createAlbum = [[CreateAlbumViewController alloc] init];
+    
    
 }
 /*响应三个相片上传相关的按键*/
@@ -140,6 +143,8 @@
             break;
         case ZY_UIBUTTON_TAG_BASE+3:
         {
+            CreateAlbumViewController *_createAlbum;
+            _createAlbum = [[CreateAlbumViewController alloc] init];
             _createAlbum.navTitle = @"新建相册";
             [self presentViewController:_createAlbum animated:YES completion:^{}];
         }
@@ -316,10 +321,11 @@
 -(void)setPageIndex:(NSInteger)page
 {
     NSLog(@"Page = %ld",(long)page);
+    _currentPage = page;
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
     
-    
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     switch (page) {
         case 0:
             NSLog(@"get resent list");
@@ -340,11 +346,14 @@
             {
                 [albumArray removeAllObjects];
             }
-            [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+            
             [self getAlbumList:[self getUserID] andNowPage:nil andPerPage:nil];
             break;
             
         default:
+        {
+            [SVProgressHUD dismiss];
+        }
             break;
     }
     
@@ -356,13 +365,21 @@
 
 -(NSString *)getUserID
 {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
     
-    return  userID;
+    if(_albumUserId == nil)
+    {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+        NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+        
+        return  userID;
+    }
+    else
+    {
+        return  _albumUserId;
+    }
 }
 #pragma mark - 获取最近相片
 -(void)getResentPic:(NSString *)nowPage andPerPage:(NSString *)perPage
@@ -376,6 +393,28 @@
     
     [dataprovider GetResentPic:userID andNowPage:nowPage andPerPage:perPage];
 }
+
+
+////重写返回按钮
+-(void)quitView{
+
+    if(self.pageChangeMode == Mode_nav)
+    {
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+}
+//
 
 -(void)getResentListCallBack:(id)dict
 {
@@ -832,6 +871,7 @@
         AlbumShowViewController *albumViewCtl  = [AlbumShowViewController alloc];
         albumViewCtl.navTitle = albumStr;
         albumViewCtl.aid = selectAlbumID;
+        albumViewCtl.albumUserId = [self getUserID];
         [self presentViewController:albumViewCtl animated:YES completion:^{}];
         
     

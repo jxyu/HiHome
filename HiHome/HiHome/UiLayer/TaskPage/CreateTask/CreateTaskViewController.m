@@ -65,6 +65,7 @@
     NSString *stateStr; //状态
     NSString *remindStr;//提醒
     NSString *repeatStr;//重复
+    NSString *location;//位置
     NSString *senderNameStr;//发布人
     NSString *taskTitleStr;//任务名
     NSString *taskContentStr;//任务内容

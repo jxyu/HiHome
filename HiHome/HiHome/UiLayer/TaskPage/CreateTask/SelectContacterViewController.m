@@ -218,11 +218,20 @@
 }
 
 -(void)quitView{
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    
+
+    if(self.pageChangeMode == Mode_nav)
     {
-        [self popoverPresentationController];
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:NO];
     }
-    [self.navigationController popViewControllerAnimated:NO];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
 }
 
 -(void)btnRightClick:(id)sender{
@@ -249,11 +258,13 @@
         }
     }
     
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    if([self.delegate respondsToSelector:@selector(setContacterInfo:andName:)])
     {
-        [self popoverPresentationController];
+        [self.delegate setContacterInfo:_selectContacterArrayID andName:_selectContacterArrayName];
     }
-    [self.navigationController popViewControllerAnimated:NO];
+    
+    
+    [self quitView];
 }
 
 @end

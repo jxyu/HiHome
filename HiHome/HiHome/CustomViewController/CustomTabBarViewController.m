@@ -222,6 +222,24 @@
     if ([self.delegate respondsToSelector:@selector(setViewState)]) {
         [self.delegate setViewState];
     }
+    
+    if(_btnSelected.tag==1000)
+    {
+        self.leftBtn.hidden = YES;
+    }
+    else
+        self.leftBtn.hidden = NO;
+    
+    [self showTabBar];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    
+    self.leftBtn.hidden = YES;
+   
+    
+    [self hideCustomTabBar];
 }
 
 
@@ -233,6 +251,9 @@
 /*set left btn hide or not*/
 -(void)hideLeftBtn:(id)sender
 {
+  //  self.leftBtn.hidden = YES;
+
+    
     NSString *str = [[sender userInfo]objectForKey:@"hide"];
     if([str isEqualToString:@"YES"])
     {
@@ -278,6 +299,7 @@
     sender.selected = !sender.selected;
     _btnSelected = sender;
     [self setSelectedIndex:sender.tag - 1000];
+    
 }
 
 - (void)selectTableBarIndex:(NSInteger)index

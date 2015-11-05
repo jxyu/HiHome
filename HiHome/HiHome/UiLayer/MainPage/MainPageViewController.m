@@ -250,11 +250,14 @@
         _messageNoticeVC.navTitle = @"申请通知";
         _messageNoticeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:_messageNoticeVC animated:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
     if(indexPath.section == 2){
         self.tabBarController.selectedIndex = 1;
+        
 //        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setSelectTableBarIndex" object:nil userInfo:[NSDictionary dictionaryWithObject:@"1" forKey:@"index"]];
         
         //[(AppDelegate *)[[UIApplication sharedApplication] delegate] selectTableBarIndex:1];
     }

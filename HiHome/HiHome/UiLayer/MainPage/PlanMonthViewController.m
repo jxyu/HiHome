@@ -23,6 +23,7 @@
     
     NSString *_startTime;
     NSString *_endTime;
+    NSString *todayStr;
     
     NSInteger _year;
     NSInteger _month;
@@ -55,13 +56,20 @@
 }
 -(NSString *)getUserID
 {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
-    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
-    
-    return  userID;
+    if(_friendUserId == nil||[_friendUserId isEqualToString:@""])
+    {
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+        NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+        
+        return  userID;
+    }
+    else
+    {
+        return self.friendUserId;
+    }
 }
 
 
@@ -166,7 +174,7 @@
         if(resultAll > _myTaskData.count)
         {
             myTaskPage++;
-            [self loadMyTaskDatas:[NSString stringWithFormat:@"%ld",myTaskPage] andPerPage:nil andState:nil andDate:nil andStartDate:_startTime andEndDate:_endTime];
+            [self loadMyTaskDatas:[NSString stringWithFormat:@"%ld",myTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
         }
         else
         {
@@ -309,7 +317,7 @@
         if(resultAll > _getTaskData.count)
         {
             receiveTaskPage ++ ;
-            [self loadReceiveTaskDatas:[NSString stringWithFormat:@"%ld",receiveTaskPage] andPerPage:nil andState:nil andDate:nil andStartDate:_startTime andEndDate:_endTime];
+            [self loadReceiveTaskDatas:[NSString stringWithFormat:@"%ld",receiveTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
         }
         else
         {
@@ -603,18 +611,28 @@
 
 -(void)setPageIndex:(NSInteger)page
 {
+    
     [self getMonthTime];
-    _startTime = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
-    
-    if(_month != 12)
+    if(self.showTaskMode == Mode_month)
     {
-        _endTime =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month+1,_day];
+        todayStr = nil;
+        _startTime = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+        
+        if(_month != 12)
+        {
+            _endTime =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month+1,_day];
+        }
+        else
+        {
+            _endTime = [NSString stringWithFormat:@"%ld-%02d-%02ld",_year+1,1,_day];
+        }
     }
-    else
+    else if(self.showTaskMode == Mode_today)
     {
-        _endTime = [NSString stringWithFormat:@"%ld-%02d-%02ld",_year+1,1,_day];
+        _endTime = nil;
+        _startTime = nil;
+        todayStr = [self getMonthTime];
     }
-    
     NSLog(@"Page = %ld",(long)page);
     if(_tableViews.count>0)
         [self.view bringSubviewToFront:[_tableViews objectAtIndex:page]];
@@ -627,7 +645,7 @@
         myTaskPage = 1;
         _cellCountMyTask = 0;
         [_myTaskData removeAllObjects];
-        [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:nil andStartDate:_startTime andEndDate:_endTime];
+        [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
     }
     if(page == 1)
     {
@@ -635,7 +653,7 @@
         _cellCountGetTask = 0;
         [_getTaskData removeAllObjects];
         
-        [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:nil andStartDate:_startTime andEndDate:_endTime];
+        [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
 
     }
 
@@ -803,21 +821,32 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     
-    if (tableView.tag == 0) {
+    if (tableView.tag == 0)
+    {
 
         TaskPath *tempPath;
         tempPath = [_myTaskData objectAtIndex:indexPath.row];
         _sID = tempPath.sId;
-        _taskDetailMode = TaskDetail_MyMode;
+        
+        if(self.friendUserId ==nil)
+            _taskDetailMode = TaskDetail_MyMode;
+        else
+            _taskDetailMode = TaskDetail_OtherMode;
         [self loadTaskDetails:tempPath.taskID];
             
         
-    }else if(tableView.tag == 1){
+    }
+    else if(tableView.tag == 1)
+    {
         TaskPath *tempPath;
         tempPath = [_getTaskData objectAtIndex:indexPath.row];
         
         _sID = tempPath.sId;
-        _taskDetailMode = TaskDetail_ReceiveMode;
+        
+        if(self.friendUserId ==nil)
+            _taskDetailMode = TaskDetail_ReceiveMode ;
+        else
+            _taskDetailMode = TaskDetail_OtherMode;
         [self loadTaskDetails:tempPath.taskID];
     }
     
@@ -938,6 +967,30 @@
     return tempView;
     
 }
+
+//重写返回按钮
+-(void)quitView{
+
+    if(self.friendUserId == nil)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    }
+    if(self.pageChangeMode == Mode_nav)
+    {
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+ 
+}
+
 
 
 //设置section header 的高度

@@ -33,8 +33,6 @@
     [super viewDidLoad];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
     //去除多余的横线
@@ -190,7 +188,11 @@
         if (abLastName) CFRelease(abLastName);
         if (abFullName) CFRelease(abFullName);
         
-        [mDictInfo setValue:addressBook.name forKey:temtPhone];
+        if (temtPhone != nil) {
+            [mDictInfo setValue:addressBook.name forKey:temtPhone];
+        }else{
+            
+        }
     }
     //[_tableView reloadData];
 }
@@ -268,72 +270,81 @@
 #pragma mark - 显示每行内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = @"AddressLocalCellIdentifier";
-    AddressLocalCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AddressLocalCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-
-    NSDictionary *dic = [userSource objectAtIndex:indexPath.section];
-    NSArray *arr = [[dic allValues] lastObject];
-    NSArray *array = [arr objectAtIndex:indexPath.row];
-    NSString *name = nil;
-    NSString *tel = nil;
-    int state = -1;
-    if (array.count != 1)
-    {
-        if ([[array objectAtIndex:0] isEqualToString:@"无"]) {
-            tel = [array objectAtIndex:1];
-            state = [[array objectAtIndex:2] intValue];
+    @try {
+        NSString *CellIdentifier = @"AddressLocalCellIdentifier";
+        AddressLocalCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AddressLocalCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        NSDictionary *dic = [userSource objectAtIndex:indexPath.section];
+        NSArray *arr = [[dic allValues] lastObject];
+        NSArray *array = [arr objectAtIndex:indexPath.row];
+        NSString *name = nil;
+        NSString *tel = nil;
+        int state = -1;
+        if (array.count != 1)
+        {
+            if ([[array objectAtIndex:0] isEqualToString:@"无"]) {
+                tel = [array objectAtIndex:1];
+                state = [[array objectAtIndex:2] intValue];
+            }
+            else
+            {
+                name = [array objectAtIndex:0];
+                tel = [array objectAtIndex:1];
+                state = [[array objectAtIndex:2] intValue];
+            }
         }
         else
         {
-            name = [array objectAtIndex:0];
-            tel = [array objectAtIndex:1];
+            name = [array lastObject];
             state = [[array objectAtIndex:2] intValue];
         }
+        NSLog(@"%@",userSource);
+        // cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        cell.mImage.image = [UIImage imageNamed:@"headImg"];
+        cell.mName.text = name;
+        cell.mName.textColor = [UIColor grayColor];
+        cell.mHandle.backgroundColor=RGB(26, 200, 133);
+        switch (state) {
+            case 1:
+                [cell.mHandle setTitle:@"已同意" forState:UIControlStateNormal];
+                [cell.mHandle setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
+                [cell.mHandle setBackgroundColor:[UIColor clearColor]];
+                break;
+            case 2:
+                [cell.mHandle setTitle:@"添加" forState:UIControlStateNormal];
+                [cell.mHandle addTarget:self action:@selector(applyAddFriend:) forControlEvents:UIControlEventTouchUpInside];
+                break;
+            case 3:
+                [cell.mHandle setTitle:@"邀请" forState:UIControlStateNormal];
+                [cell.mHandle setBackgroundColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1]];
+                [cell.mHandle addTarget:self action:@selector(inviteEvent:) forControlEvents:UIControlEventTouchUpInside];
+                break;
+                
+            default:
+                break;
+        }
+        
+        //分割线设置
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+        {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+            [cell setPreservesSuperviewLayoutMargins:NO];
+        }
+        return cell;
     }
-    else
-    {
-        name = [array lastObject];
-        state = [[array objectAtIndex:2] intValue];
+    @catch (NSException *exception) {
+        
     }
-    NSLog(@"%@",userSource);
-    // cell.iconView.image = [UIImage imageNamed:@"headImg"];
-    cell.mImage.image = [UIImage imageNamed:@"headImg"];
-    cell.mName.text = name;
-    cell.mName.textColor = [UIColor grayColor];
-    cell.mHandle.backgroundColor=RGB(26, 200, 133);
-    switch (state) {
-        case 1:
-            [cell.mHandle setTitle:@"已同意" forState:UIControlStateNormal];
-            [cell.mHandle setTitleColor:[UIColor colorWithRed:0.71 green:0.71 blue:0.71 alpha:1] forState:UIControlStateNormal];
-            [cell.mHandle setBackgroundColor:[UIColor clearColor]];
-            break;
-        case 2:
-            [cell.mHandle setTitle:@"添加" forState:UIControlStateNormal];
-            [cell.mHandle addTarget:self action:@selector(applyAddFriend:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        case 3:
-            [cell.mHandle setTitle:@"邀请" forState:UIControlStateNormal];
-            [cell.mHandle setBackgroundColor:[UIColor colorWithRed:0.92 green:0.33 blue:0.07 alpha:1]];
-            [cell.mHandle addTarget:self action:@selector(inviteEvent:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-            
-        default:
-            break;
+    @finally {
+        
     }
     
-    //分割线设置
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-    {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-        [cell setPreservesSuperviewLayoutMargins:NO];
-    }
-    return cell;
 }
 
 //重写退出页面方法

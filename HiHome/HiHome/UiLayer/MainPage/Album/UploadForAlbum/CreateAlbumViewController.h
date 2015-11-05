@@ -8,7 +8,8 @@
 
 #import "BackPageViewController.h"
 #import "TempCustomButton.h"
-@interface CreateAlbumViewController : BackPageViewController
+#import "SelectLimitViewController.h"
+@interface CreateAlbumViewController : BackPageViewController<SelectLimitViewControllerDelegate>
 
 
 

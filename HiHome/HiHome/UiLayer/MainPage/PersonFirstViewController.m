@@ -12,6 +12,9 @@
 #import "DataProvider.h"
 #import "MarkFriendViewController.h"
 #import "ChatContentViewController.h"
+#import "SVProgressHUD.h"
+#import "JKAlertDialog.h"
+#import "PlanMonthViewController.h"
 
 @interface PersonFirstViewController (){
     UITableView *mTableView;
@@ -21,6 +24,11 @@
     UITextField *gxqm;
     MarkFriendViewController *markFriendVC;
     NSUserDefaults *mUserDefault;
+    
+    
+    
+    NSMutableArray *resentArray;
+   // NSInteger resentPage;
 }
 
 @end
@@ -31,7 +39,7 @@
     [super viewDidLoad];
 
     cellHeight = SCREEN_HEIGHT / 11;
-    
+    resentArray =[NSMutableArray array];
     if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
         [self initView];
     }else{
@@ -99,6 +107,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+    
     
     if (indexPath.row == 0) {
         UIImageView *mImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, cellHeight * 3)];
@@ -184,13 +193,36 @@
                 [cell addSubview:xcdt];
                 
                 UIImageView *mImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(10 + xcdt.frame.size.width + 10, 5, cellHeight * 2 - 10, cellHeight * 2 - 10)];
-                mImageView1.image = [UIImage imageNamed:@"recentPic"];
-                [cell addSubview:mImageView1];
-                
+               // mImageView1.image = [UIImage imageNamed:@"recentPic"];
                 UIImageView *mImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(10 + xcdt.frame.size.width + 10 + mImageView1.frame.size.width + 10, 5, cellHeight * 2 - 10, cellHeight * 2 - 10)];
-                mImageView2.image = [UIImage imageNamed:@"recentPic"];
-                [cell addSubview:mImageView2];
-            }else{
+                
+                NSDictionary *tempDict;
+                NSString * url;
+                for (int i =0; i<2 && i<resentArray.count; i++) {
+                    tempDict = [resentArray objectAtIndex:i];
+                    if(i == 0)
+                    {
+                        
+                        url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+                        NSLog(@"img url = [%@]",url);
+                        [mImageView1 sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell addSubview:mImageView1];
+                    }
+                    else{
+                        
+                        
+                        url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+                        NSLog(@"img url = [%@]",url);
+                        [mImageView2 sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell addSubview:mImageView2];
+
+                    }
+                }
+               
+                
+                           }else{
                 UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                 [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
                 mHiBtn.layer.borderWidth = 1;
@@ -219,12 +251,33 @@
                 [cell addSubview:xcdt];
                 
                 UIImageView *mImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(10 + xcdt.frame.size.width + 10, 5, cellHeight * 2 - 10, cellHeight * 2 - 10)];
-                mImageView1.image = [UIImage imageNamed:@"recentPic"];
-                [cell addSubview:mImageView1];
-                
+                // mImageView1.image = [UIImage imageNamed:@"recentPic"];
                 UIImageView *mImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(10 + xcdt.frame.size.width + 10 + mImageView1.frame.size.width + 10, 5, cellHeight * 2 - 10, cellHeight * 2 - 10)];
-                mImageView2.image = [UIImage imageNamed:@"recentPic"];
-                [cell addSubview:mImageView2];
+                
+                NSDictionary *tempDict;
+                NSString * url;
+                for (int i =0; i<2 && i<resentArray.count; i++) {
+                    tempDict = [resentArray objectAtIndex:i];
+                    if(i == 0)
+                    {
+                        
+                        url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+                        NSLog(@"img url = [%@]",url);
+                        [mImageView1 sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell addSubview:mImageView1];
+                    }
+                    else{
+                        
+                        
+                        url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+                        NSLog(@"img url = [%@]",url);
+                        [mImageView2 sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell addSubview:mImageView2];
+                        
+                    }
+                }
             }else{
                 if ([_mIFlag isEqual:@"1"]) {
                     cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
@@ -286,6 +339,53 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
+    
+    
+    
+    if (![_mIFlag isEqual:@"2"])//个人的资料
+    {
+        if(indexPath.row == 3)
+        {
+            PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+            personTask.showTaskMode = Mode_today;
+            personTask.navTitle = @"今日任务";
+            personTask.pageChangeMode = Mode_dis;
+          //  [self.navigationController pushViewController:personTask animated:YES];
+            [self presentViewController:personTask animated:YES completion:^{}];
+        }
+        if(indexPath.row == 4)
+        {
+            AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+            _AlbumPage.pageChangeMode = Mode_dis;
+           // [self.navigationController pushViewController:_AlbumPage animated:YES];
+            [self presentViewController:_AlbumPage animated:YES completion:^{}];
+            
+        }
+    }
+    else//好友资料
+    {
+        if(indexPath.row == 4)
+        {
+            PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+            personTask.showTaskMode = Mode_today;
+            personTask.friendUserId = _mFriendID;
+            personTask.navTitle = @"今日任务";
+            personTask.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:personTask animated:YES];
+          //  [self presentViewController:personTask animated:YES completion:^{}];
+        }
+        if(indexPath.row == 5)
+        {
+            AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+            _AlbumPage.albumUserId = _mFriendID;
+            _AlbumPage.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:_AlbumPage animated:YES];
+            
+        }
+    }
+    
     if (indexPath.row == 3) {
         markFriendVC = [[MarkFriendViewController alloc] init];
         markFriendVC.navTitle = @"选择与其关系";
@@ -313,6 +413,12 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [self getResentPic:nil andPerPage:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    
     if ([_mIFlag isEqual:@"2"]) {
         if (markFriendVC.mType) {
             _mType = markFriendVC.mType;
@@ -320,9 +426,99 @@
         }
     }else{
         [self initData];
-        [mTableView reloadData];
+        
     }
 }
+
+#pragma mark - 获取最近相片
+-(void)getResentPic:(NSString *)nowPage andPerPage:(NSString *)perPage
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"getResentListCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    if(_mFriendID == nil)
+        [dataprovider GetResentPic:userID andNowPage:nowPage andPerPage:perPage];
+    else
+        [dataprovider GetResentPic:_mFriendID andNowPage:nowPage andPerPage:perPage];
+}
+
+-(void)getResentListCallBack:(id)dict
+{
+    
+    NSInteger code;
+    NSMutableDictionary *albumDict;
+    NSInteger resultAll;
+    [SVProgressHUD dismiss];
+#if DEBUG
+    NSLog(@"[%s] prm = %@",__FUNCTION__,dict);
+#endif
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"相册获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+            [mTableView reloadData];
+        }
+        return;
+    }
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        albumDict = [dict objectForKey:@"datas"];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    @try {
+        
+        [resentArray addObjectsFromArray:[albumDict objectForKey:@"list"]];
+        resultAll = [[albumDict objectForKey:@"resultAll"] integerValue];
+        NSLog(@"resultAll = %ld",resultAll);
+//        if(resultAll > resentArray.count)
+//        {
+//            resentPage++;
+//            
+//            [self getResentPic:[NSString stringWithFormat:@"%ld",resentPage] andPerPage:nil];
+//            return;
+//        }
+        
+//        if(resentArray.count !=0)
+//            _cellCountRecentPic = resentArray.count;
+        
+        [mTableView reloadData];
+        
+    }
+    @catch (NSException *exception) {
+        
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"数据解析错误"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        
+        
+        return;
+    }
+    @finally {
+        [mTableView reloadData];
+    }
+    
+}
+
 
 -(void)btnEditInfo:(id)sender{
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];

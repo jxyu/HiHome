@@ -9,6 +9,7 @@
 #import "CreateAlbumViewController.h"
 #import "DataProvider.h"
 #import "JKAlertDialog.h"
+
 @interface CreateAlbumViewController ()
 {
     CGFloat _rowHeight;
@@ -16,6 +17,8 @@
     UITextField *nameField;
     UITextField *introField;
     UITextField *limitField;
+    
+    NSString *limit;
 }
 @end
 
@@ -35,7 +38,7 @@
 {
     self.mBtnRight.hidden = NO;
     [self.mBtnRight setTitle:@"新建" forState:UIControlStateNormal];
-    
+    limit = [NSString stringWithFormat:@"0"];
     
     nameField = [[UITextField alloc] initWithFrame:CGRectMake(20, ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH - 20*2, _rowHeight)];
     UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, _rowHeight)];
@@ -63,17 +66,18 @@
     limitField.leftViewMode = UITextFieldViewModeAlways;
     limitField.borderStyle  = UITextBorderStyleRoundedRect;
     limitField.backgroundColor = [UIColor whiteColor];
-    
+    limitField.font = [UIFont systemFontOfSize:14];
     TempCustomButton *rightBtn = [[TempCustomButton alloc] initWithFrame:CGRectMake(limitField.frame.size.width/4*3, 0, limitField.frame.size.width/4, _rowHeight)];
-    [rightBtn setTitle:@"仅自己" forState:UIControlStateNormal];
+    [rightBtn setTitle:@"所有人" forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [rightBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
     rightBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+    [rightBtn addTarget:self action:@selector(selectLimit:) forControlEvents:UIControlEventTouchUpInside];
+  //  [limitField addSubview:rightBtn];
     limitField.rightView = rightBtn;
     limitField.rightViewMode = UITextFieldViewModeAlways ;
-    limitField.enabled = NO;
+   // limitField.enabled = NO;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
     [self.view addGestureRecognizer:tapGesture];
@@ -81,6 +85,13 @@
     [self.view addSubview:nameField];
     [self.view addSubview:introField];
     [self.view addSubview:limitField];
+}
+-(void)selectLimit:(UIButton *)sender
+{
+    SelectLimitViewController *seclectLimitViewCtl = [[SelectLimitViewController alloc] init];
+    seclectLimitViewCtl.delegate = self;
+    [self presentViewController:seclectLimitViewCtl animated:YES completion:^{}];
+    DLog(@"Click limit btn");
 }
 
 -(void)tapViewAction:(id)sender
@@ -91,9 +102,9 @@
 -(void)btnRightClick:(UIButton *)sender
 {
     
-    if((nameField.text && introField.text)&&(![nameField.text isEqualToString:@""] && ![introField.text isEqualToString:@""]))
+    if((nameField.text && introField.text)&&(![nameField.text isEqualToString:@""] && ![introField.text isEqualToString:@""])&&limit)
     {
-        [self CreateAlbum:nameField.text andLimit:@"0" andIntro:introField.text];
+        [self CreateAlbum:nameField.text andLimit:limit andIntro:introField.text];
     }
     else
     {
@@ -120,6 +131,57 @@
     
 }
 
+#pragma mark - limit delegate
+-(void)setLimitDict:(NSDictionary *)dict
+{
+    if(dict!=nil)
+    {
+        @try {
+            switch ([[dict objectForKey:@"mode"] integerValue]) {
+                case Mode_mine:
+                    limit = [NSString stringWithFormat:@"-1"];
+                    //limitField.text = @"自己";
+                    [(UIButton *)(limitField.rightView) setTitle:@"仅自己" forState:UIControlStateNormal];
+                    break;
+                case Mode_all:
+                    limit = [NSString stringWithFormat:@"0"];
+                    [(UIButton *)(limitField.rightView) setTitle:@"所有人" forState:UIControlStateNormal];
+                    break;
+                case Mode_friends:
+                    //limitField.text = @"自己";
+                    {
+                        [(UIButton *)(limitField.rightView) setTitle:@"好友" forState:UIControlStateNormal];
+                        NSArray *tempArr = [dict objectForKey:@"userName"];
+                
+                        NSString *str = @"";
+                        
+                        for (int i = 0; i < tempArr.count; i++) {
+                            str = [NSString stringWithFormat:@"%@ %@",str,[tempArr objectAtIndex:i]];
+                            
+                        }
+                        limitField.text = str;
+                        
+                        tempArr = [dict objectForKey:@"userID"];
+                        limit = [tempArr objectAtIndex:0];
+                        for (int i = 1;i< tempArr.count; i++) {
+                            limit = [NSString stringWithFormat:@"%@,%@",limit,[tempArr objectAtIndex:i]];
+                        }
+                        NSLog(@"limit = %@",limit);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }
+}
 
 -(void)createAlbumCallBack:(id)dict
 {

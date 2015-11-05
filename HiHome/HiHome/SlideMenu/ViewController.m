@@ -427,7 +427,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
         other = [[BackPageViewController alloc] init];
     }
     
-    
+    other.pageChangeMode = Mode_dis;       
     other.navTitle = title;
     other.hidesBottomBarWhenPushed = YES;
     

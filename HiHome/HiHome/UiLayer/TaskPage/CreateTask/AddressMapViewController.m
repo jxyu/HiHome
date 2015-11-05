@@ -43,7 +43,11 @@
     _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     _mapView.delegate = self;
     _mapView.centerCoordinate=CLLocationCoordinate2DMake([[mUserDefault valueForKey:@"lat"] floatValue], [[mUserDefault valueForKey:@"long"] floatValue]);
-    [_mapView metersPerPointForZoomLevel:10];
+
+    MACoordinateSpan span = MACoordinateSpanMake(0.004913, 0.013695);
+    MACoordinateRegion region = MACoordinateRegionMake(_mapView.centerCoordinate, span);
+    _mapView.region = region;
+    
     pointAnnotation = [[MAPointAnnotation alloc] init];
     pointAnnotation.title = @"任务位置";
     pointAnnotation.coordinate = CLLocationCoordinate2DMake([[mUserDefault valueForKey:@"lat"] floatValue], [[mUserDefault valueForKey:@"long"] floatValue]);

@@ -36,7 +36,8 @@
     
     /*上传照片*/
    // UploadPicViewController *_uploadPicViewCtl;
-    CreateAlbumViewController *_createAlbum;
+    
     
 }
+@property(nonatomic)NSString *albumUserId;
 @end

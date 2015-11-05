@@ -63,6 +63,10 @@
     NSString *_sID;
     NSMutableArray *Performerslist;
     
+    BOOL sendModeHaveMe;
+    
+    NSUserDefaults *mUserDefault;
+    
 }
 
 @end
@@ -72,6 +76,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    // self.taskDetailMode = TaskDetail_ReceiveMode;
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     if(_startDateArray == nil)
         _startDateArray = [[NSMutableArray alloc] init];
@@ -181,6 +186,7 @@
 {
     @try {
         _dictData = dictData;
+
         Performerslist = [_dictData objectForKey:@"taskerlist"];
         NSLog(@"Performerslist cout = %ld",Performerslist.count);
         
@@ -193,10 +199,13 @@
                 NSDictionary *tempDict = [Performerslist objectAtIndex:i];
                 if([[tempDict objectForKey:@"tasker_uid"] isEqualToString:[self getUserID]])
                 {
+                    stateStr = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
                     [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+                     sendModeHaveMe = YES;//发布de任务重如包含自己那么 显示任务状态修改的btns
                     break;
                 }
             }
+            
             //
         }
         else{
@@ -209,7 +218,8 @@
             localTaskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
             
             [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];//更改两个按键的显示
-        }
+            
+            }
 
     }
     @catch (NSException *exception) {
@@ -449,7 +459,7 @@
         taskStatusShow.text= stateStr;
         [cell addSubview:taskStatusShow];
         
-        if(_taskDetailMode != TaskDetail_SendMode)
+        if((_taskDetailMode != TaskDetail_SendMode || sendModeHaveMe == YES)&&(_taskDetailMode != TaskDetail_OtherMode))
         {
             //UIButon
             if(btnLeftStr != nil)
@@ -1047,10 +1057,16 @@
 
 -(void)setEditMode//任务详情跳转创建任务至编辑模式
 {
+    NSLog(@"%@",_dictData);
+    
     NSString *str = @"编辑任务";
     CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
     _createTaskViewCtl.navTitle = str;
     _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
+ 
+    [mUserDefault setValue:[_dictData valueForKey:@"lat"] forKey:@"lat"];
+    [mUserDefault setValue:[_dictData valueForKey:@"lng"] forKey:@"long"];
+    
     [_createTaskViewCtl setCreateTaskMode:Mode_EditTask];
     if(taskPathLocal!=nil)
     {

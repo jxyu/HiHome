@@ -11,6 +11,12 @@
 #import "SVProgressHUD.h"
 #import "TaskDetailPageViewController.h"
 
+typedef enum _showTaskMode
+{
+    Mode_month = 0,
+    Mode_today
+}ShowTaskMode;
+
 @interface PlanMonthViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,SegmentedPageViewDelegate>
 {
     @private
@@ -26,4 +32,6 @@
     NSInteger _cellCountMyTask;
     NSInteger _cellCountGetTask;
 }
+@property(nonatomic) NSString *friendUserId;
+@property(nonatomic) ShowTaskMode showTaskMode;
 @end

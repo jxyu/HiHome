@@ -424,7 +424,6 @@
 
 -(void)setLoginValue:(NSDictionary *)dict{
     [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
-    [mUserDefault setValue:[dict valueForKey:@"nick"] forKey:@"nick"];
 }
 
 -(void)setNotificate{

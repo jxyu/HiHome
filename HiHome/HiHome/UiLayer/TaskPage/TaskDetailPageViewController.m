@@ -65,6 +65,8 @@
     
     BOOL sendModeHaveMe;
     
+    NSUserDefaults *mUserDefault;
+    
 }
 
 @end
@@ -74,6 +76,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    // self.taskDetailMode = TaskDetail_ReceiveMode;
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     _cellHeight = (self.view.frame.size.height-ZY_HEADVIEW_HEIGHT)/11;
     if(_startDateArray == nil)
         _startDateArray = [[NSMutableArray alloc] init];
@@ -183,6 +186,7 @@
 {
     @try {
         _dictData = dictData;
+
         Performerslist = [_dictData objectForKey:@"taskerlist"];
         NSLog(@"Performerslist cout = %ld",Performerslist.count);
         
@@ -1144,10 +1148,16 @@
 
 -(void)setEditMode//任务详情跳转创建任务至编辑模式
 {
+    NSLog(@"%@",_dictData);
+    
     NSString *str = @"编辑任务";
     CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
     _createTaskViewCtl.navTitle = str;
     _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
+ 
+    [mUserDefault setValue:[_dictData valueForKey:@"lat"] forKey:@"lat"];
+    [mUserDefault setValue:[_dictData valueForKey:@"lng"] forKey:@"long"];
+    
     [_createTaskViewCtl setCreateTaskMode:Mode_EditTask];
     if(taskPathLocal!=nil)
     {

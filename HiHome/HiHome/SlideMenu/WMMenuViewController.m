@@ -11,7 +11,9 @@
 #import "WMCommon.h"
 #import "UIImage+WM.h"
 
-@interface WMMenuViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface WMMenuViewController () <UITableViewDelegate, UITableViewDataSource>{
+    NSUserDefaults *mUserDefault;
+}
 @property (strong, nonatomic) WMCommon *common;
 @property (strong ,nonatomic) NSArray  *listArray;
 
@@ -51,6 +53,14 @@
     
     [self getUserInfo];
     [[self headerImageBtn] setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSetNickClick) name:@"setNick" object:nil];
+    
+}
+
+-(void)didSetNickClick{
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    _mName.text = [mUserDefault valueForKey:@"nick"];
 }
 
 - (void)btnClick:(id)sender {

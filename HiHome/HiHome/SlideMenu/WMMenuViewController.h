@@ -22,4 +22,5 @@
 
 @property (weak, nonatomic) id<WMMenuViewControllerDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UILabel *mName;
 @end

@@ -351,14 +351,16 @@
             PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
             personTask.showTaskMode = Mode_today;
             personTask.navTitle = @"今日任务";
-            personTask.pageChangeMode = Mode_nav;
-            [self.navigationController pushViewController:personTask animated:YES];
+            personTask.pageChangeMode = Mode_dis;
+          //  [self.navigationController pushViewController:personTask animated:YES];
+            [self presentViewController:personTask animated:YES completion:^{}];
         }
         if(indexPath.row == 4)
         {
             AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
-            _AlbumPage.pageChangeMode = Mode_nav;
-            [self.navigationController pushViewController:_AlbumPage animated:YES];
+            _AlbumPage.pageChangeMode = Mode_dis;
+           // [self.navigationController pushViewController:_AlbumPage animated:YES];
+            [self presentViewController:_AlbumPage animated:YES completion:^{}];
             
         }
     }

@@ -19,6 +19,8 @@
 
 @interface LoginViewController ()<UMSocialUIDelegate>{
     NSUserDefaults *mUserDefault;
+    NSString *_mAccount;
+    NSString *_mPassword;
 }
 
 @end
@@ -401,7 +403,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
             
             //设置默认值
-            [self setLoginValue];
+            [self setLoginValue:itemdict[0]];
             
             //设置通知
             [self setNotificate];
@@ -420,8 +422,8 @@
     printf("[%s] end\r\n",__FUNCTION__);
 }
 
--(void)setLoginValue{
-    [mUserDefault setValue:userText.text forKey:@"mAccountID"];
+-(void)setLoginValue:(NSDictionary *)dict{
+    [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
 }
 
 -(void)setNotificate{
@@ -473,13 +475,12 @@
             
             NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
             
+            _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 3]];
+            _mPassword = snsAccount.usid;
+            
             //调用注册接口
-            [self registerInterface:snsAccount.userName andPwdTxt:snsAccount.usid];
+            [self registerInterface];
             
-            
-//            DataProvider * dataprovider=[[DataProvider alloc] init];
-//            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
-//            [dataprovider LoginForQQWithopenid:snsAccount.usid andusername:snsAccount.userName];
         }});
 }
 
@@ -493,12 +494,11 @@
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
                 
+                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 3]];
+                _mPassword = snsAccount.usid;
                 //调用注册接口
-                [self registerInterface:snsAccount.userName andPwdTxt:snsAccount.usid];
+                [self registerInterface];
                 
-//                DataProvider * dataprovider=[[DataProvider alloc] init];
-//                [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
-//                [dataprovider LoginForWXWithopenid:snsAccount.usid andusername:snsAccount.userName];
             }
         });
     }
@@ -511,10 +511,11 @@
     }
 }
 
--(void)registerInterface:(NSString *)accountTxt andPwdTxt:(NSString *)pwdTxt{
+-(void)registerInterface{
+    
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"registerInterfaceBackCall:"];
-    NSDictionary * prm=@{@"mob":[NSString stringWithFormat:@"'%@'",accountTxt],@"pass":pwdTxt};
+    NSDictionary * prm=@{@"mob":[NSString stringWithFormat:@"%@",_mAccount],@"pass":_mPassword};//oRxyawTtX2lCkMW0JRtnZDmHXkpM
     [dataProvider RegisterUserInfo:prm];
 }
 
@@ -522,25 +523,23 @@
     NSLog(@"%@",dict);
     int code = [dict[@"code"] intValue];
     if (code == 200) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alertView show];
         
-        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                                  NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-        NSArray * itemdict=[[NSArray alloc] initWithArray:dict[@"datas"]];
-        [itemdict[0] writeToFile:plistPath atomically:YES];
+        [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+        [dataprovider Login:_mAccount andpwd:_mPassword andreferrer:@""];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil userInfo:[NSDictionary dictionaryWithObject:@"mainpage" forKey:@"rootView"]];
-        
-        //设置默认值
-        [self setLoginValue];
-        
-        //设置通知
-        [self setNotificate];
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alertView show];
+        if ([dict[@"message"] isEqual:@"手机号码已存在"]) {
+            
+            [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+            [dataprovider Login:_mAccount andpwd:_mPassword andreferrer:@""];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alertView show];
+        }
     }
 }
 

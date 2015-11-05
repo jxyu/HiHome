@@ -51,7 +51,7 @@
  //   [pan requireGestureRecognizerToFail:tempSwipLeft];
     tempSwipLeft.delegate = self;
     
-    
+    [self getUserInfo];
     [[self headerImageBtn] setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSetNickClick) name:@"setNick" object:nil];
@@ -64,14 +64,14 @@
 }
 
 - (void)btnClick:(id)sender {
-    if (sender == self.nightModeBtn) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"使用提示" message:@"要使用夜间模式需下载主题包，立即下载？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"立即下载", nil];
-        [alertView show];
-    } else {
-        if ([self.delegate respondsToSelector:@selector(didSelectItem:)]) {
-            [self.delegate didSelectItem:self.settingBtn.titleLabel.text];
-        }
-    }
+//    if (sender == self.nightModeBtn) {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"使用提示" message:@"要使用夜间模式需下载主题包，立即下载？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"立即下载", nil];
+//        [alertView show];
+//    } else {
+//        if ([self.delegate respondsToSelector:@selector(didSelectItem:)]) {
+//            [self.delegate didSelectItem:self.settingBtn.titleLabel.text];
+//        }
+//    }
 }
 
 -(void) swipAction:(id)sender
@@ -82,6 +82,69 @@
         [self.delegate swipLeftAction];
     }
     
+}
+
+#pragma mark - 获取个人资料
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    return  userID;
+}
+
+-(void)getUserInfo{
+    DataProvider *dataProvider;
+    dataProvider=[[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
+    [dataProvider GetUserInfoWithUid:[self getUserID]];
+}
+
+-(void)GetInfoBackCall:(id)dict
+{
+    DLog(@"%@",dict);
+    NSArray *userInfoArray;
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        
+        if (code == 200) {
+            @try {
+                
+                userInfoArray = (NSArray *)[dict objectForKey:@"datas"];
+                NSLog(@"%@",userInfoArray);
+                
+                NSDictionary *tempDict = [userInfoArray objectAtIndex:0];
+                self.nickNameLab.text = [tempDict objectForKey:@"nick"];
+                self.signLab.text = [tempDict objectForKey:@"sign"];
+                
+                if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]])
+                {
+                    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"avatar"]];
+                    UIImageView *tempImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.headerImageBtn.frame.size.width, self.headerImageBtn.frame.size.height)];
+                    [tempImgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[[UIImage imageNamed:@"me"]getRoundImage ]];
+                    
+                    self.headerImageBtn.layer.masksToBounds=YES;
+                    self.headerImageBtn.layer.cornerRadius=(self.headerImageBtn.frame.size.width)/2;
+                    self.headerImageBtn.layer.borderWidth=0.5;
+                    self.headerImageBtn.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+                    [self.headerImageBtn addSubview:tempImgView];
+                }
+            }
+            @catch (NSException *exception) {
+                
+            }
+            @finally {
+                
+            }
+
+        }
+    }else{
+        NSLog(@"访问服务器失败！");
+    }
 }
 
 

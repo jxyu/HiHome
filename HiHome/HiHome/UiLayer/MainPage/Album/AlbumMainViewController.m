@@ -396,15 +396,24 @@
 
 
 ////重写返回按钮
-//-(void)quitView{
-//
-//    
-//    [self dismissViewControllerAnimated:YES completion:^{}];
-//    
-//    
+-(void)quitView{
+
+    if(self.pageChangeMode == Mode_nav)
+    {
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+        {
+            [self popoverPresentationController];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+    
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-//}
+}
 //
 
 -(void)getResentListCallBack:(id)dict

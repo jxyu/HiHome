@@ -194,7 +194,7 @@
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=addInfo",Url];
         
         NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"end":etime,@"tip":tip,@"repeat":repeat,@"tasker":tasker,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3,@"address":address,@"lng":lng,@"lat":lat};
-        
+        DLog(@"prm = %@",prm);
         [self PostRequest:url andpram:prm];
     }
 

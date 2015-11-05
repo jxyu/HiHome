@@ -91,7 +91,7 @@
     
     
     self.conversationMessageCollectionView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
-    
+    [self scrollToBottomAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

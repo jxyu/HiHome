@@ -276,6 +276,8 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
  */
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setNick" object:nil];
+    
     NSLog(@"get pan self.sta = %d",self.sta);
     if(self.sta == kStateOption)//add by wangjc  设置页面禁止左划
     {

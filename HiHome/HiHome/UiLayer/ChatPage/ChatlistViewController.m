@@ -22,13 +22,12 @@
 //重载函数，onSelectedTableRow 是选择会话列表之后的事件，该接口开放是为了便于您自定义跳转事件。在快速集成过程中，您只需要复制这段代码。
 -(void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath
 {
-    ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
+    ChatContentViewController *conversationVC = [[ChatContentViewController alloc] init];
     conversationVC.conversationType =model.conversationType;
     conversationVC.targetId = model.targetId;
     conversationVC.userName = model.conversationTitle;
     conversationVC.title = model.conversationTitle;
     conversationVC.displayUserNameInCell = NO;
-    
     conversationVC.mIFlag = @"1";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
@@ -52,6 +51,13 @@
     //   _topView.backgroundColor = [UIColor colorWithRed:237/255.0 green:109/255.0 blue:3/255.0 alpha:1];
     
     _topView.backgroundColor = ZY_UIBASECOLOR;
+    
+    
+    UIImageView *threepiontImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 20, 10, ZY_VIEWHEIGHT_IN_HEADVIEW)];
+    threepiontImg.image = [UIImage imageNamed:@"threepoint"];
+    threepiontImg.contentMode = UIViewContentModeCenter;
+    
+    [_topView addSubview:threepiontImg];
     [self.view addSubview:_topView];
     //    UIImageView *imageline1=[[UIImageView alloc]initWithFrame:CGRectMake(0,NavigationBar_HEIGHT + _orginY-0.3, SCREEN_WIDTH, 0.3)];
     //    imageline1.backgroundColor=[UIColor colorWithRed:0.88 green:0.89 blue:0.89 alpha:1];
@@ -89,7 +95,7 @@
     
     
     _btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, _orginY, 60, NavigationBar_HEIGHT)];
-    [_btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+    //[_btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
     _btnLeft.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_btnLeft];
     
@@ -113,7 +119,7 @@
     [self.view addSubview:_btnRight];
     
     
-    //[self addLeftButton:@"goback"];
+    [self addLeftButton:@"threepoint"];
     //[self addRightbuttontitle:@"聊天"];
     
     

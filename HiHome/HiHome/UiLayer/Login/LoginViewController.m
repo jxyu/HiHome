@@ -424,6 +424,7 @@
 
 -(void)setLoginValue:(NSDictionary *)dict{
     [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
+    [mUserDefault setValue:[dict valueForKey:@"nick"] forKey:@"nick"];
 }
 
 -(void)setNotificate{
@@ -494,7 +495,7 @@
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
                 
-                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 3]];
+                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 4]];
                 _mPassword = snsAccount.usid;
                 //调用注册接口
                 [self registerInterface];

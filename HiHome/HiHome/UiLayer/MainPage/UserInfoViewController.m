@@ -13,7 +13,9 @@
 #import "LoginViewController.h"
 #import "PersonFirstViewController.h"
 
-@interface UserInfoViewController ()<ZHPickViewDelegate>
+@interface UserInfoViewController ()<ZHPickViewDelegate>{
+    UIImageView * img_avatar;
+}
 @property(nonatomic,strong)ZHPickView *pickview;
 @end
 
@@ -105,7 +107,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        return 200;
+        return 150;
     }
     return 0;
 }
@@ -230,16 +232,22 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        UIView * sectionHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        UIView * sectionHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
         sectionHeaderView.backgroundColor=[UIColor whiteColor];
         CGFloat btn_wh=100;
         UIButton * btn_selectImg=[[UIButton alloc] initWithFrame:CGRectMake((sectionHeaderView.frame.size.width-btn_wh)/2, (sectionHeaderView.frame.size.height-btn_wh)/2, btn_wh, btn_wh)];
-        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn_wh, btn_wh)];
+        img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn_wh, btn_wh)];
+        img_avatar.contentMode = UIViewContentModeScaleToFill;
         [img_avatar sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
         img_avatar.layer.masksToBounds=YES;
         img_avatar.layer.cornerRadius=btn_wh/2;
         img_avatar.layer.borderWidth=0.5;
         img_avatar.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+        
+        img_avatar.userInteractionEnabled = YES;
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickHeadImg)];
+        [img_avatar addGestureRecognizer:singleTap];
+
         [btn_selectImg addSubview:img_avatar];
         
         
@@ -252,6 +260,60 @@
     {
         return nil;
     }
+}
+
+-(void)onClickHeadImg{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择上传方式" message:nil delegate:self cancelButtonTitle:@"本地上传" otherButtonTitles:@"照相机", nil];
+    [alertView delegate];
+    [alertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+        mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        mImagePick.delegate = self;
+        mImagePick.allowsEditing = YES;
+        [self presentViewController:mImagePick animated:YES completion:nil];
+    }else{
+        
+    }
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    img_avatar.image = image;
+    [self changeHeadImage:imageData];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIImage *)scaleFromImage:(UIImage *)image andSize:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)changeHeadImage:(NSData *) data{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"didGetImageName:"];
+    [dataProvider UploadImgWithImgdataSlider:data];
+    //[dataProvider changeHeadImg:[userInfoWithFile objectForKey:@"id"] andImgsrc:imageBase64];
+}
+
+-(void)didGetImageName:(id)dict{
+    NSLog(@"%@",dict[@"datas"]);
+    NSLog(@"%@",[dict[@"datas"] valueForKey:@"imgsrc"]);
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"didChangeHeadImg:"];
+    [dataProvider changeHeadImg:[userInfoWithFile objectForKey:@"id"] andImgsrc:[[dict[@"datas"] valueForKey:@"imgsrc"] valueForKey:@"imgsrc"]];
+    
+}
+
+-(void)didChangeHeadImg:(id)dict{
+    NSLog(@"%@",dict);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

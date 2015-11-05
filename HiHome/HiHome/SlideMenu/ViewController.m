@@ -52,6 +52,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didHeaderImgClick) name:@"headerImgClickName" object:nil];
     
+    
     swipFlag = false;
     NSLog(@"run Here ");
     
@@ -166,6 +167,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     
     [self.view addSubview:self.tabBarController.view];
 }
+
 
 
 -(void)slideMenu:(id)sender//右划显示menu

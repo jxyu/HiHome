@@ -13,6 +13,10 @@
     id CallBackObject;
     NSString * callBackFunctionName;
 }
+
+//修改头像
+-(void)changeHeadImg:(NSString *)uid andImgsrc:(NSString *)imgsrc;
+
 /**
  *  注册
  *

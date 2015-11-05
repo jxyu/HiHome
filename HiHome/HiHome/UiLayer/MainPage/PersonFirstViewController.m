@@ -14,6 +14,7 @@
 #import "ChatContentViewController.h"
 #import "SVProgressHUD.h"
 #import "JKAlertDialog.h"
+#import "PlanMonthViewController.h"
 
 @interface PersonFirstViewController (){
     UITableView *mTableView;
@@ -343,22 +344,42 @@
     
     
     
-    if (![_mIFlag isEqual:@"2"])
+    if (![_mIFlag isEqual:@"2"])//个人的资料
     {
+        if(indexPath.row == 3)
+        {
+            PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+            personTask.showTaskMode = Mode_today;
+            personTask.navTitle = @"今日任务";
+            personTask.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:personTask animated:YES];
+        }
         if(indexPath.row == 4)
         {
             AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
-            [self presentViewController:_AlbumPage animated:YES completion:^{}];
+            _AlbumPage.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:_AlbumPage animated:YES];
             
         }
     }
-    else
+    else//好友资料
     {
+        if(indexPath.row == 4)
+        {
+            PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+            personTask.showTaskMode = Mode_today;
+            personTask.friendUserId = _mFriendID;
+            personTask.navTitle = @"今日任务";
+            personTask.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:personTask animated:YES];
+          //  [self presentViewController:personTask animated:YES completion:^{}];
+        }
         if(indexPath.row == 5)
         {
             AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
             _AlbumPage.albumUserId = _mFriendID;
-            [self presentViewController:_AlbumPage animated:YES completion:^{}];
+            _AlbumPage.pageChangeMode = Mode_nav;
+            [self.navigationController pushViewController:_AlbumPage animated:YES];
             
         }
     }
@@ -393,6 +414,8 @@
     
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     [self getResentPic:nil andPerPage:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
     if ([_mIFlag isEqual:@"2"]) {
         if (markFriendVC.mType) {

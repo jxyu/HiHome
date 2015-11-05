@@ -455,7 +455,7 @@
         taskStatusShow.text= stateStr;
         [cell addSubview:taskStatusShow];
         
-        if(_taskDetailMode != TaskDetail_SendMode || sendModeHaveMe == YES)
+        if((_taskDetailMode != TaskDetail_SendMode || sendModeHaveMe == YES)&&(_taskDetailMode != TaskDetail_OtherMode))
         {
             //UIButon
             if(btnLeftStr != nil)

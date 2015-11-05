@@ -18,9 +18,10 @@
 
 typedef enum _taskDetailMode
 {
-    TaskDetail_MyMode= 0,
-    TaskDetail_ReceiveMode,
-    TaskDetail_SendMode
+    TaskDetail_MyMode= 0,//自己的任务
+    TaskDetail_ReceiveMode,//接受的任务
+    TaskDetail_SendMode,// 发送的任务
+    TaskDetail_OtherMode//查看别人的任务
     
     
 }TaskDetailMode;

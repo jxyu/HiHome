@@ -194,6 +194,12 @@
     [titleField resignFirstResponder];
     [_titleField resignFirstResponder];
     [_textView resignFirstResponder];
+    NSRange tempRange = [taskUserID rangeOfString:[self getUserID]];
+    
+    if(tempRange.length != 0)
+    {
+        [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]]];
+    }
     
     if(_createTaskMode == Mode_EditTask)
         taskUserID = [self getUserID];
@@ -203,15 +209,6 @@
         if(_createTaskMode != Mode_EditTask)
         {
             [SVProgressHUD showWithStatus:@"正在保存..." maskType:SVProgressHUDMaskTypeBlack];
-    //        DataProvider * dataprovider=[[DataProvider alloc] init];
-    //        [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-    //        [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:userInfoWithFile[@"id"]];
-    //        if (self.assetsArray.count>0) {
-    //            DataProvider * dataprovider=[[DataProvider alloc] init];
-    //            [dataprovider setDelegateObject:self setBackFunctionName:@"SubmitTaskBackCall:"];
-    //            dataprovider
-    //        }
-            
             [self BuildSliderData];
         }
         else
@@ -272,6 +269,111 @@
         }
         
         
+    }
+}
+#pragma mark - 提醒
+-(NSDate *)getNoticeDate:(NSString *)mode andStartTime:(NSString *)stime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *date = [formatter dateFromString:stime];
+    //转换时区
+//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+//    NSInteger interval = [zone secondsFromGMTForDate: date];
+//    date = [date  dateByAddingTimeInterval: interval];
+    
+    NSInteger tempMode;
+    NSTimeInterval tempTime;
+    NSInteger timeadd = 0;
+    tempMode = [mode integerValue];
+    
+    tempTime = [date timeIntervalSince1970];
+    switch (tempMode)
+    {
+            
+        case Remind_zhengdian:
+            //return date;
+            break;
+        case Remind_5min:
+            timeadd  =5*60;
+            break;
+        case Remind_10min:
+            timeadd  =10*60;
+            break;
+        case Remind_1hour:
+            timeadd  =60*60;
+            break;
+        case Remind_1day:
+            timeadd  =24*60*60;
+            break;
+        case Remind_3day:
+            timeadd  =3*24*60*60;
+            break;
+        case Remind_never:
+            return nil;
+            break;
+            
+    }
+    
+    tempTime-=timeadd;
+    
+    date = [NSDate  dateWithTimeIntervalSince1970:tempTime];
+    
+    return date;
+}
+
+//Repeat_never        =0,
+//Repeat_day,
+//Repeat_week,
+//Repeat_month,
+//Repeat_year,
+-(NSCalendarUnit)getRepeatMode:(ZYTaskRepeat)repeatMode
+{
+    switch (repeatMode) {
+        case Repeat_never:
+            return 0;
+            
+        case Repeat_day:
+            
+            return NSCalendarUnitDay;
+        case Repeat_week:
+            
+            return NSCalendarUnitWeekday;
+        case Repeat_month:
+            
+            return NSCalendarUnitMonth;
+        case Repeat_year:
+            
+            return NSCalendarUnitYear;
+            
+        default:
+            return 0;
+    }
+    return 0;
+}
+
+
+-(void)setNotice:(NSDate *)noticeDate andNoticeStr:(NSString *)noticeStr andRepeat:(NSCalendarUnit) repeatMode
+{
+    NSLog(@"noticeDate = [%@]",noticeDate);
+    UILocalNotification *notification=[[UILocalNotification alloc] init];
+    if (notification!=nil) {
+        //  NSDate *now=[NSDate date];
+        notification.fireDate=noticeDate;
+        notification.repeatInterval=repeatMode;//循环次数，
+        notification.timeZone=[NSTimeZone defaultTimeZone];
+        notification.applicationIconBadgeNumber=1; //应用的红色数字
+        notification.soundName= UILocalNotificationDefaultSoundName;//声音，可以换成alarm.soundName = @"myMusic.caf"
+        //去掉下面2行就不会弹出提示框
+        
+        notification.alertBody=[NSString stringWithFormat:@"您有任务（%@）待执行",noticeStr];//[NSString stringWithFormat:@"%@设置的小家提醒您",noticeDate];//@"通知内容";//提示信息 弹出提示框
+        notification.alertAction = @"打开";  //提示框按钮
+        //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+        //NSDictionary*infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
+        //notification.userInfo = infoDict; //添加额外的信息
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
 }
 
@@ -903,11 +1005,11 @@
             }
             else
             {
-                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
+                NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld",(long)y,(long)m,(long)d,(long)hour,(long)min];
                 startTimeField.text =timeStr;
                 
                 
-                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
+                NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
                 endTimeField.text =timeStr2;
                
             }
@@ -933,10 +1035,10 @@
                                                NSString *weekDay) {
                                      
                                      if(isday==NO)
-                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
                                      else
                                      {
-                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ ",year,month,day];
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
                                      }
 
                                  }];
@@ -978,10 +1080,10 @@
                                      [_startDateArray addObject:weekDay];
                                     
                                      if(isday==NO)
-                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",year,month,day,hour,minute];
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
                                      else
                                      {
-                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ ",year,month,day];
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
                                      }
                                      NSLog(@"---%@",startTimeField.text);
                                      

@@ -266,6 +266,10 @@
     return YES;
 }
 
+
+
+
+
 -(void)getTokenEvent{
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];
@@ -441,7 +445,11 @@ fetchCompletionHandler:(void
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-
+- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
+{
+    NSLog(@"chu lai le ");
+    
+}
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {

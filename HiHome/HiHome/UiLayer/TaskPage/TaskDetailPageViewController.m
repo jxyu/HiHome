@@ -709,11 +709,11 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date = [formatter dateFromString:startTime];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate: date];
-    
-    date = [date  dateByAddingTimeInterval: interval];
-    
+    //转换时区
+//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+//    NSInteger interval = [zone secondsFromGMTForDate: date];
+//    date = [date  dateByAddingTimeInterval: interval];
+//    
     NSInteger tempMode;
     NSTimeInterval tempTime;
     NSInteger timeadd = 0;

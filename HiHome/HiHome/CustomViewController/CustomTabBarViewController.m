@@ -30,6 +30,8 @@
     UIView *_tabBarBG;
     UIButton *btnTabBar;
     NSUserDefaults *mUserDefault;
+    
+    NSString *backFrom;
 }
 @end
 
@@ -90,6 +92,7 @@
         
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLeftBtn:) name:@"setleftbtn" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLeftBtn:) name:@"backFrom" object:nil];
 
 //        self.leftBtn.contentMode = UIViewContentModeScaleAspectFill;
         
@@ -234,15 +237,20 @@
     if ([self.delegate respondsToSelector:@selector(setViewState)]) {
         [self.delegate setViewState];
     }
+    NSLog(@"navigationController count = %ld ",self.navigationController.viewControllers.count);
     
-    if(_btnSelected.tag==1000)
+    if([backFrom isEqualToString:@"slideTabView"])
     {
-        self.leftBtn.hidden = YES;
+        if(_btnSelected.tag==1000)
+        {
+            self.leftBtn.hidden = YES;
+        }
+        else
+            self.leftBtn.hidden = NO;
+        
+        [self showTabBar];
+        backFrom = nil;
     }
-    else
-        self.leftBtn.hidden = NO;
-    
-    [self showTabBar];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -265,15 +273,24 @@
 {
   //  self.leftBtn.hidden = YES;
 
-    
-    NSString *str = [[sender userInfo]objectForKey:@"hide"];
-    if([str isEqualToString:@"YES"])
-    {
-        self.leftBtn.hidden = YES;
+    @try {
+        backFrom =[[sender userInfo]objectForKey:@"backFrom"];
+        NSString *str = [[sender userInfo]objectForKey:@"hide"];
+        if([str isEqualToString:@"YES"])
+        {
+            self.leftBtn.hidden = YES;
+        }
+        else if([str isEqualToString:@"NO"])
+        {
+            self.leftBtn.hidden = NO;
+        }
+
     }
-    else if([str isEqualToString:@"NO"])
-    {
-        self.leftBtn.hidden = NO;
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
     }
 }
 //

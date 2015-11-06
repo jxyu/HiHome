@@ -586,6 +586,8 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
                                  }];
     
     [picker dismissViewControllerAnimated:NO completion:^{}];
+    
+  
 
     
 }

@@ -447,6 +447,12 @@
     NSLog(@"%@",dict);
     if ([dict[@"code"] intValue]==200) {
         [self.navigationController popViewControllerAnimated:YES];
+        if(_createTaskMode != Mode_EditTask)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        }
+
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
     alert.alertType = AlertType_Hint;

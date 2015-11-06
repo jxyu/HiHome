@@ -455,13 +455,13 @@
 //        photoBtns.tag = ZY_UIBUTTON_TAG_BASE + ZY_TAKEPIC_BTN_TAG;
         
 //        [photoBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
-        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-        [otherBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
-        
+//        UIButton *otherBtns = [[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height)];
+//        [otherBtns setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
+//        [otherBtns addTarget:self action:@selector(clickBtns:) forControlEvents:UIControlEventTouchUpInside];
+//        
         [cell addSubview:picBtns];
 //        [cell addSubview:photoBtns];
-        [cell addSubview:otherBtns];
+  //      [cell addSubview:otherBtns];
 
     }
     
@@ -617,6 +617,11 @@
 //
 //}
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    DLog(@"run here ");
+    
+}
 
 
 //设置cell每行间隔的高度
@@ -709,8 +714,7 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
+
     
     return indexPath;
     
@@ -1019,6 +1023,7 @@
     imagePickerController.selectedAssetArray = self.assetsArray;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
+    
 }
 
 #pragma mark - JKImagePickerControllerDelegate

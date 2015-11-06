@@ -222,6 +222,8 @@
     if ([self.delegate respondsToSelector:@selector(setViewState)]) {
         [self.delegate setViewState];
     }
+    NSLog(@"navigationController count = %ld ",self.navigationController.viewControllers.count);
+    
     
     if(_btnSelected.tag==1000)
     {

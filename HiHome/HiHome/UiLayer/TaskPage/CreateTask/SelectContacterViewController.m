@@ -9,6 +9,7 @@
 #import "SelectContacterViewController.h"
 #import "SelectContacterCell.h"
 #import "DataProvider.h"
+#import "UIImageView+WebCache.h"
 
 @interface SelectContacterViewController (){
     UITableView *mTableView;
@@ -25,6 +26,8 @@
     int normalNum;
     int spouseNum;
     int starNum;
+    
+    NSUserDefaults *mUserDefault;
 }
 
 @end
@@ -40,6 +43,8 @@
     normalNum = 0;
     spouseNum = 0;
     starNum = 0;
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
@@ -118,21 +123,29 @@
     }
     
     if (indexPath.section == 0) {
-        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [mUserDefault valueForKey:@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mHeaderImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.mName.text = @"自己";
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
     }else if(indexPath.section == 1){
-        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArraySpouse[spouseNum][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mHeaderImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.mName.text = [friendArraySpouse[spouseNum][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         spouseNum++;
     }else if(indexPath.section == 2){
-        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArrayStar[starNum][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mHeaderImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.mName.text = [friendArrayStar[starNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[starNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         starNum++;
     }else{
-        cell.mHeaderImg.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArrayNormal[normalNum][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mHeaderImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.mName.text = [friendArrayNormal[normalNum][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[normalNum][@"nick"];
         [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         normalNum++;

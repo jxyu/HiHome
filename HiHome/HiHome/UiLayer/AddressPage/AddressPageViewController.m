@@ -245,22 +245,28 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CardTableViewCell *cell = [[CardTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    
+    NSLog(@"%ld",(long)indexPath.row);
     if(indexPath.section == 0)
     {
         cell.iconView.image = [UIImage imageNamed:@"addressBook"];
         cell.nameLabel.text = @"通讯录";
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 1){
-        cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArraySpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.nameLabel.text = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 2){
-        cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArrayStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.nameLabel.text = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 3){
-        cell.iconView.image = [UIImage imageNamed:@"headImg"];
+        NSString *avatar = [friendArrayNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.nameLabel.text = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }

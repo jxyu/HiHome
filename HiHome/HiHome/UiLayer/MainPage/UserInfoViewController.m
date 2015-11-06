@@ -33,6 +33,7 @@
     NSArray *userInfoArray;
     
     NSUserDefaults *mUserDefault;
+    NSString *_mImgStr;
 }
 
 - (void)viewDidLoad {
@@ -238,7 +239,8 @@
         UIButton * btn_selectImg=[[UIButton alloc] initWithFrame:CGRectMake((sectionHeaderView.frame.size.width-btn_wh)/2, (sectionHeaderView.frame.size.height-btn_wh)/2, btn_wh, btn_wh)];
         img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn_wh, btn_wh)];
         img_avatar.contentMode = UIViewContentModeScaleToFill;
-        [img_avatar sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,_mHeadImg];
+        [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
         img_avatar.layer.masksToBounds=YES;
         img_avatar.layer.cornerRadius=btn_wh/2;
         img_avatar.layer.borderWidth=0.5;
@@ -263,27 +265,38 @@
 }
 
 -(void)onClickHeadImg{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择上传方式" message:nil delegate:self cancelButtonTitle:@"本地上传" otherButtonTitles:@"照相机", nil];
-    [alertView delegate];
-    [alertView show];
+    UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"取消"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"拍照", @"从相册中选取", nil];
+    [choiceSheet showInView:self.view];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
+        // 拍照
+        UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+        mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+        mImagePick.delegate = self;
+        mImagePick.allowsEditing = YES;
+        [self presentViewController:mImagePick animated:YES completion:nil];
+        
+    } else if (buttonIndex == 1) {
+        // 从相册中选取
         UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
         mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         mImagePick.delegate = self;
         mImagePick.allowsEditing = YES;
         [self presentViewController:mImagePick animated:YES completion:nil];
-    }else{
-        
     }
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImagePNGRepresentation(image);
-    img_avatar.image = image;
+    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
+    NSData *imageData = UIImagePNGRepresentation(smallImage);
+    img_avatar.image = smallImage;
     [self changeHeadImage:imageData];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -297,6 +310,7 @@
 }
 
 -(void)changeHeadImage:(NSData *) data{
+    [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"didGetImageName:"];
     [dataProvider UploadImgWithImgdataSlider:data];
@@ -304,16 +318,18 @@
 }
 
 -(void)didGetImageName:(id)dict{
-    NSLog(@"%@",dict[@"datas"]);
-    NSLog(@"%@",[dict[@"datas"] valueForKey:@"imgsrc"]);
+    _mImgStr = [[dict[@"datas"] valueForKey:@"imgsrc"] valueForKey:@"imgsrc"];
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"didChangeHeadImg:"];
     [dataProvider changeHeadImg:[userInfoWithFile objectForKey:@"id"] andImgsrc:[[dict[@"datas"] valueForKey:@"imgsrc"] valueForKey:@"imgsrc"]];
-    
 }
 
 -(void)didChangeHeadImg:(id)dict{
     NSLog(@"%@",dict);
+    [SVProgressHUD dismiss];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getUserInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeadImg" object:nil];
+    [mUserDefault setValue:_mImgStr forKey:@"avatar"];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -362,6 +378,7 @@
         }else{
             [self dismissViewControllerAnimated:NO completion:nil];
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getUserInfo" object:nil];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];

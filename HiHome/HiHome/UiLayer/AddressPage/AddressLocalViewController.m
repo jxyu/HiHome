@@ -564,6 +564,7 @@
 }
 
 -(void)inviteEvent:(id)sender{
+    [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     UIView *v = [sender superview];
     UITableViewCell *cell = (UITableViewCell *)[v superview];
     NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
@@ -593,6 +594,8 @@
         
         [self alertWithTitle:@"提示信息" msg:@"设备没有短信功能"];
     }
+    
+    [SVProgressHUD dismiss];
 }
 
 
@@ -600,6 +603,9 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
     
     [controller dismissViewControllerAnimated:NO completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
 //    switch ( result ) {
 //            

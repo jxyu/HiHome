@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 
-@interface UserInfoViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface UserInfoViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *myTableview;
 
 @property(strong,nonatomic) NSString *mIFlag;
+@property(strong,nonatomic) NSString *mHeadImg;
 @property(strong,nonatomic) NSString *mName;
 @property(strong,nonatomic) NSString *mSex;
 @property(strong,nonatomic) NSString *mAge;

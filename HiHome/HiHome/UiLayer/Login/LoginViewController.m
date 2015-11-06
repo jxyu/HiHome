@@ -424,6 +424,7 @@
 
 -(void)setLoginValue:(NSDictionary *)dict{
     [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
+    [mUserDefault setValue:[dict valueForKey:@"avatar"] forKey:@"avatar"];
 }
 
 -(void)setNotificate{
@@ -432,6 +433,12 @@
     
     //获取聊天Token
     [[NSNotificationCenter defaultCenter] postNotificationName:@"getTokenInfo" object:nil];
+    
+    //登陆时重新获取头像
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeadImg" object:nil];
+    
+    //获取左侧栏用户信息
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getUserInfo" object:nil];
 }
 
 -(void)tempClick:(id)sender

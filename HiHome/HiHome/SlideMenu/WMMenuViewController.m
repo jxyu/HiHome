@@ -55,7 +55,7 @@
     [[self headerImageBtn] setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSetNickClick) name:@"setNick" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUserInfo) name:@"getUserInfo" object:nil];
 }
 
 -(void)didSetNickClick{

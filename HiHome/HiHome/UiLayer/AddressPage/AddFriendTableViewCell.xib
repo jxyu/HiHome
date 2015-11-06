@@ -15,26 +15,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImg.png" translatesAutoresizingMaskIntoConstraints="NO" id="5Bn-cp-xGe">
-                        <rect key="frame" x="8" y="6" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="1FN-vQ-B7Q"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Mw-aT-5dG">
                         <rect key="frame" x="66" y="20" width="176" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImg.png" translatesAutoresizingMaskIntoConstraints="NO" id="5Bn-cp-xGe">
+                        <rect key="frame" x="8" y="6" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="2uI-tc-knU"/>
+                            <constraint firstAttribute="height" constant="50" id="BCS-Q8-JdU"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6Mw-aT-5dG" firstAttribute="leading" secondItem="5Bn-cp-xGe" secondAttribute="trailing" constant="8" symbolic="YES" id="3SF-8S-UZb"/>
-                    <constraint firstItem="5Bn-cp-xGe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="45G-7f-RyY"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="6Mw-aT-5dG" secondAttribute="trailing" constant="70" id="KmJ-pe-gof"/>
-                    <constraint firstItem="5Bn-cp-xGe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="UkJ-OY-Ayn"/>
-                    <constraint firstItem="6Mw-aT-5dG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="WBa-Im-OMK"/>
-                    <constraint firstItem="5Bn-cp-xGe" firstAttribute="centerY" secondItem="6Mw-aT-5dG" secondAttribute="centerY" id="oUv-06-n67"/>
+                    <constraint firstItem="5Bn-cp-xGe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="7wy-If-Qdc"/>
+                    <constraint firstItem="6Mw-aT-5dG" firstAttribute="leading" secondItem="5Bn-cp-xGe" secondAttribute="trailing" constant="8" symbolic="YES" id="Ceq-TO-xdn"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="6Mw-aT-5dG" secondAttribute="trailing" constant="70" id="SNz-fp-70R"/>
+                    <constraint firstItem="5Bn-cp-xGe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="doH-MT-vG3"/>
+                    <constraint firstItem="6Mw-aT-5dG" firstAttribute="centerY" secondItem="5Bn-cp-xGe" secondAttribute="centerY" id="kUe-Vc-87B"/>
+                    <constraint firstItem="6Mw-aT-5dG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="rOD-6f-Yz5"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -25,6 +25,16 @@
     CallBackObject = cbobject;
     callBackFunctionName = selectorName;
 }
+
+-(void)changeHeadImg:(NSString *)uid andImgsrc:(NSString *)imgsrc{
+    if(uid && imgsrc){
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=modAvatar",Url];
+        NSDictionary *prm = @{@"id":uid,@"imgsrc":imgsrc};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
 /**
  *  注册
  *

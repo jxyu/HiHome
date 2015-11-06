@@ -115,7 +115,19 @@
         [cell addSubview:mImageView];
         
         UIButton *mHeadImg = [[UIButton alloc] initWithFrame:CGRectMake(10, cellHeight * 1.8 - 5, cellHeight * 1.2, cellHeight * 1.2)];
-        [mHeadImg setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
+        
+        mHeadImg.layer.masksToBounds=YES;
+        mHeadImg.layer.cornerRadius=(mHeadImg.frame.size.width)/2;
+        mHeadImg.layer.borderWidth=0.5;
+        mHeadImg.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+        
+        NSString *avatar = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
+        
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        NSLog(@"%@",url);
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, mHeadImg.frame.size.width, mHeadImg.frame.size.height)];
+        [imgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        [mHeadImg addSubview:imgView];
         [cell addSubview:mHeadImg];
         
         UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];

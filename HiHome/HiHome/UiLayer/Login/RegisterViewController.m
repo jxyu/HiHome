@@ -33,7 +33,7 @@
         _lblTitle.text=@"忘记密码";
     else
         _lblTitle.text=@"注册";
-    _lblRight.text=@"取消";
+//    _lblRight.text=@"取消";
     
     
     
@@ -64,16 +64,16 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
--(void)clickRightButton:(UIButton *)sender
-{
+//-(void)clickRightButton:(UIButton *)sender
+//{
 //    [txt_phoneNum resignFirstResponder];
 //    [txt_vrifyCode resignFirstResponder];
 //    [txt_newPwd resignFirstResponder];
 //    [txt_againNewPwd resignFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
+//    
+////    [self dismissViewControllerAnimated:YES completion:nil];
+//    
+//}
 -(void)clickLeftButton:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];

@@ -122,7 +122,12 @@
         mHeadImg.layer.borderWidth=0.5;
         mHeadImg.layer.borderColor=ZY_UIBASECOLOR.CGColor;
         
-        NSString *avatar = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
+        NSString *avatar;
+        if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
+            avatar = _mHeadImg;
+        }else{
+            avatar = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
+        }
         
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, mHeadImg.frame.size.width, mHeadImg.frame.size.height)];
@@ -570,6 +575,7 @@
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
     conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
+    
 //    conversationVC.userName = @"测试1";
 //    conversationVC.title = @"自问自答";
     conversationVC.mIFlag = @"2";

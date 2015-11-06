@@ -49,6 +49,7 @@
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
+    _mainTableView.scrollEnabled = NO;
     
     UIView *tableHeaderView = [[UIView alloc] init];
     tableHeaderView.backgroundColor = ZY_UIBASECOLOR;
@@ -278,6 +279,9 @@
         _taskNoticeVC.navTitle = @"任务提醒";
         _taskNoticeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:_taskNoticeVC animated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
 }
 

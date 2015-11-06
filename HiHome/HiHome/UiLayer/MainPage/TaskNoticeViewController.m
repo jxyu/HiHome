@@ -8,6 +8,7 @@
 
 #import "TaskNoticeViewController.h"
 #import "DataProvider.h"
+#import "UIImageView+WebCache.h"
 
 @interface TaskNoticeViewController (){
     UITableView *mTableView;
@@ -16,7 +17,6 @@
     NSMutableArray *mTaskNoticeArray;
     
     NSString *mTaskIFlag;
-    NSIndexPath *mIndexPath;
 }
 
 @end
@@ -101,7 +101,9 @@
             cell = [nib objectAtIndex:0];
         }
         
-        cell.mImageView.image = [UIImage imageNamed:@"xueren.png"];
+        NSString *avatar = [mTaskNoticeArray[indexPath.section][@"avatar"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
         cell.mReleaseTaskPerson.text = [mTaskNoticeArray[indexPath.section][@"nick"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"nick"];
         cell.mStartDate.text = mStart;
         cell.mEndDate.text = [NSString stringWithFormat:@"~%@",mEnd];
@@ -183,35 +185,35 @@
         if ([mState isEqual:@"0"]) {
             mTaskIFlag = @"2";
             [cell.mReceive setTitle:@"接受任务" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent) forControlEvents:UIControlEventTouchUpInside];
             
-            [cell.mReject setTitle:@"删除任务" forState:UIControlStateNormal];
-            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReject setTitle:@"拒绝任务" forState:UIControlStateNormal];
+            [cell.mReject addTarget:self action:@selector(cancelTaskEvent) forControlEvents:UIControlEventTouchUpInside];
         }else if([mState isEqual:@"2"]){
             mTaskIFlag= @"3";
             [cell.mReceive setTitle:@"执行任务" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent) forControlEvents:UIControlEventTouchUpInside];
             
             [cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
-            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReject addTarget:self action:@selector(cancelTaskEvent) forControlEvents:UIControlEventTouchUpInside];
 
         }else if([mState isEqual:@"3"]){
             mTaskIFlag= @"4";
             [cell.mReceive setTitle:@"标记完成" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent) forControlEvents:UIControlEventTouchUpInside];
             
             [cell.mReject setTitle:@"取消任务" forState:UIControlStateNormal];
-            [cell.mReject addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReject addTarget:self action:@selector(cancelTaskEvent) forControlEvents:UIControlEventTouchUpInside];
         }else if([mState isEqual:@"4"]){
-            mTaskIFlag= @"5";
+            mTaskIFlag= @"6";
             [cell.mReceive setTitle:@"删除任务" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent) forControlEvents:UIControlEventTouchUpInside];
             
             cell.mReject.hidden = YES;
         }else if([mState isEqual:@"5"]){
-            mTaskIFlag= @"5";
+            mTaskIFlag= @"6";
             [cell.mReceive setTitle:@"删除任务" forState:UIControlStateNormal];
-            [cell.mReceive addTarget:self action:@selector(executeTaskEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.mReceive addTarget:self action:@selector(executeTaskEvent) forControlEvents:UIControlEventTouchUpInside];
             
             cell.mReject.hidden = YES;
         }
@@ -225,7 +227,9 @@
             cell = [nib objectAtIndex:0];
         }
      
-        cell.mImageView.image = [UIImage imageNamed:@"xueren.png"];
+        NSString *avatar = [mTaskNoticeArray[indexPath.section][@"avatar"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
         cell.mReleaseTaskPerson.text = [mTaskNoticeArray[indexPath.section][@"nick"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"nick"];
         NSString *releaseData = [mTaskNoticeArray[indexPath.section][@"addtime"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"addtime"];
         cell.mDate.text = [releaseData substringToIndex:10];
@@ -332,38 +336,37 @@
     [tableView reloadData];
 }
 
-//接受任务
--(void)receiveEvent:(id)sender{
-    UIView * v=[sender superview];
-    UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
-    NSIndexPath *indexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
-    
-    dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"receiveBackCall:"];
-    [dataProvider acceptOrReject:[mTaskNoticeArray[indexPath.section][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[indexPath.section][@"sid"] andState:@"1"];
-}
-
--(void)receiveBackCall:(id)dict{
-    NSLog(@"%@",dict);
-    int code = [dict[@"code"] intValue];
-    if (code == 200) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+-(void)executeTaskEvent{
+    if ([mTaskIFlag isEqual:@"6"]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定删除任务?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 2;
         [alertView show];
-    }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-}
-
--(void)executeTaskEvent:(id)sender{
-    if ([mTaskIFlag isEqual:@"5"]) {
-        dataProvider = [[DataProvider alloc] init];
-        [dataProvider setDelegateObject:self setBackFunctionName:@"delTaskBackCall:"];
-        [dataProvider delTask:[mTaskNoticeArray[selectSectionIndex][@"id"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[selectSectionIndex][@"id"]];
     }else{
         dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"executeTaskBackCall:"];
-        [dataProvider ChangeTaskState:[mTaskNoticeArray[selectSectionIndex][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[mIndexPath.section][@"sid"] andState:mTaskIFlag];
+        [dataProvider ChangeTaskState:[mTaskNoticeArray[selectSectionIndex][@"sid"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[selectSectionIndex][@"sid"] andState:mTaskIFlag];
+    }
+}
+
+-(void)cancelTaskEvent{
+    NSString *msg = [mTaskIFlag isEqual:@"2"]?@"确定拒绝任务?":@"确定取消任务?";
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.delegate = self;
+    alertView.tag = 1;
+    [alertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        if (alertView.tag == 1) {
+            mTaskIFlag = @"5";
+            [self executeTaskEvent];
+        }else{
+            dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"delTaskBackCall:"];
+            [dataProvider delTask:[mTaskNoticeArray[selectSectionIndex][@"id"] isEqual:[NSNull null]]?@"":mTaskNoticeArray[selectSectionIndex][@"id"]];
+        }
     }
 }
 
@@ -407,6 +410,12 @@
         }else if ([mTaskIFlag isEqual:@"4"]){
             NSMutableDictionary *tempDict = [[mTaskNoticeArray objectAtIndex:selectSectionIndex] mutableCopy];
             [tempDict setValue:@"4" forKey:@"state"];
+            NSDictionary * mDict = [[NSDictionary alloc] initWithDictionary:tempDict];
+            [mTaskNoticeArray replaceObjectAtIndex:selectSectionIndex withObject:mDict];
+            [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:selectSectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else if ([mTaskIFlag isEqual:@"5"]){
+            NSMutableDictionary *tempDict = [[mTaskNoticeArray objectAtIndex:selectSectionIndex] mutableCopy];
+            [tempDict setValue:@"5" forKey:@"state"];
             NSDictionary * mDict = [[NSDictionary alloc] initWithDictionary:tempDict];
             [mTaskNoticeArray replaceObjectAtIndex:selectSectionIndex withObject:mDict];
             [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:selectSectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];

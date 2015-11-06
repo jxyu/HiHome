@@ -179,6 +179,7 @@
     personFirstVC.mIFlag = @"1";
     personFirstVC.navTitle = @"好友资料";
     personFirstVC.mFriendID = [searchFriendArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"id"];
+    personFirstVC.mHeadImg = [searchFriendArray[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"avatar"];
     personFirstVC.mName = [searchFriendArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"nick"];
     personFirstVC.mSex = [searchFriendArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"sex"];
     personFirstVC.mAge = [searchFriendArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"age"];

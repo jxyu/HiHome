@@ -96,14 +96,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.section==3) {
-        [_pickview remove];
-        NSDate *date=[NSDate dateWithTimeIntervalSinceNow:9000000];
-        _pickview=[[ZHPickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
-        _pickview.delegate=self;
-        [_pickview show];
-    }
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//    if (indexPath.section==3) {
+//        [_pickview remove];
+//        NSDate *date=[NSDate dateWithTimeIntervalSinceNow:9000000];
+//        _pickview=[[ZHPickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
+//        _pickview.delegate=self;
+//        [_pickview show];
+//    }
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

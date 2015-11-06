@@ -49,6 +49,7 @@
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT +50 )];
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
+    _mainTableView.scrollEnabled = NO;
     
     UIView *tableHeaderView = [[UIView alloc] init];
     tableHeaderView.backgroundColor = ZY_UIBASECOLOR;

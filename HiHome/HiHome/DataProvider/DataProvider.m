@@ -270,6 +270,9 @@
         
         NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"imgsrc":img,@"mdate":mdate,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3};
         
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
         [self PostRequest:url andpram:prm];
     }
     

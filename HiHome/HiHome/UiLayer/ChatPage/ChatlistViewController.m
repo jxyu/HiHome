@@ -115,7 +115,7 @@
     
     _btnRight = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, _orginY, 60, NavigationBar_HEIGHT)];
     _btnRight.backgroundColor = [UIColor clearColor];
-    [_btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
+ //   [_btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btnRight];
     
     
@@ -126,7 +126,7 @@
     
     [self.emptyConversationView removeFromSuperview];
     
-    self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-113);
+    self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT);
     self.conversationListTableView.tableFooterView = [UIView new];
     
 }

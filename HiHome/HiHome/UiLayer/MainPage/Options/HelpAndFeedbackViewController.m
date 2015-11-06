@@ -265,7 +265,7 @@
             
             [cell addSubview:picBtns];
             [cell addSubview:photoBtns];
-            [cell addSubview:otherBtns];
+     //       [cell addSubview:otherBtns];
         }
             break;
         default:

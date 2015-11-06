@@ -26,10 +26,13 @@
 @interface CustomTabBarViewController ()
 {
     NSArray *_arrayImages;
-    UIButton *_btnSelected;
+    volatile UIButton *_btnSelected;
+    NSInteger _btnSelectedTag;
     UIView *_tabBarBG;
     UIButton *btnTabBar;
     NSUserDefaults *mUserDefault;
+    
+    NSMutableArray *btnArr;
     
     NSString *backFrom;
 }
@@ -52,7 +55,10 @@
 {
     [super viewDidLoad];
     mUserDefault = [NSUserDefaults standardUserDefaults];
+    
+    btnArr = [NSMutableArray array];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setHeadImg) name:@"setHeadImg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setSelectTableBarIndex:) name:@"setSelectTableBarIndex" object:nil];
     //隐藏系统tabbar
     self.tabBar.hidden = YES;
     self.hidesBottomBarWhenPushed = YES;
@@ -132,6 +138,8 @@
             btnTabBar1.tag = i + 1000;
             [btnTabBar1 addTarget:self action:@selector(onTabButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [_tabBarBG addSubview:btnTabBar1];
+        
+        [btnArr addObject:btnTabBar1];
 //        }
 		
         
@@ -231,6 +239,30 @@
     
 }
 
+-(void)setSelectTableBarIndex:(id)sender
+{
+    
+    NSInteger index = [[[sender userInfo]objectForKey:@"index"] integerValue];
+    UIButton *tempBtn;
+    
+    self.leftBtn.hidden = NO;
+    
+    for (int i; i<btnArr.count; i++) {
+        tempBtn = [btnArr objectAtIndex:i];
+        if(i != index)
+        {
+            tempBtn.selected = NO;
+        }
+        else
+        {
+            tempBtn.selected = YES;
+            _btnSelected = tempBtn;
+        }
+    }
+    [self setSelectedIndex:index];
+}
+
+
 
 -(void) viewDidAppear:(BOOL)animated
 {
@@ -316,9 +348,12 @@
             self.leftBtn.hidden = YES;
         }
         else
+        {
             self.leftBtn.hidden = NO;
+            
+        }
     }
-    if (_btnSelected == sender)
+    if (_btnSelected == sender&&_btnSelectedTag != sender.tag)
         return ;
     
     if (_btnSelected)
@@ -327,6 +362,7 @@
     NSLog(@"select this tab %ld ",(long)sender.tag);
     sender.selected = !sender.selected;
     _btnSelected = sender;
+    _btnSelectedTag = sender.tag;
     [self setSelectedIndex:sender.tag - 1000];
     
 }
@@ -335,7 +371,11 @@
 {
     if (index < 0 || index > 5)
         return ;
+    
+    //[self setSelectedIndex:index ];
+   // return;
     UIButton *btnSender = (UIButton *)[self.view viewWithTag:index + 1000];
+    NSLog(@"_btnSelected tag =%ld", _btnSelected.tag);
     [self onTabButtonPressed:btnSender];
 }
 

@@ -35,7 +35,7 @@
     UITextField *titleField;//标题
     UITextField *field;//日期
     NSDictionary *userInfoWithFile;
-    
+    UIButton *_uploadBtn;
     NSString * imgAvatar;
     
     NSMutableArray * img_uploaded;
@@ -347,9 +347,14 @@
     BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight)];
     
     if (indexPath.row == 0) {
-        UIButton *uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _cellHeight*2, _cellHeight*2)];
-        [uploadBtn setImage:[UIImage imageNamed:@"redcamera"] forState:UIControlStateNormal];
-        [uploadBtn addTarget:self action:@selector(editPortrait) forControlEvents:UIControlEventTouchUpInside];
+        _uploadBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, _cellHeight*2 - 20, _cellHeight*2 - 20)];
+        [_uploadBtn setImage:[UIImage imageNamed:@"redcamera"] forState:UIControlStateNormal];
+        [_uploadBtn addTarget:self action:@selector(editPortrait) forControlEvents:UIControlEventTouchUpInside];
+        
+        _uploadBtn.layer.masksToBounds=YES;
+        _uploadBtn.layer.cornerRadius=(_uploadBtn.frame.size.width)/2;
+        _uploadBtn.layer.borderWidth=0;
+        _uploadBtn.layer.borderColor=ZY_UIBASECOLOR.CGColor;
         
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cellHeight*2+20, 0, 200, _cellHeight*2)];
         
@@ -358,7 +363,7 @@
         textLabel.textColor = [UIColor grayColor];
         textLabel.font = [UIFont systemFontOfSize:18];
         [cell addSubview:textLabel];
-        [cell addSubview:uploadBtn];
+        [cell addSubview:_uploadBtn];
     }else if(indexPath.row == 1){
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,120, _cellHeight)];
         titleField = [[UITextField alloc]init];
@@ -390,7 +395,7 @@
             NSInteger y = [temp year];
             NSInteger m = [temp month];
             NSInteger d = [temp day];
-            NSString *timeStr = [NSString stringWithFormat:@"%2ld-%2ld-%2ld",(long)y,(long)m,d];
+            NSString *timeStr = [NSString stringWithFormat:@"%02ld-%02ld-%02ld",(long)y,(long)m,d];
             field.text =timeStr;
             
         }
@@ -789,6 +794,9 @@
     [cropperViewController dismissViewControllerAnimated:YES completion:^{
         // TO DO
         [self saveImage:editedImage withName:@"avatar.jpg"];
+        
+        [_uploadBtn setImage:editedImage forState:UIControlStateNormal];
+        
         
         NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"avatar.jpg"];
         NSLog(@"选择完成");

@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIDefine.h"
 #import "DataProvider.h"
-
+#import "ChatlistViewController.h"
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
     DataProvider *dataProvider;
@@ -254,7 +254,19 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
     if(indexPath.section == 2){
-        self.tabBarController.selectedIndex = 1;
+    //    self.tabBarController.selectedIndex = 1;
+        
+//        ChatlistViewController *chatListViewController = [[ChatlistViewController alloc]init];
+//        chatListViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//        UINavigationController *chatListVCNav = [[UINavigationController alloc] initWithRootViewController:chatListViewController];
+//        chatListViewController.automaticallyAdjustsScrollViewInsets = NO;
+//        chatListViewController.hidesBottomBarWhenPushed = YES;
+//        chatListVCNav.navigationBar.hidden = YES;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+//        
+//        [self.navigationController pushViewController:chatListViewController animated:YES];
+        
+     //    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
         
 //        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setSelectTableBarIndex" object:nil userInfo:[NSDictionary dictionaryWithObject:@"1" forKey:@"index"]];

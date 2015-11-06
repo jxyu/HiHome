@@ -240,7 +240,7 @@
     [self.window makeKeyAndVisible];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setSelectTableBarIndex:) name:@"setSelectTableBarIndex" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootView:) name:@"changeRootView" object:nil];
 #else
     if(self.window == nil)

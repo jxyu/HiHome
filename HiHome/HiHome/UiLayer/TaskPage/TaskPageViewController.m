@@ -1443,7 +1443,7 @@
             cell.mName.text = anniversaryValue.title;
             
            
-            cell.mDate.text = anniversaryValue.date;
+            cell.mDate.text = [anniversaryValue.date substringToIndex:10];
             NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,anniversaryValue.headImgSrc];
             NSLog(@"img url = [%@]",url);
             

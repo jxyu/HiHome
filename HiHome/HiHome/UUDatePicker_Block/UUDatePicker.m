@@ -433,86 +433,122 @@
     UIColor *textColor = [UIColor blackColor];
     NSString *title;
     
-    if(row>=dayArray.count)//防止在重设大小限制时，row计算错误导致dayarray访问越界而崩溃
-        goto end;
-    
-    switch (self.datePickerStyle) {
-        case UUDateStyle_YearMonthDayHourMinute:{
-            if (component==0) {
-                title = yearArray[row];
-                textColor = [self returnYearColorRow:row];
+    @try {
+        switch (self.datePickerStyle) {
+            case UUDateStyle_YearMonthDayHourMinute:{
+                if (component==0) {
+                    if(row>=yearArray.count)
+                        goto end;
+                    title = yearArray[row];
+                    textColor = [self returnYearColorRow:row];
+                }
+                if (component==1) {
+                    if(row>=monthArray.count)
+                        goto end;
+                    title = monthArray[row];
+                    textColor = [self returnMonthColorRow:row];
+                }
+                if (component==2) {
+                    
+                    if(row>=dayArray.count)//防止在重设大小限制时，row计算错误导致dayarray访问越界而崩溃
+                        goto end;
+                    title = dayArray[row];
+                    textColor = [self returnDayColorRow:row];
+                }
+                if (component==3) {
+                    if(row>=hourArray.count)
+                        goto end;
+                    title = hourArray[row];
+                    textColor = [self returnHourColorRow:row];
+                }
+                if (component==4) {
+                    if(row>=minuteArray.count)
+                        goto end;
+                    title = minuteArray[row];
+                    textColor = [self returnMinuteColorRow:row];
+                }
             }
-            if (component==1) {
-                title = monthArray[row];
-                textColor = [self returnMonthColorRow:row];
+                break;
+                
+                
+            case UUDateStyle_YearMonthDay:{
+                if (component==0) {
+                    if(row>=yearArray.count)
+                        goto end;
+                    title = yearArray[row];
+                    textColor = [self returnYearColorRow:row];
+                }
+                if (component==1) {
+                    if(row>=monthArray.count)
+                        goto end;
+                    title = monthArray[row];
+                    textColor = [self returnMonthColorRow:row];
+                }
+                if (component==2) {
+                    if(row>=dayArray.count)
+                        goto end;
+                    title = dayArray[row];
+                    textColor = [self returnDayColorRow:row];
+                }
             }
-            if (component==2) {
-                title = dayArray[row];
-                textColor = [self returnDayColorRow:row];
+                break;
+                
+            case UUDateStyle_MonthDayHourMinute:{
+                if (component==0) {
+                    if(row>=monthArray.count)
+                        goto end;
+                    title = monthArray[row];
+                    textColor = [self returnMonthColorRow:row];
+                }
+                if (component==1) {
+                    if(row>=dayArray.count)
+                        goto end;
+                    title = dayArray[row];
+                    textColor = [self returnDayColorRow:row];
+                }
+                if (component==2) {
+                    if(row>=hourArray.count)
+                        goto end;
+                    title = hourArray[row];
+                    textColor = [self returnHourColorRow:row];
+                }
+                if (component==3) {
+                    if(row>=minuteArray.count)
+                        goto end;
+                    title = minuteArray[row];
+                    textColor = [self returnMinuteColorRow:row];
+                }
             }
-            if (component==3) {
-                title = hourArray[row];
-                textColor = [self returnHourColorRow:row];
+                break;
+                
+            case UUDateStyle_HourMinute:{
+                if (component==0) {
+                    if(row>=hourArray.count)
+                        goto end;
+                    title = hourArray[row];
+                    textColor = [self returnHourColorRow:row];
+                }
+                if (component==1) {
+                    if(row>=minuteArray.count)
+                        goto end;
+                    title = minuteArray[row];
+                    textColor = [self returnMinuteColorRow:row];
+                }
             }
-            if (component==4) {
-                title = minuteArray[row];
-                textColor = [self returnMinuteColorRow:row];
-            }
+                break;
+            default:
+                break;
         }
-            break;
-            
-            
-        case UUDateStyle_YearMonthDay:{
-            if (component==0) {
-                title = yearArray[row];
-                textColor = [self returnYearColorRow:row];
-            }
-            if (component==1) {
-                title = monthArray[row];
-                textColor = [self returnMonthColorRow:row];
-            }
-            if (component==2) {
-                title = dayArray[row];
-                textColor = [self returnDayColorRow:row];
-            }
-        }
-            break;
-            
-        case UUDateStyle_MonthDayHourMinute:{
-            if (component==0) {
-                title = monthArray[row];
-                textColor = [self returnMonthColorRow:row];
-            }
-            if (component==1) {
-                title = dayArray[row];
-                textColor = [self returnDayColorRow:row];
-            }
-            if (component==2) {
-                title = hourArray[row];
-                textColor = [self returnHourColorRow:row];
-            }
-            if (component==3) {
-                title = minuteArray[row];
-                textColor = [self returnMinuteColorRow:row];
-            }
-        }
-            break;
-            
-        case UUDateStyle_HourMinute:{
-            if (component==0) {
-                title = hourArray[row];
-                textColor = [self returnHourColorRow:row];
-            }
-            if (component==1) {
-                title = minuteArray[row];
-                textColor = [self returnMinuteColorRow:row];
-            }
-        }
-            break;
-        default:
-            break;
+
     }
-end:
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+    
+   end:
     customLabel.text = title;
     customLabel.textColor = textColor;
     return customLabel;

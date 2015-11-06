@@ -155,8 +155,9 @@
         cell = [nib objectAtIndex:0];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    cell.mHeadImage.image = [UIImage imageNamed:@"headImg.png"];
+    NSString *avatar = [searchFriendArray[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"avatar"];
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+    [cell.mHeadImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
     cell.mName.text = [searchFriendArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchFriendArray[indexPath.row][@"nick"];
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )

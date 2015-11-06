@@ -19,6 +19,7 @@
 
 #import "CalendarViewController.h"
 #import "ChatlistViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define tabBarButtonNum 4
 
@@ -28,6 +29,7 @@
     UIButton *_btnSelected;
     UIView *_tabBarBG;
     UIButton *btnTabBar;
+    NSUserDefaults *mUserDefault;
 }
 @end
 
@@ -47,6 +49,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setHeadImg) name:@"setHeadImg" object:nil];
     //隐藏系统tabbar
     self.tabBar.hidden = YES;
     self.hidesBottomBarWhenPushed = YES;
@@ -72,7 +76,15 @@
         self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.leftBtn.frame = CGRectMake(20, 20, 44, 44);
         [self.leftBtn addTarget:self action:@selector(clicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.leftBtn setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
+        self.leftBtn.layer.masksToBounds=YES;
+        self.leftBtn.layer.cornerRadius=(self.leftBtn.frame.size.width)/2;
+        self.leftBtn.layer.borderWidth=0.5;
+        self.leftBtn.layer.borderColor=ZY_UIBASECOLOR.CGColor;
+        UIImageView *mImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.leftBtn.frame.size.width, self.leftBtn.frame.size.height)];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[mUserDefault valueForKey:@"avatar"]];
+        [mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        [self.leftBtn addSubview:mImageView];
+        //[self.leftBtn setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
         UIBarButtonItem *barLeftBtn = [[UIBarButtonItem alloc]initWithCustomView:self.leftBtn];
         [self.navigationItem setLeftBarButtonItem:barLeftBtn];
         
@@ -333,6 +345,13 @@
 - (void)goToHomePage
 {
     [self setSelectedIndex:0];
+}
+
+-(void)setHeadImg{
+    UIImageView *mImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.leftBtn.frame.size.width, self.leftBtn.frame.size.height)];
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[mUserDefault valueForKey:@"avatar"]];
+    [mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+    [self.leftBtn addSubview:mImageView];
 }
 
 - (void)didReceiveMemoryWarning

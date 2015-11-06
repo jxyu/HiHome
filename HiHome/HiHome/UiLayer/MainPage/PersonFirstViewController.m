@@ -63,7 +63,7 @@
 }
 
 -(void)initData{
-    
+    [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
     [dataProvider GetUserInfoWithUid:[self getUserID]];
@@ -71,6 +71,7 @@
 
 -(void)GetInfoBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
@@ -124,7 +125,6 @@
         NSString *avatar = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
         
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
-        NSLog(@"%@",url);
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, mHeadImg.frame.size.width, mHeadImg.frame.size.height)];
         [imgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
         [mHeadImg addSubview:imgView];
@@ -534,6 +534,7 @@
 
 -(void)btnEditInfo:(id)sender{
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+    userInfoVC.mHeadImg = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
     userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
     userInfoVC.mAge = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];

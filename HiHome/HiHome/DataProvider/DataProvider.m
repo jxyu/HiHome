@@ -31,6 +31,8 @@
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=modAvatar",Url];
         NSDictionary *prm = @{@"id":uid,@"imgsrc":imgsrc};
         [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
     }
 }
 
@@ -339,6 +341,8 @@
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=public&a=upload",Url];
         NSDictionary * prm=@{@"name":@"imgsrc"};
         [self ShowOrderuploadImageWithImage:imagedata andurl:url andprm:prm];
+    }else{
+        [SVProgressHUD dismiss];
     }
     
 }
@@ -444,6 +448,8 @@
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
         NSDictionary * prm=@{@"id":uid};
         [self GetRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
     }
 }
 
@@ -454,9 +460,6 @@
         [self PostRequest:url andpram:prm];
     }
 }
-
-
-
 
 -(void)GetTaskCalender:(NSString *)uid
 {

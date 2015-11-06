@@ -266,6 +266,9 @@
         _taskNoticeVC.navTitle = @"任务提醒";
         _taskNoticeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:_taskNoticeVC animated:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }
 }
 

@@ -342,6 +342,7 @@
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
         personFirstVC.mFriendID = [friendArraySpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [friendArraySpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"avatar"];
         personFirstVC.mName = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
         personFirstVC.mSex = [friendArraySpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"sex"];
         personFirstVC.mAge = [friendArraySpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"age"];
@@ -356,6 +357,7 @@
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
         personFirstVC.mFriendID = [friendArrayStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [friendArrayStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"avatar"];
         personFirstVC.mName = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
         personFirstVC.mSex = [friendArrayStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"sex"];
         personFirstVC.mAge = [friendArrayStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"age"];
@@ -370,6 +372,7 @@
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
         personFirstVC.mFriendID = [friendArrayNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [friendArrayNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"avatar"];
         personFirstVC.mName = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
         personFirstVC.mSex = [friendArrayNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"sex"];
         personFirstVC.mAge = [friendArrayNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"age"];

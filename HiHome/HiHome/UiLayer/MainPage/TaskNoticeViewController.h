@@ -11,6 +11,6 @@
 #import "TaskNoticeTableViewCell.h"
 #import "SelectTaskNoticeCell.h"
 
-@interface TaskNoticeViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource>
+@interface TaskNoticeViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 @end

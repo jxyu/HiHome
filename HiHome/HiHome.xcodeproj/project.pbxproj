@@ -295,6 +295,8 @@
 		B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF31BD4D17000A1078F /* TaskNoticeViewController.xib */; };
 		B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */; };
 		B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */; };
+		B7D661661BED92DD00A65860 /* PersonSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D661641BED92DD00A65860 /* PersonSecondViewController.m */; };
+		B7D661671BED92DD00A65860 /* PersonSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */; };
 		B7EE4F601BE703130077BECA /* AddressLocalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */; };
 		B7EE4F611BE703130077BECA /* AddressLocalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */; };
 		B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FB16761BDB65510048551C /* SelectContacterViewController.m */; };
@@ -786,6 +788,9 @@
 		B7CC5AF61BD4D5E400A1078F /* SelectTaskNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectTaskNoticeCell.h; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.h; sourceTree = SOURCE_ROOT; };
 		B7CC5AF71BD4D5E400A1078F /* SelectTaskNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectTaskNoticeCell.m; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.m; sourceTree = SOURCE_ROOT; };
 		B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectTaskNoticeCell.xib; path = HiHome/UiLayer/MainPage/SelectTaskNoticeCell.xib; sourceTree = SOURCE_ROOT; };
+		B7D661631BED92DD00A65860 /* PersonSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSecondViewController.h; path = HiHome/UiLayer/MainPage/PersonSecondViewController.h; sourceTree = SOURCE_ROOT; };
+		B7D661641BED92DD00A65860 /* PersonSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSecondViewController.m; path = HiHome/UiLayer/MainPage/PersonSecondViewController.m; sourceTree = SOURCE_ROOT; };
+		B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonSecondViewController.xib; path = HiHome/UiLayer/MainPage/PersonSecondViewController.xib; sourceTree = SOURCE_ROOT; };
 		B7EE4F5D1BE703130077BECA /* AddressLocalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalCell.h; sourceTree = "<group>"; };
 		B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressLocalCell.m; sourceTree = "<group>"; };
 		B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressLocalCell.xib; sourceTree = "<group>"; };
@@ -1918,6 +1923,9 @@
 				B7942BA01BD882CA007D6F17 /* PersonFirstViewController.h */,
 				B7942BA11BD882CA007D6F17 /* PersonFirstViewController.m */,
 				B7942BA21BD882CA007D6F17 /* PersonFirstViewController.xib */,
+				B7D661631BED92DD00A65860 /* PersonSecondViewController.h */,
+				B7D661641BED92DD00A65860 /* PersonSecondViewController.m */,
+				B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */,
 				80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */,
 				80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */,
 				80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */,
@@ -2144,6 +2152,7 @@
 				B78E4A441BD9FAA800F23976 /* AddFriendFirstViewController.xib in Resources */,
 				B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */,
 				B57F5D8D1BBA8399009AC336 /* password@2x.png in Resources */,
+				B7D661671BED92DD00A65860 /* PersonSecondViewController.xib in Resources */,
 				B58DD96A1BB687A90040A084 /* addtask@2x.png in Resources */,
 				B5033BE61BAFB41F0014935E /* ChatPageViewController.xib in Resources */,
 				B783D0151BE0D05D00052792 /* MarkFriendViewController.xib in Resources */,
@@ -2333,6 +2342,7 @@
 				B7CC5AF91BD4D5E400A1078F /* SelectTaskNoticeCell.m in Sources */,
 				B5E059E01BB146E100DBF786 /* WMOtherViewController.m in Sources */,
 				B52102C21BE0AC2400C981B4 /* taskerCollectionViewCell.m in Sources */,
+				B7D661661BED92DD00A65860 /* PersonSecondViewController.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
 				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,

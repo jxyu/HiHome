@@ -8,7 +8,7 @@
 
 #import "PersonFirstViewController.h"
 #import "UIImage+WM.h"
-#import "UserInfoViewController.h"
+#import "PersonSecondViewController.h"
 #import "DataProvider.h"
 #import "MarkFriendViewController.h"
 #import "ChatContentViewController.h"
@@ -538,7 +538,8 @@
 
 
 -(void)btnEditInfo:(id)sender{
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+    PersonSecondViewController *userInfoVC = [[PersonSecondViewController alloc] init];
+    userInfoVC.navTitle = @"个人资料";
     userInfoVC.mHeadImg = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
     userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];

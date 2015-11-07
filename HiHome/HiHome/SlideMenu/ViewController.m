@@ -196,6 +196,8 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     else if([str isEqualToString:@"NO"])
     {
         [self.homeVC showTabBar];
+    }else{
+        [self.homeVC showTabBar];
     }
 
 }

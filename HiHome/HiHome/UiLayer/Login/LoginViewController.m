@@ -439,6 +439,9 @@
     
     //获取左侧栏用户信息
     [[NSNotificationCenter defaultCenter] postNotificationName:@"getUserInfo" object:nil];
+    
+    //设置显示/隐藏tabbar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
 }
 
 -(void)tempClick:(id)sender

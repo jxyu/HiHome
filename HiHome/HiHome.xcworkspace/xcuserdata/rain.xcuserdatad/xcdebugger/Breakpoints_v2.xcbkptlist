@@ -655,7 +655,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
             endingLineNumber = "292"
-            landmarkName = "-hideLeftBtn:"
+            landmarkName = "-viewDidDisappear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -671,7 +671,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
             endingLineNumber = "269"
-            landmarkName = "-clicked"
+            landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -703,7 +703,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "236"
             endingLineNumber = "236"
-            landmarkName = "-viewDidAppear:"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -714,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "468405321.107577"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "-didSelectItem:"
             landmarkType = "5">
          </BreakpointContent>
@@ -810,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "468405321.107577"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "-didSelectItem:"
             landmarkType = "5">
          </BreakpointContent>
@@ -826,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "468405321.107577"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "-didSelectItem:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2824,11 +2824,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "467805378.069293"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3016,11 +3016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "467865468.359619"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4152,11 +4152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "496"
-            endingLineNumber = "496"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4168,11 +4168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "500"
-            endingLineNumber = "500"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4184,11 +4184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "-registerInterfaceBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4200,11 +4200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
+            startingLineNumber = "526"
+            endingLineNumber = "526"
             landmarkName = "-registerInterface"
             landmarkType = "5">
          </BreakpointContent>
@@ -4248,11 +4248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "528"
+            endingLineNumber = "528"
             landmarkName = "-registerInterface"
             landmarkType = "5">
          </BreakpointContent>
@@ -4296,11 +4296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "534"
-            endingLineNumber = "534"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
             landmarkName = "-registerInterfaceBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4328,11 +4328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "535"
+            endingLineNumber = "535"
             landmarkName = "-registerInterfaceBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4808,11 +4808,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "-QQLogin:"
             landmarkType = "5">
             <Locations>
@@ -4856,11 +4856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4888,11 +4888,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4904,11 +4904,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "513"
-            endingLineNumber = "513"
+            startingLineNumber = "516"
+            endingLineNumber = "516"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4920,11 +4920,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "517"
-            endingLineNumber = "517"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
             landmarkName = "-weChatLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4936,11 +4936,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "-QQLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4952,11 +4952,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/Login/LoginViewController.m"
-            timestampString = "468473642.372446"
+            timestampString = "468568528.621776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
+            startingLineNumber = "533"
+            endingLineNumber = "533"
             landmarkName = "-registerInterfaceBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5016,11 +5016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "468402196.130315"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "-tempSwip"
             landmarkType = "5">
          </BreakpointContent>
@@ -5032,11 +5032,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/SlideMenu/ViewController.m"
-            timestampString = "468405321.107577"
+            timestampString = "468568908.368266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "-handlePan:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5389,7 +5389,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "351"
             endingLineNumber = "351"
-            landmarkName = "-hideCustomTabBar"
+            landmarkName = "-onTabButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5710,6 +5710,22 @@
             startingLineNumber = "67"
             endingLineNumber = "67"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/SlideMenu/ViewController.m"
+            timestampString = "468567899.060471"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "-setHideTabBar:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

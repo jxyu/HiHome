@@ -9,9 +9,12 @@
 #import "HelpAndFeedbackViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
+#import "DataProvider.h"
 
 
-@interface HelpAndFeedbackViewController ()
+@interface HelpAndFeedbackViewController (){
+    DataProvider *mDataProvider;
+}
 
 @end
 
@@ -21,6 +24,7 @@
     [super viewDidLoad];
     
     _cellHeight = 50;//self.view.frame.size.height/11;
+    [self.mBtnRight setTitle:@"提交" forState:UIControlStateNormal];
     _keyShow = false;
     [self initViews];
     
@@ -110,7 +114,7 @@
     _cellCount = 3;
     _cellTextViewHeight = SCREEN_HEIGHT - 2*_cellHeight - 64;
     
-    _keyHeight = 216;//default
+    _keyHeight = 252;//216;//default
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
     [self.view addGestureRecognizer:tapGesture];
@@ -212,7 +216,7 @@
     if(_keyShow)
     {
         NSLog(@"move up");
-        rect.size.height = self.view.frame.size.height -ZY_HEADVIEW_HEIGHT -_keyHeight;
+        rect.size.height = SCREEN_HEIGHT -ZY_HEADVIEW_HEIGHT -_keyHeight;//64--216 == 288
         _mainTableView.frame = rect;
         
     }
@@ -424,8 +428,6 @@
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSUInteger row = [indexPath row];
-    
     return indexPath;
     
 }
@@ -482,14 +484,60 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+//重写退出页面方法
+-(void)quitView{
+    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0)
+    {
+        [self popoverPresentationController];
+    }
+    
+    [self tapViewAction:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
 }
-*/
+
+//提交
+-(void)btnRightClick:(id)sender{
+    NSString *mTitle = _titleField.text;
+    NSString *mContent = _textView.text;
+    if ([mTitle isEqual:@""]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写标题~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return;
+    }
+    if ([mContent isEqual:@""]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写内容~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return;
+    }
+    mDataProvider = [[DataProvider alloc] init];
+    [mDataProvider setDelegateObject:self setBackFunctionName:@"saveInfoBackCall:"];
+    [mDataProvider HelpAndFeedbackSave:[self getUserID] andTitle:mTitle andContent:mContent];
+}
+
+-(void)saveInfoBackCall:(id)dict{
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        _titleField.text = @"";
+        _textView.text = @"";
+        [self quitView];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
+}
 
 @end

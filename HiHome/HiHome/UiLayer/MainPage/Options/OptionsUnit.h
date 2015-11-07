@@ -15,5 +15,6 @@
 #import "ChatLogViewController.h"
 #import "HelpAndFeedbackViewController.h"
 #import "TextViewController.h"
+#import "FunctionDescViewController.h"
 
 #endif /* OptionsUnit_h */

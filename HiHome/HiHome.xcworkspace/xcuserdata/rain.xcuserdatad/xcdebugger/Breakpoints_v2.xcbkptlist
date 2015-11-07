@@ -367,7 +367,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "511"
             endingLineNumber = "511"
-            landmarkName = "-addLabelViewsForCell3"
+            landmarkName = "-addImgViewsForCell3"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -383,8 +383,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "276"
             endingLineNumber = "276"
-            landmarkName = "@implementation MainPageViewController"
-            landmarkType = "3">
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466997164.658931"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "-keyboardDidShow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -442,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466997164.658931"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "-keyboardDidHidden"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466998315.700108"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -474,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466997164.658931"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "-initViews"
             landmarkType = "5">
          </BreakpointContent>
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466997164.658931"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "-initViews"
             landmarkType = "5">
          </BreakpointContent>
@@ -506,29 +506,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466998315.700108"
+            timestampString = "468573952.300394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
-            timestampString = "466998315.700108"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
-            landmarkName = "@implementation HelpAndFeedbackViewController"
-            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -586,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "@implementation DataProvider"
             landmarkType = "3">
          </BreakpointContent>
@@ -970,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "-getAnniversaryList:andNowPage:andPerPage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1082,11 +1066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468222059.163576"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "-headerView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1098,11 +1082,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1114,11 +1098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "-initData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1162,11 +1146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468222059.163576"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
             landmarkName = "-addFriendEvent:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1226,11 +1210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "-GetToken:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1306,11 +1290,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "-addFriend:andUserID:andRemark:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1322,11 +1306,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-addFriend:andUserID:andRemark:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1386,11 +1370,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
             landmarkName = "-getFriendApplyList:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1418,12 +1402,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
-            landmarkName = "-accessApplyFriend:andStatus:"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
+            landmarkName = "-delApplyFriend:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1482,11 +1466,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468222059.163576"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1498,11 +1482,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468140105.784034"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1514,11 +1498,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468222059.163576"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1530,11 +1514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "-initData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1546,11 +1530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1578,11 +1562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
             landmarkName = "-getFriendInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1610,11 +1594,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1626,11 +1610,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468143400.509533"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1642,27 +1626,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468222059.163576"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
-            landmarkName = "-tableView:numberOfRowsInSection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468470179.695569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1738,11 +1706,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1882,11 +1850,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
             landmarkName = "-delFriendBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1994,11 +1962,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
             landmarkName = "-delAnniversary:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2042,11 +2010,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "-delFriendBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2122,11 +2090,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "-getWeatherInfo:withHttpArg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2186,11 +2154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-updateTask:andTitle:andContent:andIsDay:andStartTime:andEndTime:andTip:andRepeat:andTasker:andimgsrc1:andimgsrc2:andimgsrc3:andAddress:andLng:andLat:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2202,11 +2170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "-getReceiveTask:andState:andMyOrNot:andPage:andPerPage:andDate:andStartDate:andEndDate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2298,12 +2266,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
-            landmarkName = "-getFriendApplyList:"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "-addFriend:andUserID:andRemark:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2442,11 +2410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468470179.695569"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2490,11 +2458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
             landmarkName = "-delFriend:andUserID:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2698,11 +2666,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
             landmarkName = "-delApplyFriend:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3384,11 +3352,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "@implementation DataProvider"
             landmarkType = "3">
          </BreakpointContent>
@@ -3560,11 +3528,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "-tableView:canMoveRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3576,11 +3544,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
             landmarkName = "-tableView:editingStyleForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3592,11 +3560,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "417"
+            endingLineNumber = "417"
             landmarkName = "-tableView:canEditRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3608,11 +3576,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468141711.918831"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "-friendListBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3640,11 +3608,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
             landmarkName = "-didGetFriendInfoClick"
             landmarkType = "5">
          </BreakpointContent>
@@ -3656,11 +3624,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
             landmarkName = "-didGetFriendInfoClick"
             landmarkType = "5">
          </BreakpointContent>
@@ -3672,11 +3640,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481928.155582"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "583"
+            endingLineNumber = "583"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4136,11 +4104,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466720.806961"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "-GetUserInfoWithUid:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4216,11 +4184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "-RegisterUserInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4232,11 +4200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "-RegisterUserInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4264,11 +4232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468235968.276881"
+            timestampString = "468582395.404106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "-getUserID"
             landmarkType = "5">
          </BreakpointContent>
@@ -4344,11 +4312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-Login:andpwd:andreferrer:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5208,11 +5176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468466638.376969"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "-UploadImgWithImgdataSlider:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5256,12 +5224,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468467934.118425"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "457"
-            endingLineNumber = "457"
-            landmarkName = "-SaveUserInfo:andNick:andSex:andAge:andSign:"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
+            landmarkName = "-GetUserInfoWithUid:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5416,11 +5384,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
-            timestampString = "468481817.523248"
+            timestampString = "468582956.040324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5512,11 +5480,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/DataProvider/DataProvider.m"
-            timestampString = "468484376.726233"
+            timestampString = "468577709.103935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
+            startingLineNumber = "446"
+            endingLineNumber = "446"
             landmarkName = "-ChangeTaskState:andState:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5726,6 +5694,118 @@
             startingLineNumber = "191"
             endingLineNumber = "191"
             landmarkName = "-setHideTabBar:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-keyboardDidShow:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "-setViewMove"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-keyboardDidShow:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-initViews"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "-setViewMove"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/MainPage/Options/HelpAndFeedbackViewController.m"
+            timestampString = "468573952.300394"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "489"
+            endingLineNumber = "489"
+            landmarkName = "-quitView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/AddressPage/AddressPageViewController.m"
+            timestampString = "468582421.592921"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

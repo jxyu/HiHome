@@ -26,5 +26,6 @@
     SoundSetViewController *_soundsetViewCtl;
     ChatLogViewController *_chatLogViewCtl;
     HelpAndFeedbackViewController *_helpAndFeedBackViewCtl;
+    FunctionDescViewController *_functionDescVC;
 }
 @end

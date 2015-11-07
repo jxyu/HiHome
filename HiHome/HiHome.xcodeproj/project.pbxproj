@@ -298,6 +298,9 @@
 		B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */; };
 		B7D661661BED92DD00A65860 /* PersonSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D661641BED92DD00A65860 /* PersonSecondViewController.m */; };
 		B7D661671BED92DD00A65860 /* PersonSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */; };
+		B7D6616B1BEDE74B00A65860 /* FunctionDescViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */; };
+		B7D6616C1BEDE74B00A65860 /* FunctionDescViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */; };
+		B7D6616F1BEDF06C00A65860 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D6616E1BEDF06C00A65860 /* GTMBase64.m */; };
 		B7EE4F601BE703130077BECA /* AddressLocalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */; };
 		B7EE4F611BE703130077BECA /* AddressLocalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */; };
 		B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FB16761BDB65510048551C /* SelectContacterViewController.m */; };
@@ -794,6 +797,11 @@
 		B7D661631BED92DD00A65860 /* PersonSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSecondViewController.h; path = HiHome/UiLayer/MainPage/PersonSecondViewController.h; sourceTree = SOURCE_ROOT; };
 		B7D661641BED92DD00A65860 /* PersonSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSecondViewController.m; path = HiHome/UiLayer/MainPage/PersonSecondViewController.m; sourceTree = SOURCE_ROOT; };
 		B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonSecondViewController.xib; path = HiHome/UiLayer/MainPage/PersonSecondViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7D661681BEDE74B00A65860 /* FunctionDescViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionDescViewController.h; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.h; sourceTree = SOURCE_ROOT; };
+		B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionDescViewController.m; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.m; sourceTree = SOURCE_ROOT; };
+		B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FunctionDescViewController.xib; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7D6616D1BEDF06C00A65860 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		B7D6616E1BEDF06C00A65860 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		B7EE4F5D1BE703130077BECA /* AddressLocalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalCell.h; sourceTree = "<group>"; };
 		B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressLocalCell.m; sourceTree = "<group>"; };
 		B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressLocalCell.xib; sourceTree = "<group>"; };
@@ -1523,6 +1531,9 @@
 				B5879D691BC746A0003AACFA /* TextViewController.m */,
 				B5879D6B1BC747ED003AACFA /* OptionTextViewController.h */,
 				B5879D6C1BC747ED003AACFA /* OptionTextViewController.m */,
+				B7D661681BEDE74B00A65860 /* FunctionDescViewController.h */,
+				B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */,
+				B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -1779,6 +1790,8 @@
 		B5E059A01BB0F93200DBF786 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B7D6616D1BEDF06C00A65860 /* GTMBase64.h */,
+				B7D6616E1BEDF06C00A65860 /* GTMBase64.m */,
 				B5E059A11BB0F93200DBF786 /* CommenDef.h */,
 				B5E059A21BB0F93200DBF786 /* Toolkit.h */,
 				B5E059A31BB0F93200DBF786 /* Toolkit.m */,
@@ -2198,6 +2211,7 @@
 				80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */,
 				B58DD9501BB61F0A0040A084 /* set@2x.png in Resources */,
 				B587FF1B1BC8BDA600E9F119 /* fristPic@2x.png in Resources */,
+				B7D6616C1BEDE74B00A65860 /* FunctionDescViewController.xib in Resources */,
 				8018388F1BDDD5010046B814 /* PushConfig.plist in Resources */,
 				802306B31BD4ED66006CFFEC /* SMS_SDKLocalizable.strings in Resources */,
 				B581960E1BCB906400D69A1E /* UploadPicViewController.xib in Resources */,
@@ -2369,6 +2383,7 @@
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
+				B7D6616B1BEDE74B00A65860 /* FunctionDescViewController.m in Sources */,
 				B5C60C311BE303C2005DE72A /* TempCustomButton.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
@@ -2394,6 +2409,7 @@
 				B5033BEF1BAFB46C0014935E /* MainPageViewController.m in Sources */,
 				80124C051BD885E800DBE369 /* SDWebImageDecoder.m in Sources */,
 				80124C0B1BD885E800DBE369 /* UIImage+GIF.m in Sources */,
+				B7D6616F1BEDF06C00A65860 /* GTMBase64.m in Sources */,
 				B5E059A61BB0F93200DBF786 /* Toolkit.m in Sources */,
 				B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */,
 				80124C0A1BD885E800DBE369 /* UIButton+WebCache.m in Sources */,

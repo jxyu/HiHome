@@ -40,6 +40,7 @@
 
 @interface AppDelegate (){
     NSArray *mFriendArray;
+    NSUserDefaults *mUserDefault;
 }
 
 @end
@@ -349,7 +350,14 @@
     RCUserInfo *user = [[RCUserInfo alloc]init];
     user.userId = userId;
     user.name = @"匿名";
-    //user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    NSString *avatar = [mUserDefault valueForKey:@"avatar"];
+    if ([avatar isEqual:@""]) {
+        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    }else{
+        user.portraitUri = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+    }
+    
     for (int i = 0; i < mFriendArray.count; i++) {
         if ([[mFriendArray[i] objectForKey:@"fid"] isEqual:userId]) {
             user.name = [[mFriendArray[i] objectForKey:@"nick"] isEqual:[NSNull null]]?@"匿名":[mFriendArray[i] objectForKey:@"nick"];

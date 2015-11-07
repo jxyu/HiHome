@@ -10,7 +10,6 @@
 #import "AddressLocalCell.h"
 #import "AppDelegate.h"
 #import "CommenDef.h"
-#import "UserInfoViewController.h"
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
 #import "UMSocial.h"

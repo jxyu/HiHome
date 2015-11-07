@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "571"
             endingLineNumber = "571"
-            landmarkName = "-numberOfSectionsInTableView:"
+            landmarkName = "-setLoadDefaultPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "468397791.370283"
+            timestampString = "468552563.468699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "742"
-            endingLineNumber = "742"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "761"
+            endingLineNumber = "761"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -682,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
             landmarkName = "-ClickBtn"
             landmarkType = "5">
          </BreakpointContent>
@@ -1146,13 +1146,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/CreateTask/CreateTaskViewController.m"
-            timestampString = "468397791.370283"
+            timestampString = "468552563.468699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "727"
-            endingLineNumber = "727"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
+            startingLineNumber = "746"
+            endingLineNumber = "746"
+            landmarkName = "@implementation CreateTaskViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1706,11 +1706,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232581.347482"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1791,7 +1791,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "288"
             endingLineNumber = "288"
-            landmarkName = "-getUserID"
+            landmarkName = "-getNoticeDate:andStartTime:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1807,7 +1807,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "281"
             endingLineNumber = "281"
-            landmarkName = "-getUserID"
+            landmarkName = "-getNoticeDate:andStartTime:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1839,7 +1839,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "276"
             endingLineNumber = "276"
-            landmarkName = "-UpdateAndRequest"
+            landmarkName = "-getNoticeDate:andStartTime:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3037,7 +3037,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "578"
             endingLineNumber = "578"
-            landmarkName = "-viewDidAppear:"
+            landmarkName = "-modeValueToStr:andValue:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3688,11 +3688,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
             landmarkName = "-ClickBtn"
             landmarkType = "5">
          </BreakpointContent>
@@ -3704,11 +3704,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "-changeRootView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3720,11 +3720,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "-changeRootView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3736,11 +3736,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "-getTokenEvent"
             landmarkType = "5">
          </BreakpointContent>
@@ -3752,11 +3752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "-changeRootView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3816,11 +3816,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "-changeRootView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3896,11 +3896,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "-GetTokenBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3912,11 +3912,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "-GetTokenBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3960,11 +3960,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "-GetTokenBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3976,11 +3976,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "-getUserInfoWithUserId:completion:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3992,11 +3992,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232581.347482"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4040,11 +4040,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232581.347482"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4056,11 +4056,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4088,11 +4088,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468232876.562444"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "-GetTokenBackCall:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5592,11 +5592,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468488013.395649"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "-ClickBtn"
             landmarkType = "5">
          </BreakpointContent>
@@ -5624,11 +5624,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/AppDelegate.m"
-            timestampString = "468488578.266463"
+            timestampString = "468552967.973133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "-changeRootView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5662,6 +5662,38 @@
             startingLineNumber = "300"
             endingLineNumber = "300"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/AppDelegate.m"
+            timestampString = "468552967.973133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "-getUserInfoWithUserId:completion:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/Login/LoginViewController.m"
+            timestampString = "468551875.583754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "432"
+            endingLineNumber = "432"
+            landmarkName = "-setNotificate"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

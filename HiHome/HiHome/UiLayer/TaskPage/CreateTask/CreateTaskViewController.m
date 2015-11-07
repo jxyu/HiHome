@@ -21,7 +21,7 @@
 #import "SVProgressHUD.h"
 #import "UIImageView+WebCache.h"
 
-@interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@interface CreateTaskViewController ()<JKImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,SelectContacterViewControllerDelegate>
 {
     
     NSMutableArray *_startDateArray;
@@ -683,13 +683,31 @@
 -(void)viewDidAppear:(BOOL)animated
 {
   // remindStr = _remindViewCtl.remindModeStr;
-    for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
+//    for (int i = 0; i < selectContacterVC.selectContacterArrayID.count; i++) {
+//        if (i == 0) {
+//            titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
+//            taskUserID = selectContacterVC.selectContacterArrayID[i];
+//        }else{
+//            titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterVC.selectContacterArrayName[i]];
+//            taskUserID = [NSString stringWithFormat:@"%@,%@",taskUserID,selectContacterVC.selectContacterArrayID[i]];
+//        }
+//    }
+//    
+//    _mLag = _addressVC.mLag;
+//    _mLong = _addressVC.mLong;
+//    _mAddress = _addressVC.mAddress;
+}
+
+-(void)setContacterInfo:(NSArray *)selectContacterArrayID andName:(NSArray *)selectContacterArrayName
+{
+    
+    for (int i = 0; i < selectContacterArrayID.count; i++) {
         if (i == 0) {
-            titleField.text = [NSString stringWithFormat:@"%@",selectContacterVC.selectContacterArrayName[i]];
-            taskUserID = selectContacterVC.selectContacterArrayID[i];
+            titleField.text = [NSString stringWithFormat:@"%@",selectContacterArrayName[i]];
+            taskUserID = selectContacterArrayID[i];
         }else{
-            titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterVC.selectContacterArrayName[i]];
-            taskUserID = [NSString stringWithFormat:@"%@,%@",taskUserID,selectContacterVC.selectContacterArrayID[i]];
+            titleField.text = [NSString stringWithFormat:@"%@,%@",titleField.text,selectContacterArrayName[i]];
+            taskUserID = [NSString stringWithFormat:@"%@,%@",taskUserID,selectContacterArrayID[i]];
         }
     }
     
@@ -697,6 +715,7 @@
     _mLong = _addressVC.mLong;
     _mAddress = _addressVC.mAddress;
 }
+
 
 -(void)tapViewAction:(id)sender
 {
@@ -1416,6 +1435,7 @@
         case ZY_UIBUTTON_TAG_BASE + ZY_CONTACTER_BTN_TAG:
         {
             selectContacterVC = [[SelectContacterViewController alloc] init];
+            selectContacterVC.delegate = self;
             selectContacterVC.navTitle = @"选择执行人";
             //[self presentViewController:selectContacterVC animated:NO completion:nil];
             [self.navigationController pushViewController:selectContacterVC animated:NO];

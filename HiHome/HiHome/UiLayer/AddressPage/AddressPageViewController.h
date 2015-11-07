@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddressLocalViewController.h"
 
-@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
+@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,UISearchBarDelegate>
 {
 @private
     NSInteger _mateCellCount;

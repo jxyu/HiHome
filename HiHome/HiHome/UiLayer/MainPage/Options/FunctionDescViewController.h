@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BackPageViewController.h"
 
-@interface FunctionDescViewController : UIViewController
+@interface FunctionDescViewController : BackPageViewController
 
 @end

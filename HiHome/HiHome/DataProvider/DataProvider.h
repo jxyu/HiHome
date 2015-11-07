@@ -17,6 +17,12 @@
 //修改头像
 -(void)changeHeadImg:(NSString *)uid andImgsrc:(NSString *)imgsrc;
 
+//反馈信息保存
+-(void)HelpAndFeedbackSave:(NSString *)uid andTitle:(NSString *)title andContent:(NSString *)content;
+
+//功能介绍
+-(void)getFunctionDesc;
+
 /**
  *  注册
  *

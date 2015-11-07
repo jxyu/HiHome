@@ -284,8 +284,7 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                  charset:kBase64EncodeChars
                                   padded:YES];
     if (converted) {
-        result = [[[NSString alloc] initWithData:converted
-                                        encoding:NSASCIIStringEncoding] autorelease];
+        result = [[NSString alloc] initWithData:converted encoding:NSASCIIStringEncoding];
     }
     return result;
 }
@@ -297,8 +296,7 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                  charset:kBase64EncodeChars
                                   padded:YES];
     if (converted) {
-        result = [[[NSString alloc] initWithData:converted
-                                        encoding:NSASCIIStringEncoding] autorelease];
+        result = [[NSString alloc] initWithData:converted encoding:NSASCIIStringEncoding];
     }
     return result;
 }
@@ -363,8 +361,8 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                  charset:kWebSafeBase64EncodeChars
                                   padded:padded];
     if (converted) {
-        result = [[[NSString alloc] initWithData:converted
-                                        encoding:NSASCIIStringEncoding] autorelease];
+        result = [[NSString alloc] initWithData:converted
+                                        encoding:NSASCIIStringEncoding];
     }
     return result;
 }
@@ -378,8 +376,8 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                                  charset:kWebSafeBase64EncodeChars
                                   padded:padded];
     if (converted) {
-        result = [[[NSString alloc] initWithData:converted
-                                        encoding:NSASCIIStringEncoding] autorelease];
+        result = [[NSString alloc] initWithData:converted
+                                        encoding:NSASCIIStringEncoding];
     }
     return result;
 }
@@ -401,7 +399,7 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // A new autoreleased NSString with Base64 encoded NSString
 +(NSString *)stringByBase64String:(NSString *)base64String
 {
-    NSString *sourceString = [[[NSString alloc] initWithData:[GTMBase64 decodeData:[base64String dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO]] encoding:NSUTF8StringEncoding] autorelease];
+    NSString *sourceString = [[NSString alloc] initWithData:[GTMBase64 decodeData:[base64String dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO]] encoding:NSUTF8StringEncoding];
     return sourceString;
 }
 
@@ -410,7 +408,7 @@ NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 // A new autoreleased Base64 encoded NSString with NSString
 +(NSString *)base64StringBystring:(NSString *)string
 {
-    NSString *base64String = [[[NSString alloc] initWithData:[GTMBase64 encodeData:[string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO]] encoding:NSUTF8StringEncoding] autorelease];
+    NSString *base64String = [[NSString alloc] initWithData:[GTMBase64 encodeData:[string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO]] encoding:NSUTF8StringEncoding];
     return base64String;
 }
 

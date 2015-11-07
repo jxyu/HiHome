@@ -445,9 +445,28 @@ fetchCompletionHandler:(void
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
+- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notification
 {
     NSLog(@"chu lai le ");
+    
+    NSLog(@"notification %@",notification.alertBody);
+    
+    
+    UIApplicationState state = app.applicationState;
+    //    NSLog(@"%@,%d",notification,state);
+    if (state == UIApplicationStateActive) {
+         NSLog(@"notification xxxxxxx");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒"
+                                                        message:notification.alertBody
+                                                       delegate:self
+                                              cancelButtonTitle:@"Close"
+                                              otherButtonTitles:@"OK",nil];
+        [alert show];
+    }
+    else if (state == UIApplicationStateBackground)
+    {
+         NSLog(@"notification xxxxxxx");
+    }
     
 }
 

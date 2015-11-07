@@ -156,6 +156,7 @@
 		B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B56CFC2E1BCD08F00081B645 /* redcamera@2x.png */; };
 		B5741DD11BC2600D00335B1C /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5741DD01BC2600D00335B1C /* DataProvider.m */; };
 		B5741DD51BC26C3C00335B1C /* DataDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = B5741DD41BC26C3C00335B1C /* DataDefine.m */; };
+		B57F0CAC1BED8D610076831D /* NoticePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0CAB1BED8D610076831D /* NoticePageView.m */; };
 		B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F5D811BBA77FA009AC336 /* LoginViewController.m */; };
 		B57F5D841BBA77FA009AC336 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57F5D821BBA77FA009AC336 /* LoginViewController.xib */; };
 		B57F5D8B1BBA8399009AC336 /* account@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B57F5D861BBA8399009AC336 /* account@2x.png */; };
@@ -574,6 +575,8 @@
 		B5741DD01BC2600D00335B1C /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 		B5741DD31BC26C3C00335B1C /* DataDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDefine.h; sourceTree = "<group>"; };
 		B5741DD41BC26C3C00335B1C /* DataDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDefine.m; sourceTree = "<group>"; };
+		B57F0CAA1BED8D610076831D /* NoticePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePageView.h; sourceTree = "<group>"; };
+		B57F0CAB1BED8D610076831D /* NoticePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePageView.m; sourceTree = "<group>"; };
 		B57F5D801BBA77FA009AC336 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		B57F5D811BBA77FA009AC336 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B57F5D821BBA77FA009AC336 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1353,6 +1356,7 @@
 		B5033BD51BAFB1BE0014935E /* UiLayer */ = {
 			isa = PBXGroup;
 			children = (
+				B57F0CA91BED8CF90076831D /* NoticePage */,
 				B5A77AB91BB4EBAF0014DD67 /* UIDefine.h */,
 				B7942B9F1BD88134007D6F17 /* PersonPage */,
 				B583B1A31BC39B2B000572CA /* BaseUnits */,
@@ -1575,6 +1579,15 @@
 				B5741DD41BC26C3C00335B1C /* DataDefine.m */,
 			);
 			path = DataDefine;
+			sourceTree = "<group>";
+		};
+		B57F0CA91BED8CF90076831D /* NoticePage */ = {
+			isa = PBXGroup;
+			children = (
+				B57F0CAA1BED8D610076831D /* NoticePageView.h */,
+				B57F0CAB1BED8D610076831D /* NoticePageView.m */,
+			);
+			path = NoticePage;
 			sourceTree = "<group>";
 		};
 		B57F5D7F1BBA77E1009AC336 /* Login */ = {
@@ -2056,7 +2069,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 6NC56CVL43;
+						DevelopmentTeam = M7YC435M3S;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -2335,6 +2348,7 @@
 				B52102C21BE0AC2400C981B4 /* taskerCollectionViewCell.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
+				B57F0CAC1BED8D610076831D /* NoticePageView.m in Sources */,
 				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,
 				B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */,
 				B5E059DE1BB146E100DBF786 /* WMNavigationController.m in Sources */,
@@ -2607,7 +2621,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
@@ -2646,7 +2660,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";

@@ -16,6 +16,7 @@
 #import "RegisterViewController.h"
 #import "SVProgressHUD.h"
 #import "UMSocial.h"
+#import "NoticePageView.h"
 
 @interface LoginViewController ()<UMSocialUIDelegate>{
     NSUserDefaults *mUserDefault;
@@ -37,12 +38,12 @@
     _topView.hidden=YES;
     [self initViews];
   
-//    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-//    loginBtn.backgroundColor = [UIColor blueColor];
-//    
-//    [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.view addSubview:loginBtn];
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    loginBtn.backgroundColor = [UIColor blueColor];
+    
+    [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+  //  [self.view addSubview:loginBtn];
     // Do any additional setup after loading the view from its nib.
     
 
@@ -59,7 +60,16 @@
     [self initLines];
     [self initLabels];
     [self initDatas];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
+    [self.view addGestureRecognizer:tapGesture];
+    
 }
+-(void)tapViewAction:(id)sender
+{
+    [self.view endEditing:YES];
+}
+
 -(void) initDatas
 {
     _userData = [[DataDefine alloc] init];
@@ -355,6 +365,12 @@
 #pragma  mark - key click action
 -(void) btnClick:(id)sender
 {
+    NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:@"测试" message:@"测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面"];
+    [tempView addButtonWithTitle:@"去执行"];
+    [tempView addButtonWithTitle:@"取消任务"];
+ //   [tempView addButtonWithTitle:@"正点提醒"];
+    tempView.buttonHeight = 44;
+    [tempView show];
     
     NSLog(@"Click btn");
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil ];

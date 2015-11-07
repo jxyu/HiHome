@@ -216,6 +216,16 @@
             stateStr = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
             
             localTaskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
+            if(localTaskStatus == State_needDo)//如果设置的任务状态时待执行那么则设置提醒
+            {
+                NSDate *remindDate;
+                
+                remindDate = [self getNoticeDate];
+                if(remindDate!=nil)
+                {
+                    [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]]];
+                }
+            }
             
             [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];//更改两个按键的显示
             
@@ -503,6 +513,11 @@
         UIImageView *headImgView = [[UIImageView alloc]initWithFrame:CGRectMake(10+head.frame.size.width+5,5,_cellHeight -10  , _cellHeight - 10 )];
         
         headImgView.image = [UIImage imageNamed:@"me"];
+        NSString *strAvatar;
+        strAvatar = [_dictData objectForKey:@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
+        [headImgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        
         headImgView.layer.cornerRadius = headImgView.frame.size.width * 0.5;
         headImgView.layer.borderWidth = 0.1;
         headImgView.layer.masksToBounds = YES;
@@ -795,13 +810,6 @@
         case State_received://不显示已完成 直接显示待执行
         {
             
-            NSDate *remindDate;
-            
-            remindDate = [self getNoticeDate];
-            if(remindDate!=nil)
-            {
-                [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]]];
-            }
             stateStr = @"待执行";
             localTaskStatus = State_needDo;
         }
@@ -1004,7 +1012,7 @@
         return;
     }
     
-    
+   // if()
     
 //    [self setBtnStr:localTaskStatus];
     [self loadTaskDetails:TaskId];
@@ -1060,6 +1068,8 @@
     taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
     taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
     taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+    
+
     
     if(taskDetailPath.imgSrc.count > 0)
     {

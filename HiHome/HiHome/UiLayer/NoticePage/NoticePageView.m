@@ -112,7 +112,7 @@
     
      CGFloat messageHeigh = [self heightWithString:_message fontSize:14 width:AlertWidth-2*AlertPadding];
     //message
-    _labelmessage =  [[UILabel alloc]initWithFrame:CGRectMake(0, headImg.frame.size.height, _messageScrollView.frame.size.width, messageHeigh -[self heightWithString:@"你"/*一行字的高低*/ fontSize:14 width:AlertWidth-2*AlertPadding] )];
+    _labelmessage =  [[UILabel alloc]initWithFrame:CGRectMake(0, headImg.frame.size.height, _messageScrollView.frame.size.width, messageHeigh)];
     _labelmessage.font = [UIFont systemFontOfSize:14];
     _labelmessage.textColor = [UIColor grayColor];
     _labelmessage.textAlignment = NSTextAlignmentCenter;
@@ -123,8 +123,8 @@
     _messageScrollView.contentSize = CGSizeMake(_messageScrollView.frame.size.width,headImg.frame.size.height + _labelmessage.frame.size.height );
     
     
-//    _messageScrollView.backgroundColor = [UIColor blueColor];
-//    _labelmessage.backgroundColor = [UIColor redColor];
+   // _messageScrollView.backgroundColor = [UIColor blueColor];
+    //_labelmessage.backgroundColor = [UIColor redColor];
     
     checkTaskBtn = [[UIButton alloc] initWithFrame:CGRectMake(AlertWidth/2-50,(_messageScrollView.frame.size.height + _messageScrollView.frame.origin.y + 5), 100, 20)];
     checkTaskBtn.titleLabel.font =[UIFont systemFontOfSize:14];

@@ -43,7 +43,7 @@
     
     [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-  //  [self.view addSubview:loginBtn];
+    [self.view addSubview:loginBtn];
     // Do any additional setup after loading the view from its nib.
     
 
@@ -361,17 +361,52 @@
     //    tempText.text
 }
 
+-(void)setNotice:(NSDate *)noticeDate andNoticeStr:(NSString *)noticeStr andRepeat:(NSCalendarUnit) repeatMode andTaskId:(NSString *)taskId andSid:(NSString *)sid andTaskDetailMode:(NSString *)taskDetailMode
+{
+    if(noticeDate && noticeStr && taskId &&sid && taskDetailMode)
+    {
+        NSLog(@"noticeDate = [%@]",noticeDate);
+        UILocalNotification *notification=[[UILocalNotification alloc] init];
+        if (notification!=nil) {
+            //  NSDate *now=[NSDate date];
+            
+            notification.fireDate=noticeDate;
+            notification.repeatInterval=repeatMode;//循环次数，
+            notification.timeZone=[NSTimeZone defaultTimeZone];
+            notification.applicationIconBadgeNumber=1; //应用的红色数字
+            notification.soundName= UILocalNotificationDefaultSoundName;//声音，可以换成alarm.soundName = @"myMusic.caf"
+            //去掉下面2行就不会弹出提示框
+            
+            notification.alertBody=[NSString stringWithFormat:@"您有任务（%@）待执行",noticeStr];//[NSString stringWithFormat:@"%@设置的小家提醒您",noticeDate];//@"通知内容";//提示信息 弹出提示框
+            notification.alertAction = @"打开";  //提示框按钮
+            //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+            NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithObject:taskId forKey:@"taskid"];
+            [infoDict setObject:sid forKey:@"sid"];
+            [infoDict setObject:taskDetailMode forKey:@"taskDetailMode"];
+            notification.userInfo = infoDict; //添加额外的信息
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        }
+    }
+}
 
 #pragma  mark - key click action
 -(void) btnClick:(id)sender
 {
-    NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:@"测试" message:@"测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面"];
-    [tempView addButtonWithTitle:@"去执行"];
-    [tempView addButtonWithTitle:@"取消任务"];
- //   [tempView addButtonWithTitle:@"正点提醒"];
-    tempView.buttonHeight = 44;
-    [tempView show];
     
+    NSDate *nowDate = [NSDate date];
+    
+    [self setNotice:[nowDate dateByAddingTimeInterval:60] andNoticeStr:@"测试用" andRepeat:0 andTaskId:@"165" andSid:@"244" andTaskDetailMode:@"1"];
+    
+    
+//    NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:@"测试" message:@"测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面"];
+//    [tempView addButtonWithTitle:@"去执行"];
+//    [tempView addButtonWithTitle:@"取消任务"];
+// //   [tempView addButtonWithTitle:@"正点提醒"];
+//    tempView.buttonHeight = 44;
+//    [tempView show];
+//    
     NSLog(@"Click btn");
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil ];
 }

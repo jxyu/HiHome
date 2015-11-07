@@ -194,12 +194,6 @@
     [titleField resignFirstResponder];
     [_titleField resignFirstResponder];
     [_textView resignFirstResponder];
-    NSRange tempRange = [taskUserID rangeOfString:[self getUserID]];
-    
-    if(tempRange.length != 0)
-    {
-        [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]]];
-    }
     
     if(_createTaskMode == Mode_EditTask)
         taskUserID = [self getUserID];
@@ -446,6 +440,15 @@
     [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     if ([dict[@"code"] intValue]==200) {
+        
+        NSRange tempRange = [taskUserID rangeOfString:[self getUserID]];
+        
+        if(tempRange.length != 0)//任务发布成功切执行人中有自己则设置提醒
+        {
+            [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]]];
+        }
+
+        
         [self.navigationController popViewControllerAnimated:YES];
         if(_createTaskMode != Mode_EditTask)
         {

@@ -20,7 +20,7 @@
 #import "CommenDef.h"
 #import <SMS_SDK/SMSSDK.h>
 
-
+#import "NoticePageView.h"
 #import "APService.h"
 
 #import "OptionTextViewController.h"
@@ -41,6 +41,8 @@
 @interface AppDelegate (){
     NSArray *mFriendArray;
     NSUserDefaults *mUserDefault;
+    NSString *sId;
+    TaskDetailMode _taskDetailMode;
 }
 
 @end
@@ -453,14 +455,13 @@ fetchCompletionHandler:(void
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
+
+
 - (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notification
 {
     NSLog(@"chu lai le ");
-    
-    NSLog(@"notification %@",notification.alertBody);
-    
-    
     UIApplicationState state = app.applicationState;
+    NSLog(@"notification %@ state = %ld",notification.alertBody,state);
     //    NSLog(@"%@,%d",notification,state);
     if (state == UIApplicationStateActive) {
          NSLog(@"notification xxxxxxx");
@@ -471,12 +472,212 @@ fetchCompletionHandler:(void
                                               otherButtonTitles:@"OK",nil];
         [alert show];
     }
-    else if (state == UIApplicationStateBackground)
+    else //if (state == UIApplicationStateBackground)
     {
-         NSLog(@"notification xxxxxxx");
+        NSLog(@"notification xxxxxxx");
+        
+        
+        NSString *userId = [self getUserID];
+        if(userId == nil)
+        {
+            return;
+        }
+        
+        NSDictionary *tempDict ;
+        NSString *taskId;
+        
+        
+        @try {
+            tempDict =notification.userInfo;
+            if(tempDict.count>0)
+            {
+                taskId = [tempDict objectForKey:@"taskid"];
+                sId= [tempDict objectForKey:@"sid"];
+                _taskDetailMode =(TaskDetailMode)[[tempDict objectForKey:@"taskDetailMode"] integerValue];
+            }
+            
+            
+            [self loadTaskDetails:taskId];
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+        
+
     }
     
 }
+
+
+
+#pragma  mark - 获取任务详情
+-(void)loadTaskDetails:(NSString *)taskID
+{
+    NSLog(@"load task Details");
+    
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"taskDetailCallBack:"];
+    
+    [dataprovider getTaskInfo:taskID];
+}
+
+
+-(void)taskDetailCallBack:(id)dict
+{
+    
+    NSInteger code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    NSDictionary *taskDetailDict;
+    
+    if(code!=200)
+    {
+        if(code != 400)
+        {
+            
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        return;
+    }
+    
+    NSLog(@"task detail dict = [%@]",dict);
+    
+    if(![[dict objectForKey:@"datas"] isEqual:[NSNull null]])
+    {
+        taskDetailDict = [(NSArray *)[dict objectForKey:@"datas"] objectAtIndex:0];
+    }
+    else
+    {
+        NSLog(@"datas = NULL");
+        return;
+    }
+    
+    @try {
+        NSArray *tempArr =[taskDetailDict objectForKey:@"taskerlist"];
+        TaskPath * taskDetailPath = [[TaskPath alloc] init];
+        taskDetailPath.taskContent = [taskDetailDict objectForKey:@"content"];
+        //      taskDetailPath.taskStatus = (ZYTaskStatue)[(NSString *)[taskDetailDict objectForKey:@"state"] integerValue];
+        if(tempArr.count > 1)
+            taskDetailPath.taskStatus = State_morepeople;
+        else
+        {
+            NSDictionary *tempDict = [tempArr objectAtIndex:0];
+            
+            taskDetailPath.taskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
+        }
+        
+        taskDetailPath.taskOwner = [taskDetailDict objectForKey:@"uid"];
+        taskDetailPath.taskName = [taskDetailDict objectForKey:@"title"];
+        taskDetailPath.repeatMode = (ZYTaskRepeat)[(NSString *)[taskDetailDict objectForKey:@"repeat"] integerValue];
+        taskDetailPath.remindTime = (ZYTaskRemind)[(NSString *)[taskDetailDict objectForKey:@"tip"] integerValue];
+        taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
+        taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
+        taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+        taskDetailPath.sId = sId;
+        //  [self setTaskDetails];
+        
+        if(taskDetailPath.imgSrc.count > 0)
+        {
+            [taskDetailPath.imgSrc removeAllObjects];
+        }
+        if((![[taskDetailDict objectForKey:@"imgsrc1"] isEqual:[NSNull null]]))
+        {
+            if(![[taskDetailDict objectForKey:@"imgsrc1"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc1"]];
+            }
+        }
+        if((![[taskDetailDict objectForKey:@"imgsrc2"] isEqual:[NSNull null]]))
+        {
+            if(![[taskDetailDict objectForKey:@"imgsrc2"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc2"]];
+            }
+        }
+        if((![[taskDetailDict objectForKey:@"imgsrc3"] isEqual:[NSNull null]]))
+        {
+            if(![[taskDetailDict objectForKey:@"imgsrc3"] isEqualToString:@""])
+            {
+                [taskDetailPath.imgSrc addObject:[taskDetailDict objectForKey:@"imgsrc3"]];
+            }
+        }
+
+        if(![[taskDetailDict objectForKey:@"taskerlist"] isEqual:[NSNull null]])
+        {
+            taskDetailPath.taskPerformerDetails = [taskDetailDict objectForKey:@"taskerlist"];
+        }
+        else
+        {
+            NSLog(@"taskerlist = NULL");
+            // return;
+        }
+        NSString *contentStr;
+        contentStr = [NSString stringWithFormat:@"任务发布人：%@\n任务执行人：%@\n任务内容：%@\n任务开始时间结束时间：%@-%@",taskDetailPath.taskOwner,@"jeff",taskDetailPath.taskContent,taskDetailPath.startTaskDateStr,taskDetailPath.startTaskDateStr];
+        NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:taskDetailPath.taskName message:contentStr];
+        [tempView addButton:NoticeButton_OK withTitle:@"去执行" handler:^(NoticePageItem *item )
+         {
+             TaskDetailPageViewController *_taskDetailPageCtl;
+             
+             _taskDetailPageCtl = [[TaskDetailPageViewController alloc] init];
+             _taskDetailPageCtl.delegate = self;
+             _taskDetailPageCtl.taskDetailMode = _taskDetailMode;
+             _taskDetailPageCtl.navTitle = taskDetailPath.taskName;
+             
+             // taskDetailPath.taskPerformerDetails =[taskDetailDict objectForKey:@"id"];
+             
+             
+             [_taskDetailPageCtl setDictData:taskDetailDict];
+             [_taskDetailPageCtl setDatas:taskDetailPath];
+             _taskDetailPageCtl.hidesBottomBarWhenPushed = YES;
+             _taskDetailPageCtl.pageChangeMode = Mode_dis;
+             [self.window.rootViewController presentViewController:_taskDetailPageCtl animated:YES completion:^{}];
+         }];
+        
+        [tempView addButton:NoticeButton_CANCEL withTitle:@"取消任务" handler:^(NoticePageItem *item )
+         {
+             DLog(@"run here 2");
+         }];
+        //   [tempView addButtonWithTitle:@"正点提醒"];
+        tempView.buttonHeight = 44;
+        [tempView show];
+        
+        
+    }
+    @catch (NSException *exception) {
+        [SVProgressHUD dismiss];
+    }
+    @finally {
+        
+    }
+    [SVProgressHUD dismiss];
+    
+}
+
+
+#pragma mark - 任务详情代理－>编辑模式
+-(void)setEdit//任务详情跳转创建任务至编辑模式
+{
+    
+    NSLog(@"run here -- [%d]",__LINE__);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    
+    NSString *str = @"创建任务";
+    CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
+    _createTaskViewCtl.navTitle = str;
+    _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
+    [self.window.rootViewController.navigationController pushViewController:_createTaskViewCtl animated:NO];
+    
+}
+
+
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {

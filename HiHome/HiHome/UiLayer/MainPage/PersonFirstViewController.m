@@ -67,9 +67,9 @@
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
     if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
-        [dataProvider GetUserInfoWithUid:_mFriendID];
+        [dataProvider GetUserInfoWithUid:_mFriendID anduid:[self getUserID]];
     }else{
-        [dataProvider GetUserInfoWithUid:[self getUserID]];
+        [dataProvider GetUserInfoWithUid:nil anduid:[self getUserID]];
     }
 }
 
@@ -304,19 +304,27 @@
             }else{
                 if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"4"]) {
                     cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
-                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+                    
+                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
                     [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
                     [mAddFriendBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
                     [mAddFriendBtn addTarget:self action:@selector(mAddFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
                     mAddFriendBtn.backgroundColor = [UIColor whiteColor];
                     [cell addSubview:mAddFriendBtn];
                     
-                    UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mAddFriendBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
-                    [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
-                    [mHiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
-                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
-                    [cell addSubview:mHiBtn];
+//                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+//                    [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+//                    [mAddFriendBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
+//                    [mAddFriendBtn addTarget:self action:@selector(mAddFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
+//                    mAddFriendBtn.backgroundColor = [UIColor whiteColor];
+//                    [cell addSubview:mAddFriendBtn];
+//                    
+//                    UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mAddFriendBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+//                    [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
+//                    [mHiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+//                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
+//                    [cell addSubview:mHiBtn];
                 }else{
                     UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                     [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -465,7 +473,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
-    if ([_mIFlag isEqual:@"2"]) {
+    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
         if (markFriendVC.mType) {
             _mType = markFriendVC.mType;
             [mTableView reloadData];

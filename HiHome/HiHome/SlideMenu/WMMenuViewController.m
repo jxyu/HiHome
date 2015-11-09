@@ -102,7 +102,7 @@
     DataProvider *dataProvider;
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    [dataProvider GetUserInfoWithUid:[self getUserID]];
+    [dataProvider GetUserInfoWithUid:nil anduid:[self getUserID]];
 }
 
 -(void)GetInfoBackCall:(id)dict

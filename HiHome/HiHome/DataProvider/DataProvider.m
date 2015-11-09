@@ -459,14 +459,16 @@
     
 }
 
--(void)GetUserInfoWithUid:(NSString *)uid
+-(void)GetUserInfoWithUid:(NSString *)fid anduid:(NSString *)uid
 {
-    if (uid) {
+    if (fid && uid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
+        NSDictionary * prm=@{@"id":fid,@"uid":uid};
+        [self GetRequest:url andpram:prm];
+    }else{
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
         NSDictionary * prm=@{@"id":uid};
         [self GetRequest:url andpram:prm];
-    }else{
-        [SVProgressHUD dismiss];
     }
 }
 

@@ -100,9 +100,11 @@
 
 //发送
 -(void)btnRightClick:(id)sender{
-    dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"changeFriendType:"];
-    [dataProvider changeFriendType:_mFriendID andUserID:[self getUserID] andType:[NSString stringWithFormat:@"%d",(int)oldIndexPath.row]];
+    if (![_mType isEqual:[NSString stringWithFormat:@"%d",(int)oldIndexPath.row]]) {
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"changeFriendType:"];
+        [dataProvider changeFriendType:_mFriendID andUserID:[self getUserID] andType:[NSString stringWithFormat:@"%d",(int)oldIndexPath.row]];
+    }
 }
 
 -(void)changeFriendType:(id)dict{

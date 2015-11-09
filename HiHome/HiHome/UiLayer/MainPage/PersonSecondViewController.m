@@ -23,7 +23,6 @@
     UITextField * txt_signe;
     UITextField *txt_age;
     BOOL isMan;
-    
     NSUserDefaults *mUserDefault;
     
     NSString *_mImgStr;
@@ -42,7 +41,7 @@
 
 -(void)initView{
     cellHeight = SCREEN_HEIGHT / 11;
-    
+    isMan = [_mSex isEqual:@"男"]?YES:NO;
     mUserDefault = [NSUserDefaults standardUserDefaults];
     
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT)];

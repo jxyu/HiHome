@@ -10,7 +10,7 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
-#import "UserInfoViewController.h"
+#import "PersonSecondViewController.h"
 
 @interface RegisterViewController ()
 
@@ -283,7 +283,7 @@
     NSLog(@"注册返回数据%@",dict);
     if ([dict[@"code"] intValue]==200) {
         //[self dismissViewControllerAnimated:YES completion:nil];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+        PersonSecondViewController *userInfoVC = [[PersonSecondViewController alloc] init];
         userInfoVC.mIFlag = @"1";
         [self presentViewController:userInfoVC animated:NO completion:nil];
     }
@@ -354,7 +354,7 @@
     NSLog(@"忘记密码返回数据%@",dict);
     if ([dict[@"code"] intValue]==200) {
         //[self dismissViewControllerAnimated:YES completion:nil];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+        PersonSecondViewController *userInfoVC = [[PersonSecondViewController alloc] init];
         userInfoVC.mIFlag = @"1";
         
       

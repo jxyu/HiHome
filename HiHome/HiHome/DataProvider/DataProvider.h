@@ -327,7 +327,7 @@
 -(void)matchAddress:(NSString *)userID andMob:(NSString *) mob;
 
 //获取用户资料
--(void)GetUserInfoWithUid:(NSString *)uid;
+-(void)GetUserInfoWithUid:(NSString *)fid anduid:(NSString *)uid;
 
 //保存用户资料
 -(void)SaveUserInfo:(NSString *)userID andNick:(NSString *) nick andSex:(NSString *) sex andAge:(NSString *)age andSign:(NSString *) sign;

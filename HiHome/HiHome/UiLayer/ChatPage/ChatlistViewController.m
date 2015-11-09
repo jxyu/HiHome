@@ -184,31 +184,4 @@
     self.emptyConversationView=emptyView;
 }
 
-/**
- *  退出登录
- *
- *  @param sender <#sender description#>
- */
-- (void)leftBarButtonItemPressed:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
-    [alertView show];
-}
-
-
-- (void)clickLeftButton:(UIButton *)sender
-{
-//    UIViewController *aa = [self.navigationController popViewControllerAnimated:YES];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
-    [alertView show];
-
-}
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[RCIM sharedRCIM]disconnect];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
 @end

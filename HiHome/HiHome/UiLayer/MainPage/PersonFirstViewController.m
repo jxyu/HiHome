@@ -66,7 +66,7 @@
     [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"]){
+    if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
         [dataProvider GetUserInfoWithUid:_mFriendID];
     }else{
         [dataProvider GetUserInfoWithUid:[self getUserID]];
@@ -175,10 +175,10 @@
         gxqm.leftViewMode = UITextFieldViewModeAlways;
         [cell addSubview:gxqm];
     }else{
-        if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"]) {
+        if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
             if (indexPath.row == 3) {
                 UITextField *relation = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
-                if([_mIFlag isEqual:@"3"]){
+                if(!_mType){
                     _mType = [userInfoArray[0][@"type"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"type"];
                 }
                 if ([_mType isEqual:@"0"]) {
@@ -246,7 +246,7 @@
                 }
                
                 
-                           }else{
+            }else{
                 UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                 [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
                 mHiBtn.layer.borderWidth = 1;
@@ -254,7 +254,6 @@
                 [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
                 [mHiBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1] forState:UIControlStateNormal];
                 [cell addSubview:mHiBtn];
-
             }
         }else{
             if(indexPath.row == 3){
@@ -342,7 +341,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"]) {
+    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
         if (indexPath.row == 0) {
             return cellHeight * 3;
         }else if(indexPath.row == 5){
@@ -450,7 +449,7 @@
     if ([_mIFlag isEqual:@"2"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-    }else if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"]){
+    }else if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }else{

@@ -9,10 +9,13 @@
 #import "ChatContentViewController.h"
 #import "UIImage+NSBundle.h"
 #import "ChatLocationViewController.h"
+#import "PersonFirstViewController.h"
 
 #define DefaultLeftImageWidth 44
 
-@interface ChatContentViewController ()<RCLocationPickerViewControllerDelegate>
+@interface ChatContentViewController ()<RCLocationPickerViewControllerDelegate>{
+    PersonFirstViewController *personFirstVC;
+}
 
 @end
 
@@ -188,6 +191,15 @@
     [self sendMessage:locationMessage pushContent:nil];
 //    [self.navigationController popViewControllerAnimated:YES];
     
+}
+
+- (void)didTapCellPortrait:(NSString *)userId{
+    personFirstVC = [[PersonFirstViewController alloc] init];
+    personFirstVC.mIFlag = @"5";
+    personFirstVC.navTitle = @"好友资料";
+    personFirstVC.mFriendID = userId;
+    
+    [self.navigationController pushViewController:personFirstVC animated:NO];
 }
 
 @end

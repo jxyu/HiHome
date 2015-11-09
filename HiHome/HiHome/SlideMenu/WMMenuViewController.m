@@ -38,6 +38,7 @@
     self.tableView.dataSource      = self;
     self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight       = 44 * (self.common.screenW / 320);
+    self.tableView.scrollEnabled = NO;
     // 设置tableFooterView为一个空的View，这样就不会显示多余的空白格子了
     self.tableView.tableFooterView = [[UIView alloc] init];
     

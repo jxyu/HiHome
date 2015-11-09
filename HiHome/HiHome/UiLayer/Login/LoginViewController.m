@@ -17,11 +17,13 @@
 #import "SVProgressHUD.h"
 #import "UMSocial.h"
 #import "NoticePageView.h"
+#import "UIImageView+WebCache.h"
 
 @interface LoginViewController ()<UMSocialUIDelegate>{
     NSUserDefaults *mUserDefault;
     NSString *_mAccount;
     NSString *_mPassword;
+    UIImageView *headImg;
 }
 
 @end
@@ -144,7 +146,7 @@
     [self.view addSubview:logoImgView];
     
     
-    UIImageView *headImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me"]];
+    headImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me"]];
     headImg.frame =CGRectMake((self.view.frame.size.width - 2*ZY_UISTART_X)/3+ZY_UISTART_X +20/2 ,
                               ZY_UIPART_SCREEN_HEIGHT * 20-((self.view.frame.size.width - 2*ZY_UISTART_X - 30)/3-20)/2,
                               (self.view.frame.size.width - 2*ZY_UISTART_X )/3-20,
@@ -332,6 +334,9 @@
     switch (tempText.tag) {
         case USER_TEXT_TAG:
             _userData.phoneNum = tempText.text;
+            if (tempText.text.length == 11) {
+                [self getHeadImgByPhone:tempText.text];
+            }
             break;
         case PASSWORD_TEXT_TAG:
             _userData.passWord = tempText.text;
@@ -341,6 +346,22 @@
     }
 }
 
+-(void)getHeadImgByPhone:(NSString *)phone{
+    DataProvider *mDataProvider = [[DataProvider alloc] init];
+    [mDataProvider setDelegateObject:self setBackFunctionName:@"getHeadImgByPhoneBackCall:"];
+    [mDataProvider getContacterByPhone:phone];
+}
+
+-(void)getHeadImgByPhoneBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        NSString *avatar = [[[dict valueForKey:@"datas"] valueForKey:@"list"][0] valueForKey:@"avatar"];
+        NSLog(@"%@",avatar);
+        NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [headImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+    }
+}
 
 - (void)textFieldDidEnd:(id)sender
 {
@@ -555,7 +576,7 @@
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
                 
-                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 4]];
+                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 3]];
                 _mPassword = snsAccount.usid;
                 //调用注册接口
                 [self registerInterface];

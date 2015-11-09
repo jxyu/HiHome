@@ -10,6 +10,8 @@
 #import "DataProvider.h"
 #import "AddFriendSecondViewController.h"
 #import "JKAlertDialog.h"
+#import "UIImageView+WebCache.h"
+#import "PersonFirstViewController.h"
 
 @interface MessageNotice (){
     UITableView *mTableView;
@@ -19,6 +21,8 @@
     NSArray *personDetailArray;
     
     NSIndexPath *currentRow;
+    
+    PersonFirstViewController *personFirstVC;
 }
 
 @end
@@ -88,10 +92,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    cell.mImageView.image = [UIImage imageNamed:@"me"];
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[personDetailArray[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"avatar"]];
+    [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
     
     cell.mName.text = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
-    cell.mDetail.text = [personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
+    cell.mDetail.text = @"你好,希望和你成为好朋友!";//[personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
     
     NSString *mState = [personDetailArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"state"];
     if ([mState isEqual:@"0"]) {
@@ -169,6 +174,20 @@
         addFriendSecondVC.mIFlag = @"1";
         //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
         [self.navigationController pushViewController:addFriendSecondVC animated:NO];
+    }else if ([mState isEqual:@"1"]){ //同意
+        personFirstVC = [[PersonFirstViewController alloc] init];
+        personFirstVC.mIFlag = @"3";
+        personFirstVC.navTitle = @"好友资料";
+        personFirstVC.mFriendID = [personDetailArray[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"fid"];
+        
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+    }else if ([mState isEqual:@"2"]){ //拒绝
+        personFirstVC = [[PersonFirstViewController alloc] init];
+        personFirstVC.mIFlag = @"4";
+        personFirstVC.navTitle = @"好友资料";
+        personFirstVC.mFriendID = [personDetailArray[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"fid"];
+        
+        [self.navigationController pushViewController:personFirstVC animated:NO];
     }
 }
 

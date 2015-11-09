@@ -38,12 +38,12 @@
     _topView.hidden=YES;
     [self initViews];
   
-    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];//测试按钮
     loginBtn.backgroundColor = [UIColor blueColor];
     
     [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:loginBtn];
+//   [self.view addSubview:loginBtn];
     // Do any additional setup after loading the view from its nib.
     
 
@@ -397,7 +397,7 @@
     
     NSDate *nowDate = [NSDate date];
     
-    [self setNotice:[nowDate dateByAddingTimeInterval:60] andNoticeStr:@"测试用" andRepeat:0 andTaskId:@"165" andSid:@"244" andTaskDetailMode:@"1"];
+    [self setNotice:[nowDate dateByAddingTimeInterval:30] andNoticeStr:@"测试用" andRepeat:0 andTaskId:@"374" andSid:@"468" andTaskDetailMode:@"0"];
     
     
 //    NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:@"测试" message:@"测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面"];

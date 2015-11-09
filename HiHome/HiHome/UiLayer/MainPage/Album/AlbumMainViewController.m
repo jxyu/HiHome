@@ -896,7 +896,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return NO;
+    return YES;
 }
 
 - (UITableViewCellEditingStyle)tableView: (UITableView *)tableView editingStyleForRowAtIndexPath: (NSIndexPath *)indexPath
@@ -918,18 +918,65 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView beginUpdates];
-        //        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-        //        [_mainTableView endUpdates];
+        
+        NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
+        
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+        
+        alert.alertType = AlertType_Alert;
+        [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+            NSLog(@"Click ok");
+            
+            NSDictionary *tempDict = [resentArray objectAtIndex:indexPath.row];
+            
+            [self delAlbum:[tempDict objectForKey:@"id"]];
+            
+            
+        }];
+        
+        //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+        [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+            NSLog(@"Click canel");
+            
+        }];
+        [alert show];
+
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 
-
+#pragma mark - 删除相册
+-(void) delAlbum:(NSString *)albumID
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"delAlbumCallBack:"];
+    
+    NSString *userID = [self getUserID];//获取userID
+    
+    NSLog(@"id = [%@]",userID);
+    
+    [dataprovider DelAlbum:albumID];
+}
+-(void)delAlbumCallBack:(id)dict
+{
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"删除失败"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
+    
+    [_taskPageSeg setCurrentPage:_taskPageSeg.currentPage];//刷新数据
+}
 
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath

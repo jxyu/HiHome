@@ -38,6 +38,6 @@ typedef enum _taskDetailMode
 @property (nonatomic)id<TaskDetailDelegate> delegate;
 @property (nonatomic)NSDictionary *dictData;
 -(void)setDatas:(TaskPath *)taskPath;
-
+-(void)loadTaskDetails:(NSString *)taskID;
 
 @end

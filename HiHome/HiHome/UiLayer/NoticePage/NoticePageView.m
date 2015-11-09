@@ -99,7 +99,12 @@
     _messageScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(AlertPadding/2,_labelTitle.frame.origin.y+_labelTitle.frame.size.height+5 , AlertWidth-AlertPadding, [self heightWithString:@"你"/*一行字的高低*/ fontSize:16 width:AlertWidth-2*AlertPadding]*7)];
     
     UIImageView *headImg =[ [UIImageView alloc] initWithFrame:CGRectMake(_messageScrollView.frame.size.width/2- 20, 0, 40, 40)];
-    headImg.image = [UIImage imageNamed:@"me"];
+    
+   // NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
+    [headImg sd_setImageWithURL:[NSURL URLWithString:self.HeadImgUrl] placeholderImage:[UIImage imageNamed:@"me"]];
+    
+   // headImg.image = [UIImage imageNamed:@"me"];
+    
     headImg.layer.cornerRadius = headImg.frame.size.width * 0.5;
     headImg.layer.borderWidth = 1;
     headImg.layer.borderColor = [ZY_UIBASECOLOR CGColor];
@@ -115,7 +120,7 @@
     _labelmessage =  [[UILabel alloc]initWithFrame:CGRectMake(0, headImg.frame.size.height, _messageScrollView.frame.size.width, messageHeigh)];
     _labelmessage.font = [UIFont systemFontOfSize:14];
     _labelmessage.textColor = [UIColor grayColor];
-    _labelmessage.textAlignment = NSTextAlignmentCenter;
+    _labelmessage.textAlignment = NSTextAlignmentLeft;
     _labelmessage.text = _message;
     _labelmessage.numberOfLines = 0;
 //    _labelmessage.lineBreakMode = NSLineBreakByCharWrapping;
@@ -130,6 +135,7 @@
     checkTaskBtn.titleLabel.font =[UIFont systemFontOfSize:14];
     checkTaskBtn.backgroundColor = ZY_UIBASECOLOR;
     [checkTaskBtn setTitle:@"查看任务详情" forState:UIControlStateNormal];
+    [checkTaskBtn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
     
     [_alertView addSubview:checkTaskBtn];
     _contentScrollView = [[UIScrollView alloc]initWithFrame:CGRectZero];
@@ -137,6 +143,14 @@
     
 }
 
+
+-(void)btnAction
+{
+    if([self.delegate respondsToSelector:@selector(clickTaskDetailBtnAction)])
+    {
+        [self.delegate clickTaskDetailBtnAction];
+    }
+}
 
 - (CGFloat)heightWithString:(NSString*)string fontSize:(CGFloat)fontSize width:(CGFloat)width
 {

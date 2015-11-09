@@ -52,8 +52,6 @@
 		800A4DBE1BDF865800A22EA4 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4D9F1BDF865800A22EA4 /* libWeChatSDK.a */; };
 		800A4DC01BDF86F800A22EA4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4DBF1BDF86F800A22EA4 /* libiconv.tbd */; };
 		800A4DC21BDF871800A22EA4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 800A4DC11BDF871800A22EA4 /* libsqlite3.tbd */; };
-		80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */; };
-		80124BDE1BD882BD00DBE369 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */; };
 		80124C011BD885E800DBE369 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BE11BD885E800DBE369 /* MKAnnotationView+WebCache.m */; };
 		80124C021BD885E800DBE369 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BE31BD885E800DBE369 /* NSData+ImageContentType.m */; };
 		80124C031BD885E800DBE369 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 80124BE51BD885E800DBE369 /* SDImageCache.m */; };
@@ -156,6 +154,7 @@
 		B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B56CFC2E1BCD08F00081B645 /* redcamera@2x.png */; };
 		B5741DD11BC2600D00335B1C /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5741DD01BC2600D00335B1C /* DataProvider.m */; };
 		B5741DD51BC26C3C00335B1C /* DataDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = B5741DD41BC26C3C00335B1C /* DataDefine.m */; };
+		B57F0CAC1BED8D610076831D /* NoticePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0CAB1BED8D610076831D /* NoticePageView.m */; };
 		B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F5D811BBA77FA009AC336 /* LoginViewController.m */; };
 		B57F5D841BBA77FA009AC336 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57F5D821BBA77FA009AC336 /* LoginViewController.xib */; };
 		B57F5D8B1BBA8399009AC336 /* account@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B57F5D861BBA8399009AC336 /* account@2x.png */; };
@@ -297,6 +296,9 @@
 		B7CC5AFA1BD4D5E400A1078F /* SelectTaskNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7CC5AF81BD4D5E400A1078F /* SelectTaskNoticeCell.xib */; };
 		B7D661661BED92DD00A65860 /* PersonSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D661641BED92DD00A65860 /* PersonSecondViewController.m */; };
 		B7D661671BED92DD00A65860 /* PersonSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */; };
+		B7D6616B1BEDE74B00A65860 /* FunctionDescViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */; };
+		B7D6616C1BEDE74B00A65860 /* FunctionDescViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */; };
+		B7D6616F1BEDF06C00A65860 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D6616E1BEDF06C00A65860 /* GTMBase64.m */; };
 		B7EE4F601BE703130077BECA /* AddressLocalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */; };
 		B7EE4F611BE703130077BECA /* AddressLocalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */; };
 		B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FB16761BDB65510048551C /* SelectContacterViewController.m */; };
@@ -418,9 +420,6 @@
 		800A4DA21BDF865800A22EA4 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		800A4DBF1BDF86F800A22EA4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		800A4DC11BDF871800A22EA4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = HiHome/UiLayer/MainPage/UserInfoViewController.h; sourceTree = SOURCE_ROOT; };
-		80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoViewController.m; path = HiHome/UiLayer/MainPage/UserInfoViewController.m; sourceTree = SOURCE_ROOT; };
-		80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserInfoViewController.xib; path = HiHome/UiLayer/MainPage/UserInfoViewController.xib; sourceTree = SOURCE_ROOT; };
 		80124BE01BD885E800DBE369 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		80124BE11BD885E800DBE369 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		80124BE21BD885E800DBE369 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -576,6 +575,8 @@
 		B5741DD01BC2600D00335B1C /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 		B5741DD31BC26C3C00335B1C /* DataDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDefine.h; sourceTree = "<group>"; };
 		B5741DD41BC26C3C00335B1C /* DataDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDefine.m; sourceTree = "<group>"; };
+		B57F0CAA1BED8D610076831D /* NoticePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePageView.h; sourceTree = "<group>"; };
+		B57F0CAB1BED8D610076831D /* NoticePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePageView.m; sourceTree = "<group>"; };
 		B57F5D801BBA77FA009AC336 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		B57F5D811BBA77FA009AC336 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B57F5D821BBA77FA009AC336 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -791,6 +792,11 @@
 		B7D661631BED92DD00A65860 /* PersonSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSecondViewController.h; path = HiHome/UiLayer/MainPage/PersonSecondViewController.h; sourceTree = SOURCE_ROOT; };
 		B7D661641BED92DD00A65860 /* PersonSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSecondViewController.m; path = HiHome/UiLayer/MainPage/PersonSecondViewController.m; sourceTree = SOURCE_ROOT; };
 		B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonSecondViewController.xib; path = HiHome/UiLayer/MainPage/PersonSecondViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7D661681BEDE74B00A65860 /* FunctionDescViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionDescViewController.h; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.h; sourceTree = SOURCE_ROOT; };
+		B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionDescViewController.m; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.m; sourceTree = SOURCE_ROOT; };
+		B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FunctionDescViewController.xib; path = HiHome/UiLayer/MainPage/Options/FunctionDescViewController.xib; sourceTree = SOURCE_ROOT; };
+		B7D6616D1BEDF06C00A65860 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		B7D6616E1BEDF06C00A65860 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		B7EE4F5D1BE703130077BECA /* AddressLocalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressLocalCell.h; sourceTree = "<group>"; };
 		B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressLocalCell.m; sourceTree = "<group>"; };
 		B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressLocalCell.xib; sourceTree = "<group>"; };
@@ -1358,6 +1364,7 @@
 		B5033BD51BAFB1BE0014935E /* UiLayer */ = {
 			isa = PBXGroup;
 			children = (
+				B57F0CA91BED8CF90076831D /* NoticePage */,
 				B5A77AB91BB4EBAF0014DD67 /* UIDefine.h */,
 				B7942B9F1BD88134007D6F17 /* PersonPage */,
 				B583B1A31BC39B2B000572CA /* BaseUnits */,
@@ -1519,6 +1526,9 @@
 				B5879D691BC746A0003AACFA /* TextViewController.m */,
 				B5879D6B1BC747ED003AACFA /* OptionTextViewController.h */,
 				B5879D6C1BC747ED003AACFA /* OptionTextViewController.m */,
+				B7D661681BEDE74B00A65860 /* FunctionDescViewController.h */,
+				B7D661691BEDE74B00A65860 /* FunctionDescViewController.m */,
+				B7D6616A1BEDE74B00A65860 /* FunctionDescViewController.xib */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -1580,6 +1590,15 @@
 				B5741DD41BC26C3C00335B1C /* DataDefine.m */,
 			);
 			path = DataDefine;
+			sourceTree = "<group>";
+		};
+		B57F0CA91BED8CF90076831D /* NoticePage */ = {
+			isa = PBXGroup;
+			children = (
+				B57F0CAA1BED8D610076831D /* NoticePageView.h */,
+				B57F0CAB1BED8D610076831D /* NoticePageView.m */,
+			);
+			path = NoticePage;
 			sourceTree = "<group>";
 		};
 		B57F5D7F1BBA77E1009AC336 /* Login */ = {
@@ -1766,6 +1785,8 @@
 		B5E059A01BB0F93200DBF786 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B7D6616D1BEDF06C00A65860 /* GTMBase64.h */,
+				B7D6616E1BEDF06C00A65860 /* GTMBase64.m */,
 				B5E059A11BB0F93200DBF786 /* CommenDef.h */,
 				B5E059A21BB0F93200DBF786 /* Toolkit.h */,
 				B5E059A31BB0F93200DBF786 /* Toolkit.m */,
@@ -1926,9 +1947,6 @@
 				B7D661631BED92DD00A65860 /* PersonSecondViewController.h */,
 				B7D661641BED92DD00A65860 /* PersonSecondViewController.m */,
 				B7D661651BED92DD00A65860 /* PersonSecondViewController.xib */,
-				80124BDA1BD882BD00DBE369 /* UserInfoViewController.h */,
-				80124BDB1BD882BD00DBE369 /* UserInfoViewController.m */,
-				80124BDC1BD882BD00DBE369 /* UserInfoViewController.xib */,
 				B783D0111BE0D05D00052792 /* MarkFriendViewController.h */,
 				B783D0121BE0D05D00052792 /* MarkFriendViewController.m */,
 				B783D0131BE0D05D00052792 /* MarkFriendViewController.xib */,
@@ -2161,7 +2179,6 @@
 				B5FA2DA91BC4E9DB00D5BDB7 /* MessageNoticeViewController.xib in Resources */,
 				B5C60C2E1BE303C2005DE72A /* ChooseAlbumViewController.xib in Resources */,
 				B58D923D1BC6497D00219E76 /* photo@2x.png in Resources */,
-				80124BDE1BD882BD00DBE369 /* UserInfoViewController.xib in Resources */,
 				80BC02F11BB0EDAA0002A267 /* metion_tab_gray_icon@2x.png in Resources */,
 				800A4DAF1BDF865800A22EA4 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				B58196061BCB87A500D69A1E /* newAlbum@2x.png in Resources */,
@@ -2185,6 +2202,7 @@
 				80BC02EA1BB0EDAA0002A267 /* chat_tab_gods_icon@2x.png in Resources */,
 				B58DD9501BB61F0A0040A084 /* set@2x.png in Resources */,
 				B587FF1B1BC8BDA600E9F119 /* fristPic@2x.png in Resources */,
+				B7D6616C1BEDE74B00A65860 /* FunctionDescViewController.xib in Resources */,
 				8018388F1BDDD5010046B814 /* PushConfig.plist in Resources */,
 				802306B31BD4ED66006CFFEC /* SMS_SDKLocalizable.strings in Resources */,
 				B581960E1BCB906400D69A1E /* UploadPicViewController.xib in Resources */,
@@ -2345,6 +2363,7 @@
 				B7D661661BED92DD00A65860 /* PersonSecondViewController.m in Sources */,
 				B5033BA71BAFA6D60014935E /* AppDelegate.m in Sources */,
 				B581960D1BCB906400D69A1E /* UploadPicViewController.m in Sources */,
+				B57F0CAC1BED8D610076831D /* NoticePageView.m in Sources */,
 				B77F91231BD22B3300DAB43C /* TaskDetailPageViewController.m in Sources */,
 				B5FA2DA81BC4E9DB00D5BDB7 /* MessageNoticeViewController.m in Sources */,
 				B5E059DE1BB146E100DBF786 /* WMNavigationController.m in Sources */,
@@ -2355,6 +2374,7 @@
 				B5E059A71BB0F93200DBF786 /* UIImage+NSBundle.m in Sources */,
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
+				B7D6616B1BEDE74B00A65860 /* FunctionDescViewController.m in Sources */,
 				B5C60C311BE303C2005DE72A /* TempCustomButton.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
@@ -2380,6 +2400,7 @@
 				B5033BEF1BAFB46C0014935E /* MainPageViewController.m in Sources */,
 				80124C051BD885E800DBE369 /* SDWebImageDecoder.m in Sources */,
 				80124C0B1BD885E800DBE369 /* UIImage+GIF.m in Sources */,
+				B7D6616F1BEDF06C00A65860 /* GTMBase64.m in Sources */,
 				B5E059A61BB0F93200DBF786 /* Toolkit.m in Sources */,
 				B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */,
 				80124C0A1BD885E800DBE369 /* UIButton+WebCache.m in Sources */,
@@ -2405,7 +2426,6 @@
 				80076AC81BDA155000DEFD35 /* JKPhotoBrowser.m in Sources */,
 				B57F5D941BBA925C009AC336 /* InputText.m in Sources */,
 				B59688281BCE4508001F2715 /* RepeatViewController.m in Sources */,
-				80124BDD1BD882BD00DBE369 /* UserInfoViewController.m in Sources */,
 				B5741DD51BC26C3C00335B1C /* DataDefine.m in Sources */,
 				B7FB16821BDB6AA70048551C /* SelectContacterCell.m in Sources */,
 				80076AC51BDA155000DEFD35 /* JKAssetsThumbnailView.m in Sources */,

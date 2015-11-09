@@ -21,6 +21,9 @@
     UILabel *outNote;
     
     NSUserDefaults *mCoorDefault;
+    
+    NSTimeInterval oldTime;
+    NSTimeInterval currentTime;
 }
 
 @end
@@ -68,24 +71,28 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
-    [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.latitude] forKey:@"lat"];
-    [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.longitude] forKey:@"long"];
-    //获取当前所在地的城市名
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    //根据经纬度反向地理编译出地址信息
-    [geocoder reverseGeocodeLocation:locations[0] completionHandler:^(NSArray *array, NSError *error) {
-        if (array.count > 0) {
-            CLPlacemark *placemark = [array objectAtIndex:0];
-            //获取城市
-            NSString *city = placemark.locality;
-            if(!city){
-                city = placemark.administrativeArea;
+    currentTime = [[NSDate date] timeIntervalSince1970];
+    if (currentTime - oldTime > 1000) {
+        oldTime = currentTime;
+        [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.latitude] forKey:@"lat"];
+        [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.longitude] forKey:@"long"];
+        //获取当前所在地的城市名
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        //根据经纬度反向地理编译出地址信息
+        [geocoder reverseGeocodeLocation:locations[0] completionHandler:^(NSArray *array, NSError *error) {
+            if (array.count > 0) {
+                CLPlacemark *placemark = [array objectAtIndex:0];
+                //获取城市
+                NSString *city = placemark.locality;
+                if(!city){
+                    city = placemark.administrativeArea;
+                }
+                NSLog(@"%@",city);
+                [self getWeatherInfo:[city substringToIndex:[city length]-1]];
             }
-            NSLog(@"%@",city);
-            [self getWeatherInfo:[city substringToIndex:[city length]-1]];
-        }
-    }];
-    [locationManager stopUpdatingLocation];
+        }];
+    }
+    //[locationManager stopUpdatingLocation];
 }
 
 - (void)getWeatherInfo:(NSString *) city{

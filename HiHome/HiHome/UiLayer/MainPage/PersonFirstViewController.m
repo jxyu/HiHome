@@ -37,7 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self getResentPic:nil andPerPage:nil];
     cellHeight = SCREEN_HEIGHT / 11;
     resentArray =[NSMutableArray array];
     if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
@@ -66,7 +66,11 @@
     [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    [dataProvider GetUserInfoWithUid:[self getUserID]];
+    if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
+        [dataProvider GetUserInfoWithUid:_mFriendID anduid:[self getUserID]];
+    }else{
+        [dataProvider GetUserInfoWithUid:nil anduid:[self getUserID]];
+    }
 }
 
 -(void)GetInfoBackCall:(id)dict
@@ -99,7 +103,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([_mIFlag isEqual:@"2"]){
+    if([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"]){
         return 7;
     }else{
         return 6;
@@ -171,9 +175,12 @@
         gxqm.leftViewMode = UITextFieldViewModeAlways;
         [cell addSubview:gxqm];
     }else{
-        if ([_mIFlag isEqual:@"2"]) {
+        if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
             if (indexPath.row == 3) {
                 UITextField *relation = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
+                if(!_mType){
+                    _mType = [userInfoArray[0][@"type"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"type"];
+                }
                 if ([_mType isEqual:@"0"]) {
                     relation.text = @"普通好友";
                 }else if([_mType isEqual:@"1"]){
@@ -239,7 +246,7 @@
                 }
                
                 
-                           }else{
+            }else{
                 UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                 [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
                 mHiBtn.layer.borderWidth = 1;
@@ -247,7 +254,6 @@
                 [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
                 [mHiBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.56 blue:0.46 alpha:1] forState:UIControlStateNormal];
                 [cell addSubview:mHiBtn];
-
             }
         }else{
             if(indexPath.row == 3){
@@ -296,21 +302,29 @@
                     }
                 }
             }else{
-                if ([_mIFlag isEqual:@"1"]) {
+                if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"4"]) {
                     cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1];
-                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+                    
+                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];
                     [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
                     [mAddFriendBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
                     [mAddFriendBtn addTarget:self action:@selector(mAddFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
                     mAddFriendBtn.backgroundColor = [UIColor whiteColor];
                     [cell addSubview:mAddFriendBtn];
                     
-                    UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mAddFriendBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
-                    [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
-                    [mHiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
-                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
-                    [cell addSubview:mHiBtn];
+//                    UIButton *mAddFriendBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+//                    [mAddFriendBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+//                    [mAddFriendBtn setTitleColor:[UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1] forState:UIControlStateNormal];
+//                    [mAddFriendBtn addTarget:self action:@selector(mAddFriendEvent:) forControlEvents:UIControlEventTouchUpInside];
+//                    mAddFriendBtn.backgroundColor = [UIColor whiteColor];
+//                    [cell addSubview:mAddFriendBtn];
+//                    
+//                    UIButton *mHiBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 + mAddFriendBtn.frame.size.width + 10, 20, (SCREEN_WIDTH - 30) / 2, 40)];
+//                    [mHiBtn setTitle:@"打招呼" forState:UIControlStateNormal];
+//                    [mHiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
+//                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
+//                    [cell addSubview:mHiBtn];
                 }else{
                     UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                     [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -335,7 +349,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([_mIFlag isEqual:@"2"]) {
+    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
         if (indexPath.row == 0) {
             return cellHeight * 3;
         }else if(indexPath.row == 5){
@@ -361,7 +375,7 @@
     
     
     
-    if (![_mIFlag isEqual:@"2"])//个人的资料
+    if (!_mIFlag)//个人的资料
     {
         if(indexPath.row == 3)
         {
@@ -383,32 +397,52 @@
     }
     else//好友资料
     {
-        if(indexPath.row == 4)
-        {
-            PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
-            personTask.showTaskMode = Mode_today;
-            personTask.friendUserId = _mFriendID;
-            personTask.navTitle = @"今日任务";
-            personTask.pageChangeMode = Mode_nav;
-            [self.navigationController pushViewController:personTask animated:YES];
-          //  [self presentViewController:personTask animated:YES completion:^{}];
+        if([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"4"]){
+            if(indexPath.row == 3)
+            {
+                PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+                personTask.showTaskMode = Mode_today;
+                personTask.friendUserId = _mFriendID;
+                personTask.navTitle = @"今日任务";
+                personTask.pageChangeMode = Mode_nav;
+                [self.navigationController pushViewController:personTask animated:YES];
+                //  [self presentViewController:personTask animated:YES completion:^{}];
+            }
+            if(indexPath.row == 4)
+            {
+                AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+                _AlbumPage.albumUserId = _mFriendID;
+                _AlbumPage.pageChangeMode = Mode_nav;
+                [self.navigationController pushViewController:_AlbumPage animated:YES];
+                
+            }
+        }else{
+            if (indexPath.row == 3) {
+                markFriendVC = [[MarkFriendViewController alloc] init];
+                markFriendVC.navTitle = @"选择与其关系";
+                markFriendVC.mType = _mType;
+                markFriendVC.mFriendID = _mFriendID;
+                [self.navigationController pushViewController:markFriendVC animated:NO];
+            }
+            if(indexPath.row == 4)
+            {
+                PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];
+                personTask.showTaskMode = Mode_today;
+                personTask.friendUserId = _mFriendID;
+                personTask.navTitle = @"今日任务";
+                personTask.pageChangeMode = Mode_nav;
+                [self.navigationController pushViewController:personTask animated:YES];
+                //  [self presentViewController:personTask animated:YES completion:^{}];
+            }
+            if(indexPath.row == 5)
+            {
+                AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+                _AlbumPage.albumUserId = _mFriendID;
+                _AlbumPage.pageChangeMode = Mode_nav;
+                [self.navigationController pushViewController:_AlbumPage animated:YES];
+                
+            }
         }
-        if(indexPath.row == 5)
-        {
-            AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
-            _AlbumPage.albumUserId = _mFriendID;
-            _AlbumPage.pageChangeMode = Mode_nav;
-            [self.navigationController pushViewController:_AlbumPage animated:YES];
-            
-        }
-    }
-    
-    if (indexPath.row == 3) {
-        markFriendVC = [[MarkFriendViewController alloc] init];
-        markFriendVC.navTitle = @"选择与其关系";
-        markFriendVC.mType = _mType;
-        markFriendVC.mFriendID = _mFriendID;
-        [self.navigationController pushViewController:markFriendVC animated:NO];
     }
 }
 
@@ -423,6 +457,9 @@
     if ([_mIFlag isEqual:@"2"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    }else if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     }else{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
@@ -436,7 +473,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
     
-    if ([_mIFlag isEqual:@"2"]) {
+    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
         if (markFriendVC.mType) {
             _mType = markFriendVC.mType;
             [mTableView reloadData];

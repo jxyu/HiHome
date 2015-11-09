@@ -216,6 +216,18 @@
             stateStr = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
             
             localTaskStatus = (ZYTaskStatue)[[tempDict objectForKey:@"tasker_state"] integerValue];
+            if(localTaskStatus == State_needDo)//如果设置的任务状态是待执行那么则设置提醒
+            {
+                NSDate *remindDate;
+                
+                remindDate = [self getNoticeDate];
+                if(remindDate!=nil)
+                {
+                 //   [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]]];
+                    
+                    [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]] andTaskId:TaskId andSid:_sID andTaskDetailMode:[NSString stringWithFormat:@"%d",_taskDetailMode] ];
+                }
+            }
             
             [self setBtnStr:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];//更改两个按键的显示
             
@@ -503,6 +515,11 @@
         UIImageView *headImgView = [[UIImageView alloc]initWithFrame:CGRectMake(10+head.frame.size.width+5,5,_cellHeight -10  , _cellHeight - 10 )];
         
         headImgView.image = [UIImage imageNamed:@"me"];
+        NSString *strAvatar;
+        strAvatar = [_dictData objectForKey:@"avatar"];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
+        [headImgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        
         headImgView.layer.cornerRadius = headImgView.frame.size.width * 0.5;
         headImgView.layer.borderWidth = 0.1;
         headImgView.layer.masksToBounds = YES;
@@ -795,13 +812,6 @@
         case State_received://不显示已完成 直接显示待执行
         {
             
-            NSDate *remindDate;
-            
-            remindDate = [self getNoticeDate];
-            if(remindDate!=nil)
-            {
-                [self setNotice:remindDate andNoticeStr:taskTitleStr andRepeat:[self getRepeatMode:(ZYTaskRepeat)[[_dictData objectForKey:@"repeat"] integerValue]]];
-            }
             stateStr = @"待执行";
             localTaskStatus = State_needDo;
         }
@@ -958,7 +968,7 @@
 
 }
 
-
+#pragma mark -  更改任务状态
 
 
 -(void)setTaskState:(NSString *)state
@@ -1004,7 +1014,7 @@
         return;
     }
     
-    
+   // if()
     
 //    [self setBtnStr:localTaskStatus];
     [self loadTaskDetails:TaskId];
@@ -1060,6 +1070,8 @@
     taskDetailPath.startTaskDateStr =[taskDetailDict objectForKey:@"start"];
     taskDetailPath.endTaskDateStr =[taskDetailDict objectForKey:@"end"];
     taskDetailPath.taskID =[taskDetailDict objectForKey:@"id"];
+    
+
     
     if(taskDetailPath.imgSrc.count > 0)
     {
@@ -1191,6 +1203,7 @@
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"backFrom" object:nil userInfo:[NSDictionary dictionaryWithObject:@"slideTabView" forKey:@"backFrom"]];
 }
 
 -(void)btnRightClick:(id)sender
@@ -1595,6 +1608,36 @@
         //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
 }
+-(void)setNotice:(NSDate *)noticeDate andNoticeStr:(NSString *)noticeStr andRepeat:(NSCalendarUnit) repeatMode andTaskId:(NSString *)noticeTaskId andSid:(NSString *)sid andTaskDetailMode:(NSString *)taskDetailMode
+{
+    if(noticeDate && noticeStr && noticeTaskId &&sid && taskDetailMode)
+    {
+        NSLog(@"set noticeDate = [%@]",noticeDate);
+        UILocalNotification *notification=[[UILocalNotification alloc] init];
+        if (notification!=nil) {
+            //  NSDate *now=[NSDate date];
+            
+            notification.fireDate=noticeDate;
+            notification.repeatInterval=repeatMode;//循环次数，
+            notification.timeZone=[NSTimeZone defaultTimeZone];
+            notification.applicationIconBadgeNumber=1; //应用的红色数字
+            notification.soundName= UILocalNotificationDefaultSoundName;//声音，可以换成alarm.soundName = @"myMusic.caf"
+            //去掉下面2行就不会弹出提示框
+            
+            notification.alertBody=[NSString stringWithFormat:@"您有任务（%@）待执行",noticeStr];//[NSString stringWithFormat:@"%@设置的小家提醒您",noticeDate];//@"通知内容";//提示信息 弹出提示框
+            notification.alertAction = @"打开";  //提示框按钮
+            //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+            NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithObject:noticeTaskId forKey:@"taskid"];
+            [infoDict setObject:sid forKey:@"sid"];
+            [infoDict setObject:taskDetailMode forKey:@"taskDetailMode"];
+            notification.userInfo = infoDict; //添加额外的信息
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        }
+    }
+}
+
 
 
 

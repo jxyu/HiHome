@@ -16,11 +16,14 @@
 #import "RegisterViewController.h"
 #import "SVProgressHUD.h"
 #import "UMSocial.h"
+#import "NoticePageView.h"
+#import "UIImageView+WebCache.h"
 
 @interface LoginViewController ()<UMSocialUIDelegate>{
     NSUserDefaults *mUserDefault;
     NSString *_mAccount;
     NSString *_mPassword;
+    UIImageView *headImg;
 }
 
 @end
@@ -37,12 +40,12 @@
     _topView.hidden=YES;
     [self initViews];
   
-//    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-//    loginBtn.backgroundColor = [UIColor blueColor];
-//    
-//    [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.view addSubview:loginBtn];
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];//测试按钮
+    loginBtn.backgroundColor = [UIColor blueColor];
+    
+    [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+//   [self.view addSubview:loginBtn];
     // Do any additional setup after loading the view from its nib.
     
 
@@ -59,7 +62,16 @@
     [self initLines];
     [self initLabels];
     [self initDatas];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
+    [self.view addGestureRecognizer:tapGesture];
+    
 }
+-(void)tapViewAction:(id)sender
+{
+    [self.view endEditing:YES];
+}
+
 -(void) initDatas
 {
     _userData = [[DataDefine alloc] init];
@@ -134,7 +146,7 @@
     [self.view addSubview:logoImgView];
     
     
-    UIImageView *headImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me"]];
+    headImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me"]];
     headImg.frame =CGRectMake((self.view.frame.size.width - 2*ZY_UISTART_X)/3+ZY_UISTART_X +20/2 ,
                               ZY_UIPART_SCREEN_HEIGHT * 20-((self.view.frame.size.width - 2*ZY_UISTART_X - 30)/3-20)/2,
                               (self.view.frame.size.width - 2*ZY_UISTART_X )/3-20,
@@ -322,6 +334,9 @@
     switch (tempText.tag) {
         case USER_TEXT_TAG:
             _userData.phoneNum = tempText.text;
+            if (tempText.text.length == 11) {
+                [self getHeadImgByPhone:tempText.text];
+            }
             break;
         case PASSWORD_TEXT_TAG:
             _userData.passWord = tempText.text;
@@ -331,6 +346,22 @@
     }
 }
 
+-(void)getHeadImgByPhone:(NSString *)phone{
+    DataProvider *mDataProvider = [[DataProvider alloc] init];
+    [mDataProvider setDelegateObject:self setBackFunctionName:@"getHeadImgByPhoneBackCall:"];
+    [mDataProvider getContacterByPhone:phone];
+}
+
+-(void)getHeadImgByPhoneBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        NSString *avatar = [[[dict valueForKey:@"datas"] valueForKey:@"list"][0] valueForKey:@"avatar"];
+        NSLog(@"%@",avatar);
+        NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [headImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+    }
+}
 
 - (void)textFieldDidEnd:(id)sender
 {
@@ -351,11 +382,52 @@
     //    tempText.text
 }
 
+-(void)setNotice:(NSDate *)noticeDate andNoticeStr:(NSString *)noticeStr andRepeat:(NSCalendarUnit) repeatMode andTaskId:(NSString *)taskId andSid:(NSString *)sid andTaskDetailMode:(NSString *)taskDetailMode
+{
+    if(noticeDate && noticeStr && taskId &&sid && taskDetailMode)
+    {
+        NSLog(@"noticeDate = [%@]",noticeDate);
+        UILocalNotification *notification=[[UILocalNotification alloc] init];
+        if (notification!=nil) {
+            //  NSDate *now=[NSDate date];
+            
+            notification.fireDate=noticeDate;
+            notification.repeatInterval=repeatMode;//循环次数，
+            notification.timeZone=[NSTimeZone defaultTimeZone];
+            notification.applicationIconBadgeNumber=1; //应用的红色数字
+            notification.soundName= UILocalNotificationDefaultSoundName;//声音，可以换成alarm.soundName = @"myMusic.caf"
+            //去掉下面2行就不会弹出提示框
+            
+            notification.alertBody=[NSString stringWithFormat:@"您有任务（%@）待执行",noticeStr];//[NSString stringWithFormat:@"%@设置的小家提醒您",noticeDate];//@"通知内容";//提示信息 弹出提示框
+            notification.alertAction = @"打开";  //提示框按钮
+            //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+            NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithObject:taskId forKey:@"taskid"];
+            [infoDict setObject:sid forKey:@"sid"];
+            [infoDict setObject:taskDetailMode forKey:@"taskDetailMode"];
+            notification.userInfo = infoDict; //添加额外的信息
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        }
+    }
+}
 
 #pragma  mark - key click action
 -(void) btnClick:(id)sender
 {
     
+    NSDate *nowDate = [NSDate date];
+    
+    [self setNotice:[nowDate dateByAddingTimeInterval:30] andNoticeStr:@"测试用" andRepeat:0 andTaskId:@"374" andSid:@"468" andTaskDetailMode:@"0"];
+    
+    
+//    NoticePageView *tempView = [[NoticePageView alloc] initWithTitle:@"测试" message:@"测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面测试页面"];
+//    [tempView addButtonWithTitle:@"去执行"];
+//    [tempView addButtonWithTitle:@"取消任务"];
+// //   [tempView addButtonWithTitle:@"正点提醒"];
+//    tempView.buttonHeight = 44;
+//    [tempView show];
+//    
     NSLog(@"Click btn");
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil ];
 }
@@ -504,7 +576,7 @@
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
                 
-                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 4]];
+                _mAccount = [NSString stringWithFormat:@"%@%@",snsAccount.userName,[snsAccount.usid substringFromIndex:snsAccount.usid.length - 3]];
                 _mPassword = snsAccount.usid;
                 //调用注册接口
                 [self registerInterface];

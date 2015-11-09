@@ -36,6 +36,20 @@
     }
 }
 
+-(void)getFunctionDesc{
+    NSString *url = [NSString stringWithFormat:@"%@api.php?c=article&a=getInfo",Url];
+    [self PostRequest:url andpram:nil];
+}
+
+-(void)HelpAndFeedbackSave:(NSString *)uid andTitle:(NSString *)title andContent:(NSString *)content{
+    if (uid) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=gbook&a=addInfo",Url];
+        NSDictionary *prm = @{@"uid":uid,@"title":title,@"content":content};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
 
 /**
  *  注册
@@ -445,14 +459,16 @@
     
 }
 
--(void)GetUserInfoWithUid:(NSString *)uid
+-(void)GetUserInfoWithUid:(NSString *)fid anduid:(NSString *)uid
 {
-    if (uid) {
+    if (fid && uid) {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
+        NSDictionary * prm=@{@"id":fid,@"uid":uid};
+        [self GetRequest:url andpram:prm];
+    }else{
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=user&a=getInfo",Url];
         NSDictionary * prm=@{@"id":uid};
         [self GetRequest:url andpram:prm];
-    }else{
-        [SVProgressHUD dismiss];
     }
 }
 

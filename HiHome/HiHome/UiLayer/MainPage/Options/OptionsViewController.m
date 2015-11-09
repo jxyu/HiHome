@@ -54,6 +54,7 @@
     _soundsetViewCtl = [[SoundSetViewController alloc] init];
     _chatLogViewCtl = [[ChatLogViewController alloc] init];
     _helpAndFeedBackViewCtl =[[HelpAndFeedbackViewController alloc] init];
+    _functionDescVC = [[FunctionDescViewController alloc] init];
   
 
     
@@ -296,6 +297,10 @@
             break;
         case 2:
             switch (indexPath.row) {
+                case 0:{
+                    optionsViewCtls = (BackPageViewController *)_functionDescVC;
+                }
+                    break;
                 case 1:
                     optionsViewCtls = (BackPageViewController *)_helpAndFeedBackViewCtl;
                     break;

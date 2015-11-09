@@ -17,6 +17,12 @@
 //修改头像
 -(void)changeHeadImg:(NSString *)uid andImgsrc:(NSString *)imgsrc;
 
+//反馈信息保存
+-(void)HelpAndFeedbackSave:(NSString *)uid andTitle:(NSString *)title andContent:(NSString *)content;
+
+//功能介绍
+-(void)getFunctionDesc;
+
 /**
  *  注册
  *
@@ -321,7 +327,7 @@
 -(void)matchAddress:(NSString *)userID andMob:(NSString *) mob;
 
 //获取用户资料
--(void)GetUserInfoWithUid:(NSString *)uid;
+-(void)GetUserInfoWithUid:(NSString *)fid anduid:(NSString *)uid;
 
 //保存用户资料
 -(void)SaveUserInfo:(NSString *)userID andNick:(NSString *) nick andSex:(NSString *) sex andAge:(NSString *)age andSign:(NSString *) sign;

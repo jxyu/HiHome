@@ -20,13 +20,19 @@
 @interface AddressPageViewController (){
     DataProvider *dataProvider;
     
-    NSArray *friendArrayNormal;
-    NSArray *friendArraySpouse;
-    NSArray *friendArrayStar;
+    NSMutableArray *friendArrayNormal;
+    NSMutableArray *friendArraySpouse;
+    NSMutableArray *friendArrayStar;
+    
+    NSMutableArray *searchResultsNormal;
+    NSMutableArray *searchResultsSpouse;
+    NSMutableArray *searchResultsStar;
     
     NSIndexPath *currentRow;
     
     PersonFirstViewController *personFirstVC;
+    
+    BOOL isSearchIFlag;
 }
 
 @end
@@ -36,6 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    isSearchIFlag = NO;
     [self initData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetFriendInfoClick) name:@"getFriendInfo" object:nil];
@@ -55,9 +62,13 @@
     
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 200) {
-        friendArrayNormal = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list0"];
-        friendArrayStar = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list1"];
-        friendArraySpouse = (NSArray *)[[dict objectForKey:@"datas"] objectForKey:@"list2"];
+        friendArrayNormal = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list0"];
+        friendArrayStar = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list1"];
+        friendArraySpouse = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list2"];
+        
+        searchResultsNormal = friendArrayNormal;
+        searchResultsStar = friendArrayStar;
+        searchResultsSpouse = friendArraySpouse;
     }else{
         NSLog(@"访问服务器失败！");
     }
@@ -112,14 +123,15 @@
     
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH
                                                                     , ZY_VIEWHEIGHT_IN_HEADVIEW)];
+    _searchBar.delegate = self;
     _searchBar.placeholder = @"搜索";
     
-    _searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
+    //_searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
     
     // searchResultsDataSource 就是 UITableViewDataSource
-    _searchDisplayController.searchResultsDataSource = self;
+    //_searchDisplayController.searchResultsDataSource = self;
     // searchResultsDelegate 就是 UITableViewDelegate
-    _searchDisplayController.searchResultsDelegate = self;
+    //_searchDisplayController.searchResultsDelegate = self;
     
   //  _mytableView.tableHeaderView = _searchBar;
     
@@ -208,13 +220,13 @@
             return  1;
             break;
         case 1:
-            return friendArraySpouse.count;
+            return searchResultsSpouse.count;
             break;
         case 2:
-             return friendArrayStar.count;
+             return searchResultsStar.count;
             break;
         case 3:
-            return friendArrayNormal.count;
+            return searchResultsNormal.count;
             break;
         default:
             break;
@@ -252,22 +264,22 @@
         cell.nameLabel.text = @"通讯录";
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 1){
-        NSString *avatar = [friendArraySpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"avatar"];
+        NSString *avatar = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
+        cell.nameLabel.text = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 2){
-        NSString *avatar = [friendArrayStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"avatar"];
+        NSString *avatar = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
+        cell.nameLabel.text = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }else if(indexPath.section == 3){
-        NSString *avatar = [friendArrayNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"avatar"];
+        NSString *avatar = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
+        cell.nameLabel.text = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
     }
     //分割线设置
@@ -341,13 +353,13 @@
         personFirstVC = [[PersonFirstViewController alloc] init];
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [friendArraySpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [friendArraySpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"avatar"];
-        personFirstVC.mName = [friendArraySpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"nick"];
-        personFirstVC.mSex = [friendArraySpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"sex"];
-        personFirstVC.mAge = [friendArraySpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"age"];
-        personFirstVC.mSign = [friendArraySpouse[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"sign"];
-        personFirstVC.mType = [friendArraySpouse[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArraySpouse[indexPath.row][@"type"];
+        personFirstVC.mFriendID = [searchResultsSpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
+        personFirstVC.mName = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
+        personFirstVC.mSex = [searchResultsSpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sex"];
+        personFirstVC.mAge = [searchResultsSpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"age"];
+        personFirstVC.mSign = [searchResultsSpouse[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sign"];
+        personFirstVC.mType = [searchResultsSpouse[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"type"];
         [self.navigationController pushViewController:personFirstVC animated:NO];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
@@ -356,13 +368,13 @@
         personFirstVC = [[PersonFirstViewController alloc] init];
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [friendArrayStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [friendArrayStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"avatar"];
-        personFirstVC.mName = [friendArrayStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"nick"];
-        personFirstVC.mSex = [friendArrayStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"sex"];
-        personFirstVC.mAge = [friendArrayStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"age"];
-        personFirstVC.mSign = [friendArrayStar[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"sign"];
-        personFirstVC.mType = [friendArrayStar[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArrayStar[indexPath.row][@"type"];
+        personFirstVC.mFriendID = [searchResultsStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
+        personFirstVC.mName = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
+        personFirstVC.mSex = [searchResultsStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sex"];
+        personFirstVC.mAge = [searchResultsStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"age"];
+        personFirstVC.mSign = [searchResultsStar[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sign"];
+        personFirstVC.mType = [searchResultsStar[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"type"];
         [self.navigationController pushViewController:personFirstVC animated:NO];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
@@ -371,13 +383,13 @@
         personFirstVC = [[PersonFirstViewController alloc] init];
         personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [friendArrayNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [friendArrayNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"avatar"];
-        personFirstVC.mName = [friendArrayNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"nick"];
-        personFirstVC.mSex = [friendArrayNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"sex"];
-        personFirstVC.mAge = [friendArrayNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"age"];
-        personFirstVC.mSign = [friendArrayNormal[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"sign"];
-        personFirstVC.mType = [friendArrayNormal[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":friendArrayNormal[indexPath.row][@"type"];
+        personFirstVC.mFriendID = [searchResultsNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"fid"];
+        personFirstVC.mHeadImg = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
+        personFirstVC.mName = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
+        personFirstVC.mSex = [searchResultsNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sex"];
+        personFirstVC.mAge = [searchResultsNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"age"];
+        personFirstVC.mSign = [searchResultsNormal[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sign"];
+        personFirstVC.mType = [searchResultsNormal[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"type"];
         [self.navigationController pushViewController:personFirstVC animated:NO];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
@@ -437,11 +449,11 @@
         dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"delFriendBackCall:"];
         if (currentRow.section == 1) {
-            [dataProvider delFriend:friendArraySpouse[currentRow.row][@"fid"] andUserID:[self getUserID]];
+            [dataProvider delFriend:searchResultsSpouse[currentRow.row][@"fid"] andUserID:[self getUserID]];
         }else if(currentRow.section == 2){
-            [dataProvider delFriend:friendArrayStar[currentRow.row][@"fid"] andUserID:[self getUserID]];
+            [dataProvider delFriend:searchResultsStar[currentRow.row][@"fid"] andUserID:[self getUserID]];
         }else if(currentRow.section == 3){
-            [dataProvider delFriend:friendArrayNormal[currentRow.row][@"fid"] andUserID:[self getUserID]];
+            [dataProvider delFriend:searchResultsNormal[currentRow.row][@"fid"] andUserID:[self getUserID]];
         }
     }
 }
@@ -452,17 +464,17 @@
     if (code == 200) {
         NSMutableArray *tempArray;
         if (currentRow.section == 1) {
-            tempArray = [[NSMutableArray alloc] initWithArray:friendArraySpouse];
+            tempArray = [[NSMutableArray alloc] initWithArray:searchResultsSpouse];
             [tempArray removeObjectAtIndex:currentRow.row];
-            friendArraySpouse = [[NSArray alloc] initWithArray:tempArray];
+            searchResultsSpouse = [[NSMutableArray alloc] initWithArray:tempArray];
         }else if(currentRow.section == 2){
-            tempArray = [[NSMutableArray alloc] initWithArray:friendArrayStar];
+            tempArray = [[NSMutableArray alloc] initWithArray:searchResultsStar];
             [tempArray removeObjectAtIndex:currentRow.row];
-            friendArrayStar = [[NSArray alloc] initWithArray:tempArray];
+            searchResultsStar = [[NSMutableArray alloc] initWithArray:tempArray];
         }else if(currentRow.section == 3){
-            tempArray = [[NSMutableArray alloc] initWithArray:friendArrayNormal];
+            tempArray = [[NSMutableArray alloc] initWithArray:searchResultsNormal];
             [tempArray removeObjectAtIndex:currentRow.row];
-            friendArrayNormal = [[NSArray alloc] initWithArray:tempArray];
+            searchResultsNormal = [[NSMutableArray alloc] initWithArray:tempArray];
         }
         
         
@@ -551,15 +563,15 @@
         return 0;
     }else{
         if (section == 1) {
-            if (friendArraySpouse.count > 0) {
+            if (searchResultsSpouse.count > 0) {
                 return 40;
             }
         }else if(section == 2){
-            if (friendArrayStar.count > 0) {
+            if (searchResultsStar.count > 0) {
                 return 40;
             }
         }else{
-            if(friendArrayNormal.count > 0){
+            if(searchResultsNormal.count > 0){
                 return 40;
             }
         }
@@ -579,19 +591,12 @@
     [self initData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+  
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    NSLog(@"111111");
 }
-*/
 
 @end

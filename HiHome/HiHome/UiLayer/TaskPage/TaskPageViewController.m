@@ -563,7 +563,11 @@
             
             NSInteger tasker =[(NSString *)[tempDict objectForKey:@"tasker"] integerValue];
             NSString *performers;
-            if(tasker > 1 )
+            if(tasker == 0)
+            {
+                performers = @"0人";
+            }
+            else if(tasker > 1 )
             {
                 performers = [NSString stringWithFormat:@"%ld人",(long)tasker];
             }
@@ -576,8 +580,11 @@
             taskPath.taskPerformers = performers;
             taskPath.taskContent =[tempDict objectForKey:@"content"];
             taskPath.taskStatus = (ZYTaskStatue)[(NSString *)[tempDict objectForKey:@"state"] integerValue];
-            
-            if([[tempDict objectForKey:@"tasker"] integerValue] > 1)
+            if(tasker == 0)
+            {
+                taskPath.taskStatus = State_unreceive;
+            }
+            else if([[tempDict objectForKey:@"tasker"] integerValue] > 1)
                 taskPath.taskStatus = State_morepeople;
             else{
                 NSDictionary *tempDict1;
@@ -588,8 +595,6 @@
                 
                 
             }
-            
-            
             
             taskPath.taskType = ZY_TASKTYPE_GET;
             taskPath.remindTime = (ZYTaskRemind)[(NSString *)[tempDict objectForKey:@"tip"] integerValue];

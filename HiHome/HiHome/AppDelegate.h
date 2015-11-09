@@ -13,9 +13,12 @@
 
 #import "OptionTextViewController.h"
 #import <RongIMKit/RongIMKit.h>
-
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource>
+#import "JKAlertDialog.h"
+#import "UIImageView+WebCache.h"
+#import "DataProvider.h"
+#import "SVProgressHUD.h"
+#import "TaskDetailPageViewController.h"
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource,TaskDetailDelegate>
 {
     CustomTabBarViewController *_tabBarViewCol;
     FirstScrollController *firstCol;

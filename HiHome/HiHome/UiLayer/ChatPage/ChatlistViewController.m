@@ -10,10 +10,13 @@
 #import <RongIMKit/RongIMKit.h>
 #import "UIImage+NSBundle.h"
 #import "ChatContentViewController.h"
+#import "RCIM.h"
 
 #define DefaultLeftImageWidth 44
 
-@interface ChatlistViewController ()
+@interface ChatlistViewController (){
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -38,6 +41,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@",[mUserDefault valueForKey:@"messageSound"]);
+    if ([mUserDefault valueForKey:@"messageSound"]) {
+        [RCIM sharedRCIM].disableMessageAlertSound = [[mUserDefault valueForKey:@"messageSound"] isEqual:@"NO"]?NO:YES;
+    }else{
+        [RCIM sharedRCIM].disableMessageAlertSound = NO;
+    }
+    
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
     
     [self.emptyConversationView removeFromSuperview];
@@ -182,6 +194,14 @@
 {
     UIView * emptyView=[[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-104)];
     self.emptyConversationView=emptyView;
+}
+
+-(BOOL)onRCIMCustomAlertSound:(RCMessage *)message{
+    return YES;
+}
+
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    
 }
 
 @end

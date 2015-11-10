@@ -9,12 +9,15 @@
 #import "SoundSetViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
+#import "RCIM.h"
 
 
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
 
 
-@interface SoundSetViewController ()
+@interface SoundSetViewController (){
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -42,6 +45,8 @@
 
 -(void) initViews
 {
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mainTableView setDelegate:self];
@@ -101,7 +106,7 @@
     NSInteger switchTag ;
     switchTag = ZY_UISWITCH_TAG_BASE + indexPath.section*10+indexPath.row;
     
-    [self setOptionCell:cell andTitleLabels:CELL_TITLE(indexPath.section,indexPath.row) andOtherViews:switchTag];
+    [self setOptionCell:cell andTitleLabels:CELL_TITLE(indexPath.section,indexPath.row) andOtherViews:switchTag andIndexPath:indexPath];
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -111,7 +116,7 @@
     
 }
 
--(void)setOptionCell:(BaseTableViewCell *)cell andTitleLabels:(NSString *)title andOtherViews:(NSInteger )switchTag
+-(void)setOptionCell:(BaseTableViewCell *)cell andTitleLabels:(NSString *)title andOtherViews:(NSInteger )switchTag andIndexPath:(NSIndexPath *) indexPath
 {
     NSMutableArray *Labels = [NSMutableArray array];
     NSMutableArray *OtherViews = [NSMutableArray array];
@@ -138,6 +143,18 @@
     {
         UISwitch *switchBtn = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-(20+50), _cellHeight/3, 50, _cellHeight/3)];
         switchBtn.tag = switchTag;
+        if (indexPath.row == 0) {
+            if ([[mUserDefault valueForKey:@"messageSound"] isEqual:@"NO"]) {
+                switchBtn.on = YES;
+            }else{
+                switchBtn.on = NO;
+            }
+        }else if(indexPath.row == 1){
+            
+        }else{
+            
+        }
+        [switchBtn addTarget:self action:@selector(switchEvent:) forControlEvents:UIControlEventTouchUpInside];
         [OtherViews addObject:switchBtn];
     }
     
@@ -167,6 +184,44 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     
+}
+
+-(void)switchEvent:(UISwitch *)sender{
+    NSLog(@"%@",sender);
+    UITableViewCell * cell = (UITableViewCell *)[sender superview];
+    NSIndexPath *indexPath = [_mainTableView indexPathForCell:cell];
+    NSLog(@"%ld",(long)indexPath.row);
+    switch (indexPath.row) {
+        case 0:{
+            if (sender.on) {
+                [RCIM sharedRCIM].disableMessageAlertSound = NO;
+                [mUserDefault setValue:@"NO" forKey:@"messageSound"];
+            }else{
+                [RCIM sharedRCIM].disableMessageAlertSound = YES;
+                [mUserDefault setValue:@"YES" forKey:@"messageSound"];
+            }
+        }
+            break;
+        case 1:{
+            if (sender.on) {
+                
+            }else{
+                
+            }
+        }
+            break;
+        case 2:{
+            if (sender.on) {
+                
+            }else{
+                
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

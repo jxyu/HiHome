@@ -896,7 +896,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return YES;
+    if(tableView.tag == 1)
+        return YES;
+    else
+        return NO;
 }
 
 - (UITableViewCellEditingStyle)tableView: (UITableView *)tableView editingStyleForRowAtIndexPath: (NSIndexPath *)indexPath
@@ -915,7 +918,8 @@
     [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     
     NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
-    
+    if(tableView.tag == 0)
+        return;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         
@@ -927,7 +931,7 @@
         [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
             NSLog(@"Click ok");
             
-            NSDictionary *tempDict = [resentArray objectAtIndex:indexPath.row];
+            NSDictionary *tempDict = [albumArray objectAtIndex:indexPath.row];
             
             [self delAlbum:[tempDict objectForKey:@"id"]];
             
@@ -963,7 +967,10 @@
 {
     NSInteger code;
     [SVProgressHUD dismiss];
+    
+    DLog(@"%@",dict);
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
     
     if(code!=200)
     {

@@ -6232,11 +6232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/ChatPage/ChatlistViewController.m"
-            timestampString = "468838673.948418"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "-showEmptyConversationView"
             landmarkType = "5">
          </BreakpointContent>
@@ -6264,11 +6264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/ChatPage/ChatlistViewController.m"
-            timestampString = "468838673.948418"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-onRCIMCustomAlertSound:"
             landmarkType = "5">
          </BreakpointContent>
@@ -6296,11 +6296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/ChatLogViewController.m"
-            timestampString = "468838480.955975"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -6312,12 +6312,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/ChatLogViewController.m"
-            timestampString = "468838480.955975"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6328,11 +6328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Options/ChatLogViewController.m"
-            timestampString = "468838480.955975"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -6376,11 +6376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/ChatPage/ChatlistViewController.m"
-            timestampString = "468838673.948418"
+            timestampString = "468839955.168427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "-refreshConversation"
             landmarkType = "5">
          </BreakpointContent>

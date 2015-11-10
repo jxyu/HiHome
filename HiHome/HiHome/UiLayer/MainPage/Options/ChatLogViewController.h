@@ -8,7 +8,7 @@
 
 #import "BackPageViewController.h"
 
-@interface ChatLogViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ChatLogViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 {
 @private
     NSInteger _cellCount;

@@ -155,6 +155,8 @@
         [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"0"]){
         [self setDisplayConversationTypes:@[@(ConversationType_SYSTEM)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"2"]){
+        [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_PRIVATE)]];
     }else{
         [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     }

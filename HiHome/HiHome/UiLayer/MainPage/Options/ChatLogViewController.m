@@ -154,20 +154,27 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     if(indexPath.row == 0){
-        [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_SYSTEM)]];
-        [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
-        //BOOL result = [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_SYSTEM)]];
-//        if (result) {
-//            [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"清空列表成功~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            [alertView show];
-//        }else{
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"清空列表失败~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            [alertView show];
-//        }
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空会话列表?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 1;
+        [alertView show];
     }else if(indexPath.row == 1){
-        BOOL b = [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:@"1"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空所有聊天内容?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 2;
+        [alertView show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        if (alertView.tag == 1) {
+            [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        }else{
+            [mUserDefault setValue:@"2" forKey:@"ChatIFlag"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        }
     }
 }
 

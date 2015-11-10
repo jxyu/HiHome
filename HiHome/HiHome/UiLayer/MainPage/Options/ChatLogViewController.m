@@ -9,11 +9,14 @@
 #import "ChatLogViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
+#import "RCIMClient.h"
 
 
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
 
-@interface ChatLogViewController ()
+@interface ChatLogViewController (){
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -21,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     
     _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
                                                              /*最右侧图标，标题，内容*/
@@ -148,9 +153,30 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
-    
+    if(indexPath.row == 0){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空会话列表?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 1;
+        [alertView show];
+    }else if(indexPath.row == 1){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空所有聊天内容?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 2;
+        [alertView show];
+    }
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        if (alertView.tag == 1) {
+            [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        }else{
+            [mUserDefault setValue:@"2" forKey:@"ChatIFlag"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        }
+    }
+}
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -212,8 +238,6 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
     
     return indexPath;
     

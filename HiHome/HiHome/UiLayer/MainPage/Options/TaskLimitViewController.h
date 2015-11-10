@@ -7,10 +7,10 @@
 //
 
 #import "BackPageViewController.h"
+#import "SelectContacterViewController.h"
 
 
-
-@interface TaskLimitViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+@interface TaskLimitViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,SelectContacterViewControllerDelegate>
 {
 @private
     NSInteger _cellCount;

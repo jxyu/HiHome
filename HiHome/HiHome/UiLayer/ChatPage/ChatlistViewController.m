@@ -10,10 +10,13 @@
 #import <RongIMKit/RongIMKit.h>
 #import "UIImage+NSBundle.h"
 #import "ChatContentViewController.h"
+#import "RCIM.h"
 
 #define DefaultLeftImageWidth 44
 
-@interface ChatlistViewController ()
+@interface ChatlistViewController (){
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -38,7 +41,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@",[mUserDefault valueForKey:@"messageSound"]);
+    if ([mUserDefault valueForKey:@"messageSound"]) {
+        [RCIM sharedRCIM].disableMessageAlertSound = [[mUserDefault valueForKey:@"messageSound"] isEqual:@"NO"]?NO:YES;
+    }else{
+        [RCIM sharedRCIM].disableMessageAlertSound = NO;
+    }
+    
+    if ([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"1"]) {
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"0"]){
+        [self setDisplayConversationTypes:@[@(ConversationType_SYSTEM)]];
+    }else{
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }
     
     [self.emptyConversationView removeFromSuperview];
     
@@ -129,6 +147,21 @@
     self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT);
     self.conversationListTableView.tableFooterView = [UIView new];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConversation) name:@"refreshConversation" object:nil];
+}
+
+-(void)refreshConversation{
+    if ([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"1"]) {
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"0"]){
+        [self setDisplayConversationTypes:@[@(ConversationType_SYSTEM)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"2"]){
+        [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_PRIVATE)]];
+    }else{
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }
+    [self refreshConversationTableViewIfNeeded];
+    [self.conversationListTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,6 +215,14 @@
 {
     UIView * emptyView=[[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-104)];
     self.emptyConversationView=emptyView;
+}
+
+-(BOOL)onRCIMCustomAlertSound:(RCMessage *)message{
+    return YES;
+}
+
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    
 }
 
 @end

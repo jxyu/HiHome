@@ -29,8 +29,15 @@
     UIImage *bigIcon = [UIImage imageNamed:icon];
     UIImageView *iconView = [[UIImageView alloc] initWithImage:bigIcon];
     if (icon) {
-        iconView.width = 34;
+        iconView.width = 20;
+      //  iconView.frame = CGRectMake(0, 0, 34,  textField.height);
     }
+    
+//    UIView *tempView = [[UIView alloc] init];
+//    //tempView.width = iconView.width + 5;
+//    tempView.frame = CGRectMake(0, 0, 34+5,  textField.height);
+//    [tempView addSubview:iconView];
+    
     iconView.contentMode = UIViewContentModeLeft;
     textField.leftView = iconView;
     textField.leftViewMode = UITextFieldViewModeAlways;

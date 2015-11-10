@@ -275,9 +275,6 @@
 }
 
 
-
-
-
 -(void)getTokenEvent{
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetTokenBackCall:"];

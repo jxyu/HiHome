@@ -9,11 +9,14 @@
 #import "ChatLogViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
+#import "RCIMClient.h"
 
 
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
 
-@interface ChatLogViewController ()
+@interface ChatLogViewController (){
+    NSUserDefaults *mUserDefault;
+}
 
 @end
 
@@ -21,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     
     _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
                                                              /*最右侧图标，标题，内容*/
@@ -148,9 +153,23 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
-    
+    if(indexPath.row == 0){
+        [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_SYSTEM)]];
+        [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        //BOOL result = [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_SYSTEM)]];
+//        if (result) {
+//            [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"清空列表成功~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//        }else{
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"清空列表失败~" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//        }
+    }else if(indexPath.row == 1){
+        BOOL b = [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:@"1"];
+    }
 }
-
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -212,8 +231,6 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
     
     return indexPath;
     

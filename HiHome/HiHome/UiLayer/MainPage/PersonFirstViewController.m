@@ -612,8 +612,9 @@
 -(void)mHiEvent:(id)sender{
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
-    conversationVC.targetId = _mFriendID; //这里模拟自己给自己发消息，您可以替换成其他登录的用户的UserId
-    
+    conversationVC.targetId = _mFriendID;
+    [mUserDefault setValue:@"1" forKey:@"ChatIFlag"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
 //    conversationVC.userName = @"测试1";
 //    conversationVC.title = @"自问自答";
     conversationVC.mIFlag = @"2";

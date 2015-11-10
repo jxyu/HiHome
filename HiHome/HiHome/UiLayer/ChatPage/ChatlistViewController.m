@@ -50,7 +50,13 @@
         [RCIM sharedRCIM].disableMessageAlertSound = NO;
     }
     
-    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
+    if ([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"1"]) {
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"0"]){
+        [self setDisplayConversationTypes:@[@(ConversationType_SYSTEM)]];
+    }else{
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }
     
     [self.emptyConversationView removeFromSuperview];
     
@@ -141,6 +147,19 @@
     self.conversationListTableView.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT);
     self.conversationListTableView.tableFooterView = [UIView new];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConversation) name:@"refreshConversation" object:nil];
+}
+
+-(void)refreshConversation{
+    if ([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"1"]) {
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }else if([[mUserDefault valueForKey:@"ChatIFlag"] isEqual:@"0"]){
+        [self setDisplayConversationTypes:@[@(ConversationType_SYSTEM)]];
+    }else{
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    }
+    [self refreshConversationTableViewIfNeeded];
+    [self.conversationListTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

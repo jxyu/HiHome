@@ -18,12 +18,24 @@
 #import "UMSocial.h"
 #import "NoticePageView.h"
 #import "UIImageView+WebCache.h"
+#import "BaseTableViewCell.h"
 
-@interface LoginViewController ()<UMSocialUIDelegate>{
+@interface LoginViewController ()<UMSocialUIDelegate,UIGestureRecognizerDelegate>{
     NSUserDefaults *mUserDefault;
     NSString *_mAccount;
     NSString *_mPassword;
     UIImageView *headImg;
+    
+    CGFloat _cellHeight;
+    NSInteger _cellCount;
+
+    //UIView *_moveDownGroup;
+    UIView *_account_box;
+    UITableView *_accountTableView;
+  //  NSMutableArray *_userAccountArr;
+    NSMutableArray *_AccountArrCache;
+    
+    
 }
 
 @end
@@ -38,6 +50,10 @@
     [super viewDidLoad];
     self.view.frame = [[UIScreen mainScreen] bounds];
     _topView.hidden=YES;
+    _AccountArrCache = [NSMutableArray array];
+    _cellCount = 0;
+    _cellHeight = 40;
+    [self initDatas];
     [self initViews];
   
     UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];//测试按钮
@@ -49,33 +65,46 @@
     // Do any additional setup after loading the view from its nib.
     
 
-
-
 }
+
+-(void)initDatas
+{
+    
+    _userData = [[DataDefine alloc] init];
+    mUserDefault = [NSUserDefaults standardUserDefaults];
+    _AccountArrCache = [mUserDefault valueForKey:@"userAccountList"];
+    if(_AccountArrCache!=nil)
+    {
+        _cellCount = _AccountArrCache.count;
+    }
+    
+    
+}
+
 -(void) initViews
 {
-    mUserDefault = [NSUserDefaults standardUserDefaults];
+   
     
     [self initImgViews];
     [self initTexts];
     [self initBtns];
     [self initLines];
     [self initLabels];
-    [self initDatas];
+    
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
+    tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
     
 }
 -(void)tapViewAction:(id)sender
 {
     [self.view endEditing:YES];
+    
+    [self hideAccountBox];
 }
 
--(void) initDatas
-{
-    _userData = [[DataDefine alloc] init];
-}
+
 
 
 -(UIImageView *)drawLine:(CGFloat)startX andSY:(CGFloat)startY andEX:(CGFloat)endX andEY:(CGFloat)endY andLW:(CGFloat)lineWidth andColor:(zyColor)color
@@ -158,16 +187,16 @@
     [self.view addSubview:headImg];
     
 
-    UIImageView *accountImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"account"]];
-    accountImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 35, 20, 20);
-    accountImgView.contentMode = UIViewContentModeCenter;
-    [self.view addSubview:accountImgView];
-    
-    
-    UIImageView *passwordImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"password"]];
-    passwordImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 45, 20, 20);
-    passwordImgView.contentMode = UIViewContentModeCenter;
-    [self.view addSubview:passwordImgView];
+//    UIImageView *accountImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"account"]];
+//    accountImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 35, 20, 20);
+//    accountImgView.contentMode = UIViewContentModeCenter;
+//    [self.view addSubview:accountImgView];
+//    
+//    
+//    UIImageView *passwordImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"password"]];
+//    passwordImgView.frame = CGRectMake(ZY_UISTART_X, ZY_UIPART_SCREEN_HEIGHT * 45, 20, 20);
+//    passwordImgView.contentMode = UIViewContentModeCenter;
+//    [self.view addSubview:passwordImgView];
     
     
 
@@ -256,19 +285,56 @@
     CGFloat centerX = self.view.width * 0.5;
     InputText *inputText = [[InputText alloc] init];
     CGFloat userY = ZY_UIPART_SCREEN_HEIGHT * 35 ;
-    userText = [inputText setupWithIcon:nil textY:userY centerX:centerX point:nil];
+    userText = [inputText setupWithIcon:@"account" textY:userY centerX:centerX point:nil];
     userText.tag = USER_TEXT_TAG;
     userText.delegate = self;
     userText.keyboardType = UIKeyboardTypeNumberPad;//设置键盘为数字键盘
     [userText setReturnKeyType:UIReturnKeyNext];
     [userText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [userText addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
+    [userText addTarget:self action:@selector(textFieldBeginChange:) forControlEvents:UIControlEventEditingDidBegin];
+    
     [self.view addSubview:userText];
     
+    _account_box = [[UIScrollView alloc] initWithFrame:CGRectMake(userText.frame.origin.x, userText.frame.origin.y+userText.frame.size.height+1, userText.frame.size.width, 40*3)];
+    _account_box.hidden = YES;
+  //  _account_box.layer.borderWidth = 0.5;
+    _account_box.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
     
+   // _account_box.backgroundColor = [UIColor greenColor];
     
+    _accountTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, _account_box.frame.size.width, _account_box.frame.size.height)];
+    _accountTableView.delegate = self;
+    _accountTableView.dataSource = self;
+    _accountTableView.tableFooterView = [[UIView alloc] init];
+    _accountTableView.contentSize = CGSizeMake(_account_box.frame.size.width, _cellCount >3 ?40*_cellCount:_account_box.frame.size.height);
+    _accountTableView.separatorInset = UIEdgeInsetsMake(10, _cellHeight + 10, 10, 20);
     
-    passWordText = [inputText setupWithIcon:nil textY:ZY_UIPART_SCREEN_HEIGHT * 45 centerX:self.view.width * 0.5 point:nil];
+    _accountTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
+    _accountTableView.separatorColor =  [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+//    _accountTableView.separatorInset = UIEdgeInsetsZero;
+//    _accountTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+//    
+//    //_mainTableView.separatorEffect = ;
+//    
+//    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+//    {
+//        //设置cell分割线从最左边开始
+//        if ([_accountTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+//            [_accountTableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+//        }
+//        
+//        if ([_accountTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+//            [_accountTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+//        }
+//    }
+    
+    [_account_box addSubview:_accountTableView];
+    [self.view addSubview:_account_box];
+    
+    //[self.view addSubview:_moveDownGroup];
+    
+    passWordText = [inputText setupWithIcon:@"password" textY:ZY_UIPART_SCREEN_HEIGHT * 45 centerX:self.view.width * 0.5 point:nil];
     passWordText.delegate = self;
     passWordText.tag = PASSWORD_TEXT_TAG;
     passWordText.secureTextEntry = YES;//设置输入后变为“＊”
@@ -278,6 +344,104 @@
     [passWordText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [passWordText addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
     [self.view addSubview:passWordText];
+}
+
+#pragma mark - UIGestureRecognizer delegate
+
+//设置点在某个view时部触发事件
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 输出点击的view的类名
+    NSLog(@"-%@", NSStringFromClass([touch.view class]));
+    
+    //||[NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"] [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]||
+    
+    // if(gestureRecognizer.d)
+    
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"])
+    {
+        return NO;
+    }
+    //  NSLog(@"return YES");
+    return  YES;
+}
+
+#define ANIMATION_DURATION 0.5f
+
+-(void)showAccountBox
+{
+    
+//    CABasicAnimation *move=[CABasicAnimation animationWithKeyPath:@"position"];
+//    [move setFromValue:[NSValue valueWithCGPoint:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y)]];
+//    [move setToValue:[NSValue valueWithCGPoint:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y+_account_box.frame.size.height)]];
+//    [move setDuration:ANIMATION_DURATION];
+//    [_moveDownGroup.layer addAnimation:move forKey:nil];
+    
+    
+    [_account_box setHidden:NO];
+    [self.view bringSubviewToFront:_account_box];
+    
+    //模糊处理
+
+    
+    CABasicAnimation *scale=[CABasicAnimation animationWithKeyPath:@"transform"];
+    [scale setFromValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 0.2, 1.0)]];
+    [scale setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    CABasicAnimation *center=[CABasicAnimation animationWithKeyPath:@"position"];
+    [center setFromValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.center.x, _account_box.center.y-_account_box.bounds.size.height/2)]];
+    [center setToValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.center.x, _account_box.center.y)]];
+    
+    CAAnimationGroup *group=[CAAnimationGroup animation];
+    [group setAnimations:[NSArray arrayWithObjects:scale,center, nil]];
+    [group setDuration:ANIMATION_DURATION];
+    [_account_box.layer addAnimation:group forKey:nil];
+    
+    
+    
+ //   [_moveDownGroup setCenter:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y+_account_box.frame.size.height)];
+    
+}
+
+-(void)hideAccountBox
+{
+
+//    CABasicAnimation *move=[CABasicAnimation animationWithKeyPath:@"position"];
+//    [move setFromValue:[NSValue valueWithCGPoint:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y)]];
+//    [move setToValue:[NSValue valueWithCGPoint:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y-_account_box.frame.size.height)]];
+//    [move setDuration:ANIMATION_DURATION];
+//    [_moveDownGroup.layer addAnimation:move forKey:nil];
+//    
+//    [_moveDownGroup setCenter:CGPointMake(_moveDownGroup.center.x, _moveDownGroup.center.y-_account_box.frame.size.height)];
+
+    
+    CABasicAnimation *scale=[CABasicAnimation animationWithKeyPath:@"transform"];
+    [scale setFromValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    [scale setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 0.2, 1.0)]];
+    
+    CABasicAnimation *center=[CABasicAnimation animationWithKeyPath:@"position"];
+    [center setFromValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.center.x, _account_box.center.y)]];
+    [center setToValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.center.x, _account_box.center.y-_account_box.bounds.size.height/2)]];
+    
+//    [center setFromValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.frame.size.width, _account_box.frame.size.height)]];
+//    [center setToValue:[NSValue valueWithCGPoint:CGPointMake(_account_box.frame.size.width, _account_box.frame.size.height-_account_box.bounds.size.height/2)]];
+    
+    
+    CAAnimationGroup *group=[CAAnimationGroup animation];
+    [group setAnimations:[NSArray arrayWithObjects:scale,center, nil]];
+    [group setDuration:ANIMATION_DURATION];
+    [_account_box.layer addAnimation:group forKey:nil];
+    
+   // [self performSelectorOnMainThread:@selector(viewDisappeared:) withObject:nil waitUntilDone:NO];
+   // _account_box.hidden = YES;
+    [self performSelector:@selector(viewSetHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:ANIMATION_DURATION - 0.1];
+ //
+}
+
+-(void)viewSetHidden:(id)info
+{
+   _account_box.hidden = YES;
 }
 
 
@@ -322,6 +486,12 @@
     {
         return  YES;
     }
+}
+
+- (void)textFieldBeginChange:(id)sender
+{
+    NSLog(@"begin edit");
+    [self showAccountBox];
 }
 
 - (void)textFieldDidChange:(id)sender
@@ -458,6 +628,7 @@
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
         [dataprovider Login:userText.text andpwd:passWordText.text andreferrer:@""];
+        
     }
 }
 -(void)loginBackcall:(id)dict
@@ -495,8 +666,55 @@
 }
 
 -(void)setLoginValue:(NSDictionary *)dict{
-    [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
-    [mUserDefault setValue:[dict valueForKey:@"avatar"] forKey:@"avatar"];
+    @try {
+           [mUserDefault setValue:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
+           [mUserDefault setValue:[dict valueForKey:@"avatar"] forKey:@"avatar"];
+           
+           NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+           
+           [tempDict setObject:[dict valueForKey:@"mobile"] forKey:@"mAccountID"];
+           [tempDict setObject:[dict valueForKey:@"avatar"] forKey:@"avatar"];
+           [tempDict setObject:passWordText.text forKey:@"password"];
+           
+           for (int i = 0; i<_AccountArrCache.count; i++)
+           {
+               NSDictionary *checkDict = [_AccountArrCache objectAtIndex:i];
+               
+               if([tempDict[@"mAccountID"] isEqualToString:checkDict[@"mAccountID"]])
+               {
+                   
+                   if([tempDict isEqualToDictionary:checkDict])//存在的账号信息完全相同则不保存
+                   {
+                       //                [mUserDefault setValue:_AccountArrCache forKey:@"userAccountList"];
+                       return;
+                   }
+                   //   goto end;
+                   else//否则替换掉之前的
+                   {
+                       [_AccountArrCache replaceObjectAtIndex:i withObject:tempDict];
+                       [mUserDefault setValue:_AccountArrCache forKey:@"userAccountList"];
+                       //  goto end;
+                   }
+               }
+               
+               
+           }
+           
+           NSMutableArray *mutaArray = [[NSMutableArray alloc] init];//反复给_AccountArrCache赋值会崩溃 这里参考网上的解决方案
+           [mutaArray addObjectsFromArray:_AccountArrCache];
+           [mutaArray addObject:tempDict];
+           _AccountArrCache = mutaArray;
+           
+           [mUserDefault setValue:_AccountArrCache forKey:@"userAccountList"];
+    
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+    
 }
 
 -(void)setNotificate{
@@ -632,6 +850,253 @@
     registerVC.pageMode = MODE_forget;
     [self presentViewController:registerVC animated:YES completion:^{}];
 }
+
+#pragma mark - delegate tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return 1;
+    
+}
+
+//指定每个分区中有多少行，默认为1
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    
+    //    switch (section) {
+    //        case 0:
+    //            return 3;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    
+    return _cellCount;
+}
+
+
+#pragma mark - setting for cell
+//设置每行调用的cell
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    
+//    NSMutableArray *Labels = [NSMutableArray array];
+//    NSMutableArray *Imgs = [NSMutableArray array];
+    
+    
+    NSDictionary *tempDict;
+    @try {
+        tempDict = [_AccountArrCache objectAtIndex:indexPath.row];
+        
+        UIImageView *cellHeadImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, _cellHeight - 10, _cellHeight -10)];
+        NSString *avatar = [tempDict valueForKey:@"avatar"];
+        NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [cellHeadImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        
+        cellHeadImg.layer.masksToBounds = YES;
+        cellHeadImg.layer.cornerRadius = cellHeadImg.frame.size.width * 0.5;
+        cellHeadImg.layer.borderWidth = 0.1;
+      //  cellHeadImg.layer.borderColor = [[UIColor yellowColor] CGColor];
+    
+        [cell addSubview:cellHeadImg];
+        //[Imgs addObject:cellHeadImg];
+        
+        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 + _cellHeight +10, 0, 150, _cellHeight)];
+        
+        cellLabel.text =[tempDict valueForKey:@"mAccountID"];
+        cellLabel.font = [UIFont systemFontOfSize:14];
+        [cell addSubview:cellLabel];
+        
+        
+//        cell.contentImgs = Imgs;
+//        cell.contentLabels = Labels;
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+        {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
+        return cell;
+
+    }
+}
+
+
+
+//设置cell每行间隔的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return _cellHeight;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
+    NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
+    
+    
+    @try {
+        NSDictionary *tempDict;
+        tempDict = [_AccountArrCache objectAtIndex:indexPath.row];
+        
+        passWordText.text = [tempDict valueForKey:@"password"];
+        _userData.passWord =passWordText.text ;
+       
+        userText.text = [tempDict valueForKey:@"mAccountID"];
+        _userData.phoneNum =userText.text;
+        
+        NSString *avatar = [tempDict valueForKey:@"avatar"];
+        NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+        [headImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        [self hideAccountBox];
+    }
+    
+}
+
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor); CGContextFillRect(context, rect); //上分割线，
+    
+    CGContextSetStrokeColorWithColor(context, [UIColor yellowColor].CGColor);
+    CGContextStrokeRect(context, CGRectMake(5, -1, rect.size.width - 10, 1)); //下分割线
+    CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextStrokeRect(context, CGRectMake(5, 10, 100, 10));
+}
+
+
+//设置划动cell是否出现del按钮，可供删除数据里进行处理
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView: (UITableView *)tableView editingStyleForRowAtIndexPath: (NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return  YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        @try {
+//            [_AccountArrCache removeObjectAtIndex:indexPath.row];
+            
+            NSMutableArray *mutaArray = [[NSMutableArray alloc] init];//反复给_AccountArrCache赋值会崩溃 这里参考网上的解决方案
+            [mutaArray addObjectsFromArray:_AccountArrCache];
+            [mutaArray removeObject:_AccountArrCache[indexPath.row]];
+            _AccountArrCache = mutaArray;
+            
+            _cellCount = _AccountArrCache.count;
+            [mUserDefault setValue:_AccountArrCache forKey:@"userAccountList"];
+            
+            _accountTableView.contentSize = CGSizeMake(_account_box.frame.size.width, _cellCount >3 ?40*_cellCount:_account_box.frame.size.height);
+            
+            
+            [_accountTableView reloadData];
+            
+            
+        }
+        @catch (NSException *exception) {
+            NSLog(@"222");
+        }
+        @finally {
+            
+        }
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+}
+
+
+
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return  @"删除";
+}
+
+//设置选中的行所执行的动作
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    return indexPath;
+    
+}
+
+#pragma mark - setting for section
+//设置section的header view
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *tempView = [[UIView alloc] init];
+    //    if(section == 0)
+    //    {
+    //        tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
+    //        UILabel *titleLabel = [[UILabel alloc] init];
+    //        titleLabel.frame = CGRectMake(20,0 , 150, 30);
+    //        titleLabel.text = @"权限选择";
+    //        titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    //        titleLabel.textColor  = ZY_UIBASECOLOR;
+    //        [tempView addSubview:titleLabel];
+    //    }
+    
+    return tempView;
+}
+
+//设置section的footer view
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *tempView = [[UIView alloc] init];
+    if(section == 0)
+    {
+        tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
+        tempView.backgroundColor =[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];//[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
+    }
+    return tempView;
+    
+}
+
+
+//设置section header 的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    
+    return 0;
+}
+//设置section footer的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 1;
+    
+}
+
+
 /*
 #pragma mark - Navigation
 

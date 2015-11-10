@@ -14,7 +14,14 @@
 
 
 @interface TaskLimitViewController ()
-
+{
+    NSUserDefaults *taskLimitDefault;
+    NSString *limitStr;
+    
+    NSString *tasklimitID;
+    NSString *tasklimitName;
+    BOOL selectCellState[2];
+}
 @end
 
 @implementation TaskLimitViewController
@@ -32,6 +39,8 @@
                                                          ]];
     
     _cellHeight = self.view.frame.size.height/11;
+    
+    memset(selectCellState, 0, sizeof(selectCellState));
     
     [self initViews];
     
@@ -153,6 +162,31 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
         [cell setSeparatorInset:UIEdgeInsetsZero];
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+    if(indexPath.row>=2)
+    {
+        
+        UIButton *btn3 = [[UIButton alloc ]initWithFrame:CGRectMake(cell.frame.size.width - 20 -10, 0, 20  , cell.frame.size.height)];
+        
+        btn3.imageView.contentMode = UIViewContentModeCenter;
+        [btn3 setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
+        [cell addSubview:btn3];
+        
+        UILabel *userNameLab = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 150,  cell.frame.size.height)];
+        
+        userNameLab.text = tasklimitName;
+        userNameLab.textAlignment = NSTextAlignmentLeft;
+        userNameLab.font = [UIFont systemFontOfSize:14];
+        [cell addSubview:userNameLab];
+        return cell;
+    }
+    if(selectCellState[indexPath.row] == YES)
+    {
+        UIImageView *imgSelect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected"]];
+        imgSelect.frame = CGRectMake(cell.frame.size.width - 40 -10, 0, 40, cell.frame.size.height);
+        imgSelect.contentMode = UIViewContentModeCenter;
+        [cell addSubview:imgSelect];
+    }
+    
     return cell;
     
 }
@@ -198,8 +232,52 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
+    memset(selectCellState, NO, sizeof(selectCellState));
+    if(indexPath.row<2)
+    {
+        selectCellState[indexPath.row] = YES;
+        [_mainTableView reloadData];
+    }
+    else
+    {
+        SelectContacterViewController *selectContacterViewCtl = [[SelectContacterViewController alloc] init];
+        selectContacterViewCtl.navTitle = @"选择好友";
+        selectContacterViewCtl.pageChangeMode = Mode_dis;
+        selectContacterViewCtl.delegate = self;
+        [self presentViewController:selectContacterViewCtl animated:YES completion:^{}];
+    }
+    
+    
 
 }
+#pragma mark - 选择好友代理
+-(void)setContacterInfo:(NSArray *)selectContacterArrayID andName:(NSArray *)selectContacterArrayName
+{
+    
+    if(selectContacterArrayID!=nil)
+    {
+        NSString *str = @"";
+        for (int i = 0; i < selectContacterArrayID.count; i++) {
+            str = [NSString stringWithFormat:@"%@ %@",str,[selectContacterArrayID objectAtIndex:i]];
+        }
+        
+        tasklimitID = str;
+        NSLog(@"tasklimitID = [%@]",tasklimitID);
+    }
+    if(selectContacterArrayName!=nil)
+    {
+        NSString *str = @"";
+        for (int i = 0; i < selectContacterArrayName.count; i++) {
+            str = [NSString stringWithFormat:@"%@ %@",str,[selectContacterArrayName objectAtIndex:i]];
+        }
+        
+        tasklimitName = str;
+        NSLog(@"tasklimitName = [%@]",tasklimitName);
+        [_mainTableView reloadData];
+
+    }
+}
+
 
 
 - (void)drawRect:(CGRect)rect {

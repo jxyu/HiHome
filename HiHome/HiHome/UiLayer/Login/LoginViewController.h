@@ -32,7 +32,7 @@ typedef struct _zyColor
 }zyColor;
 
 
-@interface LoginViewController : BaseNavigationController<UITextFieldDelegate>
+@interface LoginViewController : BaseNavigationController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     @private
     DataDefine *_userData;

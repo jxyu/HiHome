@@ -932,8 +932,8 @@
         {
             tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
             UILabel *titleLabel = [[UILabel alloc] init];
-            titleLabel.frame = CGRectMake(10,0 , 150, 30);
-            titleLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+            titleLabel.frame = CGRectMake(10,0 , SCREEN_WIDTH, 30);
+            titleLabel.text = [NSString stringWithFormat:@"%@~%@",_startTime,_endTime];
             titleLabel.font = [UIFont boldSystemFontOfSize:18];
             titleLabel.textColor  = ZY_UIBASECOLOR;
             [tempView addSubview:titleLabel];

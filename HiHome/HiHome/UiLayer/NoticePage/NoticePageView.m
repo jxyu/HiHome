@@ -18,11 +18,14 @@
     NSString *_message;
     UIView *_coverView;
     UIView *_alertView;
+    UIImageView *headImg;
 }
 @end
 
 @implementation NoticePageItem
-
+{
+    
+}
 
 
 
@@ -98,10 +101,10 @@
     
     _messageScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(AlertPadding/2,_labelTitle.frame.origin.y+_labelTitle.frame.size.height+5 , AlertWidth-AlertPadding, [self heightWithString:@"你"/*一行字的高低*/ fontSize:16 width:AlertWidth-2*AlertPadding]*7)];
     
-    UIImageView *headImg =[ [UIImageView alloc] initWithFrame:CGRectMake(_messageScrollView.frame.size.width/2- 20, 0, 40, 40)];
+    headImg =[ [UIImageView alloc] initWithFrame:CGRectMake(_messageScrollView.frame.size.width/2- 20, 0, 40, 40)];
     
    // NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
-    [headImg sd_setImageWithURL:[NSURL URLWithString:self.HeadImgUrl] placeholderImage:[UIImage imageNamed:@"me"]];
+    
     
    // headImg.image = [UIImage imageNamed:@"me"];
     
@@ -143,6 +146,13 @@
     
 }
 
+
+-(void)setHeadImgUrl:(NSString *)HeadImgUrl
+{
+    _HeadImgUrl = HeadImgUrl;
+    
+    [headImg sd_setImageWithURL:[NSURL URLWithString:self.HeadImgUrl] placeholderImage:[UIImage imageNamed:@"me"]];
+}
 
 -(void)btnAction
 {

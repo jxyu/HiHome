@@ -767,8 +767,8 @@ fetchCompletionHandler:(void
         NSRange dateRange;
         dateRange.location = 5;
         dateRange.length = 5;
-        sDate = [taskDetailPath.startTaskDateStr substringWithRange:dateRange];
-        eDate = [taskDetailPath.endTaskDateStr substringWithRange:dateRange];
+        sDate = [taskDetailPath.startTaskDateStr substringToIndex:10];//[taskDetailPath.startTaskDateStr substringWithRange:dateRange];
+        eDate = [taskDetailPath.endTaskDateStr substringToIndex:10];//[taskDetailPath.endTaskDateStr substringWithRange:dateRange];
         NSString *taskerName;
         
         if(taskDetailPath.taskPerformerDetails.count > 1 )
@@ -781,7 +781,7 @@ fetchCompletionHandler:(void
         }
         
         
-        contentStr = [NSString stringWithFormat:@"任务发布人：%@\n任务执行人：%@\n任务内容：%@\n任务时间：%@～%@",[taskDetailDict objectForKey:@"nick"],taskerName,taskDetailPath.taskContent,sDate,eDate];
+        contentStr = [NSString stringWithFormat:@"任务发布人：%@\n任务执行人：%@\n任务内容：%@\n开始时间：%@\n结束时间：%@",[taskDetailDict objectForKey:@"nick"],taskerName,taskDetailPath.taskName,sDate,eDate];
         NoticePageView *noiceView = [[NoticePageView alloc] initWithTitle:[NSString stringWithFormat:@"%@",[self modeValueToStr:Mode_Remind andValue:taskDetailPath.remindTime]] message:contentStr];
         noiceView.delegate = self;
         

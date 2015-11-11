@@ -813,7 +813,7 @@
         {
             
             stateStr = @"待执行";
-            localTaskStatus = State_needDo;
+            localTaskStatus = State_onGoing;
         }
             break;
         case State_needDo:

@@ -296,7 +296,7 @@
     
     [self.view addSubview:userText];
     
-    _account_box = [[UIScrollView alloc] initWithFrame:CGRectMake(userText.frame.origin.x, userText.frame.origin.y+userText.frame.size.height+1, userText.frame.size.width, 40*3)];
+    _account_box = [[UIScrollView alloc] initWithFrame:CGRectMake(userText.frame.origin.x, userText.frame.origin.y+userText.frame.size.height+1, userText.frame.size.width, _cellCount >3 ?40*3:40*_cellCount)];
     _account_box.hidden = YES;
   //  _account_box.layer.borderWidth = 0.5;
     _account_box.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;

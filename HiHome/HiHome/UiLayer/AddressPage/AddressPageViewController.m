@@ -17,7 +17,8 @@
 #import "PersonFirstViewController.h"
 
 
-@interface AddressPageViewController (){
+@interface AddressPageViewController ()<UIGestureRecognizerDelegate>
+{
     DataProvider *dataProvider;
     
     NSMutableArray *friendArrayNormal;
@@ -45,13 +46,48 @@
     isSearchIFlag = NO;
     [self initData];
     
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
+    tapGesture.delegate = self;
+    [self.view addGestureRecognizer:tapGesture];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetFriendInfoClick) name:@"getFriendInfo" object:nil];
 }
+
+-(void)tapViewAction:(id)sender
+{
+    [self.view endEditing:YES];
+}
+
+#pragma mark - UIGestureRecognizer delegate
+
+//设置点在某个view时部触发事件
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 输出点击的view的类名
+    NSLog(@"-%@", NSStringFromClass([touch.view class]));
+    
+    //||[NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"] [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]||
+    
+    // if(gestureRecognizer.d)
+    
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"])
+    {
+        return NO;
+    }
+    //  NSLog(@"return YES");
+    return  YES;
+}
+
+
 -(void)initData{
     
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"friendListBackCall:"];
     [dataProvider getFriendList:[self getUserID]];
+    
+    dataArray = [NSMutableArray array];
 }
 
 -(void)friendListBackCall:(id)dict{
@@ -65,6 +101,42 @@
         friendArrayNormal = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list0"];
         friendArrayStar = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list1"];
         friendArraySpouse = (NSMutableArray *)[[dict objectForKey:@"datas"] objectForKey:@"list2"];
+        
+        
+        @try {//将好友昵称加入到dataArray用于搜索
+            
+            [dataArray addObjectsFromArray:friendArrayNormal];
+            [dataArray addObjectsFromArray:friendArrayStar];
+            [dataArray addObjectsFromArray:friendArraySpouse];
+            
+//            for (int i =0 ; i <friendArrayNormal.count ; i++) {
+//                NSDictionary *tempDict;
+//                tempDict = [friendArrayNormal objectAtIndex:i];
+//                
+//                [dataArray addObject:[tempDict objectForKey:@"nick"]];
+//            }
+//            
+//            for (int i =0 ; i <friendArrayStar.count ; i++) {
+//                NSDictionary *tempDict;
+//                tempDict = [friendArrayStar objectAtIndex:i];
+//                
+//                [dataArray addObject:[tempDict objectForKey:@"nick"]];
+//            }
+//            
+//            for (int i =0 ; i <friendArraySpouse.count ; i++) {
+//                NSDictionary *tempDict;
+//                tempDict = [friendArraySpouse objectAtIndex:i];
+//                
+//                [dataArray addObject:[tempDict objectForKey:@"nick"]];
+//            }
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
         
         searchResultsNormal = friendArrayNormal;
         searchResultsStar = friendArrayStar;
@@ -90,7 +162,22 @@
 
 -(void) initViews
 {
-    _mytableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64+44, SCREEN_WIDTH, SCREEN_HEIGHT - 108)];
+    
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH
+                                                               , ZY_VIEWHEIGHT_IN_HEADVIEW)];
+    _searchBar.delegate = self;
+    _searchBar.placeholder = @"搜索";
+    
+    
+    _searchDisplayController = [[UISearchDisplayController alloc]initWithSearchBar:_searchBar contentsController:self];
+    _searchDisplayController.active = NO;
+    _searchDisplayController.searchResultsDataSource = self;
+    _searchDisplayController.searchResultsDelegate = self;
+    _searchDisplayController.delegate = self;
+    
+   // _searchDisplayController.searchResultsTableView.frame = CGRectMake(0, 200, SCREEN_WIDTH, ZY_VIEWHEIGHT_IN_HEADVIEW);
+    
+    _mytableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - 108)];
     
     _mytableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mytableView setDelegate:self];
@@ -99,7 +186,7 @@
     //    _mytableView.tableHeaderView.contentMode = UIViewContentModeCenter;
     //    _mytableView.tableHeaderView = [self headerViewForChatPage];
     
-    
+    _mytableView.tableHeaderView =_searchBar;
     _mytableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;//UITableViewCellSeparatorStyleSingleLine;
     _mytableView.separatorInset = UIEdgeInsetsZero;
     _mytableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -121,10 +208,7 @@
      }
     
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH
-                                                                    , ZY_VIEWHEIGHT_IN_HEADVIEW)];
-    _searchBar.delegate = self;
-    _searchBar.placeholder = @"搜索";
+   
     
     //_searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
     
@@ -137,7 +221,7 @@
     
     [self.view addSubview:_mytableView];
     [self.view addSubview:[self headerView]];
-    [self.view addSubview:_searchBar];
+   // [self.view addSubview:_searchBar];
     
 //    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
 //    [self.view addGestureRecognizer:tapGesture];
@@ -153,17 +237,17 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
--(void)tapViewAction:(id)sender
-{
-    NSLog(@"tap view---");
-    
-    if(_keyShow == true)
-    {
-        _keyShow = false;
-        [_searchBar resignFirstResponder];//关闭textview的键盘
-        [_searchDisplayController setActive:NO animated:YES];
-    }
-}
+//-(void)tapViewAction:(id)sender
+//{
+//    NSLog(@"tap view---");
+//    
+//    if(_keyShow == true)
+//    {
+//        _keyShow = false;
+//        [_searchBar resignFirstResponder];//关闭textview的键盘
+//        [_searchDisplayController setActive:NO animated:YES];
+//    }
+//}
 -(UIView *)headerView
 {
     UIView *tableHeaderView = [[UIView alloc] init];
@@ -205,8 +289,11 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 4;
+    if (tableView == _searchDisplayController.searchResultsTableView) {
+        return 1;
+    }
+    else
+        return 4;
     
 }
 
@@ -214,22 +301,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    
-    switch (section) {
-        case 0:
-            return  1;
-            break;
-        case 1:
-            return searchResultsSpouse.count;
-            break;
-        case 2:
-             return searchResultsStar.count;
-            break;
-        case 3:
-            return searchResultsNormal.count;
-            break;
-        default:
-            break;
+    if (tableView == _searchDisplayController.searchResultsTableView) {
+        return searchResults.count;
+    }
+    else {
+        switch (section) {
+            case 0:
+                return  1;
+                break;
+            case 1:
+                return searchResultsSpouse.count;
+                break;
+            case 2:
+                return searchResultsStar.count;
+                break;
+            case 3:
+                return searchResultsNormal.count;
+                break;
+            default:
+                break;
+        }
+
     }
     
     return 0;
@@ -252,35 +344,153 @@
 //             @"V",@"W",@"X",@"Y",@"Z",@"#"];
 //}
 
+
+
+#pragma mark - UISearchDisplayDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    searchResults = [[NSMutableArray alloc]init];
+    if (_searchBar.text.length>0&&![ChineseInclude isIncludeChineseInString:_searchBar.text]) {
+        @try {
+            for (int i=0; i<dataArray.count; i++) {
+                
+                NSString *nickStr;
+                NSDictionary *tempDict = dataArray[i];
+                
+                nickStr = [tempDict objectForKey:@"nick"];
+                
+                if ([ChineseInclude isIncludeChineseInString:nickStr]) {
+                    NSString *tempPinYinStr = [PinYinForObjc chineseConvertToPinYin:nickStr];
+                    NSRange titleResult=[tempPinYinStr rangeOfString:_searchBar.text options:NSCaseInsensitiveSearch];
+                    if (titleResult.length>0) {
+                        [searchResults addObject:dataArray[i]];
+                    }
+                    NSString *tempPinYinHeadStr = [PinYinForObjc chineseConvertToPinYinHead:nickStr];
+                    NSRange titleHeadResult=[tempPinYinHeadStr rangeOfString:_searchBar.text options:NSCaseInsensitiveSearch];
+                    if (titleHeadResult.length>0) {
+                        [searchResults addObject:dataArray[i]];
+                    }
+                }
+                else {
+                    NSRange titleResult=[nickStr rangeOfString:_searchBar.text options:NSCaseInsensitiveSearch];
+                    if (titleResult.length>0) {
+                        [searchResults addObject:dataArray[i]];
+                    }
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+      
+    } else if (_searchBar.text.length>0&&[ChineseInclude isIncludeChineseInString:_searchBar.text]) {
+        for (NSDictionary *tempDict in dataArray) {
+            NSString *nickStr;
+            nickStr = [tempDict objectForKey:@"nick"];
+            NSRange titleResult=[nickStr rangeOfString:_searchBar.text options:NSCaseInsensitiveSearch];
+            if (titleResult.length>0) {
+                [searchResults addObject:tempDict];
+            }
+        }
+    }
+    
+    
+//    [_mytableView reloadData];
+}
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    
+ //   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+//    [tableView setContentInset:UIEdgeInsetsZero];
+//    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+//    
+    tableView.frame = CGRectMake(0, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - 108);
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    
+//    [tableView setContentInset:UIEdgeInsetsMake(300, 0, 0, 0)];
+//    
+//    [tableView setScrollIndicatorInsets:UIEdgeInsetsMake(300, 0, 0, 0)];
+    
+}
+                                                                              
+                                                                              
+                                                                              
+- (void) keyboardWillHide:(NSNotification *)aNotification
+                                                                              
+{
+        
+        NSDictionary* info = [aNotification userInfo];
+        
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        
+        
+        
+        UITableView *tableView = [_searchDisplayController searchResultsTableView];
+        
+        [tableView setContentInset:UIEdgeInsetsMake(300, 0, kbSize.height, 0)];
+        
+        [tableView setScrollIndicatorInsets:UIEdgeInsetsMake(300, 0, kbSize.height, 0)];
+        
+}
+
+
 #pragma mark - setting for cell
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CardTableViewCell *cell = [[CardTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    NSLog(@"%ld",(long)indexPath.row);
-    if(indexPath.section == 0)
+ //   cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    //cell.editingStyle
+    if(tableView == _searchDisplayController.searchResultsTableView)
     {
-        cell.iconView.image = [UIImage imageNamed:@"addressBook"];
-        cell.nameLabel.text = @"通讯录";
-        cell.nameLabel.textColor = [UIColor grayColor];
-    }else if(indexPath.section == 1){
-        NSString *avatar = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
+        
+        NSString *avatar = [searchResults[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"avatar"];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
+        cell.nameLabel.text = [searchResults[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"nick"];
         cell.nameLabel.textColor = [UIColor grayColor];
-    }else if(indexPath.section == 2){
-        NSString *avatar = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
-        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
-        [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
-        cell.nameLabel.textColor = [UIColor grayColor];
-    }else if(indexPath.section == 3){
-        NSString *avatar = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
-        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
-        [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
-        cell.nameLabel.text = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
-        cell.nameLabel.textColor = [UIColor grayColor];
+        
+    }
+    else
+    {
+    
+        NSLog(@"%ld",(long)indexPath.row);
+        if(indexPath.section == 0)
+        {
+            cell.iconView.image = [UIImage imageNamed:@"addressBook"];
+            cell.nameLabel.text = @"通讯录";
+            cell.nameLabel.textColor = [UIColor grayColor];
+        }else if(indexPath.section == 1){
+            NSString *avatar = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+            [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
+            cell.nameLabel.text = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
+            cell.nameLabel.textColor = [UIColor grayColor];
+        }else if(indexPath.section == 2){
+            NSString *avatar = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+            [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
+            cell.nameLabel.text = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
+            cell.nameLabel.textColor = [UIColor grayColor];
+        }else if(indexPath.section == 3){
+            NSString *avatar = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
+            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+            [cell.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
+            cell.nameLabel.text = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
+            cell.nameLabel.textColor = [UIColor grayColor];
+        }
+        
+   
     }
     //分割线设置
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
@@ -295,36 +505,7 @@
 
 //设置cell每行间隔的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    switch (indexPath.section) {
-//        case 0:
-//            if(indexPath.row == (_cellCount - 1))
-//                return 1;
-//            else
-//                return 50;
-//            break;
-//        case 1:
-//            if(indexPath.row == (_mateCellCount - 1))
-//                return 1;
-//            else
-//                return 50;
-//            break;
-//        case 2:
-//            if(indexPath.row == (_starFriendCellCount - 1))
-//                return 1;
-//            else
-//                return 50;
-//        case 3:
-//            if(indexPath.row == (_normalFriendcellCount - 1))
-//                return 1;
-//            else
-//                return 50;
-//        default:
-//            break;
-//    }
-//    
-//    if(indexPath.row == (_cellCount - 1))
-//        return 0;
-//    else
+
         return 80;
 }
 
@@ -337,65 +518,97 @@
 //
 //    cell.backgroundView = tempView;
 //}
-
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:( NSIndexPath *)indexPath
+{
+    return indexPath;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    if (indexPath.section==0) {
-        //AddressLocalViewController * addresslocalVC=[[AddressLocalViewController alloc] initWithNibName:@"AddressLocalViewController" bundle:[NSBundle mainBundle]];
-        addresslocalVC = [[AddressLocalViewController alloc] init];
-        addresslocalVC.navTitle = @"手机通讯录";
-        [self.navigationController pushViewController:addresslocalVC animated:YES];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    }else if(indexPath.section == 1){
-        personFirstVC = [[PersonFirstViewController alloc] init];
-        personFirstVC.navTitle = @"好友资料";
-        personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [searchResultsSpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
-        personFirstVC.mName = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
-        personFirstVC.mSex = [searchResultsSpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sex"];
-        personFirstVC.mAge = [searchResultsSpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"age"];
-        personFirstVC.mSign = [searchResultsSpouse[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sign"];
-        personFirstVC.mType = [searchResultsSpouse[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"type"];
-        [self.navigationController pushViewController:personFirstVC animated:NO];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    }else if (indexPath.section == 2){
-        personFirstVC = [[PersonFirstViewController alloc] init];
-        personFirstVC.navTitle = @"好友资料";
-        personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [searchResultsStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
-        personFirstVC.mName = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
-        personFirstVC.mSex = [searchResultsStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sex"];
-        personFirstVC.mAge = [searchResultsStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"age"];
-        personFirstVC.mSign = [searchResultsStar[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sign"];
-        personFirstVC.mType = [searchResultsStar[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"type"];
-        [self.navigationController pushViewController:personFirstVC animated:NO];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    }else{
-        personFirstVC = [[PersonFirstViewController alloc] init];
-        personFirstVC.navTitle = @"好友资料";
-        personFirstVC.mIFlag = @"2";
-        personFirstVC.mFriendID = [searchResultsNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"fid"];
-        personFirstVC.mHeadImg = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
-        personFirstVC.mName = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
-        personFirstVC.mSex = [searchResultsNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sex"];
-        personFirstVC.mAge = [searchResultsNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"age"];
-        personFirstVC.mSign = [searchResultsNormal[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sign"];
-        personFirstVC.mType = [searchResultsNormal[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"type"];
-        [self.navigationController pushViewController:personFirstVC animated:NO];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    }
+  //  [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     
+    @try {
+        if (tableView == _searchDisplayController.searchResultsTableView)
+        {
+            personFirstVC = [[PersonFirstViewController alloc] init];
+            personFirstVC.navTitle = @"好友资料";
+            personFirstVC.mIFlag = @"2";
+            personFirstVC.mFriendID = [searchResults[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"fid"];
+            personFirstVC.mHeadImg = [searchResults[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"avatar"];
+            personFirstVC.mName = [searchResults[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"nick"];
+            personFirstVC.mSex = [searchResults[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"sex"];
+            personFirstVC.mAge = [searchResults[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"age"];
+            personFirstVC.mSign = [searchResults[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"sign"];
+            personFirstVC.mType = [searchResults[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResults[indexPath.row][@"type"];
+            [self.navigationController pushViewController:personFirstVC animated:NO];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+        }
+        else
+        {
+            if (indexPath.section==0) {
+                //AddressLocalViewController * addresslocalVC=[[AddressLocalViewController alloc] initWithNibName:@"AddressLocalViewController" bundle:[NSBundle mainBundle]];
+                addresslocalVC = [[AddressLocalViewController alloc] init];
+                addresslocalVC.navTitle = @"手机通讯录";
+                [self.navigationController pushViewController:addresslocalVC animated:YES];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+            }else if(indexPath.section == 1){
+                personFirstVC = [[PersonFirstViewController alloc] init];
+                personFirstVC.navTitle = @"好友资料";
+                personFirstVC.mIFlag = @"2";
+                personFirstVC.mFriendID = [searchResultsSpouse[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"fid"];
+                personFirstVC.mHeadImg = [searchResultsSpouse[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"avatar"];
+                personFirstVC.mName = [searchResultsSpouse[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"nick"];
+                personFirstVC.mSex = [searchResultsSpouse[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sex"];
+                personFirstVC.mAge = [searchResultsSpouse[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"age"];
+                personFirstVC.mSign = [searchResultsSpouse[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"sign"];
+                personFirstVC.mType = [searchResultsSpouse[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsSpouse[indexPath.row][@"type"];
+                [self.navigationController pushViewController:personFirstVC animated:NO];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+            }else if (indexPath.section == 2){
+                personFirstVC = [[PersonFirstViewController alloc] init];
+                personFirstVC.navTitle = @"好友资料";
+                personFirstVC.mIFlag = @"2";
+                personFirstVC.mFriendID = [searchResultsStar[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"fid"];
+                personFirstVC.mHeadImg = [searchResultsStar[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"avatar"];
+                personFirstVC.mName = [searchResultsStar[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"nick"];
+                personFirstVC.mSex = [searchResultsStar[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sex"];
+                personFirstVC.mAge = [searchResultsStar[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"age"];
+                personFirstVC.mSign = [searchResultsStar[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"sign"];
+                personFirstVC.mType = [searchResultsStar[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsStar[indexPath.row][@"type"];
+                [self.navigationController pushViewController:personFirstVC animated:NO];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+            }else{
+                personFirstVC = [[PersonFirstViewController alloc] init];
+                personFirstVC.navTitle = @"好友资料";
+                personFirstVC.mIFlag = @"2";
+                personFirstVC.mFriendID = [searchResultsNormal[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"fid"];
+                personFirstVC.mHeadImg = [searchResultsNormal[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"avatar"];
+                personFirstVC.mName = [searchResultsNormal[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"nick"];
+                personFirstVC.mSex = [searchResultsNormal[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sex"];
+                personFirstVC.mAge = [searchResultsNormal[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"age"];
+                personFirstVC.mSign = [searchResultsNormal[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"sign"];
+                personFirstVC.mType = [searchResultsNormal[indexPath.row][@"type"] isEqual:[NSNull null]]?@"":searchResultsNormal[indexPath.row][@"type"];
+                [self.navigationController pushViewController:personFirstVC animated:NO];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+            }
+        }
+
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
 }
 
 
@@ -502,40 +715,45 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *tempView = [[UIView alloc] init];
-    
-    if(section == 0)
+    if(tableView == _searchDisplayController.searchResultsTableView)
     {
-//        tempView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 50);
-//        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width
-//                                                                               , 44)];
-//        searchBar.placeholder = @"搜索";
-//        [tempView addSubview:searchBar];
     }
     else
     {
-        tempView.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
-        tempView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 40);
-        
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
-        switch (section) {
-            case 1:
-                titleLabel.text = @"配偶";
-                break;
-            case 2:
-                titleLabel.text = @"星标好友";
-                break;
-            case 3:
-                titleLabel.text = @"亲友列表";
-                break;
-                
-            default:
-                break;
+        if(section == 0)
+        {
+    //        tempView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 50);
+    //        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width
+    //                                                                               , 44)];
+    //        searchBar.placeholder = @"搜索";
+    //        [tempView addSubview:searchBar];
         }
-        titleLabel.textColor = ZY_UIBASE_FONT_COLOR;
-        titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        
-        [tempView addSubview:titleLabel];
-        
+        else
+        {
+            tempView.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
+            tempView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 40);
+            
+            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
+            switch (section) {
+                case 1:
+                    titleLabel.text = @"配偶";
+                    break;
+                case 2:
+                    titleLabel.text = @"星标好友";
+                    break;
+                case 3:
+                    titleLabel.text = @"亲友列表";
+                    break;
+                    
+                default:
+                    break;
+            }
+            titleLabel.textColor = ZY_UIBASE_FONT_COLOR;
+            titleLabel.font = [UIFont boldSystemFontOfSize:15];
+            
+            [tempView addSubview:titleLabel];
+            
+        }
     }
     
     return tempView;
@@ -591,12 +809,17 @@
     [self initData];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-  
-}
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+//  
+//}
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    NSLog(@"111111");
+  //  [_mytableView reloadData];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    
 }
 
 @end

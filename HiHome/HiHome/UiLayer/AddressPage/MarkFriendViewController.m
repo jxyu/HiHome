@@ -42,7 +42,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,15 +64,16 @@
         }else{
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-    }else{
-        cell.textLabel.text = @"配偶";
-        if ([_mType isEqual:@"2"]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            oldIndexPath = indexPath;
-        }else{
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
     }
+//    else{
+//        cell.textLabel.text = @"配偶";
+//        if ([_mType isEqual:@"2"]) {
+//            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//            oldIndexPath = indexPath;
+//        }else{
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+//        }
+//    }
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
         [cell setSeparatorInset:UIEdgeInsetsZero];

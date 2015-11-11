@@ -23,6 +23,15 @@
 //功能介绍
 -(void)getFunctionDesc;
 
+//获取配偶申请列表
+-(void)getSpouseApplayList:(NSString *)uid;
+
+//处理配偶申请
+-(void)handleSpouseApply:(NSString *)mid andState:(NSString *)state;
+
+//删除配偶申请列表
+-(void)delSpouseApply:(NSString *) FID;
+
 /**
  *  注册
  *

@@ -51,6 +51,22 @@
     }
 }
 
+-(void)getSpouseApplayList:(NSString *)uid{
+    if (uid) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getMateList",Url];
+        NSDictionary *prm = @{@"uid":uid};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)handleSpouseApply:(NSString *)mid andState:(NSString *)state{
+    if (mid && state) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=modMateState",Url];
+        NSDictionary *prm = @{@"id":mid,@"state":state};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 /**
  *  注册
  *
@@ -389,6 +405,14 @@
 -(void)delApplyFriend:(NSString *)FID{
     if (FID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delApplyInfo",Url];
+        NSDictionary *prm = @{@"id":FID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)delSpouseApply:(NSString *) FID{
+    if (FID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delMateInfo",Url];
         NSDictionary *prm = @{@"id":FID};
         [self PostRequest:url andpram:prm];
     }

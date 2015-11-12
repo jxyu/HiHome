@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
 #import "TaskPath.h"
+#import "PictureShowView.h"
+
 @interface AnniversaryTaskDetailView : BackPageViewController
 -(void) setDatas:(anniversaryPath *)annPath;
 @end

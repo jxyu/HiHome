@@ -120,10 +120,12 @@
     imgView.contentMode = UIViewContentModeCenter;
     [customView addSubview:imgView];
     
-    _textLab = [[UILabel alloc] initWithFrame:CGRectMake(customView.frame.size.height, 0, 70, customView.frame.size.height)];
+    _textLab = [[UILabel alloc] initWithFrame:CGRectMake(customView.frame.size.height, 0, SCREEN_WIDTH - customView.frame.size.height, customView.frame.size.height)];
     _textLab.textAlignment = NSTextAlignmentCenter;
     _repeatTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(customView.frame.size.height + 100, 0, 150, customView.frame.size.height)];
     _repeatTimeLab.textAlignment = NSTextAlignmentLeft;
+    _repeatTimeLab.font = [UIFont systemFontOfSize:14];
+    _textLab.font = [UIFont systemFontOfSize:14];
     
 //    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0,customView.frame.size.height, self.view.frame.size.width, 1)];
 //    lineView.backgroundColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
@@ -137,7 +139,7 @@
 //    customView.layer.shadowColor = [[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0] CGColor];
     
     [customView addSubview:_textLab];
-    [customView addSubview:_repeatTimeLab];
+ //   [customView addSubview:_repeatTimeLab];
 }
 
 -(void) setDefault
@@ -159,7 +161,9 @@
 {
     UIButton *tempBtn;
     NSString  *str;
-    _textLab.text =sender.titleLabel.text;
+    NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",[_dateArr objectAtIndex:0] ,[_dateArr objectAtIndex:1] ,[_dateArr objectAtIndex:2] ,[_dateArr objectAtIndex:3] ,[_dateArr objectAtIndex:4] ];
+    
+    
     
     for(int i =0;i <_arrayBtn.count;i++)
     {
@@ -201,8 +205,19 @@
     }
     
 //    NSLog(@"%ld%@",(long)sender.tag,sender.currentTitle);
+    
+    if([sender.titleLabel.text isEqualToString:@"不重复"])
+    {
+        _textLab.text =@"不重复";
+    }
+    else
+    {
+        _textLab.text = [NSString stringWithFormat:@"从%@起%@%@",startDate,sender.titleLabel.text,str];
+    }
     repeat=[NSString stringWithFormat:@"%ld",sender.tag-2315];
     repeatName=sender.currentTitle;
+    
+    
 }
 
 //重写退出页面方法

@@ -187,6 +187,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     }
+    
+    if([self.delegate respondsToSelector:@selector(quitViewDelegate:)])
+    {
+        [self.delegate quitViewDelegate:self];
+    }
+    
 }
 
 -(void)btnRightClick:(id)sender{
@@ -477,7 +483,7 @@
         else
         {
             NSLog(@"datas = NULL");
-            return;
+         //   return;
         }
         
         NSRange tempRange = [taskUserID rangeOfString:[self getUserID]];
@@ -490,12 +496,14 @@
         }
 
         
-        [self.navigationController popViewControllerAnimated:YES];
-        if(_createTaskMode != Mode_EditTask)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-        }
+        
+        [self quitView];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        if(_createTaskMode != Mode_EditTask)
+//        {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//        }
 
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];

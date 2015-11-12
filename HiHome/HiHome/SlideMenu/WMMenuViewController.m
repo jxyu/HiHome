@@ -13,6 +13,8 @@
 
 @interface WMMenuViewController () <UITableViewDelegate, UITableViewDataSource>{
     NSUserDefaults *mUserDefault;
+    UILabel *infoLab;
+    
 }
 @property (strong, nonatomic) WMCommon *common;
 @property (strong ,nonatomic) NSArray  *listArray;
@@ -51,6 +53,11 @@
     [self.view addGestureRecognizer:tempSwipLeft];
  //   [pan requireGestureRecognizerToFail:tempSwipLeft];
     tempSwipLeft.delegate = self;
+    
+    
+    infoLab = [[UILabel alloc] initWithFrame:CGRectMake(72, 84, 150, 30)];
+    infoLab.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:infoLab];
     
     [self getUserInfo];
     [[self headerImageBtn] setImage:[[UIImage imageNamed:@"me"] getRoundImage] forState:UIControlStateNormal];
@@ -121,7 +128,9 @@
                 NSDictionary *tempDict = [userInfoArray objectAtIndex:0];
                 self.nickNameLab.text = [tempDict objectForKey:@"nick"];
                 self.signLab.text = [tempDict objectForKey:@"sign"];
-                
+                infoLab.font = [UIFont systemFontOfSize:14];
+                infoLab.textColor = [UIColor whiteColor];
+                infoLab.text = [NSString stringWithFormat:@"年龄：%@ %@",[tempDict objectForKey:@"age"],[tempDict objectForKey:@"sex"]];
                 if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]])
                 {
                     NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"avatar"]];

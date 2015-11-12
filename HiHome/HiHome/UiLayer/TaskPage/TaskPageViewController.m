@@ -1020,6 +1020,8 @@
             NSString *str = @"创建任务";
             CreateTaskViewController * _createTaskViewCtl = [[CreateTaskViewController alloc] init];
             _createTaskViewCtl.navTitle = str;
+            _createTaskViewCtl.delegate = self;
+            _createTaskViewCtl.tag = 100;
             _createTaskViewCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:_createTaskViewCtl animated:NO];
         }
@@ -1032,6 +1034,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
 }
 
+
+#pragma mark - CreateTaskViewController delegate
+-(void)quitViewDelegate:(CreateTaskViewController *)createTaskView
+{
+    if(createTaskView.tag == 100)
+    {
+        [self loadTaskCalenderDatas];//获取任务日历
+        [_taskPageSeg setCurrentPage:_taskPageSeg.currentPage];
+    }
+}
 
 -(void)setPageIndex:(NSInteger)page//分页的代理方法
 {

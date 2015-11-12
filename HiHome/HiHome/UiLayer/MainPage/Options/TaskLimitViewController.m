@@ -31,7 +31,6 @@
     
     _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
                                                              /*最右侧图标，标题，内容*/
-                                                             @[@"只对家庭圈"],
                                                              @[@"对所有人"],
                                                              @[@"对好友"],
                                                              ],
@@ -123,7 +122,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
             [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
         }
     }
-    _cellCount = 3;
+    _cellCount = [_cellInfo[0] count];
     [self.view addSubview:_mainTableView];
     
 }
@@ -162,7 +161,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
         [cell setSeparatorInset:UIEdgeInsetsZero];
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
-    if(indexPath.row>=2)
+    if(indexPath.row==1)
     {
         
         UIButton *btn3 = [[UIButton alloc ]initWithFrame:CGRectMake(cell.frame.size.width - 20 -10, 0, 20  , cell.frame.size.height)];
@@ -233,7 +232,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
     memset(selectCellState, NO, sizeof(selectCellState));
-    if(indexPath.row<2)
+    if(indexPath.row<1)
     {
         selectCellState[indexPath.row] = YES;
         [_mainTableView reloadData];
@@ -358,7 +357,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
         tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.frame = CGRectMake(20,0 , 150, 30);
-        titleLabel.text = @"权限选择";
+        titleLabel.text = @"任务权限";
         titleLabel.font = [UIFont boldSystemFontOfSize:18];
         titleLabel.textColor  = ZY_UIBASECOLOR;
         [tempView addSubview:titleLabel];

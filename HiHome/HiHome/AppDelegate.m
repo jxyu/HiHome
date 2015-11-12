@@ -827,7 +827,17 @@ fetchCompletionHandler:(void
             }];
         }
             
+        NSString *tempStr;
         
+        if(_taskDetailMode == TaskDetail_MyMode)
+        {
+            tempStr = @"删除任务";
+        }
+        else
+        {
+            tempStr = @"取消任务";
+        }
+            
         [noiceView addButton:NoticeButton_CANCEL withTitle:@"取消任务" handler:^(NoticePageItem *item )
          {
              

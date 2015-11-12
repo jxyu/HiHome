@@ -235,7 +235,8 @@
             self.labelForStatus.text = @"未接受";
             break;
         case State_received:
-            self.labelForStatus.text = @"已接受";
+           // self.labelForStatus.text = @"已接受";
+            self.labelForStatus.text = @"待执行";
             break;
         case State_needDo:
             self.labelForStatus.text = @"待执行";

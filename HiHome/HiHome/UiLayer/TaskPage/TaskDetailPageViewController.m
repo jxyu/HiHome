@@ -378,7 +378,8 @@
                     str= @"未接受";
                     break;
                 case State_received:
-                    str = @"已接受";
+                    //str = @"已接受";
+                    str = @"待执行";//不显示已接受只有待执行
                     break;
                 case State_needDo:
                     str = @"待执行";
@@ -897,7 +898,35 @@
         case State_received://取消
         case State_needDo://取消
         case State_onGoing://取消
-            [self setTaskState:[NSString stringWithFormat:@"%ld",(long)State_cancel]];//上传状态
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {//自己的任务没有取消只有删除
+                {
+                    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+                    
+                    alert.alertType = AlertType_Alert;
+                    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                        NSLog(@"Click ok");
+                        
+                        [self delTask:TaskId];
+                        
+                        
+                    }];
+                    
+                    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                        NSLog(@"Click canel");
+                        
+                    }];
+                    [alert show];
+                    
+                }
+
+            }
+            else
+            {
+                [self setTaskState:[NSString stringWithFormat:@"%ld",(long)State_cancel]];//上传状态;
+            }
+            
             break;
         case State_finish://删除
         case State_unreceive://删除
@@ -1131,15 +1160,36 @@
             break;
         case State_received:
             btnLeftStr = @"开始执行";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_needDo:
             btnLeftStr = @"开始执行";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_onGoing:
             btnLeftStr = @"标记完成";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_finish:
             btnLeftStr = @"删除任务";

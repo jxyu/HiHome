@@ -359,7 +359,7 @@
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cellHeight*2+20, 0, 200, _cellHeight*2)];
         
         textLabel.textAlignment = NSTextAlignmentLeft;
-        textLabel.text = @"请上传头像";
+        textLabel.text = @"请上传纪念日主图";
         textLabel.textColor = [UIColor grayColor];
         textLabel.font = [UIFont systemFontOfSize:18];
         [cell addSubview:textLabel];

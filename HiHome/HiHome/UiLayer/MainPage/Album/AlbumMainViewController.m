@@ -33,6 +33,7 @@
     NSInteger resentPage;
     NSInteger _currentPage;
     NSString *selectAlbumID;
+    UIButton *upLoadBtn;
     
     BOOL pickPicOK;
 }
@@ -103,10 +104,17 @@
     //    _mainTableView.backgroundColor = ZY_UIBASECOLOR;
     //
     //    [self.view addSubview:_mainTableView];
-    UIButton *upLoadBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - ZY_VIEWHEIGHT_IN_HEADVIEW -10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW)];
-    [upLoadBtn setImage:[UIImage imageNamed:@"addtask"] forState:UIControlStateNormal];
-    [upLoadBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self->_tableHeaderView addSubview:upLoadBtn];
+//    upLoadBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - ZY_VIEWHEIGHT_IN_HEADVIEW -10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW)];
+//    [upLoadBtn setImage:[UIImage imageNamed:@"addtask"] forState:UIControlStateNormal];
+//    [upLoadBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    upLoadBtn.backgroundColor = [UIColor blueColor];
+    
+    
+    [ self.mBtnRight setImage:[UIImage imageNamed:@"addtask"] forState:UIControlStateNormal];
+    [ self.mBtnRight addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+  //  self->_tableHeaderView.alpha = 0.3;
+    self.mBtnRight.hidden = NO;
+    //[self->_tableHeaderView addSubview:upLoadBtn];
     _pullDownBtnTab = [[PullDownButtonsTab alloc] init];
     _pullDownBtnTab.delegate = self;
     /*上传照片各view*/

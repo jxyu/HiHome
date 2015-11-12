@@ -144,6 +144,15 @@
     _contentScrollView = [[UIScrollView alloc]initWithFrame:CGRectZero];
     [_alertView addSubview:_contentScrollView];
     
+    
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:)];
+    [self addGestureRecognizer:tapGesture];
+    
+}
+
+-(void)tapViewAction:(id)sender
+{
+    [self dismiss];
 }
 
 

@@ -463,8 +463,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "170"
             endingLineNumber = "170"
-            landmarkName = "@implementation DataProvider"
-            landmarkType = "3">
+            landmarkName = "-getReceiveTask:andState:andMyOrNot:andPage:andPerPage:andDate:andStartDate:andEndDate:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -607,7 +607,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "395"
             endingLineNumber = "395"
-            landmarkName = "-delApplyFriend:"
+            landmarkName = "-addFriend:andUserID:andRemark:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -767,8 +767,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "186"
             endingLineNumber = "186"
-            landmarkName = "-getSendTask:andState:andPage:andPerPage:andDate:"
-            landmarkType = "5">
+            landmarkName = "@implementation DataProvider"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1482,11 +1482,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/AnniversaryTaskDetailView.m"
-            timestampString = "468152485.073815"
+            timestampString = "469006914.158087"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "-quitView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1498,11 +1498,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/TaskPage/AnniversaryTaskDetailView.m"
-            timestampString = "468152486.259288"
+            timestampString = "469006914.158087"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "-quitView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1786,11 +1786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Album/AlbumShowViewController.m"
-            timestampString = "468326909.177184"
+            timestampString = "469011183.745003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
             landmarkName = "-getAlbumPicListCallBack:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1802,11 +1802,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/MainPage/Album/AlbumShowViewController.m"
-            timestampString = "468326909.177184"
+            timestampString = "469011183.745003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "-getAlbumPicListCallBack:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2335,7 +2335,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "616"
             endingLineNumber = "616"
-            landmarkName = "-GetPictureList:andAid:andNowPage:andPerPage:"
+            landmarkName = "-DelPicture:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3151,7 +3151,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "276"
             endingLineNumber = "276"
-            landmarkName = "-delTask:"
+            landmarkName = "-acceptOrReject:andState:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3338,11 +3338,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HiHome/UiLayer/NoticePage/NoticePageView.m"
-            timestampString = "468926182.269443"
+            timestampString = "469008319.271516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "-reLayout"
             landmarkType = "5">
          </BreakpointContent>
@@ -4513,6 +4513,54 @@
             endingLineNumber = "500"
             landmarkName = "-SubmitTaskBackCall:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HiHome/UiLayer/BaseUnits/PictureShowViewController.m"
+            timestampString = "469005683.95444"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-btnClick:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PictureShowViewController btnClick:]"
+                  moduleName = "HiHome"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangjc/work/project/HIHome/Project/HiHome/HiHome/UiLayer/BaseUnits/PictureShowViewController.m"
+                  timestampString = "469004821.39224"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__38-[PictureShowViewController btnClick:]_block_invoke"
+                  moduleName = "HiHome"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangjc/work/project/HIHome/Project/HiHome/HiHome/UiLayer/BaseUnits/PictureShowViewController.m"
+                  timestampString = "469004821.39257"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -223,6 +223,8 @@
 		B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96C1BB6888E0040A084 /* editTask@2x.png */; };
 		B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96E1BB693180040A084 /* threepoint@2x.png */; };
 		B590E9611BE6F66800759207 /* CreateTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56CFC151BCC90940081B645 /* CreateTaskViewController.m */; };
+		B591FAEE1BF47306003B249B /* PictureShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B591FAED1BF47306003B249B /* PictureShowView.m */; };
+		B591FAF01BF48473003B249B /* del@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B591FAEF1BF48473003B249B /* del@2x.png */; };
 		B596881F1BCDEFB1001F2715 /* UUDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881C1BCDEFB1001F2715 /* UUDatePicker.m */; };
 		B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881E1BCDEFB1001F2715 /* UUDatePicker_DateModel.m */; };
 		B59688241BCE0929001F2715 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59688221BCE0929001F2715 /* RemindViewController.m */; };
@@ -700,6 +702,9 @@
 		B58DD9681BB687A90040A084 /* addtask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addtask@2x.png"; sourceTree = "<group>"; };
 		B58DD96C1BB6888E0040A084 /* editTask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editTask@2x.png"; sourceTree = "<group>"; };
 		B58DD96E1BB693180040A084 /* threepoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "threepoint@2x.png"; sourceTree = "<group>"; };
+		B591FAEC1BF47306003B249B /* PictureShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureShowView.h; sourceTree = "<group>"; };
+		B591FAED1BF47306003B249B /* PictureShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureShowView.m; sourceTree = "<group>"; };
+		B591FAEF1BF48473003B249B /* del@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "del@2x.png"; sourceTree = "<group>"; };
 		B596881B1BCDEFB1001F2715 /* UUDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker.h; sourceTree = "<group>"; };
 		B596881C1BCDEFB1001F2715 /* UUDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUDatePicker.m; sourceTree = "<group>"; };
 		B596881D1BCDEFB1001F2715 /* UUDatePicker_DateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker_DateModel.h; sourceTree = "<group>"; };
@@ -1298,6 +1303,7 @@
 		80BC02E01BB0ED890002A267 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B591FAEF1BF48473003B249B /* del@2x.png */,
 				B5E0CE7D1BE3457300DF8EB1 /* album */,
 				B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */,
 				80124C111BD8B4F900DBE369 /* select_Radio_icon@2x.png */,
@@ -1717,6 +1723,8 @@
 				B583B1A51BC39B2B000572CA /* BackPageViewController.m */,
 				B583B1A71BC39B72000572CA /* BaseTableViewCell.h */,
 				B583B1A81BC39B72000572CA /* BaseTableViewCell.m */,
+				B591FAEC1BF47306003B249B /* PictureShowView.h */,
+				B591FAED1BF47306003B249B /* PictureShowView.m */,
 			);
 			path = BaseUnits;
 			sourceTree = "<group>";
@@ -2184,7 +2192,7 @@
 				TargetAttributes = {
 					B5033B9E1BAFA6D60014935E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 6NC56CVL43;
+						DevelopmentTeam = M7YC435M3S;
 					};
 					B5033BB71BAFA6D70014935E = {
 						CreatedOnToolsVersion = 7.0;
@@ -2362,6 +2370,7 @@
 				B5033BAD1BAFA6D60014935E /* Main.storyboard in Resources */,
 				80BC02F71BB0F07A0002A267 /* index_2.png in Resources */,
 				B58196121BCBAC0D00D69A1E /* pickPicBtn@2x.png in Resources */,
+				B591FAF01BF48473003B249B /* del@2x.png in Resources */,
 				B58DD94F1BB61F0A0040A084 /* repeat@2x.png in Resources */,
 				B50FA11F1BD878BE003E80CD /* jinianri_img@2x.png in Resources */,
 				B5FA2DAE1BC4F00200D5BDB7 /* SoundSetViewController.xib in Resources */,
@@ -2510,6 +2519,7 @@
 				8048CC4D1BD21C5200B76C59 /* Model.m in Sources */,
 				B5E059D51BB146E100DBF786 /* UIImage+WM.m in Sources */,
 				B5E0599E1BB0F92900DBF786 /* FirstScrollController.m in Sources */,
+				B591FAEE1BF47306003B249B /* PictureShowView.m in Sources */,
 				B5879D7E1BC7A755003AACFA /* SegmentedButton.m in Sources */,
 				80124C091BD885E800DBE369 /* SDWebImagePrefetcher.m in Sources */,
 				B5033BEF1BAFB46C0014935E /* MainPageViewController.m in Sources */,
@@ -2755,7 +2765,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";
@@ -2795,7 +2805,7 @@
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/UMSocial_Shake_Sdk",
 					"$(PROJECT_DIR)/HiHome/Sources/UMeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.HomeHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)HiHome/Sources/JPush/lib";

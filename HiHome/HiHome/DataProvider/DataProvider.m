@@ -618,7 +618,9 @@
 #if DEBUG
         NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
 #endif
-        [self PostRequest:url andpram:prm];
+       // [self PostRequest:url andpram:prm];
+        
+        [self GetRequest:url andpram:prm];
     }
 }
 

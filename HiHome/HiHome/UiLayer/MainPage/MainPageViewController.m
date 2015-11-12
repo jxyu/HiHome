@@ -84,11 +84,13 @@
     NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:nsTimeInterval];
     
     //转换时区
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate: date];
-    date = [date  dateByAddingTimeInterval: interval];
+//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+//    NSInteger interval = [zone secondsFromGMTForDate: date];
+//    date = [date  dateByAddingTimeInterval: interval];
     
-    NSLog(@"%@",date);
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    detailChat2.text = [dateFormatter stringFromDate:date];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{

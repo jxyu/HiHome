@@ -11,6 +11,9 @@
 #import "UIDefine.h"
 #import "DataProvider.h"
 #import "ChatlistViewController.h"
+#import "UIImageView+WebCache.h"
+#import "RCIMClient.h"
+
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
     DataProvider *dataProvider;
@@ -24,6 +27,9 @@
     
     NSTimeInterval oldTime;
     NSTimeInterval currentTime;
+    
+    UILabel *detailChat1;
+    UILabel *detailChat2;
 }
 
 @end
@@ -65,9 +71,18 @@
     [self.view addSubview:_mainTableView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated{
+    //getTotalUnreadCount
+    int num = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    NSLog(@"%d",num);
+    detailChat1.text = [NSString stringWithFormat:@"您有%d条信息未查看",num];
+    
+    NSArray *lastMessage = [[RCIMClient sharedRCIMClient] getLatestMessages:ConversationType_GROUP targetId:@"3" count:1];
+    NSLog(@"%@",lastMessage);
+    
+    RCConversation *conversation = [[RCConversation alloc] init];
+    RCMessageContent *ddd = conversation.lastestMessage;
+    NSLog(@"%@",ddd);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
@@ -494,19 +509,19 @@
     mainLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     mainLabel.text = @"聊天提醒";
     
-    UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
-    detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
-    detail1.font = [UIFont systemFontOfSize:10];
-    detail1.text = @"您有10条信息未查看";
+    detailChat1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
+    detailChat1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detailChat1.font = [UIFont systemFontOfSize:10];
+    detailChat1.text = @"您有10条信息未查看";
     
-    UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
-    detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
-    detail2.font = [UIFont systemFontOfSize:10];
-    detail2.text = @"今天19:00";
+    detailChat2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detailChat1.frame.size.height + detailChat1.frame.origin.y, 150, 13)];
+    detailChat2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detailChat2.font = [UIFont systemFontOfSize:10];
+    detailChat2.text = @"今天19:00";
     
     [LabelViews addObject:mainLabel];
-    [LabelViews addObject:detail1];
-    [LabelViews addObject:detail2];
+    [LabelViews addObject:detailChat1];
+    [LabelViews addObject:detailChat2];
     return LabelViews;
 }
 //第3个cell添加views

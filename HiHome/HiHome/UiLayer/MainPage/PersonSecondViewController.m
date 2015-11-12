@@ -26,6 +26,8 @@
     NSUserDefaults *mUserDefault;
     
     NSString *_mImgStr;
+    
+    UIView *mView;
 }
 
 @end
@@ -50,6 +52,9 @@
     [self.view addSubview:mTableView];
     
     mTableView.tableFooterView = [[UIView alloc] init];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne)];
+    [self.view addGestureRecognizer:tap];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -125,6 +130,7 @@
             break;
         case 4:{
             txt_age = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, cellHeight)];
+            txt_age.delegate = self;
             txt_age.placeholder = @"请输入您的年龄";
             txt_age.text = _mAge;
             UILabel *age_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, cellHeight)];
@@ -136,6 +142,7 @@
             break;
         case 5:{
             txt_signe = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, cellHeight)];
+            txt_signe.delegate = self;
             txt_signe.placeholder = @"请输入您的签名";
             txt_signe.text = _mSign;
             UILabel *signe_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, cellHeight)];
@@ -169,10 +176,31 @@
     return cell;
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    mView = [[textField superview] superview];
+    CGRect frame = mView.frame;
+    frame.origin.y -= frame.size.height * 0.3;
+    [UIView beginAnimations:@"moveView" context:nil];
+    [UIView setAnimationDuration:0.3];
+    mView.frame = frame;
+    [UIView commitAnimations];
+}
+
+-(void)tapOne{
+    
     [txt_name resignFirstResponder];
     [txt_age resignFirstResponder];
     [txt_signe resignFirstResponder];
+    
+    CGRect frame = mView.frame;
+    if (frame.origin.y == 0) {
+        return;
+    }
+    frame.origin.y += frame.size.height * 0.3;
+    [UIView beginAnimations:@"moveView" context:nil];
+    [UIView setAnimationDuration:0.3];
+    mView.frame = frame;
+    [UIView commitAnimations];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

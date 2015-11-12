@@ -83,7 +83,7 @@
         NSLog(@"%@",userInfoArray);
         [self initView];
     }else{
-        NSLog(@"访问服务器失败！");
+        NSLog(@"%@",dict[@"message"]);
     }
 }
 
@@ -325,6 +325,8 @@
 //                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
 //                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
 //                    [cell addSubview:mHiBtn];
+                }else if([_mIFlag isEqual:@"6"]){
+                    
                 }else{
                     UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                     [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];

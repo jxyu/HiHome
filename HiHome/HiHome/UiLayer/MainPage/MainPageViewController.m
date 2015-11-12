@@ -77,12 +77,18 @@
     NSLog(@"%d",num);
     detailChat1.text = [NSString stringWithFormat:@"您有%d条信息未查看",num];
     
-    NSArray *lastMessage = [[RCIMClient sharedRCIMClient] getLatestMessages:ConversationType_GROUP targetId:@"3" count:1];
-    NSLog(@"%@",lastMessage);
+    NSArray *mArray = [[RCIMClient sharedRCIMClient] getConversationList:@[@(ConversationType_PRIVATE)]];
+    long long value = [[mArray[0] valueForKey:@"receivedTime"] longLongValue] / 1000;
+    NSNumber *time = [NSNumber numberWithLongLong:value];
+    NSTimeInterval nsTimeInterval = [time longValue];
+    NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:nsTimeInterval];
     
-    RCConversation *conversation = [[RCConversation alloc] init];
-    RCMessageContent *ddd = conversation.lastestMessage;
-    NSLog(@"%@",ddd);
+    //转换时区
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: date];
+    date = [date  dateByAddingTimeInterval: interval];
+    
+    NSLog(@"%@",date);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{

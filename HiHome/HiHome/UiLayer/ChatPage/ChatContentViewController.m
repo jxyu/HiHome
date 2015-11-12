@@ -196,11 +196,28 @@
 
 - (void)didTapCellPortrait:(NSString *)userId{
     personFirstVC = [[PersonFirstViewController alloc] init];
-    personFirstVC.mIFlag = @"5";
     personFirstVC.navTitle = @"好友资料";
     personFirstVC.mFriendID = userId;
+    if ([userId isEqual:[self getUserID]]) {
+        personFirstVC.mIFlag = @"6";
+    }else{
+        personFirstVC.mIFlag = @"5";
+    }
     
     [self.navigationController pushViewController:personFirstVC animated:NO];
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile1 =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile1 objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
 }
 
 @end

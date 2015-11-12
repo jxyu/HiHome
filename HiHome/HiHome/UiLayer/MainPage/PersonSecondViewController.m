@@ -177,8 +177,12 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    mView = [[textField superview] superview];
+    mView = [[[textField superview] superview] superview];
     CGRect frame = mView.frame;
+    NSLog(@"%f",frame.origin.y);
+    if (frame.origin.y != 64) {
+        return;
+    }
     frame.origin.y -= frame.size.height * 0.3;
     [UIView beginAnimations:@"moveView" context:nil];
     [UIView setAnimationDuration:0.3];

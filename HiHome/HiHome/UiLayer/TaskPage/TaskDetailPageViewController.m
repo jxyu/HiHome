@@ -18,6 +18,7 @@
 #import "UIImageView+WebCache.h"
 #import "CreateTask/CreateTaskViewController.h"
 #import "taskerCollectionViewCell.h"
+#import "PersonFirstViewController.h"
 
 #define _CELL @ "acell"
 @interface TaskDetailPageViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
@@ -524,9 +525,12 @@
         headImgView.layer.cornerRadius = headImgView.frame.size.width * 0.5;
         headImgView.layer.borderWidth = 0.1;
         headImgView.layer.masksToBounds = YES;
-        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
+        singleTap.numberOfTapsRequired = 1;
+        [headImgView setUserInteractionEnabled:YES];
+        [headImgView addGestureRecognizer:singleTap];
         UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(headImgView.frame.origin.x+headImgView.frame.size.width + 10, 10, 200, _cellHeight - 10*2)];
-        userName.text = senderNameStr;//发布人
+        userName.text = [_dictData objectForKey:@"nick"];//senderNameStr;//发布人
         userName.textColor = [UIColor grayColor];
         userName.font = [UIFont systemFontOfSize:14];
         
@@ -668,6 +672,24 @@
         [cell setPreservesSuperviewLayoutMargins:false];
     }
     return cell;
+}
+
+-(void)tapDetected{
+    PersonFirstViewController *personFirstVC = [[PersonFirstViewController alloc] init];
+    personFirstVC.navTitle = @"好友资料";
+    personFirstVC.mFriendID = [_dictData valueForKey:@"uid"];
+    if ([[_dictData valueForKey:@"uid"] isEqual:[self getUserID]]) {
+        personFirstVC.mIFlag = @"6";
+    }else{
+        personFirstVC.mIFlag = @"5";
+    }
+    if(self.pageChangeMode == Mode_nav){
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+    }
+    else{
+        personFirstVC.pageChangeMode = Mode_dis;
+        [self presentViewController:personFirstVC animated:NO completion:nil];
+    }
 }
 
 //设置cell每行间隔的高度

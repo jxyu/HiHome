@@ -42,6 +42,7 @@
     int uploadImgIndex;
     
     NSMutableArray * img_prm;
+    UIView *mView;
 }
 
 - (void)viewDidLoad {
@@ -265,6 +266,16 @@
         [_titleField resignFirstResponder];//关闭titleField的键盘
         [self setViewMove];
         
+        CGRect frame = mView.frame;
+        NSLog(@"%f",frame.origin.y);
+        if (frame.origin.y == 64) {
+            return;
+        }
+        frame.origin.y += frame.size.height * 0.4;
+        [UIView beginAnimations:@"moveView" context:nil];
+        [UIView setAnimationDuration:0.3];
+        mView.frame = frame;
+        [UIView commitAnimations];
     }
 }
 
@@ -479,7 +490,19 @@
     
 }
 
-
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    mView = [[[textView superview] superview] superview];
+    CGRect frame = mView.frame;
+    NSLog(@"%f",frame.origin.y);
+    if (frame.origin.y != 64) {
+        return;
+    }
+    frame.origin.y -= frame.size.height * 0.4;
+    [UIView beginAnimations:@"moveView" context:nil];
+    [UIView setAnimationDuration:0.3];
+    mView.frame = frame;
+    [UIView commitAnimations];
+}
 
 //打开相册
 -(void)showLocalAlbum

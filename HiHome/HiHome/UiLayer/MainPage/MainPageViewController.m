@@ -11,6 +11,8 @@
 #import "UIDefine.h"
 #import "DataProvider.h"
 #import "ChatlistViewController.h"
+#import "UIImageView+WebCache.h"
+
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
     DataProvider *dataProvider;

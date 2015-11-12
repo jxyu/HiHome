@@ -583,7 +583,7 @@
         MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
         
         controller.recipients = [NSArray arrayWithObject:phoneTxt];
-        controller.body = @"欢迎加入小家";
+        controller.body = @"http://www.pgyer.com/NACr";
         controller.messageComposeDelegate = self;
         
         [self presentViewController:controller animated:YES completion:nil];

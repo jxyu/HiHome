@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BackPageViewController.h"
 
+typedef enum _selectContactMode{
+    Mode_DefaultSelectOneself,
+    Mode_NotSelectOneself
+}SelectContactMode;
+
 @protocol  SelectContacterViewControllerDelegate <NSObject>
 
 -(void) setContacterInfo:(NSArray *)selectContacterArrayID andName:(NSArray *)selectContacterArrayName;
@@ -20,5 +25,6 @@
 @property(strong,nonatomic) NSMutableArray *selectContacterArrayID;//已选择的联系人数组
 @property(strong,nonatomic) NSMutableArray *selectContacterArrayName;//已选择的联系人数组
 @property(nonatomic)id<SelectContacterViewControllerDelegate> delegate;
+@property(nonatomic)SelectContactMode selectContactMode;
 
 @end

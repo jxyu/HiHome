@@ -583,7 +583,7 @@
     userInfoVC.mHeadImg = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
     userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
-    userInfoVC.mAge = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];
+    userInfoVC.mBirthday = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];
     userInfoVC.mSign = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
     [self presentViewController:userInfoVC animated:NO completion:^{}];
 }

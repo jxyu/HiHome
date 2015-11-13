@@ -1518,7 +1518,7 @@
             selectContacterVC = [[SelectContacterViewController alloc] init];
             selectContacterVC.delegate = self;
             selectContacterVC.navTitle = @"选择执行人";
-            //[self presentViewController:selectContacterVC animated:NO completion:nil];
+            [selectContacterVC setSelectContactMode:Mode_NotSelectOneself];
             [self.navigationController pushViewController:selectContacterVC animated:NO];
         }
             break;

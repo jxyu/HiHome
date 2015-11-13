@@ -188,6 +188,21 @@
 		B587FF171BC8B4D500E9F119 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B587FF161BC8B4D500E9F119 /* AlbumTableViewCell.m */; };
 		B587FF1B1BC8BDA600E9F119 /* fristPic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B587FF191BC8BDA600E9F119 /* fristPic@2x.png */; };
 		B587FF1C1BC8BDA600E9F119 /* recentPic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B587FF1A1BC8BDA600E9F119 /* recentPic@2x.png */; };
+		B58B638B1BF2D40000027C02 /* PinYinForObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B637F1BF2D40000027C02 /* PinYinForObjc.m */; };
+		B58B638C1BF2D40000027C02 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63811BF2D40000027C02 /* ChineseToPinyinResource.m */; };
+		B58B638D1BF2D40000027C02 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63831BF2D40000027C02 /* HanyuPinyinOutputFormat.m */; };
+		B58B638E1BF2D40000027C02 /* NSString+PinYin4Cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63851BF2D40000027C02 /* NSString+PinYin4Cocoa.m */; };
+		B58B638F1BF2D40000027C02 /* PinyinFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63871BF2D40000027C02 /* PinyinFormatter.m */; };
+		B58B63901BF2D40000027C02 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63891BF2D40000027C02 /* PinyinHelper.m */; };
+		B58B63911BF2D40000027C02 /* unicode_to_hanyu_pinyin.txt in Resources */ = {isa = PBXBuildFile; fileRef = B58B638A1BF2D40000027C02 /* unicode_to_hanyu_pinyin.txt */; };
+		B58B63971BF2D47700027C02 /* PushView.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63931BF2D47700027C02 /* PushView.m */; };
+		B58B63981BF2D47700027C02 /* PushView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58B63941BF2D47700027C02 /* PushView.xib */; };
+		B58B63991BF2D47700027C02 /* ChineseInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63961BF2D47700027C02 /* ChineseInclude.m */; };
+		B58B63A31BF2D55400027C02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B58B63A11BF2D55400027C02 /* InfoPlist.strings */; };
+		B58B63A41BF2D55400027C02 /* SearchTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B58B63A21BF2D55400027C02 /* SearchTests-Info.plist */; };
+		B58B63A71BF2D59400027C02 /* Search-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B58B63A51BF2D59400027C02 /* Search-Info.plist */; };
+		B58B63A91BF2D5A200027C02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B58B63A81BF2D5A200027C02 /* InfoPlist.strings */; };
+		B58B63AE1BF3152000027C02 /* MySearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58B63AD1BF3152000027C02 /* MySearchDisplayController.m */; };
 		B58D923B1BC6497D00219E76 /* other@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D92381BC6497D00219E76 /* other@2x.png */; };
 		B58D923D1BC6497D00219E76 /* photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D923A1BC6497D00219E76 /* photo@2x.png */; };
 		B58D923F1BC64B5F00219E76 /* picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D923E1BC64B5F00219E76 /* picture@2x.png */; };
@@ -208,6 +223,8 @@
 		B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96C1BB6888E0040A084 /* editTask@2x.png */; };
 		B58DD96F1BB693180040A084 /* threepoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DD96E1BB693180040A084 /* threepoint@2x.png */; };
 		B590E9611BE6F66800759207 /* CreateTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56CFC151BCC90940081B645 /* CreateTaskViewController.m */; };
+		B591FAEE1BF47306003B249B /* PictureShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B591FAED1BF47306003B249B /* PictureShowView.m */; };
+		B591FAF01BF48473003B249B /* del@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B591FAEF1BF48473003B249B /* del@2x.png */; };
 		B596881F1BCDEFB1001F2715 /* UUDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881C1BCDEFB1001F2715 /* UUDatePicker.m */; };
 		B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B596881E1BCDEFB1001F2715 /* UUDatePicker_DateModel.m */; };
 		B59688241BCE0929001F2715 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59688221BCE0929001F2715 /* RemindViewController.m */; };
@@ -326,6 +343,18 @@
 			remoteInfo = HiHome;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B58B63AB1BF2DC5000027C02 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Applications/Xcode.app/Contents/Developer/Library/Frameworks;
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4A5067773248DD015B75248D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -628,6 +657,31 @@
 		B587FF161BC8B4D500E9F119 /* AlbumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumTableViewCell.m; path = HiHome/UiLayer/MainPage/Album/AlbumTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		B587FF191BC8BDA600E9F119 /* fristPic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fristPic@2x.png"; sourceTree = "<group>"; };
 		B587FF1A1BC8BDA600E9F119 /* recentPic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recentPic@2x.png"; sourceTree = "<group>"; };
+		B58B637E1BF2D40000027C02 /* PinYinForObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinYinForObjc.h; sourceTree = "<group>"; };
+		B58B637F1BF2D40000027C02 /* PinYinForObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinYinForObjc.m; sourceTree = "<group>"; };
+		B58B63801BF2D40000027C02 /* ChineseToPinyinResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseToPinyinResource.h; sourceTree = "<group>"; };
+		B58B63811BF2D40000027C02 /* ChineseToPinyinResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseToPinyinResource.m; sourceTree = "<group>"; };
+		B58B63821BF2D40000027C02 /* HanyuPinyinOutputFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HanyuPinyinOutputFormat.h; sourceTree = "<group>"; };
+		B58B63831BF2D40000027C02 /* HanyuPinyinOutputFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HanyuPinyinOutputFormat.m; sourceTree = "<group>"; };
+		B58B63841BF2D40000027C02 /* NSString+PinYin4Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin4Cocoa.h"; sourceTree = "<group>"; };
+		B58B63851BF2D40000027C02 /* NSString+PinYin4Cocoa.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PinYin4Cocoa.m"; sourceTree = "<group>"; };
+		B58B63861BF2D40000027C02 /* PinyinFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinyinFormatter.h; sourceTree = "<group>"; };
+		B58B63871BF2D40000027C02 /* PinyinFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinyinFormatter.m; sourceTree = "<group>"; };
+		B58B63881BF2D40000027C02 /* PinyinHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinyinHelper.h; sourceTree = "<group>"; };
+		B58B63891BF2D40000027C02 /* PinyinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinyinHelper.m; sourceTree = "<group>"; };
+		B58B638A1BF2D40000027C02 /* unicode_to_hanyu_pinyin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = unicode_to_hanyu_pinyin.txt; sourceTree = "<group>"; };
+		B58B63921BF2D47700027C02 /* PushView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushView.h; sourceTree = "<group>"; };
+		B58B63931BF2D47700027C02 /* PushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushView.m; sourceTree = "<group>"; };
+		B58B63941BF2D47700027C02 /* PushView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushView.xib; sourceTree = "<group>"; };
+		B58B63951BF2D47700027C02 /* ChineseInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseInclude.h; sourceTree = "<group>"; };
+		B58B63961BF2D47700027C02 /* ChineseInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseInclude.m; sourceTree = "<group>"; };
+		B58B63A11BF2D55400027C02 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		B58B63A21BF2D55400027C02 /* SearchTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SearchTests-Info.plist"; sourceTree = "<group>"; };
+		B58B63A51BF2D59400027C02 /* Search-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Search-Info.plist"; sourceTree = "<group>"; };
+		B58B63A61BF2D59400027C02 /* Search-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Search-Prefix.pch"; sourceTree = "<group>"; };
+		B58B63A81BF2D5A200027C02 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		B58B63AC1BF3152000027C02 /* MySearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySearchDisplayController.h; sourceTree = "<group>"; };
+		B58B63AD1BF3152000027C02 /* MySearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySearchDisplayController.m; sourceTree = "<group>"; };
 		B58D92381BC6497D00219E76 /* other@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "other@2x.png"; sourceTree = "<group>"; };
 		B58D923A1BC6497D00219E76 /* photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo@2x.png"; sourceTree = "<group>"; };
 		B58D923E1BC64B5F00219E76 /* picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picture@2x.png"; sourceTree = "<group>"; };
@@ -648,6 +702,9 @@
 		B58DD9681BB687A90040A084 /* addtask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addtask@2x.png"; sourceTree = "<group>"; };
 		B58DD96C1BB6888E0040A084 /* editTask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editTask@2x.png"; sourceTree = "<group>"; };
 		B58DD96E1BB693180040A084 /* threepoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "threepoint@2x.png"; sourceTree = "<group>"; };
+		B591FAEC1BF47306003B249B /* PictureShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureShowView.h; sourceTree = "<group>"; };
+		B591FAED1BF47306003B249B /* PictureShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureShowView.m; sourceTree = "<group>"; };
+		B591FAEF1BF48473003B249B /* del@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "del@2x.png"; sourceTree = "<group>"; };
 		B596881B1BCDEFB1001F2715 /* UUDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker.h; sourceTree = "<group>"; };
 		B596881C1BCDEFB1001F2715 /* UUDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUDatePicker.m; sourceTree = "<group>"; };
 		B596881D1BCDEFB1001F2715 /* UUDatePicker_DateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUDatePicker_DateModel.h; sourceTree = "<group>"; };
@@ -1201,6 +1258,7 @@
 		8048CC471BD21C2E00B76C59 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B58B637C1BF2D2F100027C02 /* Search */,
 				B798401B1BE2152000CE6143 /* Location */,
 				800A4D591BDF865800A22EA4 /* UMeng */,
 				8018387C1BDDCB0B0046B814 /* JPush */,
@@ -1245,6 +1303,7 @@
 		80BC02E01BB0ED890002A267 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B591FAEF1BF48473003B249B /* del@2x.png */,
 				B5E0CE7D1BE3457300DF8EB1 /* album */,
 				B7942BA51BD8B5C5007D6F17 /* person_top_bg.png */,
 				80124C111BD8B4F900DBE369 /* select_Radio_icon@2x.png */,
@@ -1456,6 +1515,8 @@
 				B7EE4F5D1BE703130077BECA /* AddressLocalCell.h */,
 				B7EE4F5E1BE703130077BECA /* AddressLocalCell.m */,
 				B7EE4F5F1BE703130077BECA /* AddressLocalCell.xib */,
+				B58B63AC1BF3152000027C02 /* MySearchDisplayController.h */,
+				B58B63AD1BF3152000027C02 /* MySearchDisplayController.m */,
 			);
 			path = AddressPage;
 			sourceTree = "<group>";
@@ -1662,6 +1723,8 @@
 				B583B1A51BC39B2B000572CA /* BackPageViewController.m */,
 				B583B1A71BC39B72000572CA /* BaseTableViewCell.h */,
 				B583B1A81BC39B72000572CA /* BaseTableViewCell.m */,
+				B591FAEC1BF47306003B249B /* PictureShowView.h */,
+				B591FAED1BF47306003B249B /* PictureShowView.m */,
 			);
 			path = BaseUnits;
 			sourceTree = "<group>";
@@ -1708,6 +1771,52 @@
 				B587FF1A1BC8BDA600E9F119 /* recentPic@2x.png */,
 			);
 			path = Album;
+			sourceTree = "<group>";
+		};
+		B58B637C1BF2D2F100027C02 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				B58B63A81BF2D5A200027C02 /* InfoPlist.strings */,
+				B58B63A51BF2D59400027C02 /* Search-Info.plist */,
+				B58B63A61BF2D59400027C02 /* Search-Prefix.pch */,
+				B58B639A1BF2D4AD00027C02 /* SearchTests */,
+				B58B63921BF2D47700027C02 /* PushView.h */,
+				B58B63931BF2D47700027C02 /* PushView.m */,
+				B58B63941BF2D47700027C02 /* PushView.xib */,
+				B58B63951BF2D47700027C02 /* ChineseInclude.h */,
+				B58B63961BF2D47700027C02 /* ChineseInclude.m */,
+				B58B637D1BF2D32B00027C02 /* PinYin */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		B58B637D1BF2D32B00027C02 /* PinYin */ = {
+			isa = PBXGroup;
+			children = (
+				B58B637E1BF2D40000027C02 /* PinYinForObjc.h */,
+				B58B637F1BF2D40000027C02 /* PinYinForObjc.m */,
+				B58B63801BF2D40000027C02 /* ChineseToPinyinResource.h */,
+				B58B63811BF2D40000027C02 /* ChineseToPinyinResource.m */,
+				B58B63821BF2D40000027C02 /* HanyuPinyinOutputFormat.h */,
+				B58B63831BF2D40000027C02 /* HanyuPinyinOutputFormat.m */,
+				B58B63841BF2D40000027C02 /* NSString+PinYin4Cocoa.h */,
+				B58B63851BF2D40000027C02 /* NSString+PinYin4Cocoa.m */,
+				B58B63861BF2D40000027C02 /* PinyinFormatter.h */,
+				B58B63871BF2D40000027C02 /* PinyinFormatter.m */,
+				B58B63881BF2D40000027C02 /* PinyinHelper.h */,
+				B58B63891BF2D40000027C02 /* PinyinHelper.m */,
+				B58B638A1BF2D40000027C02 /* unicode_to_hanyu_pinyin.txt */,
+			);
+			path = PinYin;
+			sourceTree = "<group>";
+		};
+		B58B639A1BF2D4AD00027C02 /* SearchTests */ = {
+			isa = PBXGroup;
+			children = (
+				B58B63A11BF2D55400027C02 /* InfoPlist.strings */,
+				B58B63A21BF2D55400027C02 /* SearchTests-Info.plist */,
+			);
+			path = SearchTests;
 			sourceTree = "<group>";
 		};
 		B58D92311BC6476300219E76 /* help */ = {
@@ -2025,6 +2134,7 @@
 				B5033B9C1BAFA6D60014935E /* Frameworks */,
 				B5033B9D1BAFA6D60014935E /* Resources */,
 				3F84585B84A1244F0D90FD90 /* Copy Pods Resources */,
+				B58B63AB1BF2DC5000027C02 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -2126,6 +2236,7 @@
 				B5E0599F1BB0F92900DBF786 /* FirstScrollController.xib in Resources */,
 				800A4DAB1BDF865800A22EA4 /* UMShareEditViewControlleriPad.xib in Resources */,
 				B5E059DD1BB146E100DBF786 /* WMMenuViewController.xib in Resources */,
+				B58B63981BF2D47700027C02 /* PushView.xib in Resources */,
 				B5E0CE7F1BE3457300DF8EB1 /* albumbackground@2x.png in Resources */,
 				B5E059D01BB146E100DBF786 /* Images.xcassets in Resources */,
 				80BC02EB1BB0EDAA0002A267 /* chat_tab_gray_icon@2x.png in Resources */,
@@ -2161,7 +2272,9 @@
 				B77F91111BD1DDE900DAB43C /* AnniversaryTaskCell.xib in Resources */,
 				B56CFC2F1BCD08F00081B645 /* redcamera@2x.png in Resources */,
 				B58DD96D1BB6888E0040A084 /* editTask@2x.png in Resources */,
+				B58B63A91BF2D5A200027C02 /* InfoPlist.strings in Resources */,
 				800A4DA41BDF865800A22EA4 /* UMSocialLocalizable.strings in Resources */,
+				B58B63911BF2D40000027C02 /* unicode_to_hanyu_pinyin.txt in Resources */,
 				B58196071BCB87A500D69A1E /* takePic@2x.png in Resources */,
 				B57F5D8B1BBA8399009AC336 /* account@2x.png in Resources */,
 				80BC02F01BB0EDAA0002A267 /* metion_tab_gods_icon@2x.png in Resources */,
@@ -2221,6 +2334,7 @@
 				B55D08AC1BB3D55600C10932 /* mytask_red@2x.png in Resources */,
 				B5E059E11BB146E100DBF786 /* WMOtherViewController.xib in Resources */,
 				80076ABF1BDA155000DEFD35 /* JKImagePickerController.strings in Resources */,
+				B58B63A41BF2D55400027C02 /* SearchTests-Info.plist in Resources */,
 				B56C2EEB1BC4BF330030FB83 /* OptionsViewController.xib in Resources */,
 				B57F5D911BBA8408009AC336 /* logo@2x.png in Resources */,
 				B5FA2DB81BC4F87A00D5BDB7 /* HelpAndFeedbackViewController.xib in Resources */,
@@ -2238,6 +2352,7 @@
 				B57F5D841BBA77FA009AC336 /* LoginViewController.xib in Resources */,
 				B7CC5AF01BD4C7CB00A1078F /* TaskNoticeTableViewCell.xib in Resources */,
 				80BC02EE1BB0EDAA0002A267 /* main_tab_gods_icon@2x.png in Resources */,
+				B58B63A31BF2D55400027C02 /* InfoPlist.strings in Resources */,
 				B58DD9561BB638AD0040A084 /* headman.png in Resources */,
 				B58DD94E1BB61F0A0040A084 /* remindTime@2x.png in Resources */,
 				800A4DA91BDF865800A22EA4 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -2246,6 +2361,7 @@
 				B7CC5AF51BD4D17000A1078F /* TaskNoticeViewController.xib in Resources */,
 				B7FB16871BDB765D0048551C /* checkbox_checked.png in Resources */,
 				B58DD95C1BB63DED0040A084 /* chat@2x.png in Resources */,
+				B58B63A71BF2D59400027C02 /* Search-Info.plist in Resources */,
 				B7A9D8B11BD7864900C37DB5 /* MessageNotice.xib in Resources */,
 				B5A77AB11BB4D9220014DD67 /* textImg@2x.png in Resources */,
 				800A4DAC1BDF865800A22EA4 /* UMSLoginViewController.xib in Resources */,
@@ -2254,6 +2370,7 @@
 				B5033BAD1BAFA6D60014935E /* Main.storyboard in Resources */,
 				80BC02F71BB0F07A0002A267 /* index_2.png in Resources */,
 				B58196121BCBAC0D00D69A1E /* pickPicBtn@2x.png in Resources */,
+				B591FAF01BF48473003B249B /* del@2x.png in Resources */,
 				B58DD94F1BB61F0A0040A084 /* repeat@2x.png in Resources */,
 				B50FA11F1BD878BE003E80CD /* jinianri_img@2x.png in Resources */,
 				B5FA2DAE1BC4F00200D5BDB7 /* SoundSetViewController.xib in Resources */,
@@ -2314,12 +2431,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B58B63901BF2D40000027C02 /* PinyinHelper.m in Sources */,
 				B5879D711BC78DE9003AACFA /* CoupleViewController.m in Sources */,
 				B59688241BCE0929001F2715 /* RemindViewController.m in Sources */,
 				B5E059D61BB146E100DBF786 /* ViewController.m in Sources */,
 				80076AC11BDA155000DEFD35 /* JKAssets.m in Sources */,
 				B5E059D91BB146E100DBF786 /* WMHomeViewController.m in Sources */,
 				B5879D771BC7A0C4003AACFA /* PlanMonthViewController.m in Sources */,
+				B58B638D1BF2D40000027C02 /* HanyuPinyinOutputFormat.m in Sources */,
 				B5E924531BE8648F00B15B55 /* PlanWeekViewController.m in Sources */,
 				B58196021BCB862900D69A1E /* PullDownButtonsTab.m in Sources */,
 				8003CC991BE319E20057B229 /* ChatLocationViewController.m in Sources */,
@@ -2340,6 +2459,7 @@
 				B56CFC171BCC90950081B645 /* CreateTaskViewController.m in Sources */,
 				80076ACA1BDA155000DEFD35 /* JKPromptView.m in Sources */,
 				B5E059DC1BB146E100DBF786 /* WMMenuViewController.m in Sources */,
+				B58B638B1BF2D40000027C02 /* PinYinForObjc.m in Sources */,
 				80076AC41BDA155000DEFD35 /* JKAssetsGroupsView.m in Sources */,
 				B7A9D8AB1BD780A700C37DB5 /* MessageNoticeCell.m in Sources */,
 				B57F5D971BBA9335009AC336 /* UIView+XD.m in Sources */,
@@ -2375,11 +2495,15 @@
 				B57F5D831BBA77FA009AC336 /* LoginViewController.m in Sources */,
 				B59688201BCDEFB1001F2715 /* UUDatePicker_DateModel.m in Sources */,
 				B7D6616B1BEDE74B00A65860 /* FunctionDescViewController.m in Sources */,
+				B58B63991BF2D47700027C02 /* ChineseInclude.m in Sources */,
+				B58B63971BF2D47700027C02 /* PushView.m in Sources */,
 				B5C60C311BE303C2005DE72A /* TempCustomButton.m in Sources */,
 				B7FB16781BDB65510048551C /* SelectContacterViewController.m in Sources */,
 				802306A71BD49BCA006CFFEC /* RegisterViewController.m in Sources */,
 				B5C60C2D1BE303C2005DE72A /* ChooseAlbumViewController.m in Sources */,
+				B58B638E1BF2D40000027C02 /* NSString+PinYin4Cocoa.m in Sources */,
 				B798401E1BE2152000CE6143 /* CCLocationManager.m in Sources */,
+				B58B638F1BF2D40000027C02 /* PinyinFormatter.m in Sources */,
 				B5E0599C1BB0F92900DBF786 /* BaseNavigationController.m in Sources */,
 				B596BF921BBBCB8F00349B1E /* JKAlertDialog.m in Sources */,
 				B5E0CE7B1BE338DC00DF8EB1 /* AlbumShowViewController.m in Sources */,
@@ -2395,12 +2519,14 @@
 				8048CC4D1BD21C5200B76C59 /* Model.m in Sources */,
 				B5E059D51BB146E100DBF786 /* UIImage+WM.m in Sources */,
 				B5E0599E1BB0F92900DBF786 /* FirstScrollController.m in Sources */,
+				B591FAEE1BF47306003B249B /* PictureShowView.m in Sources */,
 				B5879D7E1BC7A755003AACFA /* SegmentedButton.m in Sources */,
 				80124C091BD885E800DBE369 /* SDWebImagePrefetcher.m in Sources */,
 				B5033BEF1BAFB46C0014935E /* MainPageViewController.m in Sources */,
 				80124C051BD885E800DBE369 /* SDWebImageDecoder.m in Sources */,
 				80124C0B1BD885E800DBE369 /* UIImage+GIF.m in Sources */,
 				B7D6616F1BEDF06C00A65860 /* GTMBase64.m in Sources */,
+				B58B63AE1BF3152000027C02 /* MySearchDisplayController.m in Sources */,
 				B5E059A61BB0F93200DBF786 /* Toolkit.m in Sources */,
 				B770E6011BDF617E00EF2FFA /* AddFriendTableViewCell.m in Sources */,
 				80124C0A1BD885E800DBE369 /* UIButton+WebCache.m in Sources */,
@@ -2437,6 +2563,7 @@
 				B583B1AC1BC3A9B1000572CA /* AnniversaryViewController.m in Sources */,
 				B78E4A431BD9FAA800F23976 /* AddFriendFirstViewController.m in Sources */,
 				B5033BE01BAFB4050014935E /* TaskPageViewController.m in Sources */,
+				B58B638C1BF2D40000027C02 /* ChineseToPinyinResource.m in Sources */,
 				80076AC71BDA155000DEFD35 /* JKImagePickerController.m in Sources */,
 				80124C061BD885E800DBE369 /* SDWebImageDownloader.m in Sources */,
 				8093B3D61BD8D36A00DE7A49 /* VPImageCropperViewController.m in Sources */,
@@ -2609,6 +2736,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E9ABF0C8F9D7712420D6C800 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2648,6 +2776,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE92AEDFFEBEE890706378FA /* Pods.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

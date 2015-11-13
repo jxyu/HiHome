@@ -207,7 +207,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     _personFirstVC = [[PersonFirstViewController alloc] init];
     _anniversaryPage= [[AnniversaryViewController alloc] init];
     _optionPage = [[OptionsViewController alloc] init];
-    _CoupleSetPage = [[CoupleViewController alloc]init];
+    //_CoupleSetPage = [[CoupleViewController alloc]init];
     _planMonthPage = [[PlanMonthViewController alloc] init];
     _planWeekPage = [[PlanWeekViewController alloc]init];
     _AlbumPage = [[AlbumMainViewController alloc] init];
@@ -412,6 +412,7 @@ static const CGFloat menuStartNarrowRatio  = 0.70;
     }
     else if([title isEqualToString:@"绑定配偶"])
     {
+        _CoupleSetPage = [[CoupleViewController alloc]init];
         other = (BackPageViewController *)_CoupleSetPage;
     }
     else if([title isEqualToString:@"月任务总览"])

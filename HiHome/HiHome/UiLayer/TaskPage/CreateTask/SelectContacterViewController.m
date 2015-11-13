@@ -127,7 +127,12 @@
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
         [cell.mHeaderImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headImg"]];
         cell.mName.text = @"自己";
-        [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        if (_selectContactMode == Mode_DefaultSelectOneself) {
+            [selectContacterArray addObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]];
+            [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateNormal];
+        }else{
+            [cell.mSelectCheckBoxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
+        }
     }else if(indexPath.section == 1){
         NSString *avatar = [friendArraySpouse[spouseNum][@"avatar"] isEqual:[NSNull null]]?@"":friendArraySpouse[spouseNum][@"avatar"];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];

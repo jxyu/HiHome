@@ -18,6 +18,7 @@
 #import "UIImageView+WebCache.h"
 #import "CreateTask/CreateTaskViewController.h"
 #import "taskerCollectionViewCell.h"
+#import "PersonFirstViewController.h"
 
 #define _CELL @ "acell"
 @interface TaskDetailPageViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
@@ -378,7 +379,8 @@
                     str= @"未接受";
                     break;
                 case State_received:
-                    str = @"已接受";
+                    //str = @"已接受";
+                    str = @"待执行";//不显示已接受只有待执行
                     break;
                 case State_needDo:
                     str = @"待执行";
@@ -523,9 +525,12 @@
         headImgView.layer.cornerRadius = headImgView.frame.size.width * 0.5;
         headImgView.layer.borderWidth = 0.1;
         headImgView.layer.masksToBounds = YES;
-        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
+        singleTap.numberOfTapsRequired = 1;
+        [headImgView setUserInteractionEnabled:YES];
+        [headImgView addGestureRecognizer:singleTap];
         UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(headImgView.frame.origin.x+headImgView.frame.size.width + 10, 10, 200, _cellHeight - 10*2)];
-        userName.text = senderNameStr;//发布人
+        userName.text = [_dictData objectForKey:@"nick"];//senderNameStr;//发布人
         userName.textColor = [UIColor grayColor];
         userName.font = [UIFont systemFontOfSize:14];
         
@@ -667,6 +672,24 @@
         [cell setPreservesSuperviewLayoutMargins:false];
     }
     return cell;
+}
+
+-(void)tapDetected{
+    PersonFirstViewController *personFirstVC = [[PersonFirstViewController alloc] init];
+    personFirstVC.navTitle = @"好友资料";
+    personFirstVC.mFriendID = [_dictData valueForKey:@"uid"];
+    if ([[_dictData valueForKey:@"uid"] isEqual:[self getUserID]]) {
+        personFirstVC.mIFlag = @"6";
+    }else{
+        personFirstVC.mIFlag = @"5";
+    }
+    if(self.pageChangeMode == Mode_nav){
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+    }
+    else{
+        personFirstVC.pageChangeMode = Mode_dis;
+        [self presentViewController:personFirstVC animated:NO completion:nil];
+    }
 }
 
 //设置cell每行间隔的高度
@@ -813,7 +836,7 @@
         {
             
             stateStr = @"待执行";
-            localTaskStatus = State_needDo;
+            localTaskStatus = State_onGoing;
         }
             break;
         case State_needDo:
@@ -897,7 +920,35 @@
         case State_received://取消
         case State_needDo://取消
         case State_onGoing://取消
-            [self setTaskState:[NSString stringWithFormat:@"%ld",(long)State_cancel]];//上传状态
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {//自己的任务没有取消只有删除
+                {
+                    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+                    
+                    alert.alertType = AlertType_Alert;
+                    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                        NSLog(@"Click ok");
+                        
+                        [self delTask:TaskId];
+                        
+                        
+                    }];
+                    
+                    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                        NSLog(@"Click canel");
+                        
+                    }];
+                    [alert show];
+                    
+                }
+
+            }
+            else
+            {
+                [self setTaskState:[NSString stringWithFormat:@"%ld",(long)State_cancel]];//上传状态;
+            }
+            
             break;
         case State_finish://删除
         case State_unreceive://删除
@@ -1131,15 +1182,36 @@
             break;
         case State_received:
             btnLeftStr = @"开始执行";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_needDo:
             btnLeftStr = @"开始执行";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_onGoing:
             btnLeftStr = @"标记完成";
-            btnRightStr = @"取消任务";
+            if(self.taskDetailMode == TaskDetail_MyMode)
+            {
+                btnRightStr = @"删除任务";
+            }
+            else
+            {
+                btnRightStr = @"取消任务";
+            }
             break;
         case State_finish:
             btnLeftStr = @"删除任务";
@@ -1655,7 +1727,7 @@
 - ( CGSize )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath
 {
     
-    return CGSizeMake ( _cellHeight , _cellHeight*2-20 );
+    return CGSizeMake ( _cellHeight+5 , _cellHeight*2-20 );
 }
 
 //定义每个UICollectionView 的边距

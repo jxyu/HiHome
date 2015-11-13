@@ -24,6 +24,14 @@ typedef enum _createTaskMode
     Mode_EditTask
 }CreateTaskMode;
 
+@class CreateTaskViewController;
+
+@protocol CreateTaskViewControllerDelegate <NSObject>
+
+-(void)quitViewDelegate:(CreateTaskViewController *)createTaskView;
+
+@end
+
 @interface CreateTaskViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 {
@@ -50,9 +58,10 @@ typedef enum _createTaskMode
 
 @property(nonatomic)CreateTaskMode createTaskMode;
 @property(nonatomic)TaskPath *loadDefaultPath;
-
+@property(nonatomic) id<CreateTaskViewControllerDelegate> delegate;
 @property (strong,nonatomic) NSString *mLag;
 @property (strong,nonatomic) NSString *mLong;
 @property (strong,nonatomic) NSString *mAddress;
-
+@property(nonatomic) NSInteger tag;
 @end
+

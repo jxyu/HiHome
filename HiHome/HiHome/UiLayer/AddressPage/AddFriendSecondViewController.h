@@ -21,5 +21,6 @@
 @property(nonatomic) NSString *mNameTxt;
 @property(nonatomic) NSString *mSexTxt;
 @property(nonatomic) NSString *mIFlag;
+@property(nonatomic) NSString *mType;
 
 @end

@@ -130,8 +130,27 @@
 //拒绝好友事件
 -(void)rejectBtnEvent:(id)sender{
     dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"rejectApplyFriendBackCall:"];
-    [dataProvider accessApplyFriend:_mContacterID andStatus:@"2"];
+    if ([_mType isEqual:@"1"]) {
+        [dataProvider setDelegateObject:self setBackFunctionName:@"rejectSpouseApplyBackCall:"];
+        [dataProvider handleSpouseApply:_mContacterID andState:@"2"];
+    }else if([_mType isEqual:@"2"]){
+        [dataProvider setDelegateObject:self setBackFunctionName:@"rejectApplyFriendBackCall:"];
+        [dataProvider accessApplyFriend:_mContacterID andStatus:@"2"];
+    }
+}
+
+-(void)rejectSpouseApplyBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"拒绝配偶申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 -(void)rejectApplyFriendBackCall:(id)dict{
@@ -140,8 +159,10 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"拒绝好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -149,8 +170,27 @@
 //同意好友事件
 -(void)accessBtnEvent:(id)sender{
     dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
-    [dataProvider accessApplyFriend:_mContacterID andStatus:@"1"];
+    if ([_mType isEqual:@"1"]) {
+        [dataProvider setDelegateObject:self setBackFunctionName:@"accessSpouseApplyBackCall:"];
+        [dataProvider handleSpouseApply:_mContacterID andState:@"1"];
+    }else{
+        [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
+        [dataProvider accessApplyFriend:_mContacterID andStatus:@"1"];
+    }
+}
+
+-(void)accessSpouseApplyBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过配偶申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 -(void)accessApplyFriendBackCall:(id)dict{
@@ -159,8 +199,10 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -204,7 +246,7 @@
     }
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
 }
 
 @end

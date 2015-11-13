@@ -645,15 +645,20 @@
         myTaskPage = 1;
         _cellCountMyTask = 0;
         [_myTaskData removeAllObjects];
-        [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
+        if(self.showTaskMode == Mode_today)
+            [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:nil andEndDate:nil];
+        else
+            [self loadMyTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
     }
     if(page == 1)
     {
         receiveTaskPage = 1;
         _cellCountGetTask = 0;
         [_getTaskData removeAllObjects];
-        
-        [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
+        if(self.showTaskMode == Mode_today)
+            [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:nil andEndDate:nil];
+        else
+            [self loadReceiveTaskDatas:nil andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
 
     }
 
@@ -932,8 +937,15 @@
         {
             tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
             UILabel *titleLabel = [[UILabel alloc] init];
-            titleLabel.frame = CGRectMake(10,0 , 150, 30);
-            titleLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+            titleLabel.frame = CGRectMake(10,0 , SCREEN_WIDTH, 30);
+            if(self.showTaskMode == Mode_today)
+            {
+                titleLabel.text =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+            }
+            else
+            {
+                titleLabel.text = [NSString stringWithFormat:@"%@~%@",_startTime,_endTime];
+            }
             titleLabel.font = [UIFont boldSystemFontOfSize:18];
             titleLabel.textColor  = ZY_UIBASECOLOR;
             [tempView addSubview:titleLabel];
@@ -946,7 +958,14 @@
             tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
             UILabel *titleLabel = [[UILabel alloc] init];
             titleLabel.frame = CGRectMake(10,0 , 150, 30);
-            titleLabel.text =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+            if(self.showTaskMode == Mode_today)
+            {
+                titleLabel.text =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];
+            }
+            else
+            {
+                titleLabel.text = [NSString stringWithFormat:@"%@~%@",_startTime,_endTime];
+            }
             titleLabel.font = [UIFont boldSystemFontOfSize:18];
             titleLabel.textColor  = ZY_UIBASECOLOR;
             [tempView addSubview:titleLabel];

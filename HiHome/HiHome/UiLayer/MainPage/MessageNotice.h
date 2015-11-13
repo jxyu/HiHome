@@ -10,6 +10,6 @@
 #import "BackPageViewController.h"
 #import "MessageNoticeCell.h"
 
-@interface MessageNotice : BackPageViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MessageNotice : BackPageViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @end

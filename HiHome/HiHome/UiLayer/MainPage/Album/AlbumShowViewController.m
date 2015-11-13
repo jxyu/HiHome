@@ -329,27 +329,63 @@
 -(void)clickImgBtns:(UIButton *)sender
 {
  
-    if(showImgViewState == false)
-    {
-        showImgView.alpha = 0.5;
-        showImgView.backgroundColor = [UIColor blackColor];
-        
-        if(sender.tag > _picArr.count-1)
-            return;
-        NSDictionary *tempDict ;
-        tempDict = [_picArr objectAtIndex:sender.tag];
-        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
-        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(50, ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT -100)];
-        [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
-        img_avatar.contentMode =UIViewContentModeScaleAspectFit;
-        
-        [self.view addSubview:showImgView];
-        [self.view addSubview:img_avatar];
-        [self.view bringSubviewToFront:img_avatar];
-        showImgViewState = true;
-    }
+//    if(showImgViewState == false)
+//    {
+////        showImgView.alpha = 0.5;
+////        showImgView.backgroundColor = [UIColor blackColor];
+////        
+////        if(sender.tag > _picArr.count-1)
+////            return;
+////        NSDictionary *tempDict ;
+////        tempDict = [_picArr objectAtIndex:sender.tag];
+////        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+////        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(50, ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - ZY_HEADVIEW_HEIGHT -100)];
+////        [img_avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+////        img_avatar.contentMode =UIViewContentModeScaleAspectFit;
+////        
+////        [self.view addSubview:showImgView];
+////        [self.view addSubview:img_avatar];
+////        [self.view bringSubviewToFront:img_avatar];
+////        showImgViewState = true;
+//    }
 
+    if(sender.tag > _picArr.count-1)
+        return;
+    
+    PictureShowView *picShowViewCtl = [[PictureShowView alloc] initWithTitle:nil message:nil];
+    NSDictionary *tempDict ;
+    tempDict = [_picArr objectAtIndex:sender.tag];
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+    picShowViewCtl.picIndex = sender.tag;
+    picShowViewCtl.ImgUrl = url;
+    picShowViewCtl.delegate = self;
+    [picShowViewCtl show];
+    
 }
+
+#pragma mark - picture show delegate
+
+-(void)didClickDelPicBtn:(NSInteger)index
+{
+    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+    
+    alert.alertType = AlertType_Alert;
+    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+        NSDictionary *tempDict ;
+        tempDict = [_picArr objectAtIndex:index];
+        [self delpic:[tempDict objectForKey:@"id"]];
+        
+    }];
+    
+    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+        NSLog(@"Click canel");
+        
+    }];
+    [alert show];
+    
+}
+
 
 -(NSString *)getUserID
 {
@@ -367,6 +403,43 @@
         return _albumUserId;
     }
     
+}
+#pragma mark - 删除照片接口
+
+-(void)delpic:(NSString *)picId
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"delPicCallBack:"];
+    
+    [dataprovider DelPicture:picId];
+}
+
+-(void)delPicCallBack:(id)dict
+{
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    
+    DLog(@"[%s] prm = %@",__FUNCTION__,dict);
+    
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        NSLog(@"%@",[NSString stringWithFormat:@"照片删除失败:%ld",(long)code]);
+        
+        if(code!=400)  //= 400 不弹框
+        {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[dict objectForKey:@"message"]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+        }
+        return;
+    }
+
+    picPage = 1;
+    [self getAlbumPicList:_aid andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
 }
 
 #pragma  mark - 获取图片列表

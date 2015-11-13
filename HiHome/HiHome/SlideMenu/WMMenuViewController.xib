@@ -20,31 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="Bwb-sj-PgX">
-                    <rect key="frame" x="72" y="84" width="25" height="27"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="27" id="fm3-8e-aZA"/>
-                        <constraint firstAttribute="width" constant="25" id="gjD-Dx-tsQ"/>
-                    </constraints>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="mxO-lU-pBM">
-                    <rect key="frame" x="105" y="84" width="27" height="27"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="27" id="aAT-ko-q9X"/>
-                        <constraint firstAttribute="height" constant="27" id="cDZ-ND-qjR"/>
-                    </constraints>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="euo-TL-1dd">
-                    <rect key="frame" x="140" y="84" width="27" height="27"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="27" id="1yl-Q7-u0h"/>
-                        <constraint firstAttribute="width" constant="27" id="MaL-R9-oHy"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JH-gA-cVX">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JH-gA-cVX">
                     <rect key="frame" x="72" y="55" width="500" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
@@ -110,7 +86,6 @@
             </subviews>
             <animations/>
             <constraints>
-                <constraint firstItem="euo-TL-1dd" firstAttribute="leading" secondItem="mxO-lU-pBM" secondAttribute="trailing" constant="8" id="15O-1v-rFv"/>
                 <constraint firstItem="Mp4-C3-CDa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="1Nr-bp-deK"/>
                 <constraint firstItem="Bj2-FG-goS" firstAttribute="leading" secondItem="MAY-vZ-sly" secondAttribute="leading" id="7As-H7-jrL"/>
                 <constraint firstItem="uDq-qB-jNZ" firstAttribute="trailing" secondItem="8JH-gA-cVX" secondAttribute="trailing" constant="-22" id="7Oc-Kf-jKj"/>
@@ -127,24 +102,17 @@
                 <constraint firstItem="Rz6-ks-tfB" firstAttribute="top" secondItem="MAY-vZ-sly" secondAttribute="bottom" constant="8" id="TNx-G3-dce"/>
                 <constraint firstItem="eGt-Fe-0zL" firstAttribute="top" secondItem="Rz6-ks-tfB" secondAttribute="bottom" constant="8" id="VZS-D4-taK"/>
                 <constraint firstItem="uDq-qB-jNZ" firstAttribute="top" secondItem="Bj2-FG-goS" secondAttribute="bottom" constant="8" symbolic="YES" id="brZ-bX-5jG"/>
-                <constraint firstItem="mxO-lU-pBM" firstAttribute="centerY" secondItem="Bwb-sj-PgX" secondAttribute="centerY" id="dsW-Y7-U3s"/>
                 <constraint firstItem="Bj2-FG-goS" firstAttribute="leading" secondItem="uDq-qB-jNZ" secondAttribute="leading" id="eQw-tY-9qJ"/>
                 <constraint firstItem="Bj2-FG-goS" firstAttribute="leading" secondItem="Rz6-ks-tfB" secondAttribute="leading" id="gLq-XE-8nC"/>
-                <constraint firstItem="Bwb-sj-PgX" firstAttribute="leading" secondItem="Bj2-FG-goS" secondAttribute="trailing" constant="8" symbolic="YES" id="gMf-X6-jsE"/>
                 <constraint firstItem="uDq-qB-jNZ" firstAttribute="trailing" secondItem="MAY-vZ-sly" secondAttribute="trailing" id="gN7-ly-87e"/>
                 <constraint firstAttribute="trailing" secondItem="uDq-qB-jNZ" secondAttribute="trailing" constant="50" id="hWw-sF-BKT"/>
-                <constraint firstItem="mxO-lU-pBM" firstAttribute="centerY" secondItem="euo-TL-1dd" secondAttribute="centerY" id="kbv-aC-tBq"/>
                 <constraint firstItem="MAY-vZ-sly" firstAttribute="top" secondItem="uDq-qB-jNZ" secondAttribute="bottom" constant="8" id="kiO-ja-hxl"/>
                 <constraint firstItem="Bj2-FG-goS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="55" id="n47-j9-pCt"/>
-                <constraint firstItem="Bwb-sj-PgX" firstAttribute="top" secondItem="8JH-gA-cVX" secondAttribute="bottom" constant="8" id="ofl-tJ-Na6"/>
                 <constraint firstItem="Rz6-ks-tfB" firstAttribute="trailing" secondItem="uDq-qB-jNZ" secondAttribute="trailing" id="oh6-Mn-Eoy"/>
-                <constraint firstItem="Bj2-FG-goS" firstAttribute="bottom" secondItem="Bwb-sj-PgX" secondAttribute="bottom" id="x13-cg-noF"/>
-                <constraint firstItem="mxO-lU-pBM" firstAttribute="leading" secondItem="Bwb-sj-PgX" secondAttribute="trailing" constant="8" id="yD4-gh-t1Y"/>
             </constraints>
         </view>
     </objects>
     <resources>
         <image name="me" width="250" height="250"/>
-        <image name="star" width="26" height="27"/>
     </resources>
 </document>

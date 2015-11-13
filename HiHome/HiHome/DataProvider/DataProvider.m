@@ -51,6 +51,22 @@
     }
 }
 
+-(void)getSpouseApplayList:(NSString *)uid{
+    if (uid) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=getMateList",Url];
+        NSDictionary *prm = @{@"uid":uid};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)handleSpouseApply:(NSString *)mid andState:(NSString *)state{
+    if (mid && state) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=modMateState",Url];
+        NSDictionary *prm = @{@"id":mid,@"state":state};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 /**
  *  注册
  *
@@ -394,6 +410,14 @@
     }
 }
 
+-(void)delSpouseApply:(NSString *) FID{
+    if (FID) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=delMateInfo",Url];
+        NSDictionary *prm = @{@"id":FID};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)accessApplyFriend:(NSString *)FID andStatus:(NSString *) status{
     if (FID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=friend&a=applyFriend&id=%@&state=%@",Url,FID,status];
@@ -476,6 +500,10 @@
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=modInfo",Url];
         NSDictionary *prm = @{@"id":userID,@"nick":nick,@"sex":sex,@"age":age,@"sign":sign};
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
         [self PostRequest:url andpram:prm];
     }
 }
@@ -594,7 +622,9 @@
 #if DEBUG
         NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
 #endif
-        [self PostRequest:url andpram:prm];
+       // [self PostRequest:url andpram:prm];
+        
+        [self GetRequest:url andpram:prm];
     }
 }
 

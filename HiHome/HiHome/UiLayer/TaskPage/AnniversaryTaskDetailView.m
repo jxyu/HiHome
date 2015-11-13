@@ -169,6 +169,14 @@
 
 -(void)clickImgBtns:(UIButton *)sender
 {
+    PictureShowView *picShowViewCtl = [[PictureShowView alloc] initWithTitle:nil message:nil];
+    
+    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[imgSrc objectAtIndex:(sender.tag - ZY_UIBUTTON_TAG_BASE)]];
+    
+    picShowViewCtl.ImgUrl = url;
+    [picShowViewCtl show];
+    
+   // [self presentViewController:picShowViewCtl animated:YES completion:^{}];
     
 }
 

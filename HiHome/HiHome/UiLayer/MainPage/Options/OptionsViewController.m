@@ -24,7 +24,7 @@
     
     _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
                                                                             /*最右侧图标，标题，内容*/
-                                                                            @[@"set",@"任务权限",@"nil"],
+                                                                            @[@"set",@"展示权限",@"nil"],
                                                                             @[@"set",@"消息通知",@"nil"],
                                                                             @[@"set",@"声音通知",@"nil"],
                                                                             ],

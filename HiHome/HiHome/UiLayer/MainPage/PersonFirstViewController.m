@@ -83,7 +83,7 @@
         NSLog(@"%@",userInfoArray);
         [self initView];
     }else{
-        NSLog(@"访问服务器失败！");
+        NSLog(@"%@",dict[@"message"]);
     }
 }
 
@@ -325,6 +325,8 @@
 //                    mHiBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.57 blue:0.48 alpha:1];
 //                    [mHiBtn addTarget:self action:@selector(mHiEvent:) forControlEvents:UIControlEventTouchUpInside];
 //                    [cell addSubview:mHiBtn];
+                }else if([_mIFlag isEqual:@"6"]){
+                    
                 }else{
                     UIButton *editInfo = [[UIButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 10, SCREEN_WIDTH - 20, 40)];
                     [editInfo addTarget:self action:@selector(btnEditInfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -464,6 +466,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"backFrom" object:nil userInfo:[NSDictionary dictionaryWithObject:@"slideTabView" forKey:@"backFrom"]];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -580,7 +583,7 @@
     userInfoVC.mHeadImg = [userInfoArray[0][@"avatar"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"avatar"];
     userInfoVC.mName = [userInfoArray[0][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"nick"];
     userInfoVC.mSex = [userInfoArray[0][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sex"];
-    userInfoVC.mAge = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];
+    userInfoVC.mBirthday = [userInfoArray[0][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"age"];
     userInfoVC.mSign = [userInfoArray[0][@"sign"] isEqual:[NSNull null]]?@"":userInfoArray[0][@"sign"];
     [self presentViewController:userInfoVC animated:NO completion:^{}];
 }

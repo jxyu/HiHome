@@ -10,7 +10,7 @@
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
 #import "RCIM.h"
-
+#import <AVFoundation/AVFoundation.h>
 
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
 
@@ -204,7 +204,7 @@
             break;
         case 1:{
             if (sender.on) {
-                
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
             }else{
                 
             }

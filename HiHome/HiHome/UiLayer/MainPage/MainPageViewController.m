@@ -11,6 +11,9 @@
 #import "UIDefine.h"
 #import "DataProvider.h"
 #import "ChatlistViewController.h"
+#import "UIImageView+WebCache.h"
+#import "RCIMClient.h"
+
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
     DataProvider *dataProvider;
@@ -24,6 +27,9 @@
     
     NSTimeInterval oldTime;
     NSTimeInterval currentTime;
+    
+    UILabel *detailChat1;
+    UILabel *detailChat2;
 }
 
 @end
@@ -63,11 +69,17 @@
     _taskNoticeVC = [[TaskNoticeViewController alloc] init];
     
     [self.view addSubview:_mainTableView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChatRemindEvent) name:@"ChatRemindEvent" object:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)ChatRemindEvent{
+    //刷新指定section
+    [_mainTableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self ChatRemindEvent];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
@@ -494,19 +506,55 @@
     mainLabel.textColor = [UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     mainLabel.text = @"聊天提醒";
     
-    UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
-    detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
-    detail1.font = [UIFont systemFontOfSize:10];
-    detail1.text = @"您有10条信息未查看";
+    detailChat1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
+    detailChat1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detailChat1.font = [UIFont systemFontOfSize:10];
     
-    UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
-    detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
-    detail2.font = [UIFont systemFontOfSize:10];
-    detail2.text = @"今天19:00";
+    int num = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    NSLog(@"%d",num);
+    if(num == -1){
+        detailChat1.text = @"加载中...";
+    }else{
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"您有%d条信息未查看",num]];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2,str.length - 8)];
+        
+        detailChat1.attributedText = str;
+    }
+    
+    detailChat2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detailChat1.frame.size.height + detailChat1.frame.origin.y, 150, 13)];
+    detailChat2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    detailChat2.font = [UIFont systemFontOfSize:10];
+    
+    NSArray *mArray = [[RCIMClient sharedRCIMClient] getConversationList:@[@(ConversationType_PRIVATE)]];
+    if (mArray.count == 0) {
+        detailChat2.text = @"00:00";
+    }else{
+        long long value = [[mArray[0] valueForKey:@"receivedTime"] longLongValue] / 1000;
+        NSNumber *time = [NSNumber numberWithLongLong:value];
+        NSTimeInterval nsTimeInterval = [time longValue];
+        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:nsTimeInterval];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        
+        
+        NSString *mChatDateIFlag = [self compareDate:date];
+        NSLog(@"%@",mChatDateIFlag);
+        if ([mChatDateIFlag isEqual:@"今天"]) {
+            [dateFormatter setDateFormat:@"HH:mm"];
+            detailChat2.text = [NSString stringWithFormat:@"今天 %@",[dateFormatter stringFromDate:date]];
+        }else if([mChatDateIFlag isEqual:@"昨天"]){
+            [dateFormatter setDateFormat:@"HH:mm"];
+            detailChat2.text = [NSString stringWithFormat:@"昨天 %@",[dateFormatter stringFromDate:date]];
+        }else{
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            detailChat2.text = [dateFormatter stringFromDate:date];
+        }
+    }
+    
     
     [LabelViews addObject:mainLabel];
-    [LabelViews addObject:detail1];
-    [LabelViews addObject:detail2];
+    [LabelViews addObject:detailChat1];
+    [LabelViews addObject:detailChat2];
     return LabelViews;
 }
 //第3个cell添加views
@@ -688,6 +736,40 @@
     
 }
 
+-(NSString *)compareDate:(NSDate *)date{
+    
+    NSDate * today = [NSDate date];
+    NSDate * yesterday = [NSDate dateWithTimeIntervalSinceNow:-86400];
+    NSDate * refDate = date;
+    
+    // 10 first characters of description is the calendar date:
+    NSString * todayString = [[today description] substringToIndex:10];
+    NSString * yesterdayString = [[yesterday description] substringToIndex:10];
+    NSString * refDateString = [[refDate description] substringToIndex:10];
+    
+    if ([refDateString isEqualToString:todayString])
+    {
+        return @"今天";
+    } else if ([refDateString isEqualToString:yesterdayString])
+    {
+        return @"昨天";
+    }
+    else
+    {
+        return [self formatDate:date];
+    }
+    
+    
+}
+
+-(NSString *)formatDate:(NSDate *)date{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //[formatter setDateFormat:@"MM-dd    HH:mm"];
+    NSString* str = [formatter stringFromDate:date];
+    return str;
+    
+}
 
 /*
 #pragma mark - Navigation

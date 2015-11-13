@@ -19,6 +19,7 @@
     NSString *applyName;
     NSString *applySign;
     NSArray *personDetailArray;
+    NSArray *spouseArray;
     
     NSIndexPath *currentRow;
     
@@ -71,8 +72,24 @@
     }else{
         NSLog(@"%@",dict[@"message"]);
     }
-    [self initView];
+    if([personDetailArray isEqual:[NSNull null]]){
+        personDetailArray = [[NSArray alloc] init];
+    }
+    //获取配偶申请列表
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getSpouseApplyListBackCall:"];
+    [dataProvider getSpouseApplayList:[self getUserID]];
     
+}
+
+-(void)getSpouseApplyListBackCall:(id)dict{
+    NSLog(@"%@",dict);
+    spouseArray = [dict valueForKey:@"datas"];
+    if ([spouseArray isEqual:[NSNull null]]) {
+        spouseArray = [[NSArray alloc] init];
+    }
+    NSLog(@"%@",spouseArray);
+    [self initView];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -80,7 +97,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return personDetailArray.count;
+    NSLog(@"%lu",spouseArray.count + personDetailArray.count);
+    return spouseArray.count + personDetailArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -92,26 +110,45 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[personDetailArray[indexPath.row][@"avatar"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"avatar"]];
-    [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
-    
-    cell.mName.text = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
-    cell.mDetail.text = @"你好,希望和你成为好朋友!";//[personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
-    
-    NSString *mState = [personDetailArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"state"];
-    if ([mState isEqual:@"0"]) {
-        [cell.mAccept setTitle:@"同意" forState:UIControlStateNormal];
-        [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
-    }else if([mState isEqual:@"1"]){
-        [cell.mAccept setTitle:@"已同意" forState:UIControlStateNormal];
-        [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        cell.mAccept.backgroundColor = [UIColor clearColor];
+    if (indexPath.row < spouseArray.count) {
+        NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[[spouseArray[indexPath.row] valueForKey:@"avatar"] isEqual:[NSNull null]]?@"":[spouseArray[indexPath.row] valueForKey:@"avatar"]];
+        [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        cell.mName.text = [spouseArray[indexPath.row][@"name"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"name"];
+        cell.mDetail.text = @"请求添加为配偶!";
+        NSString *mState = [spouseArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"state"];
+        if ([mState isEqual:@"0"]) {
+            [cell.mAccept setTitle:@"同意" forState:UIControlStateNormal];
+            [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
+        }else if([mState isEqual:@"1"]){
+            [cell.mAccept setTitle:@"已同意" forState:UIControlStateNormal];
+            [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            cell.mAccept.backgroundColor = [UIColor clearColor];
+        }else{
+            [cell.mAccept setTitle:@"已拒绝" forState:UIControlStateNormal];
+            [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            cell.mAccept.backgroundColor = [UIColor clearColor];
+        }
     }else{
-        [cell.mAccept setTitle:@"已拒绝" forState:UIControlStateNormal];
-        [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        cell.mAccept.backgroundColor = [UIColor clearColor];
+        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[personDetailArray[indexPath.row - spouseArray.count][@"avatar"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"avatar"]];
+        [cell.mImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+        
+        cell.mName.text = [personDetailArray[indexPath.row - spouseArray.count][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"nick"];
+        cell.mDetail.text = @"你好,希望和你成为好朋友!";//[personDetailArray[indexPath.row][@"sign"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sign"];
+        
+        NSString *mState = [personDetailArray[indexPath.row - spouseArray.count][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"state"];
+        if ([mState isEqual:@"0"]) {
+            [cell.mAccept setTitle:@"同意" forState:UIControlStateNormal];
+            [cell.mAccept addTarget:self action:@selector(handleEvent:) forControlEvents:UIControlEventTouchUpInside];
+        }else if([mState isEqual:@"1"]){
+            [cell.mAccept setTitle:@"已同意" forState:UIControlStateNormal];
+            [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            cell.mAccept.backgroundColor = [UIColor clearColor];
+        }else{
+            [cell.mAccept setTitle:@"已拒绝" forState:UIControlStateNormal];
+            [cell.mAccept setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            cell.mAccept.backgroundColor = [UIColor clearColor];
+        }
     }
-    
     
     if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
     {
@@ -128,10 +165,31 @@
     UITableViewCell *cell=(UITableViewCell *)[v superview];//找到cell
     NSIndexPath *indexPath=[mTableView indexPathForCell:cell];//找到cell所在的行
  
-    NSString *_mContacterID = [personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"];
-    dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
-    [dataProvider accessApplyFriend:_mContacterID andStatus:@"1"];
+    if(indexPath.row < spouseArray.count){
+        NSString *_mContacterID = [spouseArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"id"];
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"accessSpouseApplyBackCall:"];
+        [dataProvider handleSpouseApply:_mContacterID andState:@"1"];
+    }else{
+        NSString *_mContacterID = [personDetailArray[indexPath.row - spouseArray.count][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"id"];
+        dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"accessApplyFriendBackCall:"];
+        [dataProvider accessApplyFriend:_mContacterID andStatus:@"1"];
+    }
+}
+
+-(void)accessSpouseApplyBackCall:(id)dict{
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 200) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过配偶申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 -(void)accessApplyFriendBackCall:(id)dict{
@@ -140,6 +198,8 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"通过好友申请～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         [self.navigationController popToRootViewControllerAnimated:NO];
+        //设置显示/隐藏tabbar
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"失败～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
@@ -163,31 +223,62 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *mState = [personDetailArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"state"];
-    if ([mState isEqual:@"0"]) {
-        AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
-        addFriendSecondVC.navTitle = @"好友申请";
-        addFriendSecondVC.mContacterID = [personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"];
-        NSLog(@"%@",addFriendSecondVC.mContacterID);
-        addFriendSecondVC.mNameTxt = [personDetailArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"nick"];
-        //addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
-        addFriendSecondVC.mIFlag = @"1";
-        //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
-        [self.navigationController pushViewController:addFriendSecondVC animated:NO];
-    }else if ([mState isEqual:@"1"]){ //同意
-        personFirstVC = [[PersonFirstViewController alloc] init];
-        personFirstVC.mIFlag = @"3";
-        personFirstVC.navTitle = @"好友资料";
-        personFirstVC.mFriendID = [personDetailArray[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"fid"];
-        
-        [self.navigationController pushViewController:personFirstVC animated:NO];
-    }else if ([mState isEqual:@"2"]){ //拒绝
-        personFirstVC = [[PersonFirstViewController alloc] init];
-        personFirstVC.mIFlag = @"4";
-        personFirstVC.navTitle = @"好友资料";
-        personFirstVC.mFriendID = [personDetailArray[indexPath.row][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"fid"];
-        
-        [self.navigationController pushViewController:personFirstVC animated:NO];
+    if (indexPath.row < spouseArray.count) {
+        NSString *mState = [spouseArray[indexPath.row][@"state"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"state"];
+        if ([mState isEqual:@"0"]) {
+            AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+            addFriendSecondVC.mType = @"1";
+            addFriendSecondVC.navTitle = @"好友申请";
+            addFriendSecondVC.mContacterID = [spouseArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"id"];
+            NSLog(@"%@",addFriendSecondVC.mContacterID);
+            addFriendSecondVC.mNameTxt = [spouseArray[indexPath.row][@"name"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"name"];
+            //addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
+            addFriendSecondVC.mIFlag = @"1";
+            //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
+            [self.navigationController pushViewController:addFriendSecondVC animated:NO];
+        }else if ([mState isEqual:@"1"]){ //同意
+            personFirstVC = [[PersonFirstViewController alloc] init];
+            personFirstVC.mIFlag = @"3";
+            personFirstVC.navTitle = @"好友资料";
+            personFirstVC.mFriendID = [spouseArray[indexPath.row][@"uid"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"uid"];
+            
+            [self.navigationController pushViewController:personFirstVC animated:NO];
+        }else if ([mState isEqual:@"2"]){ //拒绝
+            personFirstVC = [[PersonFirstViewController alloc] init];
+            personFirstVC.mIFlag = @"4";
+            personFirstVC.navTitle = @"好友资料";
+            personFirstVC.mFriendID = [spouseArray[indexPath.row][@"uid"] isEqual:[NSNull null]]?@"":spouseArray[indexPath.row][@"uid"];
+            
+            [self.navigationController pushViewController:personFirstVC animated:NO];
+        }
+    }else{
+        NSString *mState = [personDetailArray[indexPath.row - spouseArray.count][@"state"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"state"];
+        if ([mState isEqual:@"0"]) {
+            AddFriendSecondViewController *addFriendSecondVC = [[AddFriendSecondViewController alloc] init];
+            addFriendSecondVC.mType = @"2";
+            addFriendSecondVC.navTitle = @"好友申请";
+            addFriendSecondVC.mContacterID = [personDetailArray[indexPath.row - spouseArray.count][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"id"];
+            NSLog(@"%@",addFriendSecondVC.mContacterID);
+            addFriendSecondVC.mNameTxt = [personDetailArray[indexPath.row - spouseArray.count][@"nick"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"nick"];
+            //addFriendSecondVC.mSexTxt = [personDetailArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"sex"];
+            addFriendSecondVC.mIFlag = @"1";
+            //[self presentViewController:addFriendSecondVC animated:NO completion:nil];
+            [self.navigationController pushViewController:addFriendSecondVC animated:NO];
+        }else if ([mState isEqual:@"1"]){ //同意
+            personFirstVC = [[PersonFirstViewController alloc] init];
+            personFirstVC.mIFlag = @"3";
+            personFirstVC.navTitle = @"好友资料";
+            personFirstVC.mFriendID = [personDetailArray[indexPath.row - spouseArray.count][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"fid"];
+            
+            [self.navigationController pushViewController:personFirstVC animated:NO];
+        }else if ([mState isEqual:@"2"]){ //拒绝
+            personFirstVC = [[PersonFirstViewController alloc] init];
+            personFirstVC.mIFlag = @"4";
+            personFirstVC.navTitle = @"好友资料";
+            personFirstVC.mFriendID = [personDetailArray[indexPath.row - spouseArray.count][@"fid"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row - spouseArray.count][@"fid"];
+            
+            [self.navigationController pushViewController:personFirstVC animated:NO];
+        }
     }
 }
 
@@ -202,23 +293,67 @@
     
     NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
     
-    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.delegate = self;
     
-    alert.alertType = AlertType_Alert;
-    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
-        dataProvider = [[DataProvider alloc] init];
-        [dataProvider setDelegateObject:self setBackFunctionName:@"delApplyFriendBackCall:"];
-        [dataProvider delApplyFriend:[personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"]];
-    }];
     
-    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
-    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
-        NSLog(@"Click canel");
-        
-    }];
-    [alert show];
+    if (indexPath.row < spouseArray.count) {
+        alertView.tag = 1;
+    }else{
+        alertView.tag = 2;
+    }
+    [alertView show];
+    
+//    JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+//    
+//    alert.alertType = AlertType_Alert;
+//    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+//        dataProvider = [[DataProvider alloc] init];
+//        [dataProvider setDelegateObject:self setBackFunctionName:@"delApplyFriendBackCall:"];
+//        [dataProvider delApplyFriend:[personDetailArray[indexPath.row][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[indexPath.row][@"id"]];
+//    }];
+//    
+//    //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+//    [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+//        NSLog(@"Click canel");
+//        
+//    }];
+//    [alert show];
     
     currentRow = indexPath;
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        dataProvider = [[DataProvider alloc] init];
+        if (alertView.tag == 1) {
+            [dataProvider setDelegateObject:self setBackFunctionName:@"delSpouseApplyBackCall:"];
+            [dataProvider delSpouseApply:[spouseArray[currentRow.row][@"id"] isEqual:[NSNull null]]?@"":spouseArray[currentRow.row][@"id"]];
+        }else if(alertView.tag == 2){
+            [dataProvider setDelegateObject:self setBackFunctionName:@"delApplyFriendBackCall:"];
+            [dataProvider delApplyFriend:[personDetailArray[currentRow.row - spouseArray.count][@"id"] isEqual:[NSNull null]]?@"":personDetailArray[currentRow.row - spouseArray.count][@"id"]];
+        }
+        
+        
+    }
+}
+
+-(void)delSpouseApplyBackCall:(id)dict{
+    NSLog(@"dict");
+    int code = [dict[@"code"] intValue];
+    if (code == 200) {
+        NSMutableArray *tempArray;
+        tempArray = [[NSMutableArray alloc] initWithArray:spouseArray];
+        [tempArray removeObjectAtIndex:currentRow.row];
+        spouseArray = [[NSArray alloc] initWithArray:tempArray];
+        [mTableView reloadSections:[[NSIndexSet alloc]initWithIndex:currentRow.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 -(void)delApplyFriendBackCall:(id)dict{
@@ -227,7 +362,7 @@
     if (code == 200) {
         NSMutableArray *tempArray;
         tempArray = [[NSMutableArray alloc] initWithArray:personDetailArray];
-        [tempArray removeObjectAtIndex:currentRow.row];
+        [tempArray removeObjectAtIndex:currentRow.row - spouseArray.count];
         personDetailArray = [[NSArray alloc] initWithArray:tempArray];
         
         

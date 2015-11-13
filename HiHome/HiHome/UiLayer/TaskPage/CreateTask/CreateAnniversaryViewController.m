@@ -42,6 +42,7 @@
     int uploadImgIndex;
     
     NSMutableArray * img_prm;
+    UIView *mView;
 }
 
 - (void)viewDidLoad {
@@ -265,6 +266,16 @@
         [_titleField resignFirstResponder];//关闭titleField的键盘
         [self setViewMove];
         
+        CGRect frame = mView.frame;
+        NSLog(@"%f",frame.origin.y);
+        if (frame.origin.y == 0) {
+            return;
+        }
+        frame.origin.y += frame.size.height * 0.3;
+        [UIView beginAnimations:@"moveView" context:nil];
+        [UIView setAnimationDuration:0.3];
+        mView.frame = frame;
+        [UIView commitAnimations];
     }
 }
 
@@ -359,7 +370,7 @@
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cellHeight*2+20, 0, 200, _cellHeight*2)];
         
         textLabel.textAlignment = NSTextAlignmentLeft;
-        textLabel.text = @"请上传头像";
+        textLabel.text = @"请上传纪念日主图";
         textLabel.textColor = [UIColor grayColor];
         textLabel.font = [UIFont systemFontOfSize:18];
         [cell addSubview:textLabel];
@@ -479,7 +490,23 @@
     
 }
 
-
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    if ([[[UIDevice currentDevice]systemVersion]floatValue]<=7.0) {
+        mView = [[[textView superview] superview] superview];
+    }else{
+        mView = [[textView superview] superview];
+    }
+    CGRect frame = mView.frame;
+    NSLog(@"%f",frame.origin.y);
+    if (frame.origin.y != 0) {
+        return;
+    }
+    frame.origin.y -= frame.size.height * 0.3;
+    [UIView beginAnimations:@"moveView" context:nil];
+    [UIView setAnimationDuration:0.3];
+    mView.frame = frame;
+    [UIView commitAnimations];
+}
 
 //打开相册
 -(void)showLocalAlbum

@@ -187,6 +187,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     }
+    
+    if([self.delegate respondsToSelector:@selector(quitViewDelegate:)])
+    {
+        [self.delegate quitViewDelegate:self];
+    }
+    
 }
 
 -(void)btnRightClick:(id)sender{
@@ -253,13 +259,27 @@
                 NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
             }
             
-            
-            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
+            NSString *tempEndDate;
+            if([endTimeField.text isEqualToString:@"未设置"])
+                tempEndDate =@"1970-01-01 00:00";
+            else
+            {
+                tempEndDate = endTimeField.text;
+            }
+            [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:tempEndDate andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             
         }
         else
         {
-            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
+            
+            NSString *tempEndDate;
+            if([endTimeField.text isEqualToString:@"未设置"])
+                tempEndDate =@"1970-01-01 00:00";
+            else
+            {
+                tempEndDate = endTimeField.text;
+            }
+            [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:tempEndDate andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
         }
         
         
@@ -451,14 +471,29 @@
                 {
                     NSLog(@"i = [%d] =[%@]",i,[img_prm objectAtIndex:i]);
                 }
+                NSString *tempEndDate;
+                if([endTimeField.text isEqualToString:@"未设置"])
+                    tempEndDate =@"1970-01-01 00:00";
+                else
+                {
+                    tempEndDate = endTimeField.text;
+                }
+
                 
-                
-                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
+                [dataprovider updateTask:TaskId andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:tempEndDate andTip:tipID andRepeat:repeatID andTasker:[self getUserID] andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             }
             else
             {
+                NSString *tempEndDate;
+                if([endTimeField.text isEqualToString:@"未设置"])
+                    tempEndDate =@"1970-01-01 00:00";
+                else
+                {
+                    tempEndDate = endTimeField.text;
+                }
+
             
-                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:endTimeField.text andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
+                [dataprovider createTask:userInfoWithFile[@"id"] andTitle:_titleField.text andContent:_textView.text andIsDay:isday?@"1":@"0" andStartTime:startTimeField.text andEndTime:tempEndDate andTip:tipID andRepeat:repeatID andTasker:taskUserID andimgsrc1:img_prm.count>=1?img_prm[0]:@"" andimgsrc2:img_prm.count>=2?img_prm[1]:@"" andimgsrc3:img_prm.count>=3?img_prm[2]:@"" andAddress: _mAddress?_mAddress:@""  andLng: _mLong?_mLong:@"" andLat:_mLag?_mLag:@""];
             }
         }
         
@@ -477,7 +512,7 @@
         else
         {
             NSLog(@"datas = NULL");
-            return;
+         //   return;
         }
         
         NSRange tempRange = [taskUserID rangeOfString:[self getUserID]];
@@ -490,12 +525,14 @@
         }
 
         
-        [self.navigationController popViewControllerAnimated:YES];
-        if(_createTaskMode != Mode_EditTask)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
-        }
+        
+        [self quitView];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        if(_createTaskMode != Mode_EditTask)
+//        {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+//        }
 
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
@@ -549,7 +586,7 @@
     _textView = [[UITextView alloc] init];
     //   _textView.text = @"发帖内容";
     
-    _remindViewCtl = [[RemindViewController alloc] init];
+    
     _repeatViewCtl = [[RepeatViewController alloc] init];
 //    UIButton *sendBtn = [[UIButton alloc] init];
 //    [sendBtn setTitle:@"完成" forState:UIControlStateNormal];
@@ -1079,7 +1116,7 @@
                 
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-                endTimeField.text =timeStr2;
+               endTimeField.text =timeStr2;//@"未设置";
                
             }
             startTimeField.font = [UIFont systemFontOfSize:14];
@@ -1399,7 +1436,7 @@
                 NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
                 startTimeField.text =timeStr;
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
-                endTimeField.text =timeStr2;
+               endTimeField.text =timeStr2;//@"未设置";//
             }
             
             
@@ -1425,7 +1462,7 @@
                 startTimeField.font = [UIFont systemFontOfSize:14];
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-                endTimeField.text =timeStr2;
+                endTimeField.text =timeStr2;//@"未设置";
             }
             endTimeField.font = [UIFont systemFontOfSize:14];
             startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDayHourMinute;
@@ -1481,7 +1518,7 @@
             selectContacterVC = [[SelectContacterViewController alloc] init];
             selectContacterVC.delegate = self;
             selectContacterVC.navTitle = @"选择执行人";
-            //[self presentViewController:selectContacterVC animated:NO completion:nil];
+            [selectContacterVC setSelectContactMode:Mode_NotSelectOneself];
             [self.navigationController pushViewController:selectContacterVC animated:NO];
         }
             break;
@@ -1523,7 +1560,9 @@
             if(_startDateArray.count>5)
                 NSLog(@"date 22 : %@",[NSString stringWithFormat:@"%@-%@-%@  %@:%@  %@",[_startDateArray objectAtIndex:0] ,[_startDateArray objectAtIndex:1] ,[_startDateArray objectAtIndex:2] ,[_startDateArray objectAtIndex:3] ,[_startDateArray objectAtIndex:4] ,[_startDateArray objectAtIndex:5] ]
                       );
+            _remindViewCtl = [[RemindViewController alloc] init];
             _remindViewCtl.dateArr = _startDateArray;
+            _remindViewCtl.isDay = isday;
             _remindViewCtl.navTitle = sender.titleLabel.text;
             [_remindViewCtl setDelegateObject:self setBackFunctionName:@"TixingBackCall:"];
             [self.navigationController pushViewController:_remindViewCtl animated:YES];

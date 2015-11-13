@@ -8,7 +8,7 @@
 
 #import "BackPageViewController.h"
 
-@interface CoupleViewController : BackPageViewController
+@interface CoupleViewController : BackPageViewController<UIAlertViewDelegate>
 {
     @private
     UIButton *_okBtn;

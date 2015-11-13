@@ -126,7 +126,7 @@
         [application registerForRemoteNotificationTypes:myTypes];
     }
 
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
     
     
     
@@ -207,10 +207,10 @@
      设置根VC
      */
     firstCol=[[FirstScrollController alloc]init];
-    if (_tabBarViewCol==nil) {
-        _tabBarViewCol = [[CustomTabBarViewController alloc] init];
-        
-    }
+//    if (_tabBarViewCol==nil) {
+//        _tabBarViewCol = [[CustomTabBarViewController alloc] init];
+//        
+//    }
     if(self.window == nil)
         
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];
@@ -221,7 +221,6 @@
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
     NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]) {
         
@@ -328,6 +327,10 @@
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
             // Connect 成功
             NSLog(@"Connect 成功");
+            
+            //获取未读条数和最新一条消息的时间
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatRemindEvent" object:nil];
+            
             //获取好友列表
             DataProvider *dataProvider = [[DataProvider alloc] init];
             [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendInfoByUserID:"];
@@ -482,6 +485,12 @@ fetchCompletionHandler:(void
         NSString *userId = [self getUserID];
         if(userId == nil)
         {
+            
+             JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"消息已过期"];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
             return;
         }
         
@@ -491,8 +500,14 @@ fetchCompletionHandler:(void
         
         @try {
             if(notification == nil)
+            {
+                JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"消息已过期"];
+                
+                alert.alertType = AlertType_Hint;
+                [alert addButtonWithTitle:@"确定"];
+                [alert show];
                 return;
-            
+            }
             tempDict =notification.userInfo;
             if(tempDict.count>0)
             {
@@ -767,8 +782,8 @@ fetchCompletionHandler:(void
         NSRange dateRange;
         dateRange.location = 5;
         dateRange.length = 5;
-        sDate = [taskDetailPath.startTaskDateStr substringWithRange:dateRange];
-        eDate = [taskDetailPath.endTaskDateStr substringWithRange:dateRange];
+        sDate = [taskDetailPath.startTaskDateStr substringToIndex:10];//[taskDetailPath.startTaskDateStr substringWithRange:dateRange];
+        eDate = [taskDetailPath.endTaskDateStr substringToIndex:10];//[taskDetailPath.endTaskDateStr substringWithRange:dateRange];
         NSString *taskerName;
         
         if(taskDetailPath.taskPerformerDetails.count > 1 )
@@ -781,7 +796,7 @@ fetchCompletionHandler:(void
         }
         
         
-        contentStr = [NSString stringWithFormat:@"任务发布人：%@\n任务执行人：%@\n任务内容：%@\n任务时间：%@～%@",[taskDetailDict objectForKey:@"nick"],taskerName,taskDetailPath.taskContent,sDate,eDate];
+        contentStr = [NSString stringWithFormat:@"任务发布人：%@\n任务执行人：%@\n任务内容：%@\n开始时间：%@\n结束时间：%@",[taskDetailDict objectForKey:@"nick"],taskerName,taskDetailPath.taskName,sDate,eDate];
         NoticePageView *noiceView = [[NoticePageView alloc] initWithTitle:[NSString stringWithFormat:@"%@",[self modeValueToStr:Mode_Remind andValue:taskDetailPath.remindTime]] message:contentStr];
         noiceView.delegate = self;
         
@@ -827,28 +842,65 @@ fetchCompletionHandler:(void
             }];
         }
             
+        NSString *tempStr;
         
-        [noiceView addButton:NoticeButton_CANCEL withTitle:@"取消任务" handler:^(NoticePageItem *item )
+        if(_taskDetailMode == TaskDetail_MyMode)
+        {
+            tempStr = @"删除任务";
+        }
+        else
+        {
+            tempStr = @"取消任务";
+        }
+            
+        [noiceView addButton:NoticeButton_CANCEL withTitle:tempStr handler:^(NoticePageItem *item )
          {
              
-             JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否取消任务？"]];
-             
-             alert.alertType = AlertType_Alert;
-             [alert addButton:Button_OK withTitle:@"是" handler:^(JKAlertDialogItem *item){
-                 NSLog(@"Click ok");
-                 taskDetailPath.taskStatus = State_cancel;
-                 [self setTaskState:[NSString stringWithFormat:@"%d",taskDetailPath.taskStatus]];//上传状态
+             if(_taskDetailMode != TaskDetail_MyMode)
+             {
+                 JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"取消" message:[NSString stringWithFormat:@"是否取消任务？"]];
+                 
+                 alert.alertType = AlertType_Alert;
+                 [alert addButton:Button_OK withTitle:@"是" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click ok");
+                     taskDetailPath.taskStatus = State_cancel;
+                     [self setTaskState:[NSString stringWithFormat:@"%d",taskDetailPath.taskStatus]];//上传状态
+                     
+
+                     
+                 }];
+                 
+                 //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                 [alert addButton:Button_CANCEL withTitle:@"否" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click canel");
+                     
+                 }];
+                  [alert show];
+             }
+             else//任务为自己的任务时直接删除
+             {
+                 JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+                 
+                 alert.alertType = AlertType_Alert;
+                 [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                
+                     
+                         
+                 [self delTask:taskId];
+  
+                     
+                     
+                 }];
+                 
+                 //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                 [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click canel");
+                     
+                 }];
+                 [alert show];
                  
 
-                 
-             }];
-             
-             //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
-             [alert addButton:Button_CANCEL withTitle:@"否" handler:^(JKAlertDialogItem *item){
-                 NSLog(@"Click canel");
-                 
-             }];
-              [alert show];
+             }
              
             }];
         //   [tempView addButtonWithTitle:@"正点提醒"];
@@ -864,6 +916,38 @@ fetchCompletionHandler:(void
         
     }
     
+    
+}
+#pragma mark - 删除任务
+
+-(void)delTask:(NSString *)taskID
+{
+    
+    NSLog(@"del task datas");
+    
+    [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"delTaskCallBack:"];
+    
+    [dataprovider delTask:taskID];
+}
+
+-(void)delTaskCallBack:(id)dict
+{
+    
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"删除失败"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
     
 }
 

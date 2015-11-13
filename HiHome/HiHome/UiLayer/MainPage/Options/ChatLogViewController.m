@@ -9,7 +9,7 @@
 #import "ChatLogViewController.h"
 #import "UIDefine.h"
 #import "BaseTableViewCell.h"
-#import "RCIMClient.h"
+#import "RCIM.h"
 
 
 #define CELL_TITLE(section,row)     ([(NSArray *)[(NSArray *)[_cellInfo objectAtIndex:section] objectAtIndex:row] objectAtIndex:0])
@@ -159,9 +159,14 @@
         alertView.tag = 1;
         [alertView show];
     }else if(indexPath.row == 1){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空所有聊天内容?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空所有聊天记录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alertView.delegate = self;
         alertView.tag = 2;
+        [alertView show];
+    }else if(indexPath.row == 2){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清空缓存数据?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.delegate = self;
+        alertView.tag = 3;
         [alertView show];
     }
 }
@@ -171,10 +176,14 @@
         if (alertView.tag == 1) {
             [mUserDefault setValue:@"0" forKey:@"ChatIFlag"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
-        }else{
+        }else if(alertView.tag == 2){
             [mUserDefault setValue:@"2" forKey:@"ChatIFlag"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
+        }else{
+            [[RCIM sharedRCIM] clearUserInfoCache];
         }
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"清空成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
     }
 }
 

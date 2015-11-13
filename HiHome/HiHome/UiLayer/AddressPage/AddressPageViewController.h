@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "AddressLocalViewController.h"
+#import "ChineseInclude.h"
+#import "PinYinForObjc.h"
+#import "PushView.h"
+#import "MySearchDisplayController.h"
 
-@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,UISearchBarDelegate>
+@interface AddressPageViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 {
 @private
     NSInteger _mateCellCount;
@@ -19,6 +23,10 @@
     BOOL    _keyShow;       //标记键盘是否显示
     UISearchDisplayController *_searchDisplayController;
     AddressLocalViewController *addresslocalVC;
+    
+    //for search
+    NSMutableArray *dataArray;
+    NSMutableArray *searchResults;
 }
 
 //@property (weak, nonatomic) IBOutlet UITableView *mytableView;

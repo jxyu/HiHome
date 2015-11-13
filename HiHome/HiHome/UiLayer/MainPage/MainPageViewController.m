@@ -23,7 +23,7 @@
     UILabel *lhTempt;
     UILabel *outNote;
     
-    NSUserDefaults *mCoorDefault;
+    NSUserDefaults *mUserDefault;
     
     NSTimeInterval oldTime;
     NSTimeInterval currentTime;
@@ -51,7 +51,7 @@
 
 -(void) initViews
 {
-    mCoorDefault = [NSUserDefaults standardUserDefaults];
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     
     dataProvider = [[DataProvider alloc] init];
     
@@ -75,7 +75,12 @@
 
 -(void)ChatRemindEvent{
     //刷新指定section
-    [_mainTableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+    int num = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    [mUserDefault setValue:[NSString stringWithFormat:@"%d",num] forKey:@"NotReadNum"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_mainTableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+    });
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -86,8 +91,8 @@
     currentTime = [[NSDate date] timeIntervalSince1970];
     if (currentTime - oldTime > 1000) {
         oldTime = currentTime;
-        [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.latitude] forKey:@"lat"];
-        [mCoorDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.longitude] forKey:@"long"];
+        [mUserDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.latitude] forKey:@"lat"];
+        [mUserDefault setValue:[NSString stringWithFormat:@"%f",locations[0].coordinate.longitude] forKey:@"long"];
         //获取当前所在地的城市名
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         //根据经纬度反向地理编译出地址信息
@@ -510,32 +515,30 @@
     detailChat1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
     detailChat1.font = [UIFont systemFontOfSize:10];
     
-    int num = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
-    NSLog(@"%d",num);
-    if(num == -1){
-        detailChat1.text = @"加载中...";
-    }else{
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"您有%d条信息未查看",num]];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2,str.length - 8)];
-        
-        detailChat1.attributedText = str;
+    NSString *num = [mUserDefault valueForKey:@"NotReadNum"];
+
+    if(!num){
+        num = @"0";
     }
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"您有%@条消息未查看",num]];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2,str.length - 8)];
+    
+    detailChat1.attributedText = str;
     
     detailChat2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detailChat1.frame.size.height + detailChat1.frame.origin.y, 150, 13)];
     detailChat2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
     detailChat2.font = [UIFont systemFontOfSize:10];
     
-    NSArray *mArray = [[RCIMClient sharedRCIMClient] getConversationList:@[@(ConversationType_PRIVATE)]];
-    if (mArray.count == 0) {
+    NSString *mLastReceiveTime = [mUserDefault valueForKey:@"LastReceivedTime"];
+    if (!mLastReceiveTime) {
         detailChat2.text = @"00:00";
     }else{
-        long long value = [[mArray[0] valueForKey:@"receivedTime"] longLongValue] / 1000;
+        long long value = [mLastReceiveTime longLongValue] / 1000;
         NSNumber *time = [NSNumber numberWithLongLong:value];
         NSTimeInterval nsTimeInterval = [time longValue];
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:nsTimeInterval];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        
         
         NSString *mChatDateIFlag = [self compareDate:date];
         NSLog(@"%@",mChatDateIFlag);

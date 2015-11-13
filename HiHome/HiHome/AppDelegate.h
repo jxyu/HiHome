@@ -18,7 +18,7 @@
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
 #import "TaskDetailPageViewController.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource,TaskDetailDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource,TaskDetailDelegate,RCIMReceiveMessageDelegate>
 {
     CustomTabBarViewController *_tabBarViewCol;
     FirstScrollController *firstCol;

@@ -10,7 +10,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "Toolkit.h"
 
-@interface ChatlistViewController : RCConversationListViewController<RCIMReceiveMessageDelegate>
+@interface ChatlistViewController : RCConversationListViewController
 {
     UIView *_topView;//导航背景图
     UILabel *_lblTitle;//导航标题

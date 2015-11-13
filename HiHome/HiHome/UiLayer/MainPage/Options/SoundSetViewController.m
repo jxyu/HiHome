@@ -144,13 +144,30 @@
         UISwitch *switchBtn = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-(20+50), _cellHeight/3, 50, _cellHeight/3)];
         switchBtn.tag = switchTag;
         if (indexPath.row == 0) {
-            if ([[mUserDefault valueForKey:@"messageSound"] isEqual:@"NO"]) {
-                switchBtn.on = YES;
+            NSLog(@"%@",[mUserDefault valueForKey:@"messageSound"]);
+            if ([mUserDefault valueForKey:@"messageSound"]) {
+                if ([[mUserDefault valueForKey:@"messageSound"] isEqual:@"NO"]) {
+                    switchBtn.on = YES;
+                }else{
+                    switchBtn.on = NO;
+                }
             }else{
-                switchBtn.on = NO;
+                switchBtn.on = YES;
+                [mUserDefault setValue:@"NO" forKey:@"messageSound"];
+                [RCIM sharedRCIM].disableMessageAlertSound = NO;
             }
-        }else if(indexPath.row == 1){
             
+        }else if(indexPath.row == 1){
+            if ([mUserDefault valueForKey:@"ChatVibration"]) {
+                if ([[mUserDefault valueForKey:@"ChatVibration"] isEqual:@"YES"]) {
+                    switchBtn.on = YES;
+                }else{
+                    switchBtn.on = NO;
+                }
+            }else{
+                switchBtn.on = YES;
+                [mUserDefault setValue:@"YES" forKey:@"ChatVibration"];
+            }
         }else{
             
         }
@@ -204,9 +221,9 @@
             break;
         case 1:{
             if (sender.on) {
-                [mUserDefault setValue:@"true" forKey:@"ChatVibration"];
+                [mUserDefault setValue:@"YES" forKey:@"ChatVibration"];
             }else{
-                [mUserDefault setValue:@"false" forKey:@"ChatVibration"];
+                [mUserDefault setValue:@"NO" forKey:@"ChatVibration"];
             }
         }
             break;

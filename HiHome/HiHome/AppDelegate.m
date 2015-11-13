@@ -33,6 +33,7 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define SMSappKey @"b5174972a9ac"
 #define SMSappSecret @"8536890596fff208c04a3e52c88a2060"
@@ -127,6 +128,8 @@
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
+    
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];//监听接收消息的代理设置
     
     // Required
     #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
@@ -296,6 +299,20 @@
     [self selectTableBarIndex:index];
 }
 
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+    //获取未读条数和最新一条消息的时间
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatRemindEvent" object:nil];
+    
+    int num = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    [mUserDefault setValue:[NSString stringWithFormat:@"%d",num] forKey:@"NotReadNum"];
+    [mUserDefault setValue:[NSString stringWithFormat:@"%lld",message.receivedTime] forKey:@"LastReceivedTime"];
+    NSString *mChatVibration = [mUserDefault valueForKey:@"ChatVibration"];
+    if (!mChatVibration || [mChatVibration isEqual:@"YES"]) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+}
+
 -(void)GetTokenBackCall:(id)dict
 {
     NSLog(@"%@",dict);
@@ -304,9 +321,6 @@
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
             // Connect 成功
             NSLog(@"Connect 成功");
-            
-            //获取未读条数和最新一条消息的时间
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatRemindEvent" object:nil];
             
             //获取好友列表
             DataProvider *dataProvider = [[DataProvider alloc] init];

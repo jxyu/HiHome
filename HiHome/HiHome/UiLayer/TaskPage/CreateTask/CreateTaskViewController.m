@@ -1116,7 +1116,7 @@
                 
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-               endTimeField.text =@"未设置";//timeStr2;
+               endTimeField.text =timeStr2;//@"未设置";
                
             }
             startTimeField.font = [UIFont systemFontOfSize:14];
@@ -1436,7 +1436,7 @@
                 NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
                 startTimeField.text =timeStr;
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
-               endTimeField.text =@"未设置";//timeStr2;
+               endTimeField.text =timeStr2;//@"未设置";//
             }
             
             
@@ -1462,7 +1462,7 @@
                 startTimeField.font = [UIFont systemFontOfSize:14];
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-                endTimeField.text =@"未设置";//timeStr2;
+                endTimeField.text =timeStr2;//@"未设置";
             }
             endTimeField.font = [UIFont systemFontOfSize:14];
             startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDayHourMinute;

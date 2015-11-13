@@ -128,29 +128,6 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
     
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     // Required
     #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
         if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -1080,8 +1057,6 @@ fetchCompletionHandler:(void
     [self.window.rootViewController.navigationController pushViewController:_createTaskViewCtl animated:NO];
     
 }
-
-
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {

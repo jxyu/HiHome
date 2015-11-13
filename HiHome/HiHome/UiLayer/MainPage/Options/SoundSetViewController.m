@@ -204,9 +204,9 @@
             break;
         case 1:{
             if (sender.on) {
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                [mUserDefault setValue:@"true" forKey:@"ChatVibration"];
             }else{
-                
+                [mUserDefault setValue:@"false" forKey:@"ChatVibration"];
             }
         }
             break;

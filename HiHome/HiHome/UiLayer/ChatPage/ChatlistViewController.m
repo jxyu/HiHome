@@ -11,6 +11,7 @@
 #import "UIImage+NSBundle.h"
 #import "ChatContentViewController.h"
 #import "RCIM.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define DefaultLeftImageWidth 44
 
@@ -41,6 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];//监听接收消息的代理设置
     
     mUserDefault = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@",[mUserDefault valueForKey:@"messageSound"]);
@@ -164,8 +167,12 @@
     [self.conversationListTableView reloadData];
 }
 
-- (void)onReceived:(RCMessage *)message left:(int)nLeft object:(id)object{
-    
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+    NSString *mChatVibration = [mUserDefault valueForKey:@"ChatVibration"];
+    if ([mChatVibration isEqual:@"true"]) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -222,10 +229,6 @@
 
 -(BOOL)onRCIMCustomAlertSound:(RCMessage *)message{
     return YES;
-}
-
--(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
-    
 }
 
 @end

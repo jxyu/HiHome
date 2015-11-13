@@ -168,6 +168,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_selectContactMode == Mode_DefaultSelectOneself && indexPath.section == 0) {
+        return;
+    }
     SelectContacterCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([selectContacterArray containsObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]]) {
         [selectContacterArray removeObject:[NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row]];

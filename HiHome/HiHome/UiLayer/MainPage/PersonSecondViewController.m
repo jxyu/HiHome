@@ -132,12 +132,11 @@
         case 4:{
             NSDate *now = [NSDate date];
             txt_birthday = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, cellHeight)];
-            txt_birthday.enabled = NO;
             txt_birthday.delegate = self;
             txt_birthday.placeholder = @"请选择您的生日";
             txt_birthday.text = _mBirthday;
             UILabel *age_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, cellHeight)];
-            age_lbl.text = @"年龄:";
+            age_lbl.text = @"生日:";
             txt_birthday.leftView = age_lbl;
             txt_birthday.leftViewMode = UITextFieldViewModeAlways;
             

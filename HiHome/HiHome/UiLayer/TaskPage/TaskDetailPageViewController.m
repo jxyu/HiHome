@@ -1727,7 +1727,7 @@
 - ( CGSize )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath
 {
     
-    return CGSizeMake ( _cellHeight , _cellHeight*2-20 );
+    return CGSizeMake ( _cellHeight+5 , _cellHeight*2-20 );
 }
 
 //定义每个UICollectionView 的边距

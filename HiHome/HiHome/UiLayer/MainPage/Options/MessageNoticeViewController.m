@@ -66,7 +66,14 @@
         }
      }
     _cellCount = 3;
-    [self.view addSubview:_mainTableView];
+  //  [self.view addSubview:_mainTableView];
+    self.view.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
+    UILabel *messageLab = [[UILabel alloc]initWithFrame:CGRectMake(10, ZY_HEADVIEW_HEIGHT, SCREEN_WIDTH-20 , 100)];
+    messageLab.text = @"如果您要关闭或开启HiHome的通知功能，请在iphone的\"设置\"－\"通知中心\"功能中，找到应用程序\"HiHome\"更改";
+    messageLab.numberOfLines = 0;
+    messageLab.textAlignment = NSTextAlignmentNatural;
+    messageLab.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:messageLab];
     
 }
 

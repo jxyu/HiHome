@@ -40,6 +40,7 @@
 @property(nonatomic)NSMutableArray *dateArr;
 @property(nonatomic)NSString *remindDate;
 @property(strong,nonatomic)NSString *remindModeStr;
+@property(nonatomic)BOOL isDay;
 
 
 - (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName;

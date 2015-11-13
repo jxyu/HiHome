@@ -164,6 +164,10 @@
     [self.conversationListTableView reloadData];
 }
 
+- (void)onReceived:(RCMessage *)message left:(int)nLeft object:(id)object{
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -209,7 +213,6 @@
 {
     _lblRight.text=strName;
 }
-
 
 - (void)showEmptyConversationView
 {

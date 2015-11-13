@@ -78,7 +78,18 @@
 
 -(void) initViews
 {
-    NSArray *repeatMode = @[@"不提醒",@"正点",@"五分钟前",@"十分钟前",@"一小时之前",@"一天前",@"三天前"];
+    NSArray *repeatMode;
+    if(self.isDay == YES)
+    {
+        NSArray *tempArr = @[@"不提醒",@"正点",@"一天前",@"三天前"];
+        repeatMode =tempArr;
+    }
+    else
+    {
+        NSArray *tempArr = @[@"不提醒",@"正点",@"五分钟前",@"十分钟前",@"一小时之前",@"一天前",@"三天前"];
+        repeatMode =tempArr;
+    }
+   
     NSInteger rownum  = 0;
     for (int i = 0; i<repeatMode.count; i++) {
        // if(rownum)
@@ -115,71 +126,108 @@
         remindLineInfo *tempInfo = [[remindLineInfo alloc] init];
         tempInfo->existState = NO;
         tempInfo->title = [repeatMode objectAtIndex:i];
-        
-        switch (i) {
-            case Remind_zhengdian:
-                str = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                tempInfo->remindTime = str;
-                break;
-            case Remind_5min:
-            {
-                str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                
-                tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
-                tempTime -=(5*60);//减掉时间偏移
-                str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
-                 tempInfo->remindTime = str;
+        if(self.isDay)
+        {
+            
+            switch (i) {
+                case Remind_zhengdian:
+                    str = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    tempInfo->remindTime = str;
+                    break;
+                case 2://一天前
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(24*60*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case 3://三天前
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(3*24*60*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case Remind_never:
+                    
+                    break;
+                    
+                default:
+                    break;
             }
-        
-                break;
-            case Remind_10min:
-            {
-                str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                
-                tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
-                tempTime -=(10*60);//减掉时间偏移
-                str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
-                tempInfo->remindTime = str;
-            }
-                break;
-            case Remind_1hour:
-            {
-                str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                
-                tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
-                tempTime -=(60*60);//减掉时间偏移
-                str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
-                tempInfo->remindTime = str;
-            }
-                break;
-            case Remind_1day:
-            {
-                str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                
-                tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
-                tempTime -=(24*60*60);//减掉时间偏移
-                str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
-                tempInfo->remindTime = str;
-            }
-                break;
-            case Remind_3day:
-            {
-                str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
-                
-                tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
-                tempTime -=(3*24*60*60);//减掉时间偏移
-                str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
-                tempInfo->remindTime = str;
-            }
-                break;
-            case Remind_never:
-                
-                break;
-                
-            default:
-                break;
         }
-        
+        else
+        {
+            switch (i) {
+                case Remind_zhengdian:
+                    str = [NSString stringWithFormat:@"%@-%@-%@  %@:%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    tempInfo->remindTime = str;
+                    break;
+                case Remind_5min:
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(5*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                     tempInfo->remindTime = str;
+                }
+            
+                    break;
+                case Remind_10min:
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(10*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case Remind_1hour:
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(60*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case Remind_1day:
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(24*60*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case Remind_3day:
+                {
+                    str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                    
+                    tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                    tempTime -=(3*24*60*60);//减掉时间偏移
+                    str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                    tempInfo->remindTime = str;
+                }
+                    break;
+                case Remind_never:
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
         [_arrayRemind addObject:tempInfo];
     }
     

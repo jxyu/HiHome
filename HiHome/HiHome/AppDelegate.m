@@ -207,10 +207,10 @@
      设置根VC
      */
     firstCol=[[FirstScrollController alloc]init];
-    if (_tabBarViewCol==nil) {
-        _tabBarViewCol = [[CustomTabBarViewController alloc] init];
-        
-    }
+//    if (_tabBarViewCol==nil) {
+//        _tabBarViewCol = [[CustomTabBarViewController alloc] init];
+//        
+//    }
     if(self.window == nil)
         
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];
@@ -841,27 +841,54 @@ fetchCompletionHandler:(void
             tempStr = @"取消任务";
         }
             
-        [noiceView addButton:NoticeButton_CANCEL withTitle:@"取消任务" handler:^(NoticePageItem *item )
+        [noiceView addButton:NoticeButton_CANCEL withTitle:tempStr handler:^(NoticePageItem *item )
          {
              
-             JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否取消任务？"]];
-             
-             alert.alertType = AlertType_Alert;
-             [alert addButton:Button_OK withTitle:@"是" handler:^(JKAlertDialogItem *item){
-                 NSLog(@"Click ok");
-                 taskDetailPath.taskStatus = State_cancel;
-                 [self setTaskState:[NSString stringWithFormat:@"%d",taskDetailPath.taskStatus]];//上传状态
+             if(_taskDetailMode != TaskDetail_MyMode)
+             {
+                 JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"取消" message:[NSString stringWithFormat:@"是否取消任务？"]];
+                 
+                 alert.alertType = AlertType_Alert;
+                 [alert addButton:Button_OK withTitle:@"是" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click ok");
+                     taskDetailPath.taskStatus = State_cancel;
+                     [self setTaskState:[NSString stringWithFormat:@"%d",taskDetailPath.taskStatus]];//上传状态
+                     
+
+                     
+                 }];
+                 
+                 //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                 [alert addButton:Button_CANCEL withTitle:@"否" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click canel");
+                     
+                 }];
+                  [alert show];
+             }
+             else//任务为自己的任务时直接删除
+             {
+                 JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"删除" message:[NSString stringWithFormat:@"是否删除?"]];
+                 
+                 alert.alertType = AlertType_Alert;
+                 [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+                
+                     
+                         
+                 [self delTask:taskId];
+  
+                     
+                     
+                 }];
+                 
+                 //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
+                 [alert addButton:Button_CANCEL withTitle:@"取消" handler:^(JKAlertDialogItem *item){
+                     NSLog(@"Click canel");
+                     
+                 }];
+                 [alert show];
                  
 
-                 
-             }];
-             
-             //    typedef void(^JKAlertDialogHandler)(JKAlertDialogItem *item);
-             [alert addButton:Button_CANCEL withTitle:@"否" handler:^(JKAlertDialogItem *item){
-                 NSLog(@"Click canel");
-                 
-             }];
-              [alert show];
+             }
              
             }];
         //   [tempView addButtonWithTitle:@"正点提醒"];
@@ -877,6 +904,38 @@ fetchCompletionHandler:(void
         
     }
     
+    
+}
+#pragma mark - 删除任务
+
+-(void)delTask:(NSString *)taskID
+{
+    
+    NSLog(@"del task datas");
+    
+    [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"delTaskCallBack:"];
+    
+    [dataprovider delTask:taskID];
+}
+
+-(void)delTaskCallBack:(id)dict
+{
+    
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"删除失败"]];
+        
+        alert.alertType = AlertType_Hint;
+        [alert addButtonWithTitle:@"确定"];
+        [alert show];
+        return;
+    }
     
 }
 

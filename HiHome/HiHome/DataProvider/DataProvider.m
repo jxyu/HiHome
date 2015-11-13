@@ -500,6 +500,10 @@
     if (userID) {
         NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=modInfo",Url];
         NSDictionary *prm = @{@"id":userID,@"nick":nick,@"sex":sex,@"age":age,@"sign":sign};
+        
+#if DEBUG
+        NSLog(@"[%s] prm = %@",__FUNCTION__,prm);
+#endif
         [self PostRequest:url andpram:prm];
     }
 }

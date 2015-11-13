@@ -126,7 +126,7 @@
         [application registerForRemoteNotificationTypes:myTypes];
     }
 
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
     
     
     
@@ -221,7 +221,6 @@
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
     NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTokenEvent) name:@"getTokenInfo" object:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]) {
         
@@ -328,6 +327,10 @@
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"] success:^(NSString *userId) {
             // Connect 成功
             NSLog(@"Connect 成功");
+            
+            //获取未读条数和最新一条消息的时间
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatRemindEvent" object:nil];
+            
             //获取好友列表
             DataProvider *dataProvider = [[DataProvider alloc] init];
             [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendInfoByUserID:"];

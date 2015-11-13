@@ -485,6 +485,12 @@ fetchCompletionHandler:(void
         NSString *userId = [self getUserID];
         if(userId == nil)
         {
+            
+             JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"消息已过期"];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
             return;
         }
         
@@ -494,8 +500,14 @@ fetchCompletionHandler:(void
         
         @try {
             if(notification == nil)
+            {
+                JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"消息已过期"];
+                
+                alert.alertType = AlertType_Hint;
+                [alert addButtonWithTitle:@"确定"];
+                [alert show];
                 return;
-            
+            }
             tempDict =notification.userInfo;
             if(tempDict.count>0)
             {

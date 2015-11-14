@@ -147,7 +147,7 @@
 }
 
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate
+-(void)getReceiveTask:(NSString *)userID andMyId:(NSString *)myid andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate andAccept:(NSString *)accept
 {
     NSMutableDictionary * prm = [NSMutableDictionary dictionary];
     
@@ -178,7 +178,12 @@
             [prm setObject:startDate forKey:@"sdate"];
         if(endDate!=nil)
             [prm setObject:endDate forKey:@"edate"];
-        NSLog(@"send prm = [%@]",prm);
+        if(accept!=nil)
+            [prm setObject:accept forKey:@"accept"];
+        if(myid!=nil)
+            [prm setObject:myid forKey:@"myid"];
+        
+        DLog(@"send prm = [%@]",prm);
         
         [self PostRequest:url andpram:prm];
     }

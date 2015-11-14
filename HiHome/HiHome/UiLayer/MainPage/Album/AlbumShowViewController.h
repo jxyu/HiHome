@@ -11,6 +11,7 @@
 #import "UploadPicViewController.h"
 #import "SVProgressHUD.h"
 #import "PictureShowView.h"
+
 @interface AlbumShowViewController : BackPageViewController<PictureShowViewDelegate>
 
 @property (nonatomic) NSArray *picArr;

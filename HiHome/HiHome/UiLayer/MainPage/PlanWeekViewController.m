@@ -78,7 +78,8 @@
     
     NSLog(@"id = [%@]",userID);
     
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date andStartDate:startDate andEndDate:endDate];
+    
+    [dataprovider getReceiveTask:userID andMyId:nil andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date andStartDate:startDate andEndDate:endDate andAccept:nil];
 }
 
 
@@ -200,7 +201,9 @@
         NSLog(@"date11 =[%@]",date);
     else
         NSLog(@"date  = nil");
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date andStartDate:startDate andEndDate:endDate];
+    
+    [dataprovider getReceiveTask:userID andMyId:nil andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date andStartDate:startDate andEndDate:endDate andAccept:nil];
+    
 }
 
 

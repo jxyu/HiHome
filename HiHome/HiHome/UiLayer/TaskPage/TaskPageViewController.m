@@ -219,8 +219,9 @@
     NSString *userID = [self getUserID];//获取userID
     
     NSLog(@"id = [%@]",userID);
+
     
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:@"1" andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil];
+    [dataprovider getReceiveTask:userID andMyId:nil andState:state andMyOrNot:@"1"  andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil andAccept:nil];
 }
 
 
@@ -340,7 +341,7 @@
         NSLog(@"date11 =[%@]",date);
     else
         NSLog(@"date  = nil");
-    [dataprovider getReceiveTask:userID andState:state andMyOrNot:nil andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil];
+    [dataprovider getReceiveTask:userID andMyId:nil andState:state andMyOrNot:nil  andPage:nowPage andPerPage:perPage andDate:date andStartDate:nil andEndDate:nil andAccept:nil];
 }
 
 

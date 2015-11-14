@@ -361,6 +361,11 @@
     picShowViewCtl.delegate = self;
     [picShowViewCtl show];
     
+//    VIPhotoView *photoView = [[VIPhotoView alloc] initWithFrame:self.view.bounds andImage:image];
+//    photoView.autoresizingMask = (1 << 6) -1;
+    
+//    [self.view addSubview:photoView];
+    
 }
 
 #pragma mark - picture show delegate

@@ -75,7 +75,7 @@
  *  @param perpage          每页显示数量  default  10
  */
 
--(void)getReceiveTask:(NSString *)userID andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate;
+-(void)getReceiveTask:(NSString *)userID andMyId:(NSString *)myid andState:(NSString*)state andMyOrNot:(NSString *)my andPage:(NSString *)page andPerPage:(NSString *)perpage andDate:(NSString *)date andStartDate:(NSString *)startDate andEndDate:(NSString *)endDate andAccept:(NSString *)accept;
 /**
  *  获取发布的任务
  *

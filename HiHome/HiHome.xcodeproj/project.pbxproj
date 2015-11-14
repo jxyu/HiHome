@@ -236,7 +236,6 @@
 		B5A77AB81BB4E9780014DD67 /* gettask_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A77AB61BB4E9780014DD67 /* gettask_red@2x.png */; };
 		B5A77ABC1BB4FA5F0014DD67 /* TaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A77ABB1BB4FA5F0014DD67 /* TaskTableViewCell.m */; };
 		B5A77ABF1BB4FBA10014DD67 /* TaskPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A77ABE1BB4FBA10014DD67 /* TaskPath.m */; };
-		B5B520331BF5D88C00233FEC /* VIPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B520321BF5D88C00233FEC /* VIPhotoView.m */; };
 		B5C60C2D1BE303C2005DE72A /* ChooseAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60C261BE303C2005DE72A /* ChooseAlbumViewController.m */; };
 		B5C60C2E1BE303C2005DE72A /* ChooseAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C60C271BE303C2005DE72A /* ChooseAlbumViewController.xib */; };
 		B5C60C2F1BE303C2005DE72A /* CreateAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C60C291BE303C2005DE72A /* CreateAlbumViewController.m */; };
@@ -725,8 +724,6 @@
 		B5A77ABB1BB4FA5F0014DD67 /* TaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTableViewCell.m; sourceTree = "<group>"; };
 		B5A77ABD1BB4FBA10014DD67 /* TaskPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskPath.h; sourceTree = "<group>"; };
 		B5A77ABE1BB4FBA10014DD67 /* TaskPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskPath.m; sourceTree = "<group>"; };
-		B5B520311BF5D88C00233FEC /* VIPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIPhotoView.h; sourceTree = "<group>"; };
-		B5B520321BF5D88C00233FEC /* VIPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPhotoView.m; sourceTree = "<group>"; };
 		B5C60C251BE303C2005DE72A /* ChooseAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChooseAlbumViewController.h; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.h; sourceTree = SOURCE_ROOT; };
 		B5C60C261BE303C2005DE72A /* ChooseAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChooseAlbumViewController.m; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.m; sourceTree = SOURCE_ROOT; };
 		B5C60C271BE303C2005DE72A /* ChooseAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseAlbumViewController.xib; path = HiHome/UiLayer/MainPage/Album/UploadForAlbum/ChooseAlbumViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1717,7 +1714,6 @@
 		B583B1A31BC39B2B000572CA /* BaseUnits */ = {
 			isa = PBXGroup;
 			children = (
-				B5B520301BF5D88C00233FEC /* VIPhotoView */,
 				B553A0561BE35FF70033F9A7 /* MyCollectionFooterView.h */,
 				B553A0571BE35FF70033F9A7 /* MyCollectionFooterView.m */,
 				B553A0581BE35FF70033F9A7 /* MYCollectionHeadView.h */,
@@ -1879,15 +1875,6 @@
 				B596BF911BBBCB8F00349B1E /* JKAlertDialog.m */,
 			);
 			path = AlertView;
-			sourceTree = "<group>";
-		};
-		B5B520301BF5D88C00233FEC /* VIPhotoView */ = {
-			isa = PBXGroup;
-			children = (
-				B5B520311BF5D88C00233FEC /* VIPhotoView.h */,
-				B5B520321BF5D88C00233FEC /* VIPhotoView.m */,
-			);
-			path = VIPhotoView;
 			sourceTree = "<group>";
 		};
 		B5E059941BB0F92900DBF786 /* CustomViewController */ = {
@@ -2532,7 +2519,6 @@
 				8048CC4D1BD21C5200B76C59 /* Model.m in Sources */,
 				B5E059D51BB146E100DBF786 /* UIImage+WM.m in Sources */,
 				B5E0599E1BB0F92900DBF786 /* FirstScrollController.m in Sources */,
-				B5B520331BF5D88C00233FEC /* VIPhotoView.m in Sources */,
 				B591FAEE1BF47306003B249B /* PictureShowView.m in Sources */,
 				B5879D7E1BC7A755003AACFA /* SegmentedButton.m in Sources */,
 				80124C091BD885E800DBE369 /* SDWebImagePrefetcher.m in Sources */,

@@ -94,7 +94,7 @@
     //   _textView.text = @"发帖内容";
     
     [self.mBtnRight setTitle:@"上传" forState:UIControlStateNormal];
-    self.mBtnRight.hidden = NO;
+  //  self.mBtnRight.hidden = NO;
 //    UIButton *sendBtn = [[UIButton alloc] init];
 //    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
 //    sendBtn.frame = CGRectMake(self.view.frame.size.width-ZY_VIEWHEIGHT_IN_HEADVIEW-10, 20, ZY_VIEWHEIGHT_IN_HEADVIEW, ZY_VIEWHEIGHT_IN_HEADVIEW);
@@ -122,9 +122,12 @@
     }
     else
     {
-        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请完善信息"];
-        alert.alertType = AlertType_Hint;
-        [alert addButtonWithTitle:@"确定"];
+//        JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"请完善信息"];
+//        alert.alertType = AlertType_Hint;
+//        [alert addButtonWithTitle:@"确定"];
+//        [alert show];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
 
@@ -285,135 +288,6 @@
     }
     UITableViewCell *cell = [[UITableViewCell alloc] init];
       return cell;
-// volatile   BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight*2)];
-//    
-//
-//        if(indexPath.section == 0)
-//        {
-//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
-//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            //             cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellTextViewHeight);
-//            
-//           
-//            
-//            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
-//            
-//            _textView.delegate = self;
-//            _textView.returnKeyType = UIReturnKeyDefault;
-//            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//            
-//            [cell addSubview:_textView];
-//            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-//            {
-//                [cell setSeparatorInset:UIEdgeInsetsZero];
-//                [cell setLayoutMargins:UIEdgeInsetsZero];
-//            }
-//            return cell;
-//        }
-//        else if(indexPath.section == 1)
-//        {
-//            //            _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
-//            //
-//            //            _titleField.placeholder = @"标题";
-//            //            _titleField.delegate = self;
-//            //            [cell addSubview:_titleField];
-//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
-//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            //            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight);
-//            //
-//            
-//            
-//            TempCustomButton *setAlbumBtn = [[TempCustomButton alloc] initWithFrame:CGRectMake(0, 0, 100 , _cellHeight)];
-//            
-//            [setAlbumBtn setTitle:@"相册名字" forState:UIControlStateNormal];
-//            [setAlbumBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//            [setAlbumBtn setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
-//            setAlbumBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//            setAlbumBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//            [setAlbumBtn addTarget:self action:@selector(btnChooseAlbums:) forControlEvents:UIControlEventTouchUpInside];
-//            
-//            
-//            UILabel *_textLabel= [[UILabel alloc] init];
-//            _textLabel.text = @"   上传到:";
-//            _textLabel.frame = CGRectMake(10, 0, 80 , _cellHeight);
-//            _textLabel.font = [UIFont systemFontOfSize:14];
-//            
-//            
-//            albumField.rightView = setAlbumBtn;
-//            albumField.rightViewMode = UITextFieldViewModeAlways;
-//            
-//            albumField.leftView = _textLabel;
-//            albumField.leftViewMode = UITextFieldViewModeAlways;
-//            
-//            albumField.font = [UIFont systemFontOfSize:14];
-//            if(_albumName)
-//                albumField.text = _albumName;
-//            [cell addSubview:albumField];
-//            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-//            {
-//                [cell setSeparatorInset:UIEdgeInsetsZero];
-//                [cell setLayoutMargins:UIEdgeInsetsZero];
-//            }
-//            return cell;
-//        }
-//        else if(indexPath.section ==2)
-//        {
-//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
-//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            //            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,  _cellHeight*2);
-//            
-//            
-//            if(self.ChoosPicByCamera == YES)
-//            {
-//                pickPicBtns.frame = CGRectMake(10, 10, 0,  0);
-//                
-//            }
-//            else
-//            {
-//                [pickPicBtns setImage:[UIImage imageNamed:@"pickPicBtn"] forState:UIControlStateNormal];
-//                
-//                [pickPicBtns addTarget:self action:@selector(btnPickPicture:) forControlEvents:UIControlEventTouchUpInside];
-//                
-//                [cell addSubview:pickPicBtns];
-//            }
-//            
-//            if (!_collectionView) {
-//                UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//                layout.minimumLineSpacing = 5.0;
-//                layout.minimumInteritemSpacing = 5.0;
-//                layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-//                
-//                // _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
-//                _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(pickPicBtns.frame.size.width+pickPicBtns.frame.origin.x+5, 20,(SCREEN_WIDTH-(pickPicBtns.frame.size.width + pickPicBtns.frame.origin.x)),_cellHeight*2-40) collectionViewLayout:layout];
-//                _collectionView.backgroundColor = [UIColor clearColor];
-//                [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
-//                _collectionView.delegate = self;
-//                _collectionView.dataSource = self;
-//                _collectionView.showsHorizontalScrollIndicator = NO;
-//                _collectionView.showsVerticalScrollIndicator = NO;
-//                
-//                [cell addSubview:_collectionView];
-//                if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-//                {
-//                    [cell setSeparatorInset:UIEdgeInsetsZero];
-//                    [cell setLayoutMargins:UIEdgeInsetsZero];
-//                }
-//                return cell;
-//                
-//            }
-//            
-//            
-//            
-//        }
-////     
-//  
-//    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-//    {
-//        [cell setSeparatorInset:UIEdgeInsetsZero];
-//        [cell setLayoutMargins:UIEdgeInsetsZero];
-//    }
-//    return cell;
-
 }
 
 -(void)setAlbumName:(NSString *)albumName

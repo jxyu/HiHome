@@ -293,6 +293,12 @@
         [mUserDefault setValue:txt_phoneNum.text forKey:@"RegisterAccount"];
         [mUserDefault setValue:txt_newPwd.text forKey:@"RegisterPwd"];
         
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        NSArray * itemdict=[[NSArray alloc] initWithArray:dict[@"datas"]];
+        [itemdict[0] writeToFile:plistPath atomically:YES];
+        
         PersonSecondViewController *mPersonSecondVC = [[PersonSecondViewController alloc] init];
         mPersonSecondVC.navTitle = @"个人资料";
         mPersonSecondVC.mIFlag = @"1";

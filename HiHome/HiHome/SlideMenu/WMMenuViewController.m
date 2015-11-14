@@ -118,13 +118,20 @@
     if([birthday isEqual:@""]){
         return 0;
     }
-    
-    NSInteger mYear = [[birthday substringToIndex:4] integerValue];
-    
-    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
-    NSInteger currentDateYear  = [components2 year];
-    
-    return [NSString stringWithFormat:@"%ld",currentDateYear - mYear];
+    @try {
+        NSInteger mYear = [[birthday substringToIndex:4] integerValue];
+        
+        NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
+        NSInteger currentDateYear  = [components2 year];
+        
+        return [NSString stringWithFormat:@"%ld",currentDateYear - mYear];
+    }
+    @catch (NSException *exception) {
+        return birthday;
+    }
+    @finally {
+        
+    }
 }
 
 -(void)GetInfoBackCall:(id)dict

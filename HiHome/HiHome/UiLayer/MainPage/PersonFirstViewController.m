@@ -157,7 +157,7 @@
         UILabel *mDetail = [[UILabel alloc] initWithFrame:CGRectMake(10 + mHeadImg.frame.size.width + 10, mHeadImg.frame.origin.y + mHeadImg.frame.size.height / 2 - 10,SCREEN_WIDTH - 100, 21)];
         mDetail.textColor = [UIColor whiteColor];
         if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
-            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",_mName,_mSex,_mAge];//@"唐嫣  女  21岁";
+            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",_mName,_mSex,[self getAgeByBirthday:_mAge]];//@"唐嫣  女  21岁";
         }else{
             mDetail.text = [NSString stringWithFormat:@"%@   %@   %@岁",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[self getAgeByBirthday:[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]]];//@"唐嫣  女  21岁";
         }
@@ -631,6 +631,7 @@
     ChatContentViewController *conversationVC = [[ChatContentViewController alloc]init];
     conversationVC.conversationType =ConversationType_PRIVATE;
     conversationVC.targetId = _mFriendID;
+    conversationVC.displayUserNameInCell = NO;
     [mUserDefault setValue:@"1" forKey:@"ChatIFlag"];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshConversation" object:nil];
 //    conversationVC.userName = @"测试1";

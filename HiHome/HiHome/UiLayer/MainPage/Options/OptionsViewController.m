@@ -145,7 +145,7 @@
                 return 2;
                 break;
             case 3:
-                return 2;
+                return 1;
                 break;
             default:
                 break;

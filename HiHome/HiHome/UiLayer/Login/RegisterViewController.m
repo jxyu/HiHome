@@ -294,6 +294,7 @@
         [mUserDefault setValue:txt_newPwd.text forKey:@"RegisterPwd"];
         
         PersonSecondViewController *mPersonSecondVC = [[PersonSecondViewController alloc] init];
+        mPersonSecondVC.navTitle = @"个人资料";
         mPersonSecondVC.mIFlag = @"1";
         mPersonSecondVC.mSex = @"男";
         mPersonSecondVC.mUID = [dict[@"datas"][0] valueForKey:@"id"];

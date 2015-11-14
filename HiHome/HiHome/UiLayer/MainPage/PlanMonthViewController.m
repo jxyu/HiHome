@@ -125,7 +125,7 @@
         _taskDict = [dict objectForKey:@"datas"];
         resultAll = [[_taskDict objectForKey:@"resultAll"] integerValue];//获取的任务数
         
-        NSLog(@"result all = %ld",resultAll);
+        NSLog(@"result all = %ld",(long)resultAll);
     }
     else
     {
@@ -174,7 +174,7 @@
         if(resultAll > _myTaskData.count)
         {
             myTaskPage++;
-            [self loadMyTaskDatas:[NSString stringWithFormat:@"%ld",myTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
+            [self loadMyTaskDatas:[NSString stringWithFormat:@"%ld",(long)myTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
         }
         else
         {
@@ -318,7 +318,7 @@
         if(resultAll > _getTaskData.count)
         {
             receiveTaskPage ++ ;
-            [self loadReceiveTaskDatas:[NSString stringWithFormat:@"%ld",receiveTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
+            [self loadReceiveTaskDatas:[NSString stringWithFormat:@"%ld",(long)receiveTaskPage] andPerPage:nil andState:nil andDate:todayStr andStartDate:_startTime andEndDate:_endTime];
         }
         else
         {
@@ -442,7 +442,7 @@
         NSLog(@"img2 = [%@]",[taskDetailDict objectForKey:@"imgsrc2"]);
         NSLog(@"img3 = [%@]",[taskDetailDict objectForKey:@"imgsrc3"]);
         
-        NSLog(@"taskDetailPath.imgSrc count = %ld",taskDetailPath.imgSrc.count);
+        NSLog(@"taskDetailPath.imgSrc count = %ld",(unsigned long)taskDetailPath.imgSrc.count);
         
         
         if(![[taskDetailDict objectForKey:@"taskerlist"] isEqual:[NSNull null]])

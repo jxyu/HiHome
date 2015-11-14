@@ -11,6 +11,7 @@
 
 @interface PersonSecondViewController : BackPageViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 
+@property(strong,nonatomic) NSString *mUID;
 @property(strong,nonatomic) NSString *mIFlag;
 @property(strong,nonatomic) NSString *mHeadImg;
 @property(strong,nonatomic) NSString *mName;

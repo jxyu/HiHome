@@ -15,9 +15,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="xueren.png" translatesAutoresizingMaskIntoConstraints="NO" id="SCK-8y-eEv">
-                        <rect key="frame" x="0.0" y="0.0" width="55" height="45"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="发布任务人:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qie-eW-dM1">
                         <rect key="frame" x="79" y="4" width="90" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -104,19 +101,28 @@
                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xueren.png" translatesAutoresizingMaskIntoConstraints="NO" id="SCK-8y-eEv">
+                        <rect key="frame" x="8" y="0.0" width="55" height="45"/>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="SCK-8y-eEv" secondAttribute="trailing" constant="249" id="1pr-Wp-Cky"/>
                     <constraint firstItem="VF5-EK-p2p" firstAttribute="top" secondItem="q59-8K-9jL" secondAttribute="topMargin" constant="4" id="2W5-B2-VOk"/>
                     <constraint firstItem="b8a-Oi-g6a" firstAttribute="leading" secondItem="q59-8K-9jL" secondAttribute="leadingMargin" constant="62" id="9zR-8z-Kj4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="b8a-Oi-g6a" secondAttribute="trailing" constant="-8" id="F7N-aF-w38"/>
                     <constraint firstItem="b8a-Oi-g6a" firstAttribute="top" secondItem="q59-8K-9jL" secondAttribute="topMargin" constant="43" id="IMc-fo-d88"/>
                     <constraint firstAttribute="trailingMargin" secondItem="agj-6q-z8f" secondAttribute="trailing" constant="172" id="KFF-FR-O10"/>
+                    <constraint firstItem="SCK-8y-eEv" firstAttribute="top" secondItem="q59-8K-9jL" secondAttribute="topMargin" constant="-8" id="N4n-sd-mrW"/>
                     <constraint firstItem="agj-6q-z8f" firstAttribute="top" secondItem="q59-8K-9jL" secondAttribute="topMargin" constant="19" id="O7s-tI-QVV"/>
                     <constraint firstAttribute="trailingMargin" secondItem="k8W-lW-LGg" secondAttribute="trailing" constant="97" id="Qpe-sr-9PG"/>
                     <constraint firstAttribute="trailingMargin" secondItem="VF5-EK-p2p" secondAttribute="trailing" constant="3" id="XEW-1d-V5T"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="SCK-8y-eEv" secondAttribute="leading" id="uBb-Wu-5BV"/>
                     <constraint firstItem="k8W-lW-LGg" firstAttribute="top" secondItem="q59-8K-9jL" secondAttribute="topMargin" constant="19" id="xJo-O8-TcI"/>
                 </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="SCK-8y-eEv" secondAttribute="bottom" constant="63" id="BVB-51-wUX"/>
+            </constraints>
             <connections>
                 <outlet property="mDate" destination="k8W-lW-LGg" id="Any-ab-npH"/>
                 <outlet property="mDoing" destination="dzH-fd-Pzd" id="FTi-X7-jFH"/>

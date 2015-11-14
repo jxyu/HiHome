@@ -22,6 +22,7 @@
     UITextField * txt_vrifyCode;
     UITextField * txt_newPwd;
     UITextField * txt_againNewPwd;
+    NSUserDefaults *mUserDefault;
 }
 
 - (void)viewDidLoad {
@@ -40,6 +41,7 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
     [self.view addGestureRecognizer:tapGesture];
     
+    mUserDefault = [NSUserDefaults standardUserDefaults];
     
     [self addLeftButton:@"goback@2x.png"];
     
@@ -91,6 +93,7 @@
         case 0:
         {
             txt_phoneNum=[[UITextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-140, 30)];
+            txt_phoneNum.keyboardType = UIKeyboardTypeNumberPad;
             txt_phoneNum.placeholder=@"请输入您的手机号";
             [cell addSubview:txt_phoneNum];
             UIButton * btn_GetvrifyCode=[[UIButton alloc] initWithFrame:CGRectMake(txt_phoneNum.frame.size.width+txt_phoneNum.frame.origin.x, 10, 100, 30)];
@@ -105,16 +108,19 @@
             break;
         case 1:
             txt_vrifyCode=[[UITextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-40, 30)];
+            txt_vrifyCode.keyboardType = UIKeyboardTypeNumberPad;
             txt_vrifyCode.placeholder=@"请输入您的验证码";
             [cell addSubview:txt_vrifyCode];
             break;
         case 2:
             txt_newPwd=[[UITextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-40, 30)];
+            txt_newPwd.secureTextEntry = YES;
             txt_newPwd.placeholder=@"请输入您的新密码";
             [cell addSubview:txt_newPwd];
             break;
         case 3:
             txt_againNewPwd=[[UITextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-40, 30)];
+            txt_againNewPwd.secureTextEntry = YES;
             txt_againNewPwd.placeholder=@"请再次输入您的密码";
             [cell addSubview:txt_againNewPwd];
             break;
@@ -224,6 +230,7 @@
 
 -(void)LoginFunC:(UIButton * )sender
 {
+    
     NSLog(@"txt_newPwd.text = %@",txt_newPwd.text);
     NSLog(@"txt_againNewPwd.text = %@",txt_againNewPwd.text);
     NSLog(@"txt_newPwd.text.length = %lu",txt_newPwd.text.length);
@@ -282,10 +289,15 @@
     [SVProgressHUD dismiss];
     NSLog(@"注册返回数据%@",dict);
     if ([dict[@"code"] intValue]==200) {
-        //[self dismissViewControllerAnimated:YES completion:nil];
-        PersonSecondViewController *userInfoVC = [[PersonSecondViewController alloc] init];
-        userInfoVC.mIFlag = @"1";
-        [self presentViewController:userInfoVC animated:NO completion:nil];
+        
+        [mUserDefault setValue:txt_phoneNum.text forKey:@"RegisterAccount"];
+        [mUserDefault setValue:txt_newPwd.text forKey:@"RegisterPwd"];
+        
+        PersonSecondViewController *mPersonSecondVC = [[PersonSecondViewController alloc] init];
+        mPersonSecondVC.mIFlag = @"1";
+        mPersonSecondVC.mSex = @"男";
+        mPersonSecondVC.mUID = [dict[@"datas"][0] valueForKey:@"id"];
+        [self presentViewController:mPersonSecondVC animated:NO completion:nil];
     }
     else
     {

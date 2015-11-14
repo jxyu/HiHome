@@ -61,8 +61,7 @@
     
     [loginBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-//   [self.view addSubview:loginBtn];
-    // Do any additional setup after loading the view from its nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CallLoginFun) name:@"CallLoginFun" object:nil];
     
 
 }
@@ -841,6 +840,15 @@
             [alertView show];
         }
     }
+}
+
+-(void)CallLoginFun{
+    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+    NSString *mRegistAcount = [mUserDefault valueForKey:@"RegisterAccount"];
+    NSString *mRegistPwd = [mUserDefault valueForKey:@"RegisterPwd"];
+    [dataprovider Login:mRegistAcount andpwd:mRegistPwd andreferrer:@""];
 }
 
 -(void)JumpToForgetVC:(UIButton *)sender

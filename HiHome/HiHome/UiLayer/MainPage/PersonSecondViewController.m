@@ -256,7 +256,7 @@
     if (txt_name.text.length > 0 && txt_birthday.text.length > 0 && txt_signe.text.length > 0) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"SaveUserInfoBackCall:"];
-        [dataprovider SaveUserInfo:[self getUserID] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:txt_birthday.text andSign:txt_signe.text];
+        [dataprovider SaveUserInfo:[_mIFlag isEqual:@"1"]?_mUID:[self getUserID] andNick:txt_name.text andSex:isMan?@"男":@"女" andAge:txt_birthday.text andSign:txt_signe.text];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息～" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
@@ -269,7 +269,7 @@
     
     if (code == 200) {
         if ([_mIFlag isEqual:@"1"]) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CallLoginFun" object:nil];
         }else{
             [self dismissViewControllerAnimated:NO completion:nil];
         }

@@ -15,9 +15,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="153"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="xueren.png" translatesAutoresizingMaskIntoConstraints="NO" id="s6J-UR-eME">
-                        <rect key="frame" x="0.0" y="0.0" width="55" height="48"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="发布任务人:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlO-aB-XeQ">
                         <rect key="frame" x="79" y="13" width="90" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -93,17 +90,24 @@
                         <rect key="frame" x="79" y="107" width="73" height="35"/>
                         <state key="normal" title="接受任务"/>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xueren.png" translatesAutoresizingMaskIntoConstraints="NO" id="s6J-UR-eME">
+                        <rect key="frame" x="8" y="3" width="55" height="48"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="A7i-B6-Vha" firstAttribute="top" secondItem="KMZ-xY-k0b" secondAttribute="topMargin" constant="99" id="2Ck-Wh-sKa"/>
                     <constraint firstAttribute="trailingMargin" secondItem="fQV-YJ-gYk" secondAttribute="trailing" constant="-8" id="2Xp-dQ-sr1"/>
                     <constraint firstItem="A7i-B6-Vha" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leadingMargin" constant="210" id="5Tv-cf-9YR"/>
+                    <constraint firstItem="s6J-UR-eME" firstAttribute="top" secondItem="KMZ-xY-k0b" secondAttribute="topMargin" constant="-5" id="8ag-z5-xI1"/>
                     <constraint firstAttribute="bottomMargin" secondItem="A7i-B6-Vha" secondAttribute="bottom" constant="3" id="LSN-rB-Ww0"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="s6J-UR-eME" secondAttribute="trailing" constant="249" id="Ny6-uE-RYy"/>
                     <constraint firstAttribute="trailingMargin" secondItem="A7i-B6-Vha" secondAttribute="trailing" constant="21" id="P4f-1t-Cc0"/>
                     <constraint firstItem="A7i-B6-Vha" firstAttribute="leading" secondItem="Thw-RV-gGE" secondAttribute="trailing" constant="66" id="QNT-1M-KYD"/>
                     <constraint firstItem="fQV-YJ-gYk" firstAttribute="top" secondItem="KMZ-xY-k0b" secondAttribute="topMargin" constant="40" id="Zdp-N1-xo9"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="s6J-UR-eME" secondAttribute="leading" id="bm3-xh-WNV"/>
                     <constraint firstItem="Thw-RV-gGE" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leadingMargin" constant="71" id="i90-47-w2F"/>
                     <constraint firstItem="Thw-RV-gGE" firstAttribute="top" secondItem="KMZ-xY-k0b" secondAttribute="topMargin" constant="99" id="joi-3h-5i1"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="s6J-UR-eME" secondAttribute="bottom" constant="94" id="laA-ia-XF2"/>
                     <constraint firstItem="fQV-YJ-gYk" firstAttribute="leading" secondItem="KMZ-xY-k0b" secondAttribute="leadingMargin" constant="62" id="tEu-Uy-B7m"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Thw-RV-gGE" secondAttribute="bottom" constant="3" id="tsM-Hm-gZt"/>
                 </constraints>

@@ -33,7 +33,7 @@
     [dataProvider setDelegateObject:self setBackFunctionName:@"getTaskNoticeBackCall:"];
    // [dataProvider getReceiveTask: andState:nil andMyOrNot:nil andPage:nil andPerPage:nil andDate:nil andStartDate:nil andEndDate:nil];
     
-    [dataProvider getReceiveTask:[self getUserID] andMyId:nil andState:nil andMyOrNot:nil andPage:nil andPerPage:nil andDate:nil andStartDate:nil andEndDate:nil andAccept:nil];
+    [dataProvider getReceiveTask:[self getUserID] andMyId:nil andState:nil andMyOrNot:nil andPage:@"1" andPerPage:@"9999" andDate:nil andStartDate:nil andEndDate:nil andAccept:@"1"];
     
 }
 

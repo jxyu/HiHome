@@ -23,7 +23,7 @@
     NSMutableArray *picSrc;
     
     NSString *fullPath;
-    
+    //UIButton *pickPicBtns ;
     //图片上传
     NSMutableArray * img_uploaded;
     int uploadImgIndex;
@@ -39,7 +39,6 @@
     [super viewDidLoad];
     
     _cellHeight = self.view.frame.size.height/11;
-    _keyShow = false;
     uploadImgIndex=0;
     img_uploaded=[[NSMutableArray alloc] init];
     img_prm=[[NSMutableArray alloc] init];
@@ -50,53 +49,9 @@
     
     //添加键盘的监听事件
     
-    //    //注册通知,监听键盘弹出事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    //
-    //    //注册通知,监听键盘消失事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
     
 //    // Do any additional setup after loading the view from its nib.
 }
-
-
-// 键盘弹出时
--(void)keyboardDidShow:(NSNotification *)notification
-{
-    
-    //获取键盘高度
-    NSValue *keyboardObject = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect keyboardRect;
-    _keyShow = true;
-    [keyboardObject getValue:&keyboardRect];
-    
-    
-    _keyHeight = keyboardRect.size.height;
-    //调整放置有textView的view的位置
-    
-    //设置动画
-    [UIView beginAnimations:nil context:nil];
-    
-    //定义动画时间
-    [UIView setAnimationDuration:0.5];
-
-    [UIView commitAnimations];
-    
-}
-
-//键盘消失时
--(void)keyboardDidHidden
-{
-    //定义动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5];
-    _keyShow = false;
-    //设置view的frame，往下平移
-    [UIView commitAnimations];
-    
-}
-
 
 
 
@@ -128,8 +83,6 @@
     }
     _cellCount = 1;
     _cellTextViewHeight = self.view.frame.size.height/4;
-    
-    _keyHeight = 216;//default
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
     [self.view addGestureRecognizer:tapGesture];
@@ -189,70 +142,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    
-    //    switch (section) {
-    //        case 0:
-    //            return 3;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    
     return _cellCount;
 }
-#pragma mark -textField
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if(!_keyShow)
-    {
-        _keyShow =true;
-    }
-    
-    return YES;
-}
-
-#pragma mark - TextView
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    if(!_keyShow)
-    {
-        _keyShow =true;
-    }
-    return YES;
-}
-
-//根据键盘是否出现调整高度
-//-(void)setViewMove
-//{
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.1];
-//    
-//    CGRect rect = _mainTableView.frame;
-//    
-//    if(_keyShow)
-//    {
-//        NSLog(@"move up");
-//        rect.size.height = self.view.frame.size.height -ZY_HEADVIEW_HEIGHT -_keyHeight;
-//        _mainTableView.frame = rect;
-//        
-//    }
-//    else{
-//        NSLog(@"move down");
-//        rect.size.height = self.view.frame.size.height -ZY_HEADVIEW_HEIGHT;
-//        _mainTableView.frame = rect;
-//    }
-//    _cellTextViewHeight = self.view.frame.size.height/4;
-//    [_mainTableView reloadData];
-//    [UIView commitAnimations];
-//}
 
 #pragma mark - setting for cell
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 50)];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+   // BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight)];
+   
+
     switch (indexPath.section) {
+            
+        case 0:
+        {
+            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
+            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //             cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellTextViewHeight);
+            
+            BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellTextViewHeight)];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _cellTextViewHeight);
+            
+            _textView.delegate = self;
+            _textView.returnKeyType = UIReturnKeyDefault;
+            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            
+            [cell addSubview:_textView];
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            return cell;
+        }
+            break;
         case 1:
         {
 //            _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
@@ -260,7 +185,13 @@
 //            _titleField.placeholder = @"标题";
 //            _titleField.delegate = self;
 //            [cell addSubview:_titleField];
+//            UITableViewCell *cell = [[UITableViewCell alloc] init];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight);
+//            
             
+            BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight)];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             TempCustomButton *setAlbumBtn = [[TempCustomButton alloc] initWithFrame:CGRectMake(0, 0, 100 , _cellHeight)];
             
@@ -288,22 +219,24 @@
             if(_albumName)
                 albumField.text = _albumName;
             [cell addSubview:albumField];
-        }
-            break;
-        case 0:
-        {
-            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
-            
-            _textView.delegate = self;
-            _textView.returnKeyType = UIReturnKeyDefault;
-            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            
-            [cell addSubview:_textView];
+            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+            {
+                [cell setSeparatorInset:UIEdgeInsetsZero];
+                [cell setLayoutMargins:UIEdgeInsetsZero];
+            }
+            return cell;
         }
             break;
         case 2:
         {
-            UIButton *pickPicBtns = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, _cellHeight*2 - 20,  _cellHeight*2-20)];
+//            UITableViewCell *cell = [[UITableViewCell alloc] init];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,  _cellHeight*2);
+            
+             BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight*2)];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UIButton *pickPicBtns ;
+            pickPicBtns = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, _cellHeight*2 - 20,  _cellHeight*2-20)];
             if(self.ChoosPicByCamera == YES)
             {
                 pickPicBtns.frame = CGRectMake(10, 10, 0,  0);
@@ -334,6 +267,12 @@
                 _collectionView.showsVerticalScrollIndicator = NO;
                 
                 [cell addSubview:_collectionView];
+                if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+                {
+                    [cell setSeparatorInset:UIEdgeInsetsZero];
+                    [cell setLayoutMargins:UIEdgeInsetsZero];
+                }
+                return cell;
                 
             }
 
@@ -344,13 +283,137 @@
         default:
             break;
     }
-    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
-    {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-    return cell;
-    
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+      return cell;
+// volatile   BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight*2)];
+//    
+//
+//        if(indexPath.section == 0)
+//        {
+//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
+//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            //             cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellTextViewHeight);
+//            
+//           
+//            
+//            _textView.frame = CGRectMake(0, 0, cell.frame.size.width, _mainTableView.frame.size.height - 2*_cellHeight);
+//            
+//            _textView.delegate = self;
+//            _textView.returnKeyType = UIReturnKeyDefault;
+//            _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//            
+//            [cell addSubview:_textView];
+//            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+//            {
+//                [cell setSeparatorInset:UIEdgeInsetsZero];
+//                [cell setLayoutMargins:UIEdgeInsetsZero];
+//            }
+//            return cell;
+//        }
+//        else if(indexPath.section == 1)
+//        {
+//            //            _titleField.frame = CGRectMake(0, 0, cell.frame.size.width, _cellHeight);
+//            //
+//            //            _titleField.placeholder = @"标题";
+//            //            _titleField.delegate = self;
+//            //            [cell addSubview:_titleField];
+//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
+//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            //            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, _cellHeight);
+//            //
+//            
+//            
+//            TempCustomButton *setAlbumBtn = [[TempCustomButton alloc] initWithFrame:CGRectMake(0, 0, 100 , _cellHeight)];
+//            
+//            [setAlbumBtn setTitle:@"相册名字" forState:UIControlStateNormal];
+//            [setAlbumBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//            [setAlbumBtn setImage:[UIImage imageNamed:@"set"] forState:UIControlStateNormal];
+//            setAlbumBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//            setAlbumBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+//            [setAlbumBtn addTarget:self action:@selector(btnChooseAlbums:) forControlEvents:UIControlEventTouchUpInside];
+//            
+//            
+//            UILabel *_textLabel= [[UILabel alloc] init];
+//            _textLabel.text = @"   上传到:";
+//            _textLabel.frame = CGRectMake(10, 0, 80 , _cellHeight);
+//            _textLabel.font = [UIFont systemFontOfSize:14];
+//            
+//            
+//            albumField.rightView = setAlbumBtn;
+//            albumField.rightViewMode = UITextFieldViewModeAlways;
+//            
+//            albumField.leftView = _textLabel;
+//            albumField.leftViewMode = UITextFieldViewModeAlways;
+//            
+//            albumField.font = [UIFont systemFontOfSize:14];
+//            if(_albumName)
+//                albumField.text = _albumName;
+//            [cell addSubview:albumField];
+//            if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+//            {
+//                [cell setSeparatorInset:UIEdgeInsetsZero];
+//                [cell setLayoutMargins:UIEdgeInsetsZero];
+//            }
+//            return cell;
+//        }
+//        else if(indexPath.section ==2)
+//        {
+//            //            UITableViewCell *cell = [[UITableViewCell alloc] init];
+//            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            //            cell.frame =CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,  _cellHeight*2);
+//            
+//            
+//            if(self.ChoosPicByCamera == YES)
+//            {
+//                pickPicBtns.frame = CGRectMake(10, 10, 0,  0);
+//                
+//            }
+//            else
+//            {
+//                [pickPicBtns setImage:[UIImage imageNamed:@"pickPicBtn"] forState:UIControlStateNormal];
+//                
+//                [pickPicBtns addTarget:self action:@selector(btnPickPicture:) forControlEvents:UIControlEventTouchUpInside];
+//                
+//                [cell addSubview:pickPicBtns];
+//            }
+//            
+//            if (!_collectionView) {
+//                UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+//                layout.minimumLineSpacing = 5.0;
+//                layout.minimumInteritemSpacing = 5.0;
+//                layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+//                
+//                // _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(picBtns.frame.size.width+picBtns.frame.origin.x+5, 0, SCREEN_WIDTH-(2*cell.frame.size.height), cell.frame.size.height) collectionViewLayout:layout];
+//                _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(pickPicBtns.frame.size.width+pickPicBtns.frame.origin.x+5, 20,(SCREEN_WIDTH-(pickPicBtns.frame.size.width + pickPicBtns.frame.origin.x)),_cellHeight*2-40) collectionViewLayout:layout];
+//                _collectionView.backgroundColor = [UIColor clearColor];
+//                [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
+//                _collectionView.delegate = self;
+//                _collectionView.dataSource = self;
+//                _collectionView.showsHorizontalScrollIndicator = NO;
+//                _collectionView.showsVerticalScrollIndicator = NO;
+//                
+//                [cell addSubview:_collectionView];
+//                if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+//                {
+//                    [cell setSeparatorInset:UIEdgeInsetsZero];
+//                    [cell setLayoutMargins:UIEdgeInsetsZero];
+//                }
+//                return cell;
+//                
+//            }
+//            
+//            
+//            
+//        }
+////     
+//  
+//    if([[[UIDevice currentDevice]systemVersion]floatValue]>=8.0 )
+//    {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
+//    return cell;
+
 }
 
 -(void)setAlbumName:(NSString *)albumName
@@ -387,9 +450,12 @@
     
     if(indexPath.section==0)
         return _cellTextViewHeight;
+    if(indexPath.section==1)
+        return _cellHeight;
     if(indexPath.section==2)
          return _cellHeight*2;
-    return _cellHeight;
+    
+    return 0;
     
 }
 
@@ -413,59 +479,7 @@
 }
 
 
-//设置划动cell是否出现del按钮，可供删除数据里进行处理
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView: (UITableView *)tableView editingStyleForRowAtIndexPath: (NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return  YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSMutableArray *numberRowOfCellArray = [NSMutableArray array] ;
-    [numberRowOfCellArray addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-    
-    NSLog(@"点击了删除  Section  = %ld Row =%ld",(long)indexPath.section,(long)indexPath.row);
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView.cell.infoItems removeObjectAtIndex:(indexPath.row*2)];
-        //        [_mainTableView beginUpdates];
-        //        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
-        //        [_mainTableView endUpdates];
-    }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-}
-
-
-
-
--(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return  @"删除";
-}
-
 //设置选中的行所执行的动作
-
--(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return indexPath;
-    
-}
 
 #pragma mark - setting for section
 //设置section的header view
@@ -473,16 +487,11 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *tempView = [[UIView alloc] init];
-    //    if(section == 0)
-    //    {
-    //        tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
-    //        UILabel *titleLabel = [[UILabel alloc] init];
-    //        titleLabel.frame = CGRectMake(20,0 , 150, 30);
-    //        titleLabel.text = @"权限选择";
-    //        titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    //        titleLabel.textColor  = ZY_UIBASECOLOR;
-    //        [tempView addSubview:titleLabel];
-    //    }
+
+    
+    tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
+    //tempView.backgroundColor =[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];//[UIColor colorWithRed:189/255.0 green:
+    
     
     return tempView;
 }

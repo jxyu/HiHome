@@ -147,6 +147,25 @@
  */
 -(void)delTask:(NSString *)taskID;
 
+
+/**
+ *  设置任务权限
+ *
+ *  @param pm       任务权限
+ *  @param taskId   任务id
+ *
+ */
+-(void)setTaskLimit:(NSString *)pm andTaskID:(NSString *)taskId;
+
+/**
+ *  设置所有任务权限
+ *
+ *  @param pm       任务权限
+ *  @param userId   用户id
+ *
+ */
+-(void)setAllTaskLimit:(NSString *)pm andUserId:(NSString *)userId;
+
 /**
  *  获取任务日历
  *

@@ -224,15 +224,25 @@
 -(void) createTask:(NSString *)userID andTitle:(NSString *)title andContent:(NSString *)content andIsDay:(NSString *)isDay andStartTime:(NSString *)stime andEndTime:(NSString *)etime andTip:(NSString *)tip andRepeat:(NSString *)repeat andTasker:(NSString *)tasker andimgsrc1:(NSString *)imgsrc1 andimgsrc2:(NSString *)imgsrc2 andimgsrc3:(NSString *)imgsrc3 andAddress:(NSString *) address andLng:(NSString *) lng andLat:(NSString *) lat
 {
     if (userID && title && content
-        && isDay &&stime && etime
+        && isDay &&stime
         && tip &&repeat && tasker
         ) {
     
         NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=addInfo",Url];
         
-        NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"end":etime,@"tip":tip,@"repeat":repeat,@"tasker":tasker,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3,@"address":address,@"lng":lng,@"lat":lat};
-        DLog(@"prm = %@",prm);
-        [self PostRequest:url andpram:prm];
+        if(etime == nil)
+        {
+            NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"tip":tip,@"repeat":repeat,@"tasker":tasker,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3,@"address":address,@"lng":lng,@"lat":lat};
+            DLog(@"prm = %@",prm);
+            [self PostRequest:url andpram:prm];
+        }
+        else
+        {
+            NSDictionary * prm = @{@"uid":userID,@"title":title,@"content":content,@"isday":isDay,@"start":stime,@"end":etime,@"tip":tip,@"repeat":repeat,@"tasker":tasker,@"imgsrc1":imgsrc1,@"imgsrc2":imgsrc2,@"imgsrc3":imgsrc3,@"address":address,@"lng":lng,@"lat":lat};
+            DLog(@"prm = %@",prm);
+            [self PostRequest:url andpram:prm];
+        }
+       
     }
 
 }
@@ -294,6 +304,36 @@
         NSDictionary * prm=@{@"id":taskID};
         [self PostRequest:url andpram:prm];
     }
+}
+
+-(void)setTaskLimit:(NSString *)pm andTaskID:(NSString *)taskId
+{
+    if(pm&&taskId)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=postTaskPM",Url];
+        NSDictionary * prm=@{@"pm":pm,@"id":taskId};
+        
+        DLog("prm = %@",prm);
+        
+        [self PostRequest:url andpram:prm];
+        
+    }
+
+}
+
+-(void)setAllTaskLimit:(NSString *)pm andUserId:(NSString *)userId
+{
+    if(pm&&userId)
+    {
+        NSString * url=[NSString stringWithFormat:@"%@api.php?c=task&a=postUserTaskPM",Url];
+        NSDictionary * prm=@{@"uid":userId,@"pm":pm};
+        
+        DLog("prm = %@",prm);
+        
+        [self PostRequest:url andpram:prm];
+        
+    }
+    
 }
 
 

@@ -26,11 +26,11 @@
     NSInteger _cellTextViewHeight;//包含textview的cell的高度
     UITableView *_mainTableView;
     NSMutableArray *_cellInfo;
-    BOOL    _keyShow;       //标记键盘是否显示
+
     UITextView *_textView;
     UITextField *_titleField;//标题
 
-    CGFloat _keyHeight;
+    
 }
 
 @property(nonatomic) id<UploadPicViewControllerDelegate> delegate;

@@ -110,6 +110,21 @@
     }
 }
 
+//根据生日获取年龄
+-(NSString *)getAgeByBirthday:(NSString *) birthday{
+    
+    if([birthday isEqual:@""]){
+        return 0;
+    }
+    
+    NSInteger mYear = [[birthday substringToIndex:4] integerValue];
+    
+    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
+    NSInteger currentDateYear  = [components2 year];
+    
+    return [NSString stringWithFormat:@"%ld",currentDateYear - mYear];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
     
@@ -144,7 +159,7 @@
         if ([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"2"]) {
             mDetail.text = [NSString stringWithFormat:@"%@   %@   %@",_mName,_mSex,_mAge];//@"唐嫣  女  21岁";
         }else{
-            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@岁",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]];//@"唐嫣  女  21岁";
+            mDetail.text = [NSString stringWithFormat:@"%@   %@   %@岁",[userInfoArray[indexPath.row][@"nick"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"nick"],[userInfoArray[indexPath.row][@"sex"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"sex"],[self getAgeByBirthday:[userInfoArray[indexPath.row][@"age"] isEqual:[NSNull null]]?@"":userInfoArray[indexPath.row][@"age"]]];//@"唐嫣  女  21岁";
         }
         
         [cell addSubview:mDetail];

@@ -112,6 +112,21 @@
     [dataProvider GetUserInfoWithUid:nil anduid:[self getUserID]];
 }
 
+//根据生日获取年龄
+-(NSString *)getAgeByBirthday:(NSString *) birthday{
+    
+    if([birthday isEqual:@""]){
+        return 0;
+    }
+    
+    NSInteger mYear = [[birthday substringToIndex:4] integerValue];
+    
+    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
+    NSInteger currentDateYear  = [components2 year];
+    
+    return [NSString stringWithFormat:@"%ld",currentDateYear - mYear];
+}
+
 -(void)GetInfoBackCall:(id)dict
 {
     DLog(@"%@",dict);
@@ -130,7 +145,7 @@
                 self.signLab.text = [tempDict objectForKey:@"sign"];
                 infoLab.font = [UIFont systemFontOfSize:14];
                 infoLab.textColor = [UIColor whiteColor];
-                infoLab.text = [NSString stringWithFormat:@"年龄：%@ %@",[tempDict objectForKey:@"age"],[tempDict objectForKey:@"sex"]];
+                infoLab.text = [NSString stringWithFormat:@"年龄:%@ %@",[self getAgeByBirthday:[tempDict objectForKey:@"age"]],[tempDict objectForKey:@"sex"]];
                 if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]])
                 {
                     NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"avatar"]];

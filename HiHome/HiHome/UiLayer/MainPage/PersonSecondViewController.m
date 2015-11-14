@@ -155,6 +155,13 @@
                                      }];
             
             datePicker.ScrollToDate = now;
+            if ([_mIFlag isEqual:@"1"]) {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM-dd"];
+                txt_birthday.text = [formatter stringFromDate:now];
+            }else{
+                txt_birthday.text = _mBirthday;
+            }
             txt_birthday.inputView = datePicker;
             [cell addSubview:txt_birthday];
         }

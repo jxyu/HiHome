@@ -13,6 +13,7 @@
 #import "ChatlistViewController.h"
 #import "UIImageView+WebCache.h"
 #import "RCIMClient.h"
+#import "PersonFirstViewController.h"
 
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
@@ -449,6 +450,9 @@
     
     UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake((_mainTableView.frame.size.width-20*2)/3+20, 10, (_mainTableView.frame.size.width-20*2)/3, ZY_MAINCELL1_HEIGHT/10*6)];
     headImg.image = [UIImage imageNamed:@"headwoman"];
+    headImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickHeadImg)];
+    [headImg addGestureRecognizer:singleTap];
     headImg.contentMode = UIViewContentModeScaleAspectFit;
     
     
@@ -760,8 +764,14 @@
     {
         return [self formatDate:date];
     }
-    
-    
+}
+
+-(void)onClickHeadImg{
+    PersonFirstViewController *mPersonFirstVC = [[PersonFirstViewController alloc] init];
+    mPersonFirstVC.mFriendID = [self getUserID];
+    mPersonFirstVC.navTitle = @"个人资料";
+    mPersonFirstVC.mIFlag = @"6";
+    [self.navigationController pushViewController:mPersonFirstVC animated:NO];
 }
 
 -(NSString *)formatDate:(NSDate *)date{
@@ -772,6 +782,20 @@
     return str;
     
 }
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile1 =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    //   NSLog(@"dict = [%@]",userInfoWithFile);
+    NSString *userID = [userInfoWithFile1 objectForKey:@"id"];//获取userID
+    
+    
+    return  userID;
+}
+
 
 /*
 #pragma mark - Navigation

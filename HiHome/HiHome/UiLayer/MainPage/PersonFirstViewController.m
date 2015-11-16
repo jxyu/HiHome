@@ -422,7 +422,7 @@
     }
     else//好友资料
     {
-        if([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"4"]){
+        if([_mIFlag isEqual:@"1"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"6"]){
             if(indexPath.row == 3)
             {
                 PlanMonthViewController *personTask = [[PlanMonthViewController alloc] init];

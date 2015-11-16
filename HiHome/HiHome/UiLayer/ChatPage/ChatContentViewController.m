@@ -196,11 +196,12 @@
 
 - (void)didTapCellPortrait:(NSString *)userId{
     personFirstVC = [[PersonFirstViewController alloc] init];
-    personFirstVC.navTitle = @"好友资料";
     personFirstVC.mFriendID = userId;
     if ([userId isEqual:[self getUserID]]) {
+        personFirstVC.navTitle = @"个人资料";
         personFirstVC.mIFlag = @"6";
     }else{
+        personFirstVC.navTitle = @"好友资料";
         personFirstVC.mIFlag = @"5";
     }
     

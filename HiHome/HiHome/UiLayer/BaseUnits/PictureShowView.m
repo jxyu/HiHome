@@ -147,7 +147,7 @@
 
 -(UIView*)topView{
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    return  window.subviews[0];
+    return  window.subviews[window.subviews.count - 1];
 }
 
 
@@ -173,8 +173,10 @@
     } completion:^(BOOL finished) {
         
     }];
+    UIView *tempView = [self topView];
     
-    [[self topView] addSubview:self];
+    [tempView addSubview:self];
+    [tempView bringSubviewToFront:self];
     [self showAnimation];
 }
 

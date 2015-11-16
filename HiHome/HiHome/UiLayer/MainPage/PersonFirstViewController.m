@@ -413,6 +413,7 @@
         if(indexPath.row == 4)
         {
             AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+            _AlbumPage.navTitle = @"相册";
             _AlbumPage.pageChangeMode = Mode_dis;
            // [self.navigationController pushViewController:_AlbumPage animated:YES];
             [self presentViewController:_AlbumPage animated:YES completion:^{}];
@@ -435,6 +436,7 @@
             if(indexPath.row == 4)
             {
                 AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+                _AlbumPage.navTitle = @"相册";
                 _AlbumPage.albumUserId = _mFriendID;
                 _AlbumPage.pageChangeMode = Mode_nav;
                 [self.navigationController pushViewController:_AlbumPage animated:YES];
@@ -461,6 +463,7 @@
             if(indexPath.row == 5)
             {
                 AlbumMainViewController *_AlbumPage = [[AlbumMainViewController alloc] init];
+                _AlbumPage.navTitle = @"相册";
                 _AlbumPage.albumUserId = _mFriendID;
                 _AlbumPage.pageChangeMode = Mode_nav;
                 [self.navigationController pushViewController:_AlbumPage animated:YES];

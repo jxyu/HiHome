@@ -66,7 +66,6 @@
     _mainTableView.tableHeaderView = tableHeaderView;
     
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateLabelForTimer) userInfo:nil repeats:YES];
-    _taskNoticeVC = [[TaskNoticeViewController alloc] init];
     
     [self.view addSubview:_mainTableView];
     
@@ -299,7 +298,7 @@
         //[(AppDelegate *)[[UIApplication sharedApplication] delegate] selectTableBarIndex:1];
     }
     else if(indexPath.section == 3){
-        
+        _taskNoticeVC = [[TaskNoticeViewController alloc] init];
         _taskNoticeVC.navTitle = @"任务提醒";
         _taskNoticeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:_taskNoticeVC animated:NO];

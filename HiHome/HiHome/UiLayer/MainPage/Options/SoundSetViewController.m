@@ -48,6 +48,7 @@
     mUserDefault = [NSUserDefaults standardUserDefaults];
     
     _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT, self.view.frame.size.width,self.view.frame.size.height - ZY_HEADVIEW_HEIGHT )];
+    _mainTableView.scrollEnabled = NO;
     _mainTableView.backgroundColor =ZY_UIBASE_BACKGROUND_COLOR;
     [_mainTableView setDelegate:self];
     [_mainTableView setDataSource:self];
@@ -71,7 +72,7 @@
             [_mainTableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
         }
     }
-    _cellCount = 3;
+    _cellCount = 2;
     [self.view addSubview:_mainTableView];
     
 }

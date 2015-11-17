@@ -32,7 +32,7 @@
     _cellInfo = [[NSMutableArray alloc] initWithArray: @[@[/*第0个section*/
                                                              /*最右侧图标，标题，内容*/
                                                              @[@"对所有人"],
-                                                             @[@"对好友"],
+                                                             @[@"自定义"],
                                                              ],
                                                          
                                                          ]];
@@ -152,7 +152,7 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
 #pragma mark - setting for cell
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    BaseTableViewCell *cell = [[BaseTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _cellHeight)];
     
     
     [self setOptionCell:cell andTitleLabels:CELL_TITLE(indexPath.section,indexPath.row)];
@@ -236,6 +236,8 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
     {
         selectCellState[indexPath.row] = YES;
         [_mainTableView reloadData];
+        
+        [self setTaskPermission:@"0"];
     }
     else
     {
@@ -249,21 +251,70 @@ printf("\r\n@@[%s]----\r\n",__FUNCTION__);
     
 
 }
+
+#pragma mark - 设置任务权限
+-(void)setTaskPermission:(NSString *)limit
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"setTaskLimitCallback:"];
+    
+    [dataprovider setAllTaskLimit:limit andUserId:[self getUserID]];
+}
+
+-(NSString *)getUserID
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary *userInfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];//read plist
+    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
+    return  userID;
+}
+
+-(void)setTaskLimitCallback:(id)dict
+{
+    NSInteger code;
+    [SVProgressHUD dismiss];
+    
+    DLog(@"[%s] dict = %@",__FUNCTION__,dict);
+    
+    code = [(NSString *)[dict objectForKey:@"code"] integerValue];
+    
+    if(code!=200)
+    {
+        
+    //    if(code!=400)  //= 400 不弹框
+     //   {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[dict objectForKey:@"message"]];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
+    //    }
+        return;
+    }
+}
+
 #pragma mark - 选择好友代理
 -(void)setContacterInfo:(NSArray *)selectContacterArrayID andName:(NSArray *)selectContacterArrayName
 {
     
-    if(selectContacterArrayID!=nil)
+    
+    if(selectContacterArrayID!=nil&&selectContacterArrayID.count>0)
     {
-        NSString *str = @"";
-        for (int i = 0; i < selectContacterArrayID.count; i++) {
-            str = [NSString stringWithFormat:@"%@ %@",str,[selectContacterArrayID objectAtIndex:i]];
+        
+        NSString *str = [selectContacterArrayID objectAtIndex:0];
+        for (int i = 1; i < selectContacterArrayID.count; i++) {
+            str = [NSString stringWithFormat:@"%@,%@",str,[selectContacterArrayID objectAtIndex:i]];
         }
         
         tasklimitID = str;
         NSLog(@"tasklimitID = [%@]",tasklimitID);
     }
-    if(selectContacterArrayName!=nil)
+    
+    [self setTaskPermission:tasklimitID];
+    
+    if(selectContacterArrayName!=nil&&selectContacterArrayName.count>0)
     {
         NSString *str = @"";
         for (int i = 0; i < selectContacterArrayName.count; i++) {

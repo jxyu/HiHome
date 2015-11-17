@@ -35,6 +35,8 @@
     NSString *selectAlbumID;
     UIButton *upLoadBtn;
     
+    UIButton *TempBtn;
+    
     BOOL pickPicOK;
 }
 @end
@@ -527,6 +529,16 @@
     if(code!=200)
     {
         NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        _cellCountAlbum = 0;
+        [_albumView reloadData];
+        
+        TempBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH -100)/2, (SCREEN_HEIGHT- ZY_HEADVIEW_HEIGHT)/2, 100, 44)];
+        
+        TempBtn .backgroundColor = ZY_UIBASECOLOR;
+        [TempBtn setTitle:@"新建相册" forState:UIControlStateNormal];
+        [TempBtn addTarget:self action:@selector(createAlbumBtn) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.view addSubview:TempBtn];
         
         if(code!=400)  //= 400 不弹框
         {
@@ -564,8 +576,10 @@
         }
         
         if(albumArray.count !=0)
+        {
             _cellCountAlbum = albumArray.count;
-        
+            [TempBtn removeFromSuperview];
+        }
         [_albumView reloadData];
         
     }
@@ -585,6 +599,16 @@
     }
 
 }
+
+
+-(void)createAlbumBtn
+{
+    CreateAlbumViewController *_createAlbum;
+    _createAlbum = [[CreateAlbumViewController alloc] init];
+    _createAlbum.navTitle = @"新建相册";
+    [self presentViewController:_createAlbum animated:YES completion:^{}];
+}
+
 #pragma  mark - 获取图片列表
 
 

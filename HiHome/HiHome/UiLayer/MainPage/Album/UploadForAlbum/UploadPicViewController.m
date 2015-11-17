@@ -126,9 +126,17 @@
 //        alert.alertType = AlertType_Hint;
 //        [alert addButtonWithTitle:@"确定"];
 //        [alert show];
+        if(albumField.text.length==0||(_aid == nil||[_aid  isEqual: @""]))
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请完善信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        if(_textView.text.length==0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入描述信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
     }
 
     //if(albumDict && _textView.text &&)

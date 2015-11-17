@@ -261,7 +261,7 @@
             
             NSString *tempEndDate;
             if([endTimeField.text isEqualToString:@"未设置"])
-                tempEndDate =@"1970-01-01 00:00";
+                tempEndDate =nil;
             else
             {
                 tempEndDate = endTimeField.text;
@@ -274,7 +274,7 @@
             
             NSString *tempEndDate;
             if([endTimeField.text isEqualToString:@"未设置"])
-                tempEndDate =@"1970-01-01 00:00";
+                tempEndDate =nil;
             else
             {
                 tempEndDate = endTimeField.text;
@@ -385,6 +385,7 @@
         //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
         //NSDictionary*infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
         //notification.userInfo = infoDict; //添加额外的信息
+        notification.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications] count]+1;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
         //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
@@ -414,7 +415,7 @@
             [infoDict setObject:sid forKey:@"sid"];
             [infoDict setObject:taskDetailMode forKey:@"taskDetailMode"];
             notification.userInfo = infoDict; //添加额外的信息
-            
+            notification.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications] count]+1;
             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
             //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
         }
@@ -473,7 +474,7 @@
                 }
                 NSString *tempEndDate;
                 if([endTimeField.text isEqualToString:@"未设置"])
-                    tempEndDate =@"1970-01-01 00:00";
+                    tempEndDate =nil;
                 else
                 {
                     tempEndDate = endTimeField.text;
@@ -486,7 +487,19 @@
             {
                 NSString *tempEndDate;
                 if([endTimeField.text isEqualToString:@"未设置"])
-                    tempEndDate =@"1970-01-01 00:00";
+                {
+//                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//                    NSDate *date = [formatter dateFromString: startTimeField.text];
+//                    
+//                    NSTimeInterval tempTime;
+//                    tempTime = [date timeIntervalSince1970];
+//                    tempTime +=  60*60*24;
+                    
+                    tempEndDate =nil;
+                 //   tempEndDate =@"1970-01-01 00:00";
+
+                }
                 else
                 {
                     tempEndDate = endTimeField.text;
@@ -1116,7 +1129,7 @@
                 
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-               endTimeField.text =timeStr2;//@"未设置";
+               endTimeField.text =@"未设置";//timeStr2;
                
             }
             startTimeField.font = [UIFont systemFontOfSize:14];
@@ -1436,7 +1449,7 @@
                 NSString *timeStr = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
                 startTimeField.text =timeStr;
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)y,(long)m,(long)d];
-               endTimeField.text =timeStr2;//@"未设置";//
+               endTimeField.text =@"未设置";//@"未设置";//
             }
             
             
@@ -1462,7 +1475,7 @@
                 startTimeField.font = [UIFont systemFontOfSize:14];
                 
                 NSString *timeStr2 = [NSString stringWithFormat:@"%ld-%02ld-%02ld   %02ld:%02ld",(long)y,(long)m,(long)d+1,(long)hour,(long)min];
-                endTimeField.text =timeStr2;//@"未设置";
+                endTimeField.text =@"未设置";//@"未设置";
             }
             endTimeField.font = [UIFont systemFontOfSize:14];
             startDatePicker.datePickerStyle =  UUDateStyle_YearMonthDayHourMinute;

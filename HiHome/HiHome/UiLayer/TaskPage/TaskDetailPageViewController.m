@@ -676,12 +676,14 @@
 
 -(void)tapDetected{
     PersonFirstViewController *personFirstVC = [[PersonFirstViewController alloc] init];
-    personFirstVC.navTitle = @"好友资料";
+    
     personFirstVC.mFriendID = [_dictData valueForKey:@"uid"];
     if ([[_dictData valueForKey:@"uid"] isEqual:[self getUserID]]) {
+        personFirstVC.navTitle = @"个人资料";
         personFirstVC.mIFlag = @"6";
     }else{
         personFirstVC.mIFlag = @"5";
+        personFirstVC.navTitle = @"好友资料";
     }
     if(self.pageChangeMode == Mode_nav){
         [self.navigationController pushViewController:personFirstVC animated:NO];
@@ -1566,68 +1568,74 @@
         return cell;
     
     NSDictionary *tempDict = [Performerslist objectAtIndex:indexPath.row];
-    
-    UIView *tempView = [[UIImageView alloc] init];
+    UIButton  *tempView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     NSString *strAvatar;
     
-    
+    [tempView addTarget:self action:@selector(ClickCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     @try {
         
         NSLog(@"line  =[%d]",__LINE__);
-    
-    UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight-10, _cellHeight-10)];
         
-    if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]] )
-    {
-        NSLog(@"line  =[%d]",__LINE__);
-        if(![[tempDict objectForKey:@"avatar"] isEqual:@""])
+    //    cell.backgroundColor = [UIColor blueColor];
+    
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _cellHeight-10, _cellHeight-10)];
+        
+        tempView.tag =[[tempDict objectForKey:@"tasker_uid"] integerValue];
+        
+        if(![[tempDict objectForKey:@"avatar"] isEqual:[NSNull null]] )
         {
             NSLog(@"line  =[%d]",__LINE__);
-            strAvatar = [tempDict objectForKey:@"avatar"];
-            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
-            [img sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+            if(![[tempDict objectForKey:@"avatar"] isEqual:@""])
+            {
+                NSLog(@"line  =[%d]",__LINE__);
+                strAvatar = [tempDict objectForKey:@"avatar"];
+                NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,strAvatar];
+                [img sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"me"]];
+            }
+            else
+            {
+                img.image = [UIImage imageNamed:@"me"];
+            }
         }
         else
         {
+            NSLog(@"line  =[%d]",__LINE__);
             img.image = [UIImage imageNamed:@"me"];
         }
-    }
-    else
-    {
-        NSLog(@"line  =[%d]",__LINE__);
-        img.image = [UIImage imageNamed:@"me"];
-    }
-    
-   NSLog(@"line  =[%d]",__LINE__);
-    
-    img.layer.cornerRadius = img.frame.size.width * 0.5;
-    img.layer.borderWidth = 0.1;
-    img.layer.masksToBounds = YES;
-    
-    
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight-10, _cellHeight , (_cellHeight-10)/2)];
-    if(![[tempDict objectForKey:@"nick"] isEqual:[NSNull null]] )
-    {
+        
+       NSLog(@"line  =[%d]",__LINE__);
+        
+        img.layer.cornerRadius = img.frame.size.width * 0.5;
+        img.layer.borderWidth = 0.1;
+        img.layer.masksToBounds = YES;
+        
+        
+        UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight-10, _cellHeight , (_cellHeight-10)/2)];
+        if(![[tempDict objectForKey:@"nick"] isEqual:[NSNull null]] )
+        {
 
-        nameLab.text =[tempDict objectForKey:@"nick"];
-    }
-    else
-    {
-        nameLab.text =@"";
-    }
+            nameLab.text =[tempDict objectForKey:@"nick"];
+        }
+        else
+        {
+            nameLab.text =@"";
+        }
 
-   
-    nameLab.font = [UIFont systemFontOfSize:12];
-    
-    UILabel *stateLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight+(_cellHeight)/2-15, _cellHeight, (_cellHeight-10)/2)];
-    stateLab.text = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
-    stateLab.font = [UIFont systemFontOfSize:12];
-    stateLab.textColor = ZY_UIBASECOLOR;
-    
-    [tempView addSubview:img];
-    [tempView addSubview:nameLab];
-    [tempView addSubview:stateLab];
-    cell.backgroundView = tempView;
+       
+        nameLab.font = [UIFont systemFontOfSize:12];
+        
+        UILabel *stateLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _cellHeight+(_cellHeight)/2-15, _cellHeight, (_cellHeight-10)/2)];
+        stateLab.text = [self modeValueToStr:Mode_state andValue:[(NSString *)[tempDict objectForKey:@"tasker_state"] integerValue]];
+        stateLab.font = [UIFont systemFontOfSize:12];
+        stateLab.textColor = ZY_UIBASECOLOR;
+        
+        [tempView addSubview:img];
+        [tempView addSubview:nameLab];
+        [tempView addSubview:stateLab];
+    //    cell.backgroundView = tempView;
+        
+        [cell addSubview:tempView];
+        
   //  cell.backgroundColor = [UIColor whiteColor];
     //  cell. backgroundColor = [ UIColor colorWithRed :(( arc4random ()% 255 )/ 255.0 ) green :(( arc4random ()% 255 )/ 255.0 ) blue :(( arc4random ()% 255 )/ 255.0 ) alpha : 1.0f ];
     }
@@ -1638,6 +1646,28 @@
         return cell;
     }
 
+}
+
+
+-(void)ClickCollectionBtn:(UIButton*)sender
+{
+    PersonFirstViewController *personFirstVC = [[PersonFirstViewController alloc] init];
+    
+    personFirstVC.mFriendID = [NSString stringWithFormat:@"%ld",sender.tag] ;
+    if ([personFirstVC.mFriendID isEqual:[self getUserID]]) {
+        personFirstVC.navTitle = @"个人资料";
+        personFirstVC.mIFlag = @"6";
+    }else{
+        personFirstVC.mIFlag = @"5";
+        personFirstVC.navTitle = @"好友资料";
+    }
+    if(self.pageChangeMode == Mode_nav){
+        [self.navigationController pushViewController:personFirstVC animated:NO];
+    }
+    else{
+        personFirstVC.pageChangeMode = Mode_dis;
+        [self presentViewController:personFirstVC animated:NO completion:nil];
+    }
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -1675,7 +1705,7 @@
         //notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
         //NSDictionary*infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
         //notification.userInfo = infoDict; //添加额外的信息
-        
+        notification.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications] count]+1;
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
         //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
@@ -1703,7 +1733,7 @@
             [infoDict setObject:sid forKey:@"sid"];
             [infoDict setObject:taskDetailMode forKey:@"taskDetailMode"];
             notification.userInfo = infoDict; //添加额外的信息
-            
+            notification.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications] count]+1;
             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
             //  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
         }

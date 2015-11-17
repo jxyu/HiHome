@@ -171,8 +171,11 @@
    // NSLog(@"1111111111111111111111111111111");
     self.labelForTaskName.text = taskPath.taskName;
     self.labelForStartDate.text = [[taskPath.startTaskDateStr substringToIndex:10] substringFromIndex:5];//[NSString stringWithFormat:@"%02ld/%02ld",[taskPath.startTaskDate month],[taskPath.startTaskDate day]];
-    self.labelForEndDate.text = [[taskPath.endTaskDateStr substringToIndex:10] substringFromIndex:5];//只提取月份和日期//[NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];
-
+    
+    if(![taskPath.endTaskDateStr isEqualToString:@""]&&taskPath.endTaskDateStr!=nil)
+    {
+        self.labelForEndDate.text = [[taskPath.endTaskDateStr substringToIndex:10] substringFromIndex:5];//只提取月份和日期//[NSString stringWithFormat:@"~%02ld/%02ld",[taskPath.endTaskDate month],[taskPath.endTaskDate day]];
+    }
     switch (taskPath.repeatMode) {
     case Repeat_never :
         self.labelForRepeat.text = @"不重复";

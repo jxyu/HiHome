@@ -29,6 +29,8 @@
     UIView *showImgView;
     BOOL showImgViewState;
     
+    UILabel *TempLab;
+    
 }
 @end
 
@@ -477,11 +479,20 @@
     
     if(code!=200)
     {
-        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%ld",(long)code]);
+        NSLog(@"%@",[NSString stringWithFormat:@"任务获取失败:%@",[dict objectForKey:@"message"]]);
         
-        if(code!=400)  //= 400 不弹框
+    
+        TempLab = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2 -ZY_HEADVIEW_HEIGHT+50, SCREEN_WIDTH, 200)];
+        TempLab.text = @"暂无照片";
+        TempLab.textAlignment = NSTextAlignmentCenter;
+        TempLab.textColor = [UIColor grayColor];
+        TempLab.font = [UIFont boldSystemFontOfSize:20];
+        [self.view addSubview:TempLab];
+    
+        
+        if(code!=400)  //= 400 不弹框z
         {
-            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[NSString stringWithFormat:@"相册获取失败:%ld",(long)code]];
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"失败" message:[dict objectForKey:@"message"]];
             
             alert.alertType = AlertType_Hint;
             [alert addButtonWithTitle:@"确定"];
@@ -521,6 +532,10 @@
         DLog(@"picListArr count = %ld",picListArr.count);
         self.picArr = picListArr;
         
+        if(picListArr.count > 0)
+        {
+            [TempLab removeFromSuperview ];
+        }
         
     }
     @catch (NSException *exception) {

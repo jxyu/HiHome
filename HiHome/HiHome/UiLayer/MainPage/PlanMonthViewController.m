@@ -958,7 +958,7 @@
         {
             tempView.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
             UILabel *titleLabel = [[UILabel alloc] init];
-            titleLabel.frame = CGRectMake(10,0 , 150, 30);
+            titleLabel.frame = CGRectMake(10,0 , SCREEN_WIDTH, 30);
             if(self.showTaskMode == Mode_today)
             {
                 titleLabel.text =[NSString stringWithFormat:@"%ld-%02ld-%02ld",_year,_month,_day];

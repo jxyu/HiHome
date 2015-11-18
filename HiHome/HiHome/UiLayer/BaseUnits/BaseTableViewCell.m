@@ -137,6 +137,8 @@
     
 }
 
-
-
+-(void)drawRect:(CGRect)rect
+{
+    [self layoutIfNeeded];
+}
 @end

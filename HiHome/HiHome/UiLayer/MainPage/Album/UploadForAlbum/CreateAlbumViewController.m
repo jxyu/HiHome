@@ -209,8 +209,16 @@
     }
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"成功" message:[NSString stringWithFormat:@"新建成功"]];
     
-    alert.alertType = AlertType_Hint;
-    [alert addButtonWithTitle:@"确定"];
+    alert.alertType = AlertType_Alert;
+  //  [alert addButtonWithTitle:@"确定"];
+    
+    
+    
+    [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
+        [self quitView];
+        
+    }];
+    
     [alert show];
 
     

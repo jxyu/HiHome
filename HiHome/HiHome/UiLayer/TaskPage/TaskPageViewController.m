@@ -780,7 +780,7 @@
     [SVProgressHUD dismiss];
     NSLog(@"in function [%s]",__FUNCTION__);
     
-     NSLog(@"TaskCalender dict = [%@]",dict);
+  //   NSLog(@"TaskCalender dict = [%@]",dict);
     
     code = [(NSString *)[dict objectForKey:@"code"] integerValue];
     if(code!=200)
@@ -853,7 +853,7 @@
         NSArray *tempArr;
         tempDict=[_taskCalenderData objectAtIndex:i];
         
-        NSLog(@"[tempDict objectForKey:date] = %@",[tempDict objectForKey:@"date"]);
+  //      NSLog(@"[tempDict objectForKey:date] = %@",[tempDict objectForKey:@"date"]);
         
         if([[tempDict objectForKey:@"date"]  isEqual:[NSNull null]])
             return;
@@ -871,6 +871,11 @@
         
        
     }
+    if(eventsByDate!=nil)
+    {
+        [eventsByDate removeAllObjects];
+    }
+    
     for(int i = 0;i<dateArr.count;i++)
     {
         NSDate *date = [formatter dateFromString:[dateArr objectAtIndex:i]];
@@ -905,19 +910,22 @@
     _tableViews = [NSMutableArray array];
     
     
-    _myTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50)];
+    _myTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50 - TabBar_HEIGHT)];
+    _myTaskView.contentSize = CGSizeMake(SCREEN_WIDTH, _cellCountMyTask*50+TabBar_HEIGHT);
     [self setPageIndexPath:_myTaskView indexPage:0];
     
     _getTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50)];
+    _getTaskView.contentSize = CGSizeMake(SCREEN_WIDTH, _cellCountGetTask *40+TabBar_HEIGHT);
     [self setPageIndexPath:_getTaskView indexPage:1];
     
     
     _sendTaskView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, [[UIScreen mainScreen] bounds].size.height - ZY_CALENDAR_NORMALMODE_HEIGHT-ZY_CALENDAR_MENU_HEIGHT-80-50)];
+    _sendTaskView.contentSize = CGSizeMake(SCREEN_WIDTH, _cellCountSendTask * 50+TabBar_HEIGHT);
     [self setPageIndexPath:_sendTaskView indexPage:2];
 
-    _myTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountMyTask*50);
-    _getTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountGetTask*50);
-    _sendTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountSendTask*50);
+//    _myTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountMyTask*50);
+//    _getTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountGetTask*50);
+//    _sendTaskView.contentSize = CGSizeMake(self.view.frame.size.width, _cellCountSendTask*50);
     
     
     [_tableViews addObject:_myTaskView];
@@ -1113,7 +1121,7 @@
         newY = 175;
         
     }
-    newTableViewHeight = [[UIScreen mainScreen] bounds].size.height - newY -80;
+    newTableViewHeight = [[UIScreen mainScreen] bounds].size.height - newY -100;
     
     NSLog(@" newTableViewHeight =%lf",newTableViewHeight);
     
@@ -1294,7 +1302,7 @@
     if(!eventsByDate[key]){
         eventsByDate[key] = [NSMutableArray new];
     }
-    
+
     [eventsByDate[key] addObject:date];
 
 }

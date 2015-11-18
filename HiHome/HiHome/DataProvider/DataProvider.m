@@ -67,6 +67,14 @@
     }
 }
 
+-(void)getHomePageInfoByUserID:(NSString *) uid{
+    if (uid) {
+        NSString *url = [NSString stringWithFormat:@"%@api.php?c=user&a=index",Url];
+        NSDictionary *prm = @{@"uid":uid};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 /**
  *  注册
  *

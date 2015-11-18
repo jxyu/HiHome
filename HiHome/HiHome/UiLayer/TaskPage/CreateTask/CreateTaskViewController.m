@@ -538,7 +538,7 @@
     JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:dict[@"message"]];
     alert.alertType = AlertType_Hint;
     
-    taskUserID = [self getUserID];
+    //taskUserID = [self getUserID];
     [alert addButtonWithTitle:@"确定"];
     [alert show];
 }

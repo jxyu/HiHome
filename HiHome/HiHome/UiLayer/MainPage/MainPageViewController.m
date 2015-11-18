@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "RCIMClient.h"
 #import "PersonFirstViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface MainPageViewController ()<UITableViewDataSource,UITableViewDelegate>{
     CLLocationManager *locationManager;
@@ -31,6 +32,8 @@
     
     UILabel *detailChat1;
     UILabel *detailChat2;
+    
+    NSArray *mHomeInfo;
 }
 
 @end
@@ -50,8 +53,16 @@
     [locationManager startUpdatingLocation];
 }
 
--(void) initViews
-{
+-(void)initData{
+    dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getHomePageInfo:"];
+    [dataProvider getHomePageInfoByUserID:[self getUserID]];
+}
+
+-(void)getHomePageInfo:(id)dict{
+    NSLog(@"%@",dict);
+    mHomeInfo = [dict valueForKey:@"datas"];
+    
     mUserDefault = [NSUserDefaults standardUserDefaults];
     
     dataProvider = [[DataProvider alloc] init];
@@ -71,6 +82,11 @@
     [self.view addSubview:_mainTableView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChatRemindEvent) name:@"ChatRemindEvent" object:nil];
+}
+
+-(void) initViews
+{
+    [self initData];
 }
 
 -(void)ChatRemindEvent{
@@ -448,13 +464,20 @@
     backgroundImg.image = [UIImage imageNamed:@"HelloHome"];
     backgroundImg.contentMode = UIViewContentModeScaleAspectFit;//UIViewContentModeCenter
     
-    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake((_mainTableView.frame.size.width-20*2)/3+20, 10, (_mainTableView.frame.size.width-20*2)/3, ZY_MAINCELL1_HEIGHT/10*6)];
-    headImg.image = [UIImage imageNamed:@"headwoman"];
+    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake((_mainTableView.frame.size.width-20*2)/3+20, 3, (_mainTableView.frame.size.width-20*2)/3 - 5, (_mainTableView.frame.size.width-20*2)/3 - 5)];
+    headImg.tag = 1;
+    NSString *avatar = [[mHomeInfo valueForKey:@"avatar"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"avatar"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+    [headImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headwoman"]];
     headImg.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickHeadImg)];
     [headImg addGestureRecognizer:singleTap];
     headImg.contentMode = UIViewContentModeScaleAspectFit;
-    
+
+    headImg.layer.masksToBounds=YES;
+    headImg.layer.cornerRadius=(headImg.frame.size.width)/2;
+    headImg.layer.borderWidth=0.5;
+    headImg.layer.borderColor=ZY_UIBASECOLOR.CGColor;
     
     UIImageView *logoImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, ZY_MAINCELL1_HEIGHT/10*7, ZY_MAINCELL1_HEIGHT/10*2, ZY_MAINCELL1_HEIGHT/10*2)];
     logoImg.image = [UIImage imageNamed:@"bugle"];
@@ -587,12 +610,31 @@
     UILabel *detail1 = [[UILabel alloc] initWithFrame:CGRectMake(60, mainLabel.frame.size.height + mainLabel.frame.origin.y, 150, 13)];
     detail1.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
     detail1.font = [UIFont systemFontOfSize:10];
-    detail1.text = @"您有10条信息未查看";
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"您有%@条消息未接受",[[mHomeInfo valueForKey:@"task_num"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"task_num"]]];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2,str.length - 8)];
+    
+    detail1.attributedText = str;
     
     UILabel *detail2 = [[UILabel alloc] initWithFrame:CGRectMake(60, detail1.frame.size.height + detail1.frame.origin.y, 150, 13)];
     detail2.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
     detail2.font = [UIFont systemFontOfSize:10];
-    detail2.text = @"今天19:00";
+    
+    NSString *taskDate = [[mHomeInfo valueForKey:@"last_task"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"last_task"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [dateFormatter dateFromString:taskDate];
+    NSString *mChatDateIFlag = [self compareDate:date];
+    if ([mChatDateIFlag isEqual:@"今天"]) {
+        [dateFormatter setDateFormat:@"HH:mm"];
+        detail2.text = [NSString stringWithFormat:@"今天 %@",[dateFormatter stringFromDate:date]];
+    }else if([mChatDateIFlag isEqual:@"昨天"]){
+        [dateFormatter setDateFormat:@"HH:mm"];
+        detail2.text = [NSString stringWithFormat:@"昨天 %@",[dateFormatter stringFromDate:date]];
+    }else{
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        detail2.text = [dateFormatter stringFromDate:date];
+    }
     
     [LabelViews addObject:mainLabel];
     [LabelViews addObject:detail1];
@@ -606,9 +648,20 @@
     NSMutableArray *imgViews = [NSMutableArray array];
     
     
-    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, ZY_MAINCELL4_HEIGHT/10*2, ((self.view.frame.size.width-10*2)/100)*30, ZY_MAINCELL4_HEIGHT/10*6)];
-    headImg.image = [UIImage imageNamed:@"headman"];
+    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake(20, ZY_MAINCELL4_HEIGHT/10*2, ZY_MAINCELL4_HEIGHT/10*6, ZY_MAINCELL4_HEIGHT/10*6)];
+    headImg.tag = 2;
+    NSString *avatar = [[mHomeInfo valueForKey:@"mate_avatar"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"mate_avatar"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,avatar];
+    [headImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"headman"]];
+    headImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickMateHeadImg)];
+    [headImg addGestureRecognizer:singleTap];
     headImg.contentMode = UIViewContentModeScaleAspectFit;
+    
+    headImg.layer.masksToBounds=YES;
+    headImg.layer.cornerRadius=(headImg.frame.size.width)/2;
+    headImg.layer.borderWidth=0.5;
+    headImg.layer.borderColor=ZY_UIBASECOLOR.CGColor;
 //    
 //    CGFloat maxNum = ((self.view.frame.size.width-20)/100)*20+20>ZY_MAINCELL4_HEIGHT/10*6?((self.view.frame.size.width-20)/100)*20+20:ZY_MAINCELL4_HEIGHT/10*6;
     
@@ -772,6 +825,20 @@
     mPersonFirstVC.navTitle = @"个人资料";
     mPersonFirstVC.mIFlag = @"6";
     [self.navigationController pushViewController:mPersonFirstVC animated:NO];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+}
+
+-(void)onClickMateHeadImg{
+    PersonFirstViewController *mPersonFirstVC = [[PersonFirstViewController alloc] init];
+    mPersonFirstVC.mFriendID = [[mHomeInfo valueForKey:@"mate_id"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"mate_id"];
+    mPersonFirstVC.navTitle = @"好友资料";
+    mPersonFirstVC.mIFlag = @"7";
+    [self.navigationController pushViewController:mPersonFirstVC animated:NO];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
 }
 
 -(NSString *)formatDate:(NSDate *)date{

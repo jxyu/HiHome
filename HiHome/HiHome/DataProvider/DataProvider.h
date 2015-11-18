@@ -32,6 +32,9 @@
 //删除配偶申请列表
 -(void)delSpouseApply:(NSString *) FID;
 
+//获取首页信息
+-(void)getHomePageInfoByUserID:(NSString *) uid;
+
 /**
  *  注册
  *

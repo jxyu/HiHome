@@ -66,7 +66,7 @@
     [SVProgressHUD showWithStatus:@"请稍等..." maskType:SVProgressHUDMaskTypeBlack];
     dataProvider=[[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"GetInfoBackCall:"];
-    if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
+    if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"] || [_mIFlag isEqual:@"7"]){
         [dataProvider GetUserInfoWithUid:_mFriendID anduid:[self getUserID]];
     }else{
         [dataProvider GetUserInfoWithUid:nil anduid:[self getUserID]];
@@ -197,7 +197,7 @@
         gxqm.leftViewMode = UITextFieldViewModeAlways;
         [cell addSubview:gxqm];
     }else{
-        if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
+        if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"] || [_mIFlag isEqual:@"7"]) {
             if (indexPath.row == 3) {
                 UITextField *relation = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, cellHeight)];
                 if(!_mType){
@@ -373,7 +373,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"]) {
+    if ([_mIFlag isEqual:@"2"] || [_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"5"] || [_mIFlag isEqual:@"7"]) {
         if (indexPath.row == 0) {
             return cellHeight * 3;
         }else if(indexPath.row == 5){
@@ -487,6 +487,9 @@
     }else if([_mIFlag isEqual:@"3"] || [_mIFlag isEqual:@"4"] || [_mIFlag isEqual:@"5"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
+    }else if([_mIFlag isEqual:@"7"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];
     }else{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setleftbtn" object:nil userInfo:[NSDictionary dictionaryWithObject:@"YES" forKey:@"hide"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar" object:nil userInfo:[NSDictionary dictionaryWithObject:@"NO" forKey:@"hide"]];

@@ -26,7 +26,7 @@
 }
 
 -(void)initView{
-    [self.mBtnRight setTitle:@"发送" forState:UIControlStateNormal];
+    [self.mBtnRight setTitle:@"确定" forState:UIControlStateNormal];
     
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
     mTableView.delegate = self;
@@ -99,7 +99,7 @@
     oldIndexPath = indexPath;
 }
 
-//发送
+//确定
 -(void)btnRightClick:(id)sender{
     if (![_mType isEqual:[NSString stringWithFormat:@"%d",(int)oldIndexPath.row]]) {
         dataProvider = [[DataProvider alloc] init];

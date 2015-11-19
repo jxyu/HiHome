@@ -18,8 +18,8 @@
 -(id)init
 {
     self = [super init];
-    self.albumPath = [[AlbumPath alloc] init];
-    self.picPath = [[PicPath alloc] init];
+    _albumPath = [[AlbumPath alloc] init];
+    _picPath = [[PicPath alloc] init];
     [self initViews];
 
     return  self;
@@ -30,8 +30,8 @@
 {
     self = [super initWithFrame:frame];
     self.frame = frame;
-    self.albumPath = [[AlbumPath alloc] init];
-    self.picPath = [[PicPath alloc] init];
+    _albumPath = [[AlbumPath alloc] init];
+    _picPath = [[PicPath alloc] init];
     [self initViews];
 
     return  self;
@@ -80,9 +80,15 @@
         
         _albumNameLabel.textColor = ZY_UIBASECOLOR;
         _albumDateLabel.textColor = [UIColor grayColor];
-        
-        _albumNameLabel.text = [NSString stringWithFormat:@"%@(%ld)",albumPath.albumName,(long)albumPath.picNum];//[taskPath.endTaskDate month]
-        //_albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[albumPath.albumChangeDate year],(long)[albumPath.albumChangeDate month],(long)[albumPath.albumChangeDate day]];
+        if(albumPath.picNum != 0)
+        {
+            _albumNameLabel.text = [NSString stringWithFormat:@"%@ %ld张",albumPath.albumName,(long)albumPath.picNum];//[taskPath.endTaskDate month]
+            //_albumDateLabel.text = [NSString stringWithFormat:@"%ld-%02ld-%02ld",(long)[albumPath.albumChangeDate year],(long)[albumPath.albumChangeDate month],(long)[albumPath.albumChangeDate day]];
+        }
+        else
+        {
+             _albumNameLabel.text = [NSString stringWithFormat:@"%@",albumPath.albumName];
+        }
         _albumDateLabel.text = albumPath.albumChangeDateStr;
        // _picView.image = [UIImage imageNamed:albumPath.fristPicName];
         NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,albumPath.fristPicName];
@@ -103,13 +109,10 @@
         return;
  //   _picView.image = [UIImage imageNamed:picPath.picName];
     
-    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,picPath.picName];
-    NSLog(@"img url = [%@]",url);
-    [_picView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
-    _picView.contentMode = UIViewContentModeScaleAspectFit;
-
-   
-    
+//    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,picPath.picName];
+//    NSLog(@"img url = [%@]",url);
+//    [_picView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+   // _picView.image = [UIImage imageNamed:@"fristPic"];
     _picView.contentMode = UIViewContentModeScaleAspectFit;
     
     _albumDateLabel.font = [UIFont boldSystemFontOfSize:18];

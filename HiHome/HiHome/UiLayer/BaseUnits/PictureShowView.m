@@ -84,11 +84,12 @@
 }
 -(void)btnClickAction:(UIButton *)sender
 {
+    [self dismiss];
     if([self.delegate respondsToSelector:@selector(didClickDelPicBtn:)])
     {
         [self.delegate didClickDelPicBtn:self.picIndex];
     }
-
+   
 }
 
 

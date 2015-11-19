@@ -44,6 +44,10 @@
     _sectionCount = 2+1;
     picPage = 1;
     picListArr = [NSMutableArray array];
+    
+    if(_picArr == nil)
+        _picArr =[NSMutableArray array];
+//    else
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -90,8 +94,8 @@
 
 -(void)setPicArr:(NSArray *)picArr
 {
-    _picArr = picArr;
-    
+   // _picArr = picArr;
+    [_picArr addObjectsFromArray:picArr];
     NSLog(@"_picArr = %ld",_picArr.count);
     //按下面格式重构数据
     //    {
@@ -242,7 +246,40 @@
             UIImageView *backGroundImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, cell.frame.size.height)];
             // backGroundImgView.backgroundColor = [UIColor yellowColor];
             // backGroundImgView.contentMode = UIViewContentModeScaleAspectFit;
-            backGroundImgView.image = [UIImage imageNamed:@"albumbackground"];
+           // backGroundImgView.image = [UIImage imageNamed:@"albumbackground"];
+            NSDictionary *tempDict;
+            if (_picArr!=nil&&_picArr.count>0) {
+                tempDict = [_picArr objectAtIndex:0];
+                NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,[tempDict objectForKey:@"imgsrc"]];
+                NSLog(@"img url = [%@]",url);
+                [backGroundImgView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                
+//                typedef NS_ENUM(NSInteger, UIViewContentMode) {
+//                    UIViewContentModeScaleToFill,
+//                    UIViewContentModeScaleAspectFit,      // contents scaled to fit with fixed aspect. remainder is transparent
+//                    UIViewContentModeScaleAspectFill,     // contents scaled to fill with fixed aspect. some portion of content may be clipped.
+//                    UIViewContentModeRedraw,              // redraw on bounds change (calls -setNeedsDisplay)
+//                    UIViewContentModeCenter,              // contents remain same size. positioned adjusted.
+//                    UIViewContentModeTop,
+//                    UIViewContentModeBottom,
+//                    UIViewContentModeLeft,
+//                    UIViewContentModeRight,
+//                    UIViewContentModeTopLeft,
+//                    UIViewContentModeTopRight,
+//                    UIViewContentModeBottomLeft,
+//                    UIViewContentModeBottomRight,
+//                };
+                
+             //   backGroundImgView.contentMode = UIViewContentModeScaleAspectFit;
+            }
+            else
+            {
+                 backGroundImgView.image = [UIImage imageNamed:@"albumbackground"];
+            }
+            
+
+          
+            
             [cell addSubview:backGroundImgView];
 
         }
@@ -380,6 +417,13 @@
     [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
         NSDictionary *tempDict ;
         tempDict = [_picArr objectAtIndex:index];
+        if(_picArr !=nil)
+            [_picArr removeAllObjects];
+        
+        if(picListArr !=nil)
+            [picListArr removeAllObjects];
+        
+        
         [self delpic:[tempDict objectForKey:@"id"]];
         
     }];
@@ -559,6 +603,10 @@
     picPage = 1;
     if(picListArr !=nil)
        [picListArr removeAllObjects];
+    
+    if(_picArr !=nil)
+        [_picArr removeAllObjects];
+    
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     [self getAlbumPicList:_aid andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
 }

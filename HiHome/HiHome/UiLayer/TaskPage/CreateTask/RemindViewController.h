@@ -8,6 +8,7 @@
 
 #import "BackPageViewController.h"
 #import "TaskPath.h"
+#import "UUDatePicker.h"
 
 //typedef enum _RemindMode
 //{
@@ -26,6 +27,8 @@
     BOOL existState;
     NSString *title;
     NSString *remindTime;
+    
+    
 //    ZYTaskRemind _remindMode;//不知为何定义了不识别
 }
 @end
@@ -36,6 +39,7 @@
 
     id CallBackObject;
     NSString * callBackFunctionName;
+    NSInteger btnTag;
 }
 @property(nonatomic)NSMutableArray *dateArr;
 @property(nonatomic)NSString *remindDate;

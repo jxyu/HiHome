@@ -44,6 +44,8 @@
     
     NSString * tip;
     NSString * tipName;
+    
+    UILabel *dayTimeLab ;
 }
 @end
 
@@ -55,6 +57,10 @@
     _arrayBtn = [NSMutableArray array];
     _arrayRemind = [NSMutableArray array];
     _btnWidth = (self.view.frame.size.width-10)/4;
+    btnTag = 1;
+    
+    tip=@"1";
+    tipName=@"正点";
     
     self.view.backgroundColor = ZY_UIBASE_BACKGROUND_COLOR;
     [self initViews];
@@ -90,6 +96,82 @@
         repeatMode =tempArr;
     }
    
+    
+    if(self.isDay)
+    {
+        UITextField *dayTimeField = [[UITextField alloc] initWithFrame:CGRectMake(10, 240, 150, 44)];
+        UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+        leftLab.text = @"提醒时间为:";
+        dayTimeField.leftView  = leftLab;
+        dayTimeField.leftViewMode = UITextFieldViewModeAlways;
+        NSString *time = [NSString stringWithFormat:@"%@:%@",[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]] ;
+        dayTimeField.text = time;
+        
+        [self.view addSubview:dayTimeField];
+        
+        
+        UUDatePicker *DatePicker;
+        DatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     
+                                     
+                                     //  dayTimeField.text = [NSString stringWithFormat:@"%@:%@",hour,minute];
+                                     
+                                     [_dateArr replaceObjectAtIndex:HOUR_INDEX withObject:hour];
+                                     [_dateArr replaceObjectAtIndex:MIN_INDEX withObject:minute];
+                                     dayTimeField.text = [NSString stringWithFormat:@"%@:%@",[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                                     
+                                     remindLineInfo *tempInfo;// = [[remindLineInfo alloc] init];
+                                     tempInfo = _arrayRemind[btnTag];//减掉不提醒的位置
+                                     
+                                     NSString *str;
+                                     NSTimeInterval tempTime;
+                                     str = [NSString stringWithFormat:@"%@%@%@%@%@",[_dateArr objectAtIndex:YEAR_INDEX],[_dateArr objectAtIndex:MONTH_INDEX],[_dateArr objectAtIndex:DAY_INDEX],[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+                                     
+                                     tempTime = [self timeconvert:str andFormat:@"yyyyMMddHHmm"];//string 类型的时间转换为时间戳
+                                     if(btnTag == 2)
+                                     {
+                                         tempTime -=(24*60*60);//减掉时间偏移
+                                     }
+                                     else if (btnTag == 3)
+                                     {
+                                         tempTime -=(3*24*60*60);//减掉时间偏移
+                                     }
+                                     str = [NSString stringWithFormat:@"%@",[self timeIntervalToDate:tempTime]/*重新转化为字符*/];
+                                     tempInfo->remindTime = str;
+                                     
+                                     [_arrayRemind replaceObjectAtIndex:btnTag withObject:tempInfo];
+                                     
+                                     [self relayoutCustomView];
+                                     
+                                 }];
+        
+        
+        
+        NSLog(@"endTime = %@",time);
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        //   2015-10-31 09:09:00
+        [formatter setDateFormat:@"HH:mm"];
+        NSDate *date = [formatter dateFromString:time];
+        NSLog(@"date = %@",date);
+        DatePicker.datePickerStyle = UUDateStyle_HourMinute;
+        DatePicker.ScrollToDate =date ;
+        
+        dayTimeField.inputView = DatePicker;
+        dayTimeField.textColor = [UIColor redColor];
+        
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewAction:) ];
+        [self.view addGestureRecognizer:tapGesture];
+    }
+    
     NSInteger rownum  = 0;
     for (int i = 0; i<repeatMode.count; i++) {
        // if(rownum)
@@ -161,6 +243,22 @@
                 default:
                     break;
             }
+            
+//            dayTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(10, 240, 200, 44)];
+//            
+//            dayTimeLab.text  = [NSString stringWithFormat:@"提醒时间为:%@:%@",[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+//            
+//            [self.view addSubview:dayTimeLab];
+            
+//            UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(dayTimeLab.frame.size.width+10 +5, 200, 44, 44)];
+//            [changeBtn setTitle:@"更改" forState:UIControlStateNormal];
+//            [changeBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+//            
+//            [self.view addSubview:changeBtn];
+            
+            
+
+            
         }
         else
         {
@@ -241,8 +339,8 @@
 
     [self.mBtnRight setTitle:@"完成" forState:UIControlStateNormal];
     
-    _oneLineHight = (self.view.frame.size.height -(ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20) -20)/repeatMode.count;
-
+  //  _oneLineHight = (self.view.frame.size.height -(ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20) -20)/repeatMode.count;
+    _oneLineHight = 42;
     customView = [[UIView alloc] initWithFrame:CGRectMake(0, ZY_HEADVIEW_HEIGHT + (rownum+1)*_btnWidth+10+20, self.view.frame.size.width, _oneLineHight*0)];
     
     customView.backgroundColor = [UIColor whiteColor];
@@ -258,6 +356,11 @@
 //    [customView addSubview:_textLab];
 }
 
+
+-(void)tapViewAction:(id)sender
+{
+    [self.view endEditing:YES];
+}
 
 
 -(NSTimeInterval)timeconvert:(NSString*)str andFormat:(NSString *)format
@@ -293,8 +396,7 @@
     remindLineInfo *tempInfo;
     
     _remindModeStr  = [self modeValueToStr:Mode_Remind andValue:Remind_zhengdian];
-    NSLog(@"1213123123123123123213123123123123213_remindModeStr = %@",_remindModeStr);
-    ;    tempInfo = [_arrayRemind objectAtIndex:Remind_zhengdian];
+    tempInfo = [_arrayRemind objectAtIndex:Remind_zhengdian];
     
     tempInfo->existState = YES;
     UIButton *tempBtn;
@@ -438,7 +540,7 @@
 #if 1
     NSInteger availedCount =0 ;
     CGRect tempRect;
-    remindLineInfo *tempInfo;
+    remindLineInfo *tempInfo ;
     UIView *tempView;
     /*清理掉之前的view*/
     [self clearCustomSubView];
@@ -588,7 +690,7 @@
         
      //   _remindMode = (ZYTaskRemind)(sender.tag-ZY_UIBUTTON_TAG_BASE);
         _remindModeStr  = [self modeValueToStr:Mode_Remind andValue:(ZYTaskRemind)(sender.tag-ZY_UIBUTTON_TAG_BASE)];
-        
+        btnTag =sender.tag-ZY_UIBUTTON_TAG_BASE;
         sender.backgroundColor = [UIColor blueColor];
         sender.selected = YES;
     }
@@ -615,7 +717,11 @@
     NSLog(@"tixing done");
     SEL func_selector = NSSelectorFromString(callBackFunctionName);
     if ([CallBackObject respondsToSelector:func_selector]) {
-        NSDictionary * dict=[[NSDictionary alloc] initWithObjectsAndKeys:tip,@"tip",tipName,@"tipname", nil];
+        
+        remindLineInfo *tempInfo;// = [[remindLineInfo alloc] init];
+        tempInfo = _arrayRemind[btnTag];//减掉不提醒的位置
+        
+        NSDictionary * dict=[[NSDictionary alloc] initWithObjectsAndKeys:tip,@"tip",tipName,@"tipname",tempInfo->remindTime, @"tiptime",nil];
         [CallBackObject performSelector:func_selector withObject:dict];
         [self quitView];
     }else{

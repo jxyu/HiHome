@@ -704,6 +704,7 @@
             [tempDict setObject:dateStr forKey:@"date"];
             [tempDict setObject:introStr forKey:@"intro"];
             [tempDict setObject:[dispArr[0] objectForKey:@"addtime"] forKey:@"ctime"];//用于排序
+            [tempDict setObject:[dispArr[0] objectForKey:@"aid"] forKey:@"aid"];
             NSMutableArray *imgArr = [NSMutableArray array];
             for(int i = 0;i<dispArr.count;i++)
             {
@@ -1240,8 +1241,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    
-    if(tableView.tag == 1)
+    if(tableView.tag == 0)
+    {
+       // picPath.picDateStr = [(NSString *)[arrForCellDisp[indexPath.row] objectForKey:@"date"] substringToIndex:10];
+        
+        NSDictionary *tempDict;
+        tempDict = [arrForCellDisp objectAtIndex:indexPath.row];
+       // albumStr = [tempDict objectForKey:@"title"];
+        selectAlbumID =[tempDict objectForKey:@"aid"];
+        
+        AlbumShowViewController *albumViewCtl  = [AlbumShowViewController alloc];
+        //albumViewCtl.navTitle = albumStr;
+        albumViewCtl.aid = selectAlbumID;
+        albumViewCtl.albumUserId = [self getUserID];
+        [self presentViewController:albumViewCtl animated:YES completion:^{}];
+        
+    }
+    else if(tableView.tag == 1)
     {
         NSLog(@"click cell section : %ld row : %ld",(long)indexPath.section,(long)indexPath.row);
         NSDictionary *tempDict;

@@ -700,6 +700,11 @@ fetchCompletionHandler:(void
         
         if(taskDetailPath.taskStatus != 1 && taskDetailPath.taskStatus != 2)
         {
+            JKAlertDialog *alert = [[JKAlertDialog alloc]initWithTitle:@"提示" message:@"消息已过期"];
+            
+            alert.alertType = AlertType_Hint;
+            [alert addButtonWithTitle:@"确定"];
+            [alert show];
             return;
         }
 

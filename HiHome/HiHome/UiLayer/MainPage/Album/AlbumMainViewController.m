@@ -67,6 +67,9 @@
     albumArray = [NSMutableArray array];
     resentArray =[NSMutableArray array];
     picListArr = [NSMutableArray array];
+    dateStrArr = [NSMutableArray array];
+    arrForCellDisp = [NSMutableArray array];
+    reSetResentDict = [NSMutableDictionary dictionary];
     [self initViews];
     [self initTaskPage];
     
@@ -400,7 +403,12 @@
     NSString *userID = [self getUserID];//获取userID
     
     NSLog(@"id = [%@]",userID);
-    
+    if(reSetResentDict != nil)
+        [reSetResentDict removeAllObjects];
+    else
+    {
+        reSetResentDict =[NSMutableDictionary dictionary];
+    }
     [dataprovider GetResentPic:userID andNowPage:nowPage andPerPage:perPage];
 }
 
@@ -477,7 +485,16 @@
         }
         
         if(resentArray.count !=0)
-            _cellCountRecentPic = resentArray.count;
+        {
+          //  _cellCountRecentPic = resentArray.count;
+            _cellCountRecentPic = 0;
+            [self resetResentDict:resentArray];
+            [self setDateArr:resentArray];
+            [self buildArrForCellDisp];//和上面的两个接口或许可以简化
+            NSLog(@"reSetResentDict = %@",reSetResentDict);
+            NSLog(@"dateStrArr = %@",dateStrArr);
+            NSLog(@"_cellCountRecentPic = %ld",_cellCountRecentPic);
+        }
         
         [_recentPicView reloadData];
         
@@ -500,6 +517,252 @@
 }
 
 
+#pragma mark - 照片合并显示的处理
+-(void)setDateArr:(NSArray *)arr
+{
+    NSDictionary *tempDict;
+    NSString *dateStr;
+    if(arr == nil)
+        return;
+    
+    for(int i = 0; i<arr.count;i++)
+    {
+        tempDict = arr[i];
+        dateStr = [tempDict objectForKey:@"addtime"];
+        dateStr = [dateStr substringToIndex:10];
+        if([dateStrArr containsObject:dateStr])
+            continue;
+        else{
+            [dateStrArr addObject:dateStr];
+        }
+    }
+}
+
+-(void)resetResentDict:(NSArray *)arr
+{
+    NSString *dateStr;
+    NSString *intro;
+    NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+    if(arr == nil)
+        return;
+/*    reSetResentDict  结构
+{
+  date = {
+    intro = (
+    {}//照片
+ 
+    {}
+ )
+ 
+ }
+}
+*/
+    @try {
+        for(int i = 0; i<arr.count;i++)
+        {
+          //  tempDict = arr[i];
+            tempDict = [NSMutableDictionary dictionary];
+            [tempDict addEntriesFromDictionary:arr[i]];
+            
+            [tempDict setObject:@"NO" forKey:@"show"];//添加是否已显示的标识
+            
+            dateStr = [tempDict objectForKey:@"addtime"];
+            
+            dateStr = [dateStr substringToIndex:10];
+            intro = [tempDict objectForKey:@"intro"];
+            
+            if([[reSetResentDict allKeys] containsObject:dateStr])
+            {
+//                NSMutableArray *tempArr;
+//                tempArr = [reSetResentDict objectForKey:dateStr];
+//                [tempArr addObject:tempDict];
+                
+                NSMutableDictionary *dateDict;
+                dateDict = [reSetResentDict objectForKey:dateStr];//获取相同日期的dic
+                if([[dateDict allKeys] containsObject:intro])//判断是否存在该详情  存在则添加
+                {
+                    if(dateDict.count >=4)
+                        continue;//最多保存4张 节省时间 空间
+                    
+                    NSMutableArray *tempArr ;//= [NSMutableArray array]
+                    tempArr = [dateDict objectForKey:intro];
+                    [tempArr addObject:tempDict];
+                    [dateDict setObject:tempArr forKey:intro];
+                    
+                }
+                else//否则新建
+                {
+                    NSMutableArray *tempArr;
+                    tempArr = [NSMutableArray array];
+                    
+                    [tempArr addObject:tempDict];
+                    
+                    [dateDict setObject:tempArr forKey:intro];
+                    _cellCountRecentPic++;
+                }
+                
+                
+            }
+            else//否则新建该日期key
+            {
+                NSMutableDictionary *dateDict;
+                NSMutableArray *introArr;
+                dateDict = [NSMutableDictionary dictionary];
+                introArr = [NSMutableArray array];
+                
+                [introArr addObject:tempDict];//添加到intro 数组
+                
+                [dateDict setObject:introArr forKey:intro];//添加到 date key
+                _cellCountRecentPic ++;
+                [reSetResentDict setObject:dateDict forKey:dateStr];
+            }
+
+        }
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+    
+    
+}
+
+
+-(NSString *)checkDateDict:(NSDictionary *) dict
+{
+    NSArray *tempArr;
+    NSString *tempStr;
+    if(dict == nil)
+        return nil;
+    
+    for(tempStr in [dict allKeys])
+    {
+        
+        tempArr = [dict objectForKey:tempStr];
+        
+        if(tempArr==nil || tempArr.count <= 0)
+            return nil;
+        if([[tempArr[0] objectForKey:@"show"] isEqualToString:@"YES"])//检测是否显示过
+        {
+            continue;
+        }
+        else
+            return tempStr;
+    }
+    
+    return nil;
+}
+-(void)buildArrForCellDisp
+{
+    if(arrForCellDisp != nil)
+        [arrForCellDisp removeAllObjects];
+    
+    for(int i = 0;i < _cellCountRecentPic;i++)
+    {
+        @try {
+            NSArray *dispArr;
+            NSString *dateStr;
+            NSMutableDictionary *dateDict;
+            NSString *introStr;
+            for (int i = 0; i< dateStrArr.count; i++) {
+                dateStr = dateStrArr[i];//获取存在日期的列表
+                
+                if([[reSetResentDict allKeys] containsObject:dateStr])
+                {
+                    dateDict = [reSetResentDict objectForKey:dateStr];
+                    
+                    introStr = [self checkDateDict:dateDict] ;
+                    dispArr = [dateDict objectForKey:introStr];
+                    
+                    if(dispArr == nil)
+                    {
+                        continue;//如果日期中没有待处理的照片则再查找后面的日期
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if(dispArr == nil)
+                return;
+            
+            [dispArr[0] setObject:@"YES" forKey:@"show"];
+            
+            [dateDict setObject:dispArr forKey:introStr];
+            [reSetResentDict setObject:dateDict forKey:dateStr];
+            
+            NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+            
+            [tempDict setObject:dateStr forKey:@"date"];
+            [tempDict setObject:introStr forKey:@"intro"];
+            [tempDict setObject:[dispArr[0] objectForKey:@"addtime"] forKey:@"ctime"];//用于排序
+            NSMutableArray *imgArr = [NSMutableArray array];
+            for(int i = 0;i<dispArr.count;i++)
+            {
+                if(i == 4)//最多只保存四张
+                    break;
+                [imgArr addObject:[dispArr[i] objectForKey:@"imgsrc"]];
+                
+                // [tempDict setObject:[dispArr[i] objectForKey:@"imgsrc"] forKey:[NSString stringWithFormat:@"imgsrc%d",i]];
+            }
+            [tempDict setObject:imgArr forKey:@"imgs"];
+            [arrForCellDisp addObject:tempDict];//设置至cell显示用
+            
+            
+           
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+        }
+    }
+    
+     [self bubble_sort:arrForCellDisp];//按时间重新排序
+    
+}
+//字符串转时间戳
+-(NSTimeInterval)timeconvert:(NSString*)str andFormat:(NSString *)format
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:format];
+    NSDate *date = [formatter dateFromString:str];
+    NSTimeInterval dis = [date timeIntervalSince1970];
+    
+    return dis;
+}
+
+
+-(void)bubble_sort:(NSMutableArray *)Arr
+{
+    int i, j;
+    NSTimeInterval a,b;
+    NSDictionary *temp;
+    for (j = 0; j < Arr.count - 1; j++)
+        for (i = 0; i < Arr.count - 1 - j; i++)
+        {
+            
+            temp = Arr[i];
+            a = [self timeconvert:[Arr[i] objectForKey:@"ctime"] andFormat:@"yyyy-MM-dd HH:mm:ss"];
+            b = [self timeconvert:[Arr[i+1] objectForKey:@"ctime"] andFormat:@"yyyy-MM-dd HH:mm:ss"];
+            if(a < b)
+            {
+                temp = Arr[i];
+                Arr[i] = Arr[i + 1];
+                Arr[i + 1] = temp;
+            }
+        }
+}
 #pragma mark - 获取相册列表
 -(void)getAlbumList:(NSString *)fid andNowPage:(NSString *)nowPage andPerPage:(NSString *)perPage
 {
@@ -733,12 +996,15 @@
 }
 
 #pragma mark - setting for cell
+
+
+
 //设置每行调用的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     AlbumTableViewCell *cell;
-    
+   
     if(tableView.tag == 0)
     {
         cell = [[AlbumTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _reCentCellHeight)];
@@ -751,11 +1017,89 @@
         
         
         @try {
-            NSDictionary *tempDict = [resentArray objectAtIndex:indexPath.row];
-            picPath.picName =  [tempDict objectForKey:@"imgsrc"] ;
-            picPath.picDateStr = [(NSString *)[tempDict objectForKey:@"addtime"] substringToIndex:10];
-            picPath.picDescribe = [tempDict objectForKey:@"intro"];
+            
+            if(arrForCellDisp.count - 1< indexPath.row)
+                return cell;
+            
+           // NSDictionary *tempDict = [resentArray objectAtIndex:indexPath.row];
+          //  picPath.picName =  [tempDict objectForKey:@"imgsrc"] ;
+            picPath.picDateStr = [(NSString *)[arrForCellDisp[indexPath.row] objectForKey:@"date"] substringToIndex:10];
+            picPath.picDescribe = [arrForCellDisp[indexPath.row] objectForKey:@"intro"];
             cell.picPath = picPath;
+           // cell.picView.backgroundColor = [UIColor blackColor];
+            NSArray *imgs = [arrForCellDisp[indexPath.row] objectForKey:@"imgs"];
+            switch (imgs.count) {
+                case 1:
+                {
+                    NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,imgs[0]];
+                    NSLog(@"img url = [%@]",url);
+                    [cell.picView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                }
+                    
+                    break;
+                case 2:
+                {
+                    
+                    for(int i=0;i<2;i++)
+                    {
+                        UIImageView *tempView = [[UIImageView alloc] initWithFrame:CGRectMake(i*(cell.picView.frame.size.width/2 + 1), 0, cell.picView.frame.size.width/2 -1, cell.picView.frame.size.height)];
+                        
+                        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,imgs[i]];
+                        [tempView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell.picView addSubview:tempView];
+                    }
+                    
+                }
+                    break;
+                case 3:
+                {
+                    for(int i=0;i<3;i++)
+                    {
+                        UIImageView *tempView;
+                        if(i == 0)
+                        {
+                          tempView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.picView.frame.size.width/2-1, cell.picView.frame.size.height)];
+                        }
+                        else
+                        {
+                            tempView = [[UIImageView alloc] initWithFrame:CGRectMake(cell.picView.frame.size.width/2+1, (i-1)*(cell.picView.frame.size.height/2 +1), cell.picView.frame.size.width/2-1, cell.picView.frame.size.height/2-1)];
+                        }
+                        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,imgs[i]];
+                        [tempView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell.picView addSubview:tempView];
+                    }
+                }
+                    break;
+                case 4:
+                {
+                    
+                    for(int i=0;i<4;i++)
+                    {
+                        UIImageView *tempView;
+                        if(i == 0||i==2)
+                        {
+                            tempView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(i/2)* (cell.picView.frame.size.height/2 + 1), cell.picView.frame.size.width/2-1, cell.picView.frame.size.height/2 -1)];
+                        }
+                        else
+                        {
+                            tempView = [[UIImageView alloc] initWithFrame:CGRectMake(cell.picView.frame.size.width/2+1, (i/2)*(cell.picView.frame.size.height/2+1), cell.picView.frame.size.width/2-1, cell.picView.frame.size.height/2-1)];
+                        }
+                        
+                        NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,imgs[i]];
+                        [tempView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"fristPic"]];
+                        
+                        [cell.picView addSubview:tempView];
+                    }
+                    
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+           // cell.picView
 
         }
         @catch (NSException *exception) {
@@ -792,7 +1136,17 @@
         
         @try {
             tempDict = [albumArray objectAtIndex:indexPath.row];
-            albumPath.albumChangeDateStr = [[tempDict objectForKey:@"addtime"] substringToIndex:10];
+            
+            
+            if([[tempDict objectForKey:@"addtime"] isEqual:[NSNull null]])
+            {
+                albumPath.albumChangeDateStr = nil;
+            }
+            else
+            {
+                albumPath.albumChangeDateStr = [[tempDict objectForKey:@"addtime"] substringToIndex:10];
+            }
+            
             albumPath.fristPicName =[tempDict objectForKey:@"imgsrc"];//@"fristPic";
             albumPath.albumName = [tempDict objectForKey:@"title"];
             albumPath.picNum = [[tempDict objectForKey:@"photos"] integerValue];

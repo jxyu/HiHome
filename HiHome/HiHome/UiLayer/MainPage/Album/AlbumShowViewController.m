@@ -44,6 +44,10 @@
     _sectionCount = 2+1;
     picPage = 1;
     picListArr = [NSMutableArray array];
+    
+    if(_picArr == nil)
+        _picArr =[NSMutableArray array];
+//    else
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -90,8 +94,8 @@
 
 -(void)setPicArr:(NSArray *)picArr
 {
-    _picArr = picArr;
-    
+   // _picArr = picArr;
+    [_picArr addObjectsFromArray:picArr];
     NSLog(@"_picArr = %ld",_picArr.count);
     //按下面格式重构数据
     //    {
@@ -380,6 +384,13 @@
     [alert addButton:Button_OK withTitle:@"确定" handler:^(JKAlertDialogItem *item){
         NSDictionary *tempDict ;
         tempDict = [_picArr objectAtIndex:index];
+        if(_picArr !=nil)
+            [_picArr removeAllObjects];
+        
+        if(picListArr !=nil)
+            [picListArr removeAllObjects];
+        
+        
         [self delpic:[tempDict objectForKey:@"id"]];
         
     }];
@@ -559,6 +570,10 @@
     picPage = 1;
     if(picListArr !=nil)
        [picListArr removeAllObjects];
+    
+    if(_picArr !=nil)
+        [_picArr removeAllObjects];
+    
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     [self getAlbumPicList:_aid andNowPage:[NSString stringWithFormat:@"%ld",picPage] andPerPage:nil];
 }

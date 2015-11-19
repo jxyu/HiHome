@@ -14,7 +14,7 @@
 
 @interface AlbumShowViewController : BackPageViewController<PictureShowViewDelegate>
 
-@property (nonatomic) NSArray *picArr;
+@property (nonatomic) NSMutableArray *picArr;
 @property (nonatomic)NSString *aid;
 @property (nonatomic)NSString *albumUserId;
 @end

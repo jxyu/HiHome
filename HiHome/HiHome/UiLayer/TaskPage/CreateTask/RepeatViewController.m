@@ -185,7 +185,8 @@
     }
     else if([sender.titleLabel.text isEqualToString:@"每天"])
     {
-        str = [NSString stringWithFormat:@"%@:%@重复",[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+      //  str = [NSString stringWithFormat:@"%@:%@重复",[_dateArr objectAtIndex:HOUR_INDEX],[_dateArr objectAtIndex:MIN_INDEX]];
+        str = [NSString stringWithFormat:@"重复"];
         _repeatTimeLab.text = str;
     }
     else if([sender.titleLabel.text isEqualToString:@"每周"])
@@ -212,7 +213,7 @@
     }
     else
     {
-        _textLab.text = [NSString stringWithFormat:@"从%@起%@%@",startDate,sender.titleLabel.text,str];
+        _textLab.text = [NSString stringWithFormat:@"从%@起%@%@",[startDate substringToIndex:10] ,sender.titleLabel.text,str];
     }
     repeat=[NSString stringWithFormat:@"%ld",sender.tag-2315];
     repeatName=sender.currentTitle;

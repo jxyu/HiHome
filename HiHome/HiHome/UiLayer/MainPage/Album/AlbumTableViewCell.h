@@ -21,7 +21,7 @@ typedef enum _CellType
 @interface AlbumTableViewCell : UITableViewCell
 {
     @private
-    UIImageView *_picView;
+    
     UILabel *_albumNameLabel;
     UILabel *_albumDateLabel;
     UILabel *_picDescribeLabel;
@@ -29,5 +29,6 @@ typedef enum _CellType
 @property(nonatomic)CellType cellType;
 @property(strong,nonatomic)AlbumPath *albumPath;
 @property(strong,nonatomic)PicPath  *picPath;
+@property(strong,nonatomic)UIImageView *picView;
 @property(strong,nonatomic)NSMutableArray *customViews;
 @end

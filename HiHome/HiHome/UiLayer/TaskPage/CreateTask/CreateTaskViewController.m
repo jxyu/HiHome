@@ -33,6 +33,7 @@
     
     NSString * tipID;
     NSString * repeatID;
+    NSString * tipTime;
     
     NSInteger *_year;
     NSInteger *_month;
@@ -49,8 +50,8 @@
     NSString *taskUserID;
     
     
-    UUDatePicker *endDatePicker;
-    UUDatePicker *startDatePicker;
+//    UUDatePicker *endDatePicker;
+//    UUDatePicker *startDatePicker;
     
     SelectContacterViewController *selectContacterVC;
 
@@ -534,7 +535,14 @@
         {
            // [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]]];
             
-            [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]] andTaskId:[taskDetailDict objectForKey:@"id"] andSid:@"" andTaskDetailMode:[NSString stringWithFormat:@"%d",0/*TaskDetail_MyMode*/]];
+            if(isday&&tipTime!=nil)
+            {
+                [self setNotice:[self getNoticeDate:tipID andStartTime:tipTime] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]] andTaskId:[taskDetailDict objectForKey:@"id"] andSid:@"" andTaskDetailMode:[NSString stringWithFormat:@"%d",0/*TaskDetail_MyMode*/]];
+            }
+            else
+            {
+                [self setNotice:[self getNoticeDate:tipID andStartTime:startTimeField.text] andNoticeStr:_titleField.text andRepeat:[self getRepeatMode:(ZYTaskRepeat)[repeatID integerValue]] andTaskId:[taskDetailDict objectForKey:@"id"] andSid:@"" andTaskDetailMode:[NSString stringWithFormat:@"%d",0/*TaskDetail_MyMode*/]];
+            }
         }
 
         
@@ -1142,7 +1150,8 @@
             [_startDateArray addObject:weekStr];
             
         }
-        
+        UUDatePicker *endDatePicker;
+        UUDatePicker *startDatePicker;
         endDatePicker
         = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
                                  PickerStyle:UUDateStyle_YearMonthDayHourMinute
@@ -1404,37 +1413,97 @@
         NSInteger hour = [temp hour];
         NSInteger min = [temp minute];
         
-        NSInteger week = [temp weekday];
-        NSString *weekStr;
-        switch (week) {
-            case 1:
-                weekStr = @"周日";
-                break;
-            case 2:
-                weekStr = @"周一";
-                break;
-            case 3:
-                weekStr = @"周二";
-                break;
-            case 4:
-                weekStr = @"周三";
-                break;
-            case 5:
-                weekStr = @"周四";
-                break;
-            case 6:
-                weekStr = @"周五";
-                break;
-            case 7:
-                weekStr = @"周六";
-                break;
-                
-            default:
-                break;
+        UUDatePicker *endDatePicker;
+        UUDatePicker *startDatePicker;
+        NSDate *now = [NSDate date];
+        
+        
+        endDatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     
+                                     if(isday==NO)
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
+                                     else
+                                     {
+                                         endTimeField.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+                                     }
+                                     
+                                 }];
+        
+        if(_createTaskMode == Mode_EditTask)
+        {
+            NSLog(@"endTime = %@",endTime);
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            //   2015-10-31 09:09:00
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSDate *date = [formatter dateFromString:endTime];
+            NSLog(@"date = %@",date);
+            endDatePicker.ScrollToDate =date ;
         }
+        else
+        {
+            endDatePicker.ScrollToDate = now;
+        }
+        endTimeField.inputView = endDatePicker;
         
         
         
+        startDatePicker
+        = [[UUDatePicker alloc]initWithframe:CGRectMake(0, 0, 320, 200)
+                                 PickerStyle:UUDateStyle_YearMonthDayHourMinute
+                                 didSelected:^(NSString *year,
+                                               NSString *month,
+                                               NSString *day,
+                                               NSString *hour,
+                                               NSString *minute,
+                                               NSString *weekDay) {
+                                     [_startDateArray removeAllObjects];
+                                     [_startDateArray addObject:year];
+                                     [_startDateArray addObject:month];
+                                     [_startDateArray addObject:day];
+                                     [_startDateArray addObject:hour];
+                                     [_startDateArray addObject:minute];
+                                     [_startDateArray addObject:weekDay];
+                                     
+                                     if(isday==NO)
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",year,month,day,hour,minute];
+                                     else
+                                     {
+                                         startTimeField.text = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+                                     }
+                                     NSLog(@"---%@",startTimeField.text);
+                                     
+                                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                     [formatter setDateFormat:@"yyyy-MM-dd"];
+                                     NSLog(@"[startTimeField.text substringToIndex:10] = %@",[startTimeField.text substringToIndex:10]);
+                                     NSDate *date = [formatter dateFromString:[startTimeField.text substringToIndex:10]];
+                                     if(_createTaskMode == Mode_EditTask)
+                                     {
+                                         NSLog(@"endTime = %@",endTime);
+                                         
+                                         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                         [formatter setDateFormat:@"yyyy-MM-dd"];
+                                         NSDate *date2 = [formatter dateFromString:endTime];
+                                         endDatePicker.ScrollToDate =date2 ;
+                                     }
+                                     else
+                                     {
+                                         endDatePicker.ScrollToDate = date;
+                                         endDatePicker.minLimitDate = date;
+                                     }
+                                     
+                                 }];
+        
+        
+        startTimeField.inputView = startDatePicker;
         
         if (sender.isOn) {
             if(_createTaskMode == Mode_EditTask)
@@ -1574,6 +1643,18 @@
                 NSLog(@"date 22 : %@",[NSString stringWithFormat:@"%@-%@-%@  %@:%@  %@",[_startDateArray objectAtIndex:0] ,[_startDateArray objectAtIndex:1] ,[_startDateArray objectAtIndex:2] ,[_startDateArray objectAtIndex:3] ,[_startDateArray objectAtIndex:4] ,[_startDateArray objectAtIndex:5] ]
                       );
             _remindViewCtl = [[RemindViewController alloc] init];
+            
+            if(isday&&tipTime!=nil)
+            {
+                NSRange tempRange;
+                tempRange.location =12;
+                tempRange.length  = 2;
+                _startDateArray[3] = [tipTime substringWithRange:tempRange];
+                tempRange.location =15;
+                tempRange.length  = 2;
+                _startDateArray[4] = [tipTime substringWithRange:tempRange];
+            }
+         
             _remindViewCtl.dateArr = _startDateArray;
             _remindViewCtl.isDay = isday;
             _remindViewCtl.navTitle = sender.titleLabel.text;
@@ -1598,6 +1679,7 @@
 {
     NSLog(@"%@",dict);
     tipID=dict[@"tip"];
+    tipTime = dict[@"tiptime"];
     [remindBtn setTitle:dict[@"tipname"] forState:UIControlStateNormal];
 }
 

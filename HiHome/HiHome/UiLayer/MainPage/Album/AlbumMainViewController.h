@@ -36,7 +36,10 @@
     
     /*上传照片*/
    // UploadPicViewController *_uploadPicViewCtl;
-    
+//重新构建最近图片列表
+    NSMutableDictionary *reSetResentDict;
+    NSMutableArray *dateStrArr;
+    NSMutableArray *arrForCellDisp;
     
 }
 @property(nonatomic)NSString *albumUserId;

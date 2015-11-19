@@ -404,10 +404,10 @@
             
             
         case UUDateStyle_HourMinute:{
-            if (component == 3) {
+            if (component == 0) {
                 hourIndex = row;
             }
-            if (component == 4) {
+            if (component == 1) {
                 minuteIndex = row;
             }
         }

@@ -686,7 +686,7 @@
     CGFloat maxNum = ((self.view.frame.size.width-20)/100)*20+20>ZY_MAINCELL4_HEIGHT/10*6?((self.view.frame.size.width-20)/100)*20+20:ZY_MAINCELL4_HEIGHT/10*6;
     
     UILabel *sayHiLabel = [[UILabel alloc] initWithFrame:CGRectMake(maxNum+10+20+10, ZY_MAINCELL4_HEIGHT/10*2-5, ((self.view.frame.size.width-20)/100)*60-20, ZY_MAINCELL4_HEIGHT/10*8)];
-    sayHiLabel.text = @"老婆今天早晨吃饭了吗？几点上班呀路上注意安全！";
+    sayHiLabel.text = [[mHomeInfo valueForKey:@"message"] isEqual:[NSNull null]]?@"":[mHomeInfo valueForKey:@"message"];//@"老婆今天早晨吃饭了吗？几点上班呀路上注意安全！";
     sayHiLabel.textColor =[UIColor colorWithRed:189/255.0 green:170/255.0 blue:152/255.0 alpha:1.0];
     sayHiLabel.font = [UIFont systemFontOfSize:12];//iphone6->14
     sayHiLabel.numberOfLines = 0;//设置行数限制为无限制

@@ -29,6 +29,9 @@
     NSString *_mImgStr;
     
     UIView *mView;
+    
+    BOOL isFirstLoad;
+    UIImage *headImage;
 }
 
 @end
@@ -43,6 +46,7 @@
 }
 
 -(void)initView{
+    isFirstLoad = YES;
     cellHeight = SCREEN_HEIGHT / 11;
     isMan = [_mSex isEqual:@"男"]?YES:NO;
     mUserDefault = [NSUserDefaults standardUserDefaults];
@@ -77,10 +81,14 @@
             btn_head.layer.borderWidth=0.5;
             btn_head.layer.borderColor=ZY_UIBASECOLOR.CGColor;
             [btn_head addTarget:self action:@selector(onClickHeadImg) forControlEvents:UIControlEventTouchUpInside];
-            
-            NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,_mHeadImg];
             mHeadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn_head.frame.size.width, btn_head.frame.size.height)];
-            [mHeadImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+            if (isFirstLoad) {
+                NSString * url=[NSString stringWithFormat:@"%@%@",ZY_IMG_PATH,_mHeadImg];
+                [mHeadImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"xueren.png"]];
+            }else{
+                mHeadImageView.image = headImage;
+            }
+            
             [btn_head addSubview:mHeadImageView];
             
             [cell addSubview:btn_head];
@@ -332,6 +340,8 @@
     UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
     NSData *imageData = UIImagePNGRepresentation(smallImage);
     mHeadImageView.image = smallImage;
+    isFirstLoad = NO;
+    headImage = smallImage;
     [self changeHeadImage:imageData];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
